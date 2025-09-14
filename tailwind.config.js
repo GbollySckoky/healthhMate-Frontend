@@ -5,7 +5,7 @@ export default {
     // './healthmate-admin/lib/**/*.{ts,tsx}',
     '../healthmate-admin/components/**/*.{ts,tsx}',
     // Add any other paths where you use Tailwind classes
-    './src/**/*.{ts,tsx}',
+    // './src/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
@@ -30,6 +30,12 @@ export default {
           200: 'var(--grey-200)',
           100: 'var(--grey-100)',
           10: 'var(--red-10)'
+        },
+        blue:{
+          100: 'var(--blue-100)'
+        },
+        purple:{
+          900: "var(--purple-900)"
         },
         lightGray: '#d1d5db', // Define your custom color
         black: 'var(--black)',

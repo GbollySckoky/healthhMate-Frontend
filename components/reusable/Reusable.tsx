@@ -90,8 +90,14 @@ export const SmallestTexts = ({children}:{children: ReactNode}) => {
 
 export const DisplayFlex = ({children}:{children: ReactNode}) => {
     return( 
-        <p className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-5">
             {children}
-        </p>
+        </div>
+    )
+} 
+
+export const MinBar = ({className}:{className: string}) => {
+    return( 
+        <div className={`h-1 w-7 rounded-lg ${className}`} />
     )
 } 

@@ -1,10 +1,12 @@
 import React from 'react'
-import { Card, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '../../../components/reusable/Reusable'
+import { Card, DisplayFlex, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '../../../components/reusable/Reusable'
 import { PageWrapper } from '../../../components/reusable/Reusable'
 import {  CalendarDays } from 'lucide-react';
 import { overviewData } from '../../../components/data';
 import { ArrowDown, ArrowUp } from "lucide-react"
 import Earnings from './Earnings';
+import { AppointmentTrends } from './AppointmentTrends';
+import { ConsultDept } from './ConsultDept';
 
 const Overview = () => {
   return (
@@ -24,7 +26,7 @@ const Overview = () => {
             </div>
         </div>
         {/* Overview */}
-        <div className="flex justify-between gap-4">
+        <div className="flex justify-between gap-4 mb-7">
             <Card>
                 <MediumTitle>Overview</MediumTitle>
                 <div className="grid grid-cols-4 gap-4 mt-3">
@@ -51,6 +53,12 @@ const Overview = () => {
             </Card>
             <Earnings />
         </div>
+        {/* Charts */}
+        <DisplayFlex>
+            <AppointmentTrends />
+            <ConsultDept />
+        </DisplayFlex>
+       
     </PageWrapper>
   )
 }
