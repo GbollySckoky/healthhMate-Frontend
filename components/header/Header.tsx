@@ -4,9 +4,9 @@ import logo from '../../assets/3d.png'
 import Image from 'next/image';
 const Header = () => {
   return (
-    <div className='flex items-center justify-between bg-white shadow-sm border-b border-gray-200 z-20 fixed top-0 left-0 right-0 h-16 px-6 ml-[250px]'>
+    <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-6 ml-[250px]'>
         <div className="flex items-center justify-between w-full">
-            <h4 className='font-bold text-[20px] text-black font-libre'>Dashboard</h4>
+            <p className='font-bold text-[20px] text-health-black font-libre'>Dashboard</p>
             <div className='flex items-center space-x-4'>
                 <div className='h-8 w-[1px] bg-slate-300 mr-5'/>
                 <div className='relative cursor-pointer'>

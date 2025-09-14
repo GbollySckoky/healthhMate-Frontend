@@ -5,7 +5,7 @@ export default {
     // './healthmate-admin/lib/**/*.{ts,tsx}',
     '../healthmate-admin/components/**/*.{ts,tsx}',
     // Add any other paths where you use Tailwind classes
-    './src/**/*.{ts,tsx}',
+    // './src/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
@@ -13,15 +13,39 @@ export default {
         red: {
           900: 'var(--red-900)',
           800: 'var(--red-800)',
+          200: 'var(--red-200)',
           100: 'var(--red-100)',
+          50: 'var(--red-50)',
+          10: 'var(--red-10)'
+        },
+        green:{
+          900: 'var(--green-900)'
         },
         grey:{
           900: 'var(--grey-900)',
           800: 'var(--grey-800)',
+          700: 'var(--grey-700)',
+          600: 'var(--grey-600)',
+          500: 'var(--grey-500)',
           400: 'var(--grey-400)',
+          300: 'var(--grey-300)',
+          200: 'var(--grey-200)',
+          100: 'var(--grey-100)',
+          50:  'var(--grey-50)',
+          30:  'var(--grey-30)',
+          20:  'var(--grey-20)',
+        },
+        blue:{
+          100: 'var(--blue-100)'
+        },
+        purple:{
+          900: "var(--purple-900)"
         },
         lightGray: '#d1d5db', // Define your custom color
-        black: 'var(--black)'
+        black: 'var(--black)',
+        healthBlack:'var(--health-black)',
+        borderColor: 'var(--borderColor)',
+
       },
       fontFamily: {
         'inter': 'var(--font-inter)',

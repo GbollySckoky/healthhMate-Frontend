@@ -5,11 +5,12 @@ import Link from 'next/link'
 import image from '../../assets/Group 19156.png'
 import Image from 'next/image'
 import { LogOut } from 'lucide-react';
+import { ROUTES } from '@/lib/Routes'
 
 
 
 const SideBar = () => {
-    const [activeUrl, setActiveUrl] = useState<string>('');
+    const [activeUrl, setActiveUrl] = useState<string>(ROUTES.dashboard);
 
     const handleActiveUrl = (url: string) => setActiveUrl(url)
     
@@ -19,7 +20,7 @@ const SideBar = () => {
                 <div className="flex items-center mt-3">
                     <Image src={image} alt="Logo" width={"120"} className='h-fit' priority/>
                 </div>
-                <div className="flex flex-col justify-between h-[75vh] mt-7">
+                <div className="flex flex-col justify-between h-[75vh] mt-3">
                     {/* 0,7 */}
                     <div>
                         {sideBarData.slice(0,7).map((sidebar) => {
