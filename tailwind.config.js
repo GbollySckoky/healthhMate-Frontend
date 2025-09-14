@@ -13,8 +13,10 @@ export default {
         red: {
           900: 'var(--red-900)',
           800: 'var(--red-800)',
+          200: 'var(--red-200)',
           100: 'var(--red-100)',
           50: 'var(--red-50)',
+          10: 'var(--red-10)'
         },
         green:{
           900: 'var(--green-900)'
@@ -29,7 +31,7 @@ export default {
           300: 'var(--grey-300)',
           200: 'var(--grey-200)',
           100: 'var(--grey-100)',
-          10: 'var(--red-10)'
+          50:  'var(--grey-50)'
         },
         blue:{
           100: 'var(--blue-100)'

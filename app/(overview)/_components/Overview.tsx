@@ -8,6 +8,7 @@ import Earnings from './Earnings';
 import { AppointmentTrends } from './AppointmentTrends';
 import { ConsultDept } from './ConsultDept';
 import UpcomingConsultation from './UpcomingConsultation';
+import RecentActivities from './RecentActivities';
 
 const Overview = () => {
   return (
@@ -59,8 +60,9 @@ const Overview = () => {
             <AppointmentTrends />
             <ConsultDept />
         </DisplayFlex>
-        <div className="mt-7">
+        <div className="mt-7 flex items-center  gap-5">
         <UpcomingConsultation />
+        <RecentActivities />
         </div>
       
     </PageWrapper>

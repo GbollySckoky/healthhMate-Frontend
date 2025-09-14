@@ -106,3 +106,21 @@ export const upcomingConsultation =[
         patient: 'Janet N.'
     },
 ]
+
+export const recentActivities = [
+    {
+        title:'New consultation booked',
+        info: 'Patient: Lilian Obasi booked Dr. James Uche',
+        time: '11:30am'
+    },
+    {
+        title:'New consultation booked',
+        info: 'Patient: Lilian Obasi booked Dr. James Uche',
+        time: '11:30am'
+    },
+    {
+        title:'New consultation booked',
+        info: 'Patient: Lilian Obasi booked Dr. James Uche',
+        time: '11:30am'
+    },
+]
