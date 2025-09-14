@@ -9,6 +9,7 @@ import { AppointmentTrends } from './AppointmentTrends';
 import { ConsultDept } from './ConsultDept';
 import UpcomingConsultation from './UpcomingConsultation';
 import RecentActivities from './RecentActivities';
+import { TopDoctors } from './TopDoctors';
 
 const Overview = () => {
   return (
@@ -60,11 +61,11 @@ const Overview = () => {
             <AppointmentTrends />
             <ConsultDept />
         </DisplayFlex>
-        <div className="mt-7 flex items-center  gap-5">
-        <UpcomingConsultation />
-        <RecentActivities />
+        <div className="my-7 flex items-center  gap-5">
+            <UpcomingConsultation />
+            <RecentActivities />
         </div>
-      
+        <TopDoctors />
     </PageWrapper>
   )
 }

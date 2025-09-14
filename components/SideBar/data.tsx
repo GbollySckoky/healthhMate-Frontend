@@ -1,10 +1,11 @@
+import { ROUTES } from '@/lib/Routes';
 import { House, Wallet, Activity, CalendarDays, HouseWifi, User, Headset, Settings } from 'lucide-react';
 export const sideBarData = [
     {
         id: 1,
         icon: <House size={18} />,
         text: 'Dashboard',
-        url: '#'
+        url: ROUTES.dashboard
     },
     {
         id: 2,

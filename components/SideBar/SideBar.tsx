@@ -5,11 +5,12 @@ import Link from 'next/link'
 import image from '../../assets/Group 19156.png'
 import Image from 'next/image'
 import { LogOut } from 'lucide-react';
+import { ROUTES } from '@/lib/Routes'
 
 
 
 const SideBar = () => {
-    const [activeUrl, setActiveUrl] = useState<string>('');
+    const [activeUrl, setActiveUrl] = useState<string>(ROUTES.dashboard);
 
     const handleActiveUrl = (url: string) => setActiveUrl(url)
     
