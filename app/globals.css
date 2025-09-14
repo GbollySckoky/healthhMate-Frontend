@@ -30,12 +30,30 @@ body {
   --red-900: #851651;
   --red-800: #C11574;
   --red-100: #FFECE5;
+  --red-50: #FDF2FA;
+  --red-10: #F04438;
+
   /* gray */
   --grey-900: #101928;
   --grey-800: #211F1F; 
+  --grey-700: #344054;
+  --grey-600: #475367;
+  --grey-500: #6B7280;
   --grey-400: #A4A7AE;
+  --grey-300: #8A8A8A;
+  --grey-200: #333333;
+  --grey-100: #434343;
+
+  /* greeen */
+  --green-900: #05A505;
+
   /* black */
-  --black: #25282B; 
+  --black:  #000000;
+  --health-black: #25282B;
+
+  /* border color */
+  --borderColor: #F1F1F1;
+
 
   --font-inter: 'Inter', sans-serif;
   --font-lato: 'Lato', sans-serif;

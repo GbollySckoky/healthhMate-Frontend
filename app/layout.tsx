@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans flex`}>
+      <body className={`font-sans flex bg-[#FAFAFA]`}>
         <SideBar />
         <div className="w-full ml-[250px]">
           <Header />
