@@ -1,4 +1,5 @@
-
+import image1 from '@/assets/Image (1).png' 
+import image from '@/assets/Image.png'
 
 export const overviewData = [
     {
@@ -52,5 +53,56 @@ export const overviewData = [
         value: '05',
         percent: 10,
         month: 'this month',
+    },
+]
+
+export const upcomingConsultation =[
+    {
+        title: 'Dr. Sarah Okoro',
+        time:'2:00PM',
+        date: 'June 15',
+        callType: "Video Call",
+        img: image,
+        patient: 'Janet N.',
+    },
+    {
+        title: 'Dr. Sarah Okoro',
+        time:'2:00PM',
+        date: 'June 15',
+        callType: "Video Call",
+        img: image1,
+        patient: 'Janet N.'
+    }, 
+    {
+        title: 'Dr. Sarah Okoro',
+        time:'2:00PM',
+        date: 'June 15',
+        callType: "Video Call",
+        img: image,
+        patient: 'Janet N.'
+    },
+    {
+        title: 'Dr. Sarah Okoro',
+        time:'2:00PM',
+        date: 'June 15',
+        callType: "Video Call",
+        img: image,
+        patient: 'Janet N.'
+    },
+    {
+        title: 'Dr. Sarah Okoro',
+        time:'2:00PM',
+        date: 'June 15',
+        callType: "Video Call",
+        img: image,
+        patient: 'Janet N.'
+    },
+    {
+        title: 'Dr. Sarah Okoro',
+        time:'2:00PM',
+        date: 'June 15',
+        callType: "Video Call",
+        img: image,
+        patient: 'Janet N.'
     },
 ]

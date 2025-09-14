@@ -101,3 +101,19 @@ export const MinBar = ({className}:{className: string}) => {
         <div className={`h-1 w-7 rounded-lg ${className}`} />
     )
 } 
+
+export const SmallestTitle = ({children}:{children: ReactNode}) => {
+    return( 
+        <p className="font-libre text-grey-900 font-medium text-[14px]">
+            {children}
+        </p>
+    )
+} 
+
+export const MinText = ({children, className}:{children: ReactNode, className: string}) => {
+    return( 
+        <p className={`font-libre font-normal text-[14px] ${className}`}>
+            {children}
+        </p>
+    )
+} 

@@ -7,6 +7,7 @@ import { ArrowDown, ArrowUp } from "lucide-react"
 import Earnings from './Earnings';
 import { AppointmentTrends } from './AppointmentTrends';
 import { ConsultDept } from './ConsultDept';
+import UpcomingConsultation from './UpcomingConsultation';
 
 const Overview = () => {
   return (
@@ -58,7 +59,10 @@ const Overview = () => {
             <AppointmentTrends />
             <ConsultDept />
         </DisplayFlex>
-       
+        <div className="mt-7">
+        <UpcomingConsultation />
+        </div>
+      
     </PageWrapper>
   )
 }
