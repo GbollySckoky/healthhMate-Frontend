@@ -47,9 +47,12 @@ body {
   --grey-50: #252B37;
   --grey-30: #181D27;
   --grey-20: #535862;
+  --grey-10: #211F1F;
 
   /* greeen */
   --green-900: #05A505;
+  --green-800: #027A48;
+  --green-100: #ECFDF3;
 
   /* black */
   --black:  #000000;
@@ -57,9 +60,12 @@ body {
 
   /* border color */
   --borderColor: #F1F1F1;
+  --borderColor--100: #D5D7DA;
 
   /* blue */
+  --blue-900: #3538CD;
   --blue-100: #7CA1FE;
+  --blue-50: #EEF4FF;
 
   /* purple */
   --purple-900: #6938EF;

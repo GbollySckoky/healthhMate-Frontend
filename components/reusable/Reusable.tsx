@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export const PageWrapper = ({children}:{children: ReactNode}) => {
     return( 
-        <div className="pt-[80px] w-[95%] mx-auto pb-[40px]">
+        <div className="pt-[100px] w-[95%] mx-auto pb-[40px]">
             {children}
         </div>
     )
@@ -117,3 +117,35 @@ export const MinText = ({children, className}:{children: ReactNode, className: s
         </p>
     )
 } 
+
+export const TableTitle = ({children, className}:{children: ReactNode, className?: string}) => {
+    return( 
+        <p className={`font-inter font-medium text-grey-30 text-[18px] ${className}`}>
+            {children}
+        </p>
+    )
+}
+
+export const MinTexts = ({children, className}:{children: ReactNode, className?: string}) => {
+    return( 
+        <p className={`font-inter text-[#535862] font-normal text-[12px] ${className}`}>
+            {children}
+        </p>
+    )
+} 
+
+export const CardTitle = ({children, className}:{children: ReactNode, className?: string}) => {
+    return( 
+        <p className={`font-inter font-medium text-[#211F1F] text-[20px] ${className}`}>
+            {children}
+        </p>
+    )
+}
+
+export const CardText = ({children, className}:{children: ReactNode, className?: string}) => {
+    return( 
+        <p className={`font-lato font-medium text-grey-20 text-[16px] ${className}`}>
+            {children}
+        </p>
+    )
+}

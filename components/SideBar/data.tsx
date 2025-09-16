@@ -47,7 +47,7 @@ export const sideBarData = [
         id: 8,
         icon: <Headset size={18} />,
         text: 'Support',
-        url: '#'
+        url: ROUTES.support
     },
     {
         id: 9,
