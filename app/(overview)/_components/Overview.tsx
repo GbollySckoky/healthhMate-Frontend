@@ -22,7 +22,7 @@ const Overview = () => {
             </div> 
             <div className="flex bg-white rounded-lg p-3 border border-borderColor w-fit px-5 py-4">
                 <p className='bg-red-50 rounded-full p-3'> <CalendarDays size={18} /> </p>
-                <div className='ml-3'>
+                <div className='ml-3 '>
                     <SmallText> Today’s Date </SmallText>
                     <SmallTitle>5th July, 2025</SmallTitle>
                 </div>
@@ -61,7 +61,7 @@ const Overview = () => {
             <AppointmentTrends />
             <ConsultDept />
         </DisplayFlex>
-        <div className="my-7 flex items-center  gap-5">
+        <div className="my-7 flex items-center  gap-5 h-full">
             <UpcomingConsultation />
             <RecentActivities />
         </div>

@@ -111,12 +111,13 @@ export const recentActivities = [
     {
         title:'New consultation booked',
         info: 'Patient: Lilian Obasi booked Dr. James Uche',
-        time: '11:30am'
+        time: '11:30am',
+        image: image1
     },
     {
         title:'New consultation booked',
         info: 'Patient: Lilian Obasi booked Dr. James Uche',
-        time: '11:30am'
+        time: '11:30am',
     },
     {
         title:'New consultation booked',
@@ -164,3 +165,91 @@ export const supportInfo = {
         ]
     }
 }
+
+export const overviewCardData = [
+    {
+        id: 1,
+        about: 'Total Appointments',
+        value: '15',
+        percent: 12,
+    },
+    {
+        id: 2,
+        about: ' Completed Consultations',
+        value: '175',
+        percent: 12,
+    },
+    {
+        id: 3,
+        about: ' Cancelled / No-Show Rate',
+        value: '05',
+        percent: -14,
+    },
+    {
+        id: 4,
+        about: 'Total Hospital Earnings',
+        value: '15',
+        percent: 10,
+    },
+    {
+        id: 5,
+        about: ' Pending Payouts',
+        value: '15',
+        percent: 10,
+        month: 'this month',
+    },
+    {
+        id: 6,
+        about: 'Commission Earned',
+        value: '09',
+        percent: -10,
+        month: 'this month',
+    },
+    {
+        id: 7,
+        about: 'New Patient',
+        value: '10',
+        percent: -12,
+        month: 'this month',
+    },
+    {
+        id: 8,
+        about: 'New Doctors Added ',
+        value: '05',
+        percent: 10,
+        month: 'this month',
+    },
+]
+
+export const doctorPerformannce = [
+    {
+        title:'Dr. Sarah Okoro',
+        info: '156 consultations',
+        time: '11:30am',
+        image: image1,
+        ratings: '4.8',
+        position: '1st',
+        earnings: '₦170,000',
+        about: 'Total Earnings'
+    },
+    {
+        title:'Dr. Sarah Okoro',
+        info: '156 consultations',
+        time: '11:30am',
+        image: image1,
+        ratings: '4.8',
+        position: '2nd',
+        earnings: '₦170,000',
+        about: 'Total Earnings'
+    },
+    {
+        title:'Dr. Sarah Okoro',
+        info: '156 consultations',
+        time: '11:30am',
+        image: image1,
+        ratings: '4.8',
+        position: '3rd',
+        earnings: '₦170,000',
+        about: 'Total Earnings'
+    },
+]

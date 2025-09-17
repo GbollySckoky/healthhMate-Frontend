@@ -46,6 +46,14 @@ export default {
         purple:{
           900: "var(--purple-900)"
         },
+        orannge:{
+          900: 'var(--orange-900)',
+          400: 'var(--orange--400)',
+          200: 'var(--orange-200)'
+        },
+        pink:{
+        600: 'var(--pink-600)',
+        },
         lightGray: '#d1d5db', // Define your custom color
         black: 'var(--black)',
         healthBlack:'var(--health-black)',

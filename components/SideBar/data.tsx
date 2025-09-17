@@ -41,7 +41,7 @@ export const sideBarData = [
         id: 7,
         icon: <Activity size={18} />,
         text: 'Reports & Analytics',
-        url: '#'
+        url: ROUTES.report
     },
     {
         id: 8,

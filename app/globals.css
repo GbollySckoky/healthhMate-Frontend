@@ -70,6 +70,16 @@ body {
   /* purple */
   --purple-900: #6938EF;
   
+
+  /* orange */
+  --orange-900: #CC400C;
+  --orange-400: #F56630;
+  --orange-200:#FA9874;
+
+  /* Pink */
+  --pink-600: #DD2590;
+
+  
   --font-inter: 'Inter', sans-serif;
   --font-lato: 'Lato', sans-serif;
   --font-libre: 'Libre Franklin', sans-serif;
