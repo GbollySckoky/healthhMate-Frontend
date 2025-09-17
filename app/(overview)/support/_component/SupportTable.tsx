@@ -96,7 +96,7 @@ import {
                           <MinTexts>Doctor</MinTexts>
                       </div>
                   </TableCell>
-                  <TableCell className="font-inter font-normal text-[14px] text-[#535862]">{invoice.paymentStatus}</TableCell>
+                  <TableCell className="font-inter font-normal text-[14px] text-[#262e3e]">{invoice.paymentStatus}</TableCell>
                   <TableCell className="font-inter font-medium text-[14px] text-grey-30">{invoice.paymentMethod}</TableCell>
                   <TableCell >
                       <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === Status.CLOSED && 'text-[#027A48] bg-green-100' || invoice.paymentMethod === Status.OPEN && 'text-[#414651] bg-[#F5F5F5]'|| invoice.paymentMethod === Status.InProgress && 'text-[#3538CD] bg-blue-50'  }`}>
