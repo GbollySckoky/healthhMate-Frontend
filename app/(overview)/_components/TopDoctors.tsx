@@ -2,9 +2,7 @@ import { Card } from "@/components/reusable/Reusable"
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,

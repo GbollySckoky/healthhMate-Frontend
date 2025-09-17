@@ -32,9 +32,9 @@ const Coversation = () => {
         <Input 
             placeholder='Type your reply'
             value={inputValue}
-            className='w-full mt-3'
+            className='w-full mt-3 '
             onChange={(e) => setInputValue(e.target.value)}
-            icon={<Send size={15}/>}
+            icon={<Send size={18} />}
         />
     </Card>
   )

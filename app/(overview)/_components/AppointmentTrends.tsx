@@ -1,12 +1,9 @@
 "use client"
-
-import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
 import {
   Card,
   CardContent,
-  CardHeader,
 } from "@/components/ui/card"
 import {
   ChartConfig,
@@ -16,7 +13,6 @@ import {
 } from "@/components/ui/chart"
 import { MediumTitle, MinBar } from "@/components/reusable/Reusable"
 
-export const description = "A multiple line chart"
 
 // Updated chart data with all three fields
 const chartData = [
@@ -76,7 +72,7 @@ export function AppointmentTrends() {
         </div>
       </div>
       <CardContent>
-        <ChartContainer config={chartConfig} className="max-h-[300px] w-full">
+        <ChartContainer config={chartConfig} className="h-[300px] w-full">
           <LineChart
             accessibilityLayer
             data={chartData}

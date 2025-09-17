@@ -31,7 +31,7 @@ const Support = () => {
                     value={inputValue}
                     placeholder='Search by Name'
                     onChange={(e) => setInputValue(e.target.value)}
-                    icon={<Search size={17} />}
+                    icon={<Search size={17} color="#C11574" />}
                 />
                 <MinSelectField 
                     {...allStatus}
