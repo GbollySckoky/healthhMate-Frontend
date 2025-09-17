@@ -1,7 +1,7 @@
 "use client"
 import Input from '@/components/Inputs/Input'
 import MinSelectField from '@/components/Inputs/MinSelectField'
-import { Card, PageWrapper, TableTitle } from '@/components/reusable/Reusable'
+import { PageWrapper, TableTitle } from '@/components/reusable/Reusable'
 import React, { useState } from 'react'
 import { selectField } from '@/components/data'
 import { SupportTable } from './SupportTable'

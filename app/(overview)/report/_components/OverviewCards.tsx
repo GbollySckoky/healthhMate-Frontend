@@ -9,10 +9,20 @@ import { AppointmentTrends } from '../../_components/AppointmentTrends';
 import { ConsultDept } from '../../_components/ConsultDept';
 import { PatientGrowth } from './PatientGrowth';
 import { FinancialReport } from './FinancialReport';
+import DoctorPerformannce from './DoctorPerformance';
+import { CloudUpload } from 'lucide-react';
+
 
 const OverviewCards = () => {
   return (
     <PageWrapper>
+        {/* Generate Report */}
+        <div className='flex justify-end mb-4'>
+            <div className="flex bg-pink-600 text-white items-center cursor-pointer p-3 rounded-lg">
+                <span> <CloudUpload size={15} /></span>
+                <p className='ml-2 font-semibold text-[14px] font-inter'>Generate Report</p>
+            </div>
+        </div>
          {/* Overview */}
          <div className=" mb-7">
             <Card>
@@ -46,7 +56,7 @@ const OverviewCards = () => {
         </div>
         <div className="my-7 flex items-center  gap-5 h-full">
             <PatientGrowth/>
-            <RecentActivities />
+            <DoctorPerformannce />
         </div>
         <FinancialReport />
     </PageWrapper>

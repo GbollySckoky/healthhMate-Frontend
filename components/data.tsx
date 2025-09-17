@@ -111,12 +111,13 @@ export const recentActivities = [
     {
         title:'New consultation booked',
         info: 'Patient: Lilian Obasi booked Dr. James Uche',
-        time: '11:30am'
+        time: '11:30am',
+        image: image1
     },
     {
         title:'New consultation booked',
         info: 'Patient: Lilian Obasi booked Dr. James Uche',
-        time: '11:30am'
+        time: '11:30am',
     },
     {
         title:'New consultation booked',
@@ -217,5 +218,38 @@ export const overviewCardData = [
         value: '05',
         percent: 10,
         month: 'this month',
+    },
+]
+
+export const doctorPerformannce = [
+    {
+        title:'Dr. Sarah Okoro',
+        info: '156 consultations',
+        time: '11:30am',
+        image: image1,
+        ratings: '4.8',
+        position: '1st',
+        earnings: '₦170,000',
+        about: 'Total Earnings'
+    },
+    {
+        title:'Dr. Sarah Okoro',
+        info: '156 consultations',
+        time: '11:30am',
+        image: image1,
+        ratings: '4.8',
+        position: '2nd',
+        earnings: '₦170,000',
+        about: 'Total Earnings'
+    },
+    {
+        title:'Dr. Sarah Okoro',
+        info: '156 consultations',
+        time: '11:30am',
+        image: image1,
+        ratings: '4.8',
+        position: '3rd',
+        earnings: '₦170,000',
+        about: 'Total Earnings'
     },
 ]

@@ -51,7 +51,9 @@ export default {
           400: 'var(--orange--400)',
           200: 'var(--orange-200)'
         },
-        
+        pink:{
+        600: 'var(--pink-600)',
+        },
         lightGray: '#d1d5db', // Define your custom color
         black: 'var(--black)',
         healthBlack:'var(--health-black)',
