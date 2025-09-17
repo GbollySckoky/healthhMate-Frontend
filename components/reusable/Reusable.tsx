@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Plus } from 'lucide-react';
 
 export const PageWrapper = ({children}:{children: ReactNode}) => {
     return( 
@@ -24,9 +25,9 @@ export const Text = ({children}:{children: ReactNode}) => {
     )
 } 
 
-export const Card = ({children}:{children: ReactNode}) => {
+export const Card = ({children, className}:{children: ReactNode, className?: string}) => {
     return( 
-        <div className="bg-white rounded-lg p-4 w-full border border-borderColor ">
+        <div className={`bg-white rounded-lg p-4 w-full border border-borderColor ${className}`}>
             {children}
         </div>
     )
@@ -147,5 +148,16 @@ export const CardText = ({children, className}:{children: ReactNode, className?:
         <p className={`font-lato font-medium text-grey-20 text-[16px] ${className}`}>
             {children}
         </p>
+    )
+}
+
+export const Button = ({children, className, onClick}:{children: ReactNode, className?: string, onClick: () => void}) => {
+    return( 
+        <div className={`font-lato font-medium text-white text-[16px] p-2 rounded-lg flex items-center bg-pink-600 ${className}`} onClick={onClick}>
+            <span> <Plus color="white" size={18} /> </span>
+            <p className="font-inter font-semibold text-[14px] ml-1">
+                {children}
+            </p>
+        </div>
     )
 }

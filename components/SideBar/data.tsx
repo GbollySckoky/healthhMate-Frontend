@@ -53,6 +53,6 @@ export const sideBarData = [
         id: 9,
         icon: <Settings size={18} />,
         text: 'Settings',
-        url: '#'
+        url: ROUTES.settings
     },
 ]
