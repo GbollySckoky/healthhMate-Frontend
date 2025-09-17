@@ -1,8 +1,8 @@
 import React from 'react'
 import OverviewCards from './_components/OverviewCards'
 
-const page = () => {
+const ReportPage = () => {
   return <OverviewCards />
 }
 
-export default page
+export default ReportPage
