@@ -75,7 +75,7 @@ import {
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentStatus}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-red-800">{invoice.totalAmount}</TableCell>
+                    <TableCell className="font-inter font-normal text-[14px] text-red-800">View Details</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>

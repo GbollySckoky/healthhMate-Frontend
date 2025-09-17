@@ -4,7 +4,7 @@ import logo from '../../assets/3d.png'
 import Image from 'next/image';
 const Header = () => {
   return (
-    <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-6 ml-[250px]'>
+    <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-8 ml-[250px]'>
         <div className="flex items-center justify-between w-full">
             <p className='font-bold text-[20px] text-health-black font-libre'>Dashboard</p>
             <div className='flex items-center space-x-4'>

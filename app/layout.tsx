@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SideBar from "../components/SideBar/SideBar";
 import Header from "../components/header/Header";
+import { ModalProvider } from "@/components/Modal/Modal";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -24,16 +25,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans flex bg-[#FAFAFA]`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className="font-sans bg-[#FAFAFA] flex">
         <SideBar />
-        <div className="w-full ml-[250px]">
-          <Header />
-          <div>
-          {children}
-          </div>
-     
-        </div>
+        <ModalProvider>
+          <main className="flex-1  md:ml-[250px] ml-0">
+            <Header />
+            <div>{children}</div>
+          </main>
+        </ModalProvider>
       </body>
     </html>
   );

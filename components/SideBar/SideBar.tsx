@@ -10,7 +10,7 @@ import { ROUTES } from '@/lib/Routes'
 
 
 const SideBar = () => {
-    const [activeUrl, setActiveUrl] = useState<string>(ROUTES.dashboard);
+    const [activeUrl, setActiveUrl] = useState<string>("");
 
     const handleActiveUrl = (url: string) => setActiveUrl(url)
     

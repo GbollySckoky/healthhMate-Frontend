@@ -124,3 +124,43 @@ export const recentActivities = [
         time: '11:30am'
     },
 ]
+
+export const selectField ={
+    allStatus:{
+        label: 'All Status',
+        options: [
+            'Closed',
+            'In Progress',
+            'Open'
+        ]
+    },
+    allRoles:{
+        label: 'All Roles',
+        options: [
+            'Doctor',
+            'Patient',
+            // 'Open'
+        ]
+    }
+} 
+
+export const supportInfo = {
+    updateStatus:{
+        title: 'Update Status',
+        label: 'Pending',
+        options: [
+            'Closed',
+            'In Progress',
+            'Open'
+        ]
+    },
+    priority:{
+        title: 'Priority',
+        label: 'Low',
+        options: [
+            'Low',
+            'High',
+            'Medium'
+        ]
+    }
+}

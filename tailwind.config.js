@@ -19,7 +19,9 @@ export default {
           10: 'var(--red-10)'
         },
         green:{
-          900: 'var(--green-900)'
+          900: 'var(--green-900)',
+          800: 'var(--green-800)',
+          100: 'var(--green-100)',
         },
         grey:{
           900: 'var(--grey-900)',
@@ -34,9 +36,12 @@ export default {
           50:  'var(--grey-50)',
           30:  'var(--grey-30)',
           20:  'var(--grey-20)',
+          10:  'var(--grey-10)',
         },
         blue:{
-          100: 'var(--blue-100)'
+          900: 'var(--blue-900)',
+          100: 'var(--blue-100)',
+          50: 'var(--blue-50)'
         },
         purple:{
           900: "var(--purple-900)"
@@ -45,7 +50,7 @@ export default {
         black: 'var(--black)',
         healthBlack:'var(--health-black)',
         borderColor: 'var(--borderColor)',
-
+        borderColor100: 'var(--borderColor--100)'
       },
       fontFamily: {
         'inter': 'var(--font-inter)',
