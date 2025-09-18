@@ -13,7 +13,7 @@ interface InputProps{
 const Input = ({placeholder,value,onChange,className, label, name}: InputProps) => {
   return (
     <div className='mb-4 block'>
-        <label htmlFor={name} className='font-inter font-normal text-[16px] text-[#212121]'>{label}</label>
+        <label htmlFor={name} className='font-medium text-[14px] font-inter text-[#414651]'>{label}</label>
         <input 
             placeholder={placeholder}
             value={value}

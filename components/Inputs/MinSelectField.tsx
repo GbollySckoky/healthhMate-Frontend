@@ -9,11 +9,10 @@ interface SelectFieldProps{
     onClick: () => void;
     onSelect: (value: string) => void
     options: string[]
-    title?: string
     className?: string
 }
 
-const MinSelectField = ({ label, value, show, onClick, onSelect, options, title, className }: SelectFieldProps) => {
+const MinSelectField = ({ label, value, show, onClick, onSelect, options,  className }: SelectFieldProps) => {
     return (
       <div className="h-fit">
         <div

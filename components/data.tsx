@@ -1,5 +1,6 @@
 import image1 from '@/assets/Image (1).png' 
 import image from '@/assets/Image.png'
+import { permission } from 'process'
 
 export const overviewData = [
     {
@@ -306,4 +307,25 @@ export const admin = {
         ]
     },
     
+}
+
+export const role = {
+    roleName:{
+        label: 'Role Name',
+        placeholder: "Ever care Hospital"
+    },
+    permission:{
+        label: 'Permissions',
+        options:[
+        'Dashboard Access',
+        'Manage Doctors (Add/Edit/Deactivate)',
+        'Edit Users',
+        'Manage Patients',
+        'Manage Branches',
+        'View Earnings & Transactions',
+        'Initiate / Approve Payouts',
+        'View Reports & Analytics',
+        'View / Respond to Support Tickets'
+    ]
+    }
 }

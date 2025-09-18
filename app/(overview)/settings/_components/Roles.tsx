@@ -12,7 +12,7 @@ import {
 import useToggle from "@/hooks/useToggle"
 import { Trash2, Pencil } from 'lucide-react';
 import DeleteModal from "./DeleteModal";
-
+import CreateRole from "./CreateRole";
 
 
   const invoices = [
@@ -68,7 +68,15 @@ import DeleteModal from "./DeleteModal";
             <div className="flex items-center justify-between">
                 <p className="font-lato font-medium text-[18px] text-[#181D27]">Roles & Permission</p>
                 <div className="flex justify-end">
-                    <Button onClick={handleToggle}>Create new role</Button>
+                    <Button onClick={() =>
+                          openModal(<CreateRole />, {
+                            title:
+                              'Delete Role?',
+                            className: 'max-w-lg',
+                            onClose: () => {},
+                            confirmDelete() {},
+                          })
+                        }>Create new role</Button>
                 </div>
             </div>
             <Table className="mt-5 ">
