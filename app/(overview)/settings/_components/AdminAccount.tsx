@@ -8,11 +8,11 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import useToggle from "@/hooks/useToggle"
 import { Trash2 } from 'lucide-react';
 import { activeStatus } from "@/types/status";
 import DeleteModal from "./DeleteModal";
 import { useModal } from "@/components/Modal/Modal";
+import AddNewAdmin from "./AddNewAdmin";
 
 
   const invoices = [
@@ -62,14 +62,21 @@ import { useModal } from "@/components/Modal/Modal";
   ]
   
   export function AdminAccount() {
-    const {isToggle, handleToggle} = useToggle()
     const {openModal} = useModal()
     return (
         <Card>
             <div className="flex items-center justify-between">
                 <p className="font-lato font-medium text-[18px] text-[#181D27]">Admin Accounts</p>
                 <div className="flex justify-end">
-                    <Button onClick={handleToggle}>Add new Admin</Button>
+                    <Button onClick={() =>
+                          openModal(<AddNewAdmin/>, {
+                            title:
+                              'Add New Admin',
+                            className: 'max-w-lg',
+                            onClose: () => {},
+                            // confirmDelete() {},
+                          })
+                        }>Add new Admin</Button>
                 </div>
             </div>
             <Table className="mt-5 ">

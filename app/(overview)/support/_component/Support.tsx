@@ -6,20 +6,19 @@ import React, { useState } from 'react'
 import { selectField } from '@/components/data'
 import { SupportTable } from './SupportTable'
 import {Search } from 'lucide-react'
+import useToggle from '@/hooks/useToggle'
 
 
 const Support = () => {
     const [inputValue, setInputValue] = useState<string>('')
     const {allRoles, allStatus} = selectField;
     const [selectValue, setSelectValue] = useState('')
-    const [displayValues, setDisplayValues] = useState(false)
+    const {isToggle, handleToggle} = useToggle()
 
-    const handleDisplayValues = () => {
-        setDisplayValues((prev) => !prev)
-    }
-    const handleClick = (option: string) => {
+ 
+    const handleSelect = (option: string) => {
         setSelectValue((prev) => (prev === option ? '' : option ))
-        handleDisplayValues()
+        handleToggle
         
     }
   return (
@@ -36,9 +35,9 @@ const Support = () => {
                 <MinSelectField 
                     {...allStatus}
                     value={selectValue}
-                    show={displayValues}
-                    onSelect={handleClick}
-                    onClick={handleDisplayValues}
+                    show={isToggle}
+                    onSelect={handleSelect}
+                    onClick={handleToggle}
                     className='w-fit'
                 />
                  {/* <MinSelectField 

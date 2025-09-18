@@ -280,3 +280,30 @@ export const hospitalProfile = {
     },
     
 }
+
+export const admin = {
+    name:{
+        label: 'Full Name',
+        placeholder: "Ever care Hospital"
+    },
+    email:{
+        title: 'Priority',
+        label: 'Email Address',
+        placeholder: 'admin@evergreen.com'
+    },
+    number:{
+        title: 'Priority',
+        label: 'Phone Number (optional)',
+        placeholder: '0907386282'
+    },
+    role:{
+        title: 'Priority',
+        label: 'Assign Roles',
+        options: [
+            'Low',
+            'High',
+            'Medium'
+        ]
+    },
+    
+}

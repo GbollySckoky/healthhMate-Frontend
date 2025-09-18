@@ -28,6 +28,7 @@ const HospitalProfile = () => {
   const handleSubmit = (e: FormEvent) =>{
     e.preventDefault()
   }
+  
   return (
     <div className="bg-white rounded-lg w-full border border-borderColor">
     <TableTitle className="border-b border-borderColor100 p-4">
