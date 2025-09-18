@@ -11,8 +11,8 @@ import {
 import { Trash2 } from 'lucide-react';
 import { activeStatus } from "@/types/status";
 import DeleteModal from "./DeleteModal";
-import { useModal } from "@/components/Modal/Modal";
 import AddNewAdmin from "./AddNewAdmin";
+import { useFormModal } from "@/components/Modal/FormModal";
 
 
   const invoices = [
@@ -62,7 +62,7 @@ import AddNewAdmin from "./AddNewAdmin";
   ]
   
   export function AdminAccount() {
-    const {openModal} = useModal()
+    const {openModal} = useFormModal()
     return (
         <Card>
             <div className="flex items-center justify-between">

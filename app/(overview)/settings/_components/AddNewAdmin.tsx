@@ -4,10 +4,15 @@ import React, { FormEvent, useState } from 'react';
 import { admin } from '@/components/data';
 import SelectField from '@/components/Inputs/Select';
 import useToggle from '@/hooks/useToggle';
+import Footer from '@/components/footer/Footer';
+import { useFormModal } from '@/components/Modal/FormModal';
+import TelInput from '@/components/Inputs/TelInput';
+import EmailInput from '@/components/Inputs/EmailInput';
 
 const AddNewAdmin = () => {
   const { name, email, number, role } = admin;
   const { isToggle, handleToggle } = useToggle();
+  const {closeModal} = useFormModal()
   const [inputValue, setInputValue] = useState<Admin>({
     fullName: '',
     emailAddress: '',
@@ -44,13 +49,13 @@ const AddNewAdmin = () => {
         onChange={handleChange}
         {...name}
       />
-      <Input
+      <EmailInput
         name="emailAddress"
         value={inputValue.emailAddress}
         onChange={handleChange}
         {...email}
       />
-      <Input
+      <TelInput
         name="phoneNumber"
         value={inputValue.phoneNumber}
         onChange={handleChange}
@@ -65,11 +70,11 @@ const AddNewAdmin = () => {
         className="w-full"
       />
 
-      <div className="pt-4 flex justify-end">
-        <button className="text-white bg-pink-600 rounded-lg px-4 py-2">
-          Save Changes
-        </button>
-      </div>
+    <Footer 
+        cancelText='Cancel'
+        text='Assign Admin'
+        closeModal={closeModal}
+    />
     </form>
   );
 };

@@ -3,10 +3,13 @@ import React, { useState } from 'react'
 import { role } from '@/components/data'
 import Input from '@/components/Inputs/Inputs';
 import Checkbox from '@/components/Inputs/Checkbox';
+import Footer from '@/components/footer/Footer';
+import { useFormModal } from '@/components/Modal/FormModal';
 
 
 const CreateRole = () => {
     const {roleName, permission} = role;
+    const {closeModal} = useFormModal()
     const [inputValue, setInputValue] = useState({
         roleName: ''
     })
@@ -20,8 +23,8 @@ const CreateRole = () => {
     };
 
   return (
-    <Card>
-        <form action="">
+    <form action="">
+        <Card>
             <Input
                 name="roleName"
                 value={inputValue.roleName}
@@ -31,8 +34,14 @@ const CreateRole = () => {
             <Checkbox 
                 {...permission}
             />
-        </form>
-    </Card>
+        </Card>
+        <Footer 
+            cancelText='Cancel'
+            text='Assign Role'
+            closeModal={closeModal}
+        />
+    </form>
+
   )
 }
 

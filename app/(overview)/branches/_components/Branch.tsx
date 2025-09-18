@@ -1,29 +1,49 @@
 "use client"
-import Input from '@/components/Inputs/Input'
 import MinSelectField from '@/components/Inputs/MinSelectField'
-import { PageWrapper, TableTitle } from '@/components/reusable/Reusable'
+import { Button, PageWrapper, TableTitle } from '@/components/reusable/Reusable'
 import React, { useState } from 'react'
-import { selectField } from '@/components/data'
-import { SupportTable } from './SupportTable'
 import {Search } from 'lucide-react'
+import Input from '@/components/Inputs/Input'
+import BranchTable from './BranchTable'
 import useToggle from '@/hooks/useToggle'
+import AddNewBranch from './AddNewBranch'
+import { useFormModal } from '@/components/Modal/FormModal'
 
 
-const Support = () => {
+const Branch = () => {
     const [inputValue, setInputValue] = useState<string>('')
-    const {allRoles, allStatus} = selectField;
-    const [selectValue, setSelectValue] = useState('')
     const {isToggle, handleToggle} = useToggle()
-
- 
+    const [selectValue, setSelectValue] = useState('')
+    const {openModal} = useFormModal()
     const handleSelect = (option: string) => {
         setSelectValue((prev) => (prev === option ? '' : option ))
         handleToggle
     }
+
+    const allStatus ={
+        label: 'Status',
+        options: [
+            'Active',
+            'In Active',
+            'Open'
+        ]
+    }
+    
   return (
     <PageWrapper>
         <div className="bg-white rounded-lg w-full border border-borderColor ">
-            <TableTitle className='border-b border-borderColor100 p-4'>Ticket</TableTitle>
+            <div className="flex justify-between border-b border-borderColor100 p-4">
+                <TableTitle >All Branches</TableTitle>
+                <Button onClick={() =>
+                          openModal(<AddNewBranch />, {
+                            title:
+                              'Add New Admin',
+                            className: 'max-w-lg',
+                            onClose: () => {},
+                            // confirmDelete() {},
+                          })
+                        }>Add New Branch</Button>
+            </div>
             <div className="flex space-x-3 mt-4 px-4">
                 <Input 
                     value={inputValue}
@@ -48,11 +68,11 @@ const Support = () => {
                 /> */}
             </div>
             <div className="p-4">
-                <SupportTable />
+                <BranchTable />
             </div>
         </div>
     </PageWrapper>
   )
 }
 
-export default Support
+export default Branch

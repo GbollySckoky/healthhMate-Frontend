@@ -329,3 +329,25 @@ export const role = {
     ]
     }
 }
+
+export const newBranch = {
+    branchName:{
+        label: 'Branch Name',
+        placeholder: "Ever care Hospital"
+    },
+    branchAddress:{
+        title: 'Priority',
+        label: 'Branch Address',
+        placeholder: 'admin@evergreen.com'
+    },
+    city:{
+        title: 'Priority',
+        label: 'State',
+        placeholder: 'Lagos'
+    },
+    number:{
+        title: 'Priority',
+        label: 'Phone Number (optional)',
+        placeholder: '0907386282'
+    },
+}

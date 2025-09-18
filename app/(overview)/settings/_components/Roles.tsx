@@ -13,6 +13,7 @@ import useToggle from "@/hooks/useToggle"
 import { Trash2, Pencil } from 'lucide-react';
 import DeleteModal from "./DeleteModal";
 import CreateRole from "./CreateRole";
+import { useFormModal } from "@/components/Modal/FormModal";
 
 
   const invoices = [
@@ -61,8 +62,7 @@ import CreateRole from "./CreateRole";
   ]
   
   export function Roles() {
-    const {isToggle, handleToggle} = useToggle()
-    const {openModal} = useModal()
+    const {openModal} = useFormModal()
     return (
         <Card>
             <div className="flex items-center justify-between">

@@ -5,6 +5,8 @@ import UploadLogo from "./UploadLogo";
 import Input from "@/components/Inputs/Inputs";
 import { Profile } from "@/types/hospitalProfile.schema";
 import { hospitalProfile } from '@/components/data'
+import TelInput from "@/components/Inputs/TelInput";
+import EmailInput from "@/components/Inputs/EmailInput";
 
 
 const HospitalProfile = () => {
@@ -43,13 +45,13 @@ const HospitalProfile = () => {
                 onChange={handleChange}
                 {...name}
             />
-            <Input
+            <EmailInput
                 name="workEmail"
                 value={inputValue.workEmail}
                 onChange={handleChange}
                 {...email}
             />
-            <Input
+            <TelInput
                 name="phoneNumber"
                 value={inputValue.phoneNumber}
                 onChange={handleChange}
