@@ -11,6 +11,8 @@ import {
 import useToggle from "@/hooks/useToggle"
 import { Trash2 } from 'lucide-react';
 import { activeStatus } from "@/types/status";
+import DeleteModal from "./DeleteModal";
+import { useModal } from "@/components/Modal/Modal";
 
 
   const invoices = [
@@ -61,6 +63,7 @@ import { activeStatus } from "@/types/status";
   
   export function AdminAccount() {
     const {isToggle, handleToggle} = useToggle()
+    const {openModal} = useModal()
     return (
         <Card>
             <div className="flex items-center justify-between">
@@ -87,7 +90,18 @@ import { activeStatus } from "@/types/status";
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === activeStatus.ACTIVE && 'text-[#027A48] bg-green-100' || invoice.paymentMethod === activeStatus.IN_ACTIVE && 'text-red-10 bg-red-50'  }`}>View Details</TableCell>
-                    <TableCell className="flex items-center">
+                    <TableCell className="cursor-pointer" 
+                      onClick={() =>
+                      openModal(<DeleteModal
+                        text="Are you sure you want to delete Admin Jane Doe? they would no longer have access"
+                        />, {
+                        title:
+                          'Delete Role?',
+                        className: 'max-w-lg',
+                        onClose: () => {},
+                        confirmDelete() {},
+                      })
+                    }>
                      <Trash2 color="#F04438" size={15}/>
                     </TableCell>
                     </TableRow>

@@ -153,7 +153,7 @@ export const CardText = ({children, className}:{children: ReactNode, className?:
 
 export const Button = ({children, className, onClick}:{children: ReactNode, className?: string, onClick: () => void}) => {
     return( 
-        <div className={`font-lato font-medium text-white text-[16px] p-2 rounded-lg flex items-center bg-pink-600 ${className}`} onClick={onClick}>
+        <div className={`font-lato cursor-pointer font-medium text-white text-[16px] p-2 rounded-lg flex items-center bg-pink-600 ${className}`} onClick={onClick}>
             <span> <Plus color="white" size={18} /> </span>
             <p className="font-inter font-semibold text-[14px] ml-1">
                 {children}

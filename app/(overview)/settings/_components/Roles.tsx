@@ -1,4 +1,5 @@
 'use client'
+import { useModal } from "@/components/Modal/Modal";
 import { Button, Card } from "@/components/reusable/Reusable"
 import {
     Table,
@@ -10,6 +11,7 @@ import {
   } from "@/components/ui/table"
 import useToggle from "@/hooks/useToggle"
 import { Trash2, Pencil } from 'lucide-react';
+import DeleteModal from "./DeleteModal";
 
 
 
@@ -60,6 +62,7 @@ import { Trash2, Pencil } from 'lucide-react';
   
   export function Roles() {
     const {isToggle, handleToggle} = useToggle()
+    const {openModal} = useModal()
     return (
         <Card>
             <div className="flex items-center justify-between">
@@ -86,8 +89,18 @@ import { Trash2, Pencil } from 'lucide-react';
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">View Details</TableCell>
-                    <TableCell className="flex items-center">
-                       <span> <Trash2 color="#F04438" size={15}/></span>
+                    <TableCell className="flex items-center cursor-pointer">
+                       <span onClick={() =>
+                          openModal(<DeleteModal
+                            text="Are you sure you want to delete Operational Manager role? they would no longer have access"
+                            />, {
+                            title:
+                              'Delete Role?',
+                            className: 'max-w-lg',
+                            onClose: () => {},
+                            confirmDelete() {},
+                          })
+                        }> <Trash2 color="#F04438" size={15}/></span>
                        <span className="ml-3"> <Pencil size={15} /></span>
                     </TableCell>
                     </TableRow>

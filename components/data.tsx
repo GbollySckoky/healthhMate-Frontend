@@ -253,3 +253,30 @@ export const doctorPerformannce = [
         about: 'Total Earnings'
     },
 ]
+
+export const hospitalProfile = {
+    name:{
+        label: 'Hospital Name',
+        placeholder: "Ever care Hospital"
+    },
+    email:{
+        title: 'Priority',
+        label: 'Work Email',
+        placeholder: 'admin@evergreen.com'
+    },
+    number:{
+        title: 'Priority',
+        label: 'Phone Number (optional)',
+        placeholder: '0907386282'
+    },
+    language:{
+        title: 'Priority',
+        label: 'Work Email',
+        options: [
+            'Low',
+            'High',
+            'Medium'
+        ]
+    },
+    
+}

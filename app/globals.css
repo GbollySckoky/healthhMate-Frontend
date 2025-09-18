@@ -64,6 +64,7 @@ body {
 
   /* blue */
   --blue-900: #3538CD;
+  --blue-200: #4D8BF8;
   --blue-100: #7CA1FE;
   --blue-50: #EEF4FF;
 
@@ -79,7 +80,7 @@ body {
   /* Pink */
   --pink-600: #DD2590;
 
-  
+
   --font-inter: 'Inter', sans-serif;
   --font-lato: 'Lato', sans-serif;
   --font-libre: 'Libre Franklin', sans-serif;
