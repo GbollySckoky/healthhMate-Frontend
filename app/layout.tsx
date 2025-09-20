@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SideBar from "../components/SideBar/SideBar";
 import Header from "../components/header/Header";
-import { ModalProvider } from "@/components/Modal/Modal";
+import Provider from "@/components/provider/Provider";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -28,12 +28,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="font-sans bg-[#FAFAFA] flex">
         <SideBar />
-        <ModalProvider>
+        <Provider>
           <main className="flex-1  md:ml-[250px] ml-0">
             <Header />
             <div>{children}</div>
           </main>
-        </ModalProvider>
+        </Provider>
       </body>
     </html>
   );

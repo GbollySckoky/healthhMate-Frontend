@@ -1,5 +1,6 @@
 import image1 from '@/assets/Image (1).png' 
 import image from '@/assets/Image.png'
+import { permission } from 'process'
 
 export const overviewData = [
     {
@@ -253,3 +254,100 @@ export const doctorPerformannce = [
         about: 'Total Earnings'
     },
 ]
+
+export const hospitalProfile = {
+    name:{
+        label: 'Hospital Name',
+        placeholder: "Ever care Hospital"
+    },
+    email:{
+        title: 'Priority',
+        label: 'Work Email',
+        placeholder: 'admin@evergreen.com'
+    },
+    number:{
+        title: 'Priority',
+        label: 'Phone Number (optional)',
+        placeholder: '0907386282'
+    },
+    language:{
+        title: 'Priority',
+        label: 'Work Email',
+        options: [
+            'Low',
+            'High',
+            'Medium'
+        ]
+    },
+    
+}
+
+export const admin = {
+    name:{
+        label: 'Full Name',
+        placeholder: "Ever care Hospital"
+    },
+    email:{
+        title: 'Priority',
+        label: 'Email Address',
+        placeholder: 'admin@evergreen.com'
+    },
+    number:{
+        title: 'Priority',
+        label: 'Phone Number (optional)',
+        placeholder: '0907386282'
+    },
+    role:{
+        title: 'Priority',
+        label: 'Assign Roles',
+        options: [
+            'Low',
+            'High',
+            'Medium'
+        ]
+    },
+    
+}
+
+export const role = {
+    roleName:{
+        label: 'Role Name',
+        placeholder: "Ever care Hospital"
+    },
+    permission:{
+        label: 'Permissions',
+        options:[
+        'Dashboard Access',
+        'Manage Doctors (Add/Edit/Deactivate)',
+        'Edit Users',
+        'Manage Patients',
+        'Manage Branches',
+        'View Earnings & Transactions',
+        'Initiate / Approve Payouts',
+        'View Reports & Analytics',
+        'View / Respond to Support Tickets'
+    ]
+    }
+}
+
+export const newBranch = {
+    branchName:{
+        label: 'Branch Name',
+        placeholder: "Ever care Hospital"
+    },
+    branchAddress:{
+        title: 'Priority',
+        label: 'Branch Address',
+        placeholder: 'admin@evergreen.com'
+    },
+    city:{
+        title: 'Priority',
+        label: 'State',
+        placeholder: 'Lagos'
+    },
+    number:{
+        title: 'Priority',
+        label: 'Phone Number (optional)',
+        placeholder: '0907386282'
+    },
+}

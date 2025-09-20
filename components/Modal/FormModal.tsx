@@ -21,7 +21,7 @@ const ModalContext = createContext<ModalContextType>({
   closeModal: () => {},
 });
 
-export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ModalProviders: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<ReactNode>(null);
   const [modalConfig, setModalConfig] = useState<ModalOptions>({});
@@ -74,26 +74,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
               <div className="flex-auto p-6 overflow-y-auto text-sm">{modalContent}</div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between gap-2 p-6 border-t">
-                <button
-                  className="px-4 py-2 text-sm font-medium text-[#414651] border rounded-lg"
-                  onClick={closeModal}
-                >
-                  {modalConfig.cancelButtonName ?? 'Cancel'}
-                </button>
-
-                {modalConfig.confirmDelete && (
-                  <button
-                    className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg"
-                    onClick={() => {
-                      modalConfig.confirmDelete?.();
-                      closeModal();
-                    }}
-                  >
-                    {modalConfig.confirmButtonName ?? 'Confirm'}
-                  </button>
-                )}
-              </div>
+            
             </div>
           </div>
 
@@ -104,6 +85,6 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   );
 };
 
-export const useModal = () => {
+export const useFormModal = () => {
   return useContext(ModalContext);
 };

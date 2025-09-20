@@ -35,7 +35,7 @@ export const sideBarData = [
         id: 6,
         icon: <HouseWifi size={18} />,
         text: 'Branches',
-        url: '#'
+        url: ROUTES.branches
     },
     {
         id: 7,

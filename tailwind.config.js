@@ -40,6 +40,7 @@ export default {
         },
         blue:{
           900: 'var(--blue-900)',
+          200: 'var(--blue-200)',
           100: 'var(--blue-100)',
           50: 'var(--blue-50)'
         },

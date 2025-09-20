@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PageWrapper } from '@/components/reusable/Reusable'
 import { Roles } from './Roles'
 import { AdminAccount } from './AdminAccount'
+import HospitalProfile from './HospitalProfile'
 
 const Settings = () => {
   return (
@@ -13,7 +14,7 @@ const Settings = () => {
                 <TabsTrigger value="roles">Roles and Permission</TabsTrigger>
                 <TabsTrigger value="account">Admin Account</TabsTrigger>
             </TabsList>
-            <TabsContent value="general">Change your password here.</TabsContent>
+            <TabsContent value="general"> <HospitalProfile /> </TabsContent>
             <TabsContent value="roles"><Roles /> </TabsContent>
             <TabsContent value="account"><AdminAccount /> </TabsContent>
         </Tabs>

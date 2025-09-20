@@ -8,9 +8,11 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import useToggle from "@/hooks/useToggle"
 import { Trash2 } from 'lucide-react';
 import { activeStatus } from "@/types/status";
+import DeleteModal from "./DeleteModal";
+import AddNewAdmin from "./AddNewAdmin";
+import { useFormModal } from "@/components/Modal/FormModal";
 
 
   const invoices = [
@@ -60,13 +62,21 @@ import { activeStatus } from "@/types/status";
   ]
   
   export function AdminAccount() {
-    const {isToggle, handleToggle} = useToggle()
+    const {openModal} = useFormModal()
     return (
         <Card>
             <div className="flex items-center justify-between">
                 <p className="font-lato font-medium text-[18px] text-[#181D27]">Admin Accounts</p>
                 <div className="flex justify-end">
-                    <Button onClick={handleToggle}>Add new Admin</Button>
+                    <Button onClick={() =>
+                          openModal(<AddNewAdmin/>, {
+                            title:
+                              'Add New Admin',
+                            className: 'max-w-lg',
+                            onClose: () => {},
+                            // confirmDelete() {},
+                          })
+                        }>Add new Admin</Button>
                 </div>
             </div>
             <Table className="mt-5 ">
@@ -87,7 +97,18 @@ import { activeStatus } from "@/types/status";
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === activeStatus.ACTIVE && 'text-[#027A48] bg-green-100' || invoice.paymentMethod === activeStatus.IN_ACTIVE && 'text-red-10 bg-red-50'  }`}>View Details</TableCell>
-                    <TableCell className="flex items-center">
+                    <TableCell className="cursor-pointer" 
+                      onClick={() =>
+                      openModal(<DeleteModal
+                        text="Are you sure you want to delete Admin Jane Doe? they would no longer have access"
+                        />, {
+                        title:
+                          'Delete Role?',
+                        className: 'max-w-lg',
+                        onClose: () => {},
+                        confirmDelete() {},
+                      })
+                    }>
                      <Trash2 color="#F04438" size={15}/>
                     </TableCell>
                     </TableRow>
