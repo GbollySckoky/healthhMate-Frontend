@@ -14,9 +14,9 @@ interface SelectFieldProps{
 
 const MinSelectField = ({ label, value, show, onClick, onSelect, options,  className }: SelectFieldProps) => {
     return (
-      <div className="h-fit">
+      <div className="">
         <div
-          className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md p-[7px] ${className}`}
+          className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md px-5 p-[7px] ${className}`}
           onClick={onClick}
         >
           <p className="font-inter text-[14px] text-[#414651] font-semibold pr-3">

@@ -32,7 +32,7 @@ const HospitalProfile = () => {
   }
   
   return (
-    <div className="bg-white rounded-lg w-full border border-borderColor">
+    <div className="bg-white rounded-lg border border-borderColor w-[70%] mx-auto">
     <TableTitle className="border-b border-borderColor100 p-4">
         Hospital Profile
     </TableTitle>

@@ -90,7 +90,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
                       closeModal();
                     }}
                   >
-                    {modalConfig.confirmButtonName ?? 'Confirm'}
+                    {modalConfig.confirmButtonName ?? 'Delete'}
                   </button>
                 )}
               </div>

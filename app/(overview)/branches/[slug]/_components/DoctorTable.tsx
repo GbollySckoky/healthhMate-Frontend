@@ -1,4 +1,3 @@
-"use client"
 import { useModal } from "@/components/Modal/Modal";
 import {
     Table,
@@ -9,8 +8,9 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import image from '@/assets/Image.png'
-import { Trash2, Pencil } from 'lucide-react';
-import { activeStatus } from "@/types/status";
+import Image from "next/image";
+import { MinTexts } from "@/components/reusable/Reusable";
+import {  activeStatus } from "@/types/status";
 import {
   Pagination,
   PaginationContent,
@@ -19,16 +19,17 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
-import { useRouter } from "next/navigation";
-import DeleteModal from "../../settings/_components/DeleteModal";
+} from "@/components/ui/pagination";
+import { Trash2, Pencil } from 'lucide-react';
+import DeleteModal from "@/app/(overview)/settings/_components/DeleteModal";
+
 
   const invoices = [
     {
       invoice: "INV001",
       paymentStatus: "Paid",
       totalAmount: "$250.00",
-      paymentMethod: "Open",
+      paymentMethod: "Active",
       image: image,
     },
     {
@@ -42,7 +43,7 @@ import DeleteModal from "../../settings/_components/DeleteModal";
       invoice: "INV003",
       paymentStatus: "Unpaid",
       totalAmount: "$350.00",
-      paymentMethod: "In Progress",
+      paymentMethod: "Inactive",
       image: image,
     },
     {
@@ -56,14 +57,14 @@ import DeleteModal from "../../settings/_components/DeleteModal";
       invoice: "INV005",
       paymentStatus: "Paid",
       totalAmount: "$550.00",
-      paymentMethod: "Active",
+      paymentMethod: "Open",
       image: image,
     },
     {
       invoice: "INV006",
       paymentStatus: "Pending",
       totalAmount: "$200.00",
-      paymentMethod: "Inactive",
+      paymentMethod: "Closed",
       image: image,
     },
     {
@@ -74,38 +75,46 @@ import DeleteModal from "../../settings/_components/DeleteModal";
       image: image,
     },
   ]
-const BranchTable = () => {
+const DoctorTable = () => {
     const { openModal } = useModal();
-    const router = useRouter()
     return (
         <div>
           <Table>
               <TableHeader className="border-t border-borderColor text-[#535862]">
                   <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium ">
-                      <TableHead >Branch Name</TableHead>
-                      <TableHead>Doctor Name</TableHead>
-                      <TableHead>Phone Number</TableHead>
-                      <TableHead>Location</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead className="font-inter font-semibold text-[14px] text-grey-20">Full Name</TableHead>
+                      <TableHead className="font-inter font-semibold text-[14px] text-grey-20">Secialty</TableHead>
+                      <TableHead className="font-inter font-semibold text-[14px] text-grey-20">Avg. Rating</TableHead>
+                      <TableHead className="font-inter font-semibold text-[14px] text-grey-20">Appointments</TableHead>
+                      <TableHead className="font-inter font-semibold text-[14px] text-grey-20">Availability</TableHead>
                       <TableHead></TableHead>
                   </TableRow>
               </TableHeader>
-              <TableBody onClick={() => router.push("/branches/1")}>
+              <TableBody>
                 {invoices.map((invoice) => (
                     <TableRow  key={invoice.invoice}>
-                    <TableCell className="font-inter font-medium text-[14px] text-grey-20"> {invoice.invoice}</TableCell>
+                    <TableCell className="font-inter font-medium text-[14px] text-grey-30 flex items-center">
+                        <Image src={invoice.image} alt='Image' width={40} />
+                        <div className="ml-2">
+                            {invoice.invoice}
+                            <MinTexts>Doctor</MinTexts>
+                        </div>
+                    </TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentStatus}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
-                    <TableCell> <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === activeStatus.ACTIVE && 'text-green-800 bg-green-100' || invoice.paymentMethod === activeStatus.IN_ACTIVE && 'text-red-10 bg-red-100' }`}> {invoice.paymentMethod} </p>
+                    <TableCell>
+                        <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === activeStatus.ACTIVE && 'text-green-800 bg-green-100' || invoice.paymentMethod === activeStatus.IN_ACTIVE && 'text-red-10 bg-red-100' }`}>
+                            {invoice.paymentMethod}
+                        </p>
                     </TableCell>
                     <TableCell className="font-inter font-medium text-[14px]  cursor-pointer flex">
                           <span onClick={() =>
                             openModal(<DeleteModal
-                              text="Are you sure you want to delete this branch? All the data would be permanently deleted "
+                              text="Are you sure you want to remove Doctor James from this branch? "
                               />, {
                               title:
-                                'Delete Ikoyi Center?',
+                                'Delete Doctor James?',
                               className: 'max-w-lg',
                               onClose: () => {},
                               confirmDelete() {},
@@ -145,4 +154,4 @@ const BranchTable = () => {
     )
 }
 
-export default BranchTable
+export default DoctorTable
