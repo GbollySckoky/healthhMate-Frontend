@@ -9,7 +9,6 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import useToggle from "@/hooks/useToggle"
 import { Trash2, Pencil } from 'lucide-react';
 import DeleteModal from "./DeleteModal";
 import CreateRole from "./CreateRole";
@@ -63,6 +62,7 @@ import { useFormModal } from "@/components/Modal/FormModal";
   
   export function Roles() {
     const {openModal} = useFormModal()
+    const {openModal: open} = useModal()
     return (
         <Card>
             <div className="flex items-center justify-between">

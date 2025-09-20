@@ -1,10 +1,8 @@
-import EmailInput from '@/components/Inputs/EmailInput';
 import Input from '@/components/Inputs/Inputs';
 import { Branch } from '@/types/branch.schema';
 import React, { FormEvent, useState } from 'react'
 import { newBranch } from '@/components/data';
 import Footer from '@/components/footer/Footer';
-import useToggle from '@/hooks/useToggle';
 import { useFormModal } from '@/components/Modal/FormModal';
 
 const AddNewBranch = () => {
