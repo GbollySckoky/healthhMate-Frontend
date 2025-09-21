@@ -172,3 +172,13 @@ export const UploadButton = ({text, onClick, className}:{text: ReactNode, onClic
     </div>
     )
 }
+
+export const Info = ({label, amount}:{label:string, amount: string}) => {
+    return(
+        <div className='flex items-center justify-between space-y-1'>
+            <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
+            <p className='font-lato text-[18px] font-medium'>{amount}</p>
+        </div>
+    )
+}
+

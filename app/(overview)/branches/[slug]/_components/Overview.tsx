@@ -1,4 +1,4 @@
-import { Card } from '@/components/reusable/Reusable'
+import { Card, Info } from '@/components/reusable/Reusable'
 import React from 'react'
 
 const Overview = () => {
@@ -15,11 +15,3 @@ const Overview = () => {
 
 export default Overview
 
-const Info = ({label, amount}:{label:string, amount: string}) => {
-    return(
-        <div className='flex items-center justify-between space-y-1'>
-            <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
-            <p className='font-lato text-[18px] font-medium'>{amount}</p>
-        </div>
-    )
-}

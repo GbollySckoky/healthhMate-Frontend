@@ -18,6 +18,7 @@ import MinSelectField from "@/components/Inputs/MinSelectField";
 import { useState } from "react";
 import useToggle from "@/hooks/useToggle";
 import Paginate from '@/components/ui/paginate'
+import { useRouter } from 'next/navigation'
 
   const invoices = [
     {
@@ -75,7 +76,7 @@ import Paginate from '@/components/ui/paginate'
     const [inputValue, setInputValue] = useState<string>('')
     const [selectValue, setSelectValue] = useState('')
     const {isToggle, handleToggle} = useToggle()
-
+    const router = useRouter()
  
     const handleSelect = (option: string) => {
         setSelectValue((prev) => (prev === option ? '' : option ))
@@ -99,6 +100,10 @@ import Paginate from '@/components/ui/paginate'
                 'Open'
             ]
         }
+    }
+
+    const handleNext = () => {
+      router.push(`/earnings/1`)
     }
     const {specialty,status } = data
     return (
@@ -162,7 +167,7 @@ import Paginate from '@/components/ui/paginate'
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell > <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === paidStatus.PAID && 'text-green-800 bg-green-100' || invoice.paymentMethod === paidStatus.PENDING && 'text-grey-600 bg-[#F5F5F5]'|| invoice.paymentMethod === paidStatus.FAILED && 'text-red-10 bg-red-100'  }`}>{invoice.paymentMethod} </p></TableCell>
-                    <TableCell className="font-inter font-medium text-[14px] text-red-800 cursor-pointer"> View</TableCell>
+                    <TableCell className="font-inter font-medium text-[14px] text-red-800 cursor-pointer" onClick={handleNext}> View</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
