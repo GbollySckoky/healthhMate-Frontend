@@ -4,5 +4,6 @@ export const ROUTES = {
     report: '/report',
     settings: '/settings',
     branches: '/branches',
-    earnings: '/earnings'
+    earnings: '/earnings',
+    appointment: '/appointment'
 }

@@ -405,3 +405,30 @@ export const transactionData = [
         percent: 10,
     }
 ]
+
+export const appointmentData = [
+    {
+        id: 1,
+        about: 'Total Appointments',
+        value: '142',
+        percent: 12,
+    },
+    {
+        id: 2,
+        about: 'Pending Appointments',
+        value: '202',
+        percent: 12,
+    },
+    {
+        id: 3,
+        about: 'Completed Appointments',
+        value: '156',
+        percent: -14,
+    },
+    {
+        id: 4,
+        about: 'Cancelled Appointments',
+        value: '57',
+        percent: 10,
+    }
+]

@@ -23,7 +23,7 @@ export const sideBarData = [
         id: 4,
         icon: <CalendarDays size={18} />,
         text: 'Appointments',
-        url: '#'
+        url: ROUTES.appointment
     },
     {
         id: 5,

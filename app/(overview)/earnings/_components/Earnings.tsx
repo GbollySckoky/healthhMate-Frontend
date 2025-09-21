@@ -1,5 +1,5 @@
 import { earningData } from '@/components/data';
-import { Card, MediumText, MediumTitle, Value } from '@/components/reusable/Reusable';
+import { Card, MediumText, Value } from '@/components/reusable/Reusable';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { EarningsTable } from './EarningsTable';
