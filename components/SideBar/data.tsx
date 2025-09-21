@@ -29,7 +29,7 @@ export const sideBarData = [
         id: 5,
         icon: <Wallet size={18} />,
         text: 'Earnings & Transactions',
-        url: '#'
+        url: ROUTES.earnings
     },
     {
         id: 6,

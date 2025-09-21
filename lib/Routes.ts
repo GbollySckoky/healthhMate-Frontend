@@ -3,5 +3,6 @@ export const ROUTES = {
     support: '/support',
     report: '/report',
     settings: '/settings',
-    branches: '/branches'
+    branches: '/branches',
+    earnings: '/earnings'
 }
