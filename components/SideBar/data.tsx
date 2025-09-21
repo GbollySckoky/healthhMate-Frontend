@@ -23,13 +23,13 @@ export const sideBarData = [
         id: 4,
         icon: <CalendarDays size={18} />,
         text: 'Appointments',
-        url: '#'
+        url: ROUTES.appointment
     },
     {
         id: 5,
         icon: <Wallet size={18} />,
         text: 'Earnings & Transactions',
-        url: '#'
+        url: ROUTES.earnings
     },
     {
         id: 6,

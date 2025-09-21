@@ -3,8 +3,6 @@ import { Card, DisplayFlex, MediumText, MediumTitle, PageWrapper, SmallestText, 
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { EarningsTrend } from './EarningsTrends';
-import UpcomingConsultation from '../../_components/UpcomingConsultation';
-import RecentActivities from '../../_components/RecentActivities';
 import { AppointmentTrends } from '../../_components/AppointmentTrends';
 import { ConsultDept } from '../../_components/ConsultDept';
 import { PatientGrowth } from './PatientGrowth';

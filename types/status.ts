@@ -8,3 +8,15 @@ export const activeStatus = {
     ACTIVE: 'Active',
     IN_ACTIVE: 'Inactive',
 } 
+
+export const paidStatus = {
+    PAID: 'Paid',
+    FAILED: 'Failed',
+    PENDING: 'Pending'
+} 
+
+export const STATUS = {
+    COMPLETED: 'Completed',
+    CANCELLED: 'Cancelled',
+    PENDING: 'Pending'
+} 

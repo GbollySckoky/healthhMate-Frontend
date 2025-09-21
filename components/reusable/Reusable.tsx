@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import { Plus } from 'lucide-react';
+import { CloudUpload } from 'lucide-react';
+
 
 export const PageWrapper = ({children}:{children: ReactNode}) => {
     return( 
@@ -161,3 +163,22 @@ export const Button = ({children, className, onClick}:{children: ReactNode, clas
         </div>
     )
 }
+
+export const UploadButton = ({text, onClick, className}:{text: ReactNode, onClick?: () => void, className?: string}) => {
+    return(
+        <div className={`flex bg-white border border-borderColor100 text-white items-center cursor-pointer p-3 rounded-lg ${className}`}>
+        <span> <CloudUpload size={15} /></span>
+        <p className='ml-2 font-semibold text-[14px] font-inter'>{text}</p>
+    </div>
+    )
+}
+
+export const Info = ({label, amount}:{label:string, amount: string}) => {
+    return(
+        <div className='flex items-center justify-between space-y-1'>
+            <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
+            <p className='font-lato text-[18px] font-medium'>{amount}</p>
+        </div>
+    )
+}
+

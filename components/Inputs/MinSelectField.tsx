@@ -19,7 +19,7 @@ const MinSelectField = ({ label, value, show, onClick, onSelect, options,  class
           className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md px-5 p-[7px] ${className}`}
           onClick={onClick}
         >
-          <p className="font-inter text-[14px] text-[#414651] font-semibold pr-3">
+          <p className="font-inter text-[14px] text-[#414651] font-medium pr-3">
             {value || label}
           </p>
           <ChevronDown size={15} />

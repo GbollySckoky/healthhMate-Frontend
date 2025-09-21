@@ -351,3 +351,84 @@ export const newBranch = {
         placeholder: '0907386282'
     },
 }
+
+export const earningData = [
+    {
+        id: 1,
+        about: 'Earnings this Month',
+        value: '₦70,000',
+        percent: 12,
+    },
+    {
+        id: 2,
+        about: 'Commission Earned ',
+        value: '₦170,000',
+        percent: 12,
+    },
+    {
+        id: 3,
+        about: 'Pending Payouts',
+        value: '₦780,000',
+        percent: -14,
+    },
+    {
+        id: 4,
+        about: 'Branches',
+        value: '₦670,000',
+        percent: 10,
+    }
+]
+
+export const transactionData = [
+    {
+        id: 1,
+        about: 'Total Transactions',
+        value: '142',
+        percent: 12,
+    },
+    {
+        id: 2,
+        about: 'Pending Transactions ',
+        value: '22',
+        percent: 12,
+    },
+    {
+        id: 3,
+        about: 'Failed Transactions',
+        value: '10',
+        percent: -14,
+    },
+    {
+        id: 4,
+        about: 'Refunds Issued',
+        value: '07',
+        percent: 10,
+    }
+]
+
+export const appointmentData = [
+    {
+        id: 1,
+        about: 'Total Appointments',
+        value: '142',
+        percent: 12,
+    },
+    {
+        id: 2,
+        about: 'Pending Appointments',
+        value: '202',
+        percent: 12,
+    },
+    {
+        id: 3,
+        about: 'Completed Appointments',
+        value: '156',
+        percent: -14,
+    },
+    {
+        id: 4,
+        about: 'Cancelled Appointments',
+        value: '57',
+        percent: 10,
+    }
+]
