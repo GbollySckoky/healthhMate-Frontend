@@ -141,7 +141,7 @@ const CancelledTable = () => {
     }
 
     const handleAppointmentClick = (appointmentId: string) => {
-        router.push(`/appointments/${appointmentId}`)
+        router.push(`/appointment/${appointmentId}`)
     }
 
     // Get status styling
