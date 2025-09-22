@@ -199,3 +199,12 @@ export const NoteCard = ({label, value, className}:{label:string, value: string,
         </div>
     )
 }
+
+export const StatusInfo = ({label, value}:{label:string, value: string}) => {
+    return(
+        <div className='flex items-center justify-between space-y-1'>
+            <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
+            <p className='font-lato text-[14px] font-medium bg-green-100 text-green-900 rounded-full px-5 h-fit'>{value}</p>
+        </div>
+    )
+}

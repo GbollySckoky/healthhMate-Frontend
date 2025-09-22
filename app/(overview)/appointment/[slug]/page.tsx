@@ -1,11 +1,11 @@
-import { Card, Infos, NoteCard, PageWrapper } from '@/components/reusable/Reusable'
+import { Card, Infos, NoteCard, PageWrapper, StatusInfo } from '@/components/reusable/Reusable'
 import React from 'react'
 
 const Page = () => {
   return (
     <PageWrapper>
         <Card>
-            <Infos label='Status' value='Completed'/>
+            <StatusInfo label='Status' value='Completed'/>
             <Infos label='Date & Time' value='2025-08-09 at 10:00 AM'/>
             <Infos label='Duration' value='30 minutes'/>
             <Infos label='Type' value='Video Appointment'/>
