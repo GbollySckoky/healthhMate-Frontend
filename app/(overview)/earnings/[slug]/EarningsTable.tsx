@@ -60,8 +60,8 @@ const getStatusClasses = (status: string) => {
 const EarningsTable = () => {
   return (
     <div>
-      <div className="bg-white rounded-lg w-full border border-borderColor mt-5">
-        <div className='border-b border-borderColor100 p-4 flex items-center justify-between '>
+      <div className="bg-white rounded-lg w-full border border-borderColor mt-5 p-5">
+        <div className='border-b border-borderColor100 pb-5 flex items-center justify-between '>
             <TableTitle >Earnings Breakdown</TableTitle>
             <div className='border border-borderColor100 rounded-lg flex items-center px-3 cursor-pointer py-2 gap-2'>
             <span> <CloudUpload size={15} /></span>
@@ -69,7 +69,7 @@ const EarningsTable = () => {
             </div>
         </div>
         {/* Table */}
-        <Table className='mb-7'>
+        <Table className='mb-7 '>
           <TableHeader className="border-t border-borderColor text-[#535862]">
             <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
               <TableHead>Date</TableHead>

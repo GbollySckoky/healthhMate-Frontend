@@ -13,14 +13,12 @@ import {Search } from 'lucide-react'
 import image from '@/assets/Image.png'
 import Image from "next/image";
 import { TableTitle } from "@/components/reusable/Reusable";
-import { paidStatus } from "@/types/status";
 import Input from "@/components/Inputs/Input";
 import MinSelectField from "@/components/Inputs/MinSelectField";
 import { useState } from "react";
 import useToggle from "@/hooks/useToggle";
 import Paginate from '@/components/ui/paginate'
 import { useRouter } from 'next/navigation'
-import { ROUTES } from '@/lib/Routes'
 
 
 const invoices = [

@@ -13,6 +13,8 @@ export default {
         red: {
           900: 'var(--red-900)',
           800: 'var(--red-800)',
+          700: 'var(--red-700)',
+          600: 'var(--red-600)',
           200: 'var(--red-200)',
           100: 'var(--red-100)',
           50: 'var(--red-50)',

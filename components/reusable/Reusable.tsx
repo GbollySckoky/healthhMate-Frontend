@@ -3,9 +3,9 @@ import { Plus } from 'lucide-react';
 import { CloudUpload } from 'lucide-react';
 
 
-export const PageWrapper = ({children}:{children: ReactNode}) => {
+export const PageWrapper = ({children,className}:{children: ReactNode, className?:string}) => {
     return( 
-        <div className="pt-[100px] w-[95%] mx-auto pb-[40px]">
+        <div className={`mt-[100px] w-[95%] mx-auto mb-[40px] ${className}`}>
             {children}
         </div>
     )
