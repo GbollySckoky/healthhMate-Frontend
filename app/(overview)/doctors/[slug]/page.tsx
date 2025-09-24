@@ -6,6 +6,7 @@ import Image from 'next/image'
 import image from '@/assets/Image.png'
 import { Trash2, ChevronRight  } from 'lucide-react'
 import Overview from './Overview'
+import Documents from './Documents'
 
 const Page = () => {
 
@@ -40,7 +41,7 @@ const Page = () => {
                 <TabsContent value="overview"><Overview /> </TabsContent>
                 <TabsContent value="appointments"> <Appointment /> </TabsContent>
                 <TabsContent value="availabilty">  </TabsContent>
-                <TabsContent value="documents"></TabsContent>
+                <TabsContent value="documents"> <Documents /> </TabsContent>
             </Tabs>
         </div>
     </PageWrapper>
