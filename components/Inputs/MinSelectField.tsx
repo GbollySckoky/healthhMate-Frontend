@@ -16,7 +16,7 @@ const MinSelectField = ({ label, value, show, onClick, onSelect, options,  class
     return (
       <div className="">
         <div
-          className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md px-5 p-[7px] ${className}`}
+          className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md p-[6px] px-2 ${className}`}
           onClick={onClick}
         >
           <p className="font-inter text-[14px] text-[#414651] font-medium pr-3">

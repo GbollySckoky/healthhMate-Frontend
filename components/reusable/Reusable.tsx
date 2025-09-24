@@ -3,9 +3,9 @@ import { Plus } from 'lucide-react';
 import { CloudUpload } from 'lucide-react';
 
 
-export const PageWrapper = ({children}:{children: ReactNode}) => {
+export const PageWrapper = ({children,className}:{children: ReactNode, className?:string}) => {
     return( 
-        <div className="pt-[100px] w-[95%] mx-auto pb-[40px]">
+        <div className={`mt-[100px] w-[95%] mx-auto mb-[40px] ${className}`}>
             {children}
         </div>
     )
@@ -196,6 +196,15 @@ export const NoteCard = ({label, value, className}:{label:string, value: string,
         <div className={`border border-borderColor rounded-lg p-3 bg-white ${className}` }>
             <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
             <p className='font-lato text-[18px] font-medium text-grey-30 mt-3'>{value}</p>
+        </div>
+    )
+}
+
+export const StatusInfo = ({label, value}:{label:string, value: string}) => {
+    return(
+        <div className='flex items-center justify-between space-y-1'>
+            <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
+            <p className='font-lato text-[14px] font-medium bg-green-100 text-green-900 rounded-full px-5 h-fit'>{value}</p>
         </div>
     )
 }

@@ -58,7 +58,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
                 <div className="p-5 border-b">
                   <div className="flex items-start justify-between">
                     {modalConfig.title && (
-                      <p className="text-xl font-medium text-[#1E1E1E]">{modalConfig.title}</p>
+                      <p className="text-xl font-medium text-[#1E1E1E] font-lato">{modalConfig.title}</p>
                     )}
                     <button className="text-xl ml-4" onClick={closeModal}>
                       ×

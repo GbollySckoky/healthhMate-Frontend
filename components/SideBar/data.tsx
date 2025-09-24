@@ -17,7 +17,7 @@ export const sideBarData = [
         id: 3,
         icon: <User size={18}  />,
         text: 'Patients',
-        url: '#'
+        url: ROUTES.patients
     },
     {
         id: 4,

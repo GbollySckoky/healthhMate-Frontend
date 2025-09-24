@@ -40,7 +40,7 @@ const SupportModal = () => {
         <div className="flex items-center">
           <Image src={image} alt='Image' className="w-[80px] h-[80px] rounded-full" />
           <div className='ml-2'>
-            <CardTitle>Gbolly Sckoky</CardTitle>
+            <p className='font-libre font-medium text-[#211F1F] text-[20px]'>Uche Abiodun</p>
             <p className='text-[16px] font-lato font-medium pt-2 text-red-800 pb-1'>Patient</p>
             <CardText>2021-11-09</CardText>
           </div>
