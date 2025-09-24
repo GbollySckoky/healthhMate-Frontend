@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/pagination";
 import { Trash2, Pencil } from 'lucide-react';
 import DeleteModal from "@/app/(overview)/settings/_components/DeleteModal";
+import Paginate from "@/components/ui/paginate";
 
 
   const invoices = [
@@ -126,30 +127,7 @@ const DoctorTable = () => {
                 ))}
               </TableBody>
           </Table>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" >3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <Paginate />
         </div>
     )
 }

@@ -6,5 +6,6 @@ export const ROUTES = {
     branches: '/branches',
     earnings: '/earnings',
     appointment: '/appointment',
-    patients: '/patients'
+    patients: '/patients',
+    doctors: '/doctors'
 }

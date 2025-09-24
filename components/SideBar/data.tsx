@@ -11,7 +11,7 @@ export const sideBarData = [
         id: 2,
         icon: <House size={18} />,
         text: 'Doctors',
-        url: '#'
+        url: ROUTES.doctors
     },
     {
         id: 3,
