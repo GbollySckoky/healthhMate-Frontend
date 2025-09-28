@@ -87,3 +87,8 @@ body {
   --font-lato: 'Lato', sans-serif;
   --font-libre: 'Libre Franklin', sans-serif;
 }
+
+.img{
+  background-image: url('../../healthmate-admin/assets/lovely.png');
+  height: 100vh;
+}

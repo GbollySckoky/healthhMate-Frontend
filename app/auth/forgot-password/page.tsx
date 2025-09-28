@@ -6,11 +6,14 @@ import useStep from '@/hooks/useStep'
 import { STEP } from '@/lib/step'
 import VerifyCode from './_components/VerifyCode'
 import NewPassword from './_components/NewPassword'
-import Success from './_components/Success'
+import Success from '@/components/ui/Success'
+import { ROUTES } from '@/lib/Routes'
+import { useRouter } from 'next/navigation'
+
 
 const Page = () => {
    const {step, handleNextStep} = useStep()
-
+   const router = useRouter()
     return (
         <div className='min-h-screen flex flex-col lg:flex-row bg-white'>
             {/* Left side - Form area */}
@@ -19,7 +22,10 @@ const Page = () => {
              {step === STEP.ZERO && <ForgotPassword handleNextStep={handleNextStep}/>} 
              {step === STEP.ONE && <VerifyCode handleNextStep={handleNextStep} />} 
              {step === STEP.TWO && <NewPassword handleNextStep={handleNextStep} />} 
-             {step === STEP.THREE && <Success  />} 
+             {step === STEP.THREE && 
+             <Success text="Your password has been updated. You can now log in securely." 
+             title="Password Reset Successful" btnText=" Log In" 
+             onClick={() => router.push(ROUTES.dashboard)} />} 
             </div>
 
             {/* Right side - Image (exactly as shown in Figma) */}
