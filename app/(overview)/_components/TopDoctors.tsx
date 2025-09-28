@@ -1,4 +1,4 @@
-import { Card } from "@/components/reusable/Reusable"
+import { Card } from "@/components/ui/Reusable"
 import {
     Table,
     TableBody,

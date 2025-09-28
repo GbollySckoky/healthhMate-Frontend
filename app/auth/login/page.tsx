@@ -5,10 +5,11 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Img from '@/components/ui/Image'
 import { ROUTES } from '@/lib/Routes'
+import { Login } from '@/types/login.schema'
 
 const Page = () => {
-    const [inputValue, setInputValue] = useState({
-        email: '',
+    const [inputValue, setInputValue] = useState<Login>({
+        workEmail: '',
         password: ''
     })
     const [isLoading, setIsLoading] = useState(false)
@@ -62,7 +63,7 @@ const Page = () => {
                         <AuthEmail
                             label='Work Email'
                             placeholder='admin@example.com'
-                            value={inputValue.email}
+                            value={inputValue.workEmail}
                             name='email'
                             onChange={handleChange}
                         />
@@ -95,7 +96,7 @@ const Page = () => {
                         {/* Login button - pink background */}
                         <button 
                             type='submit'
-                            disabled={isLoading || !inputValue.email || !inputValue.password}
+                            disabled={isLoading || !inputValue.workEmail || !inputValue.password}
                             className='w-full bg-pink-600  disabled:bg-[#F670C7] disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors duration-200 mt-6 font-inter'
                         >
                             {isLoading ? 'Signing In...' : 'Log in'}

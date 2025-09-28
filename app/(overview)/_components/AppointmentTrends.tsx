@@ -11,7 +11,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { MediumTitle, MinBar } from "@/components/reusable/Reusable"
+import { MediumTitle, MinBar } from "@/components/ui/Reusable"
 
 
 // Updated chart data with all three fields

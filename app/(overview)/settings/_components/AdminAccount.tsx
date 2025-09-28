@@ -1,5 +1,5 @@
 'use client'
-import { Button, Card } from "@/components/reusable/Reusable"
+import { Button, Card } from "@/components/ui/Reusable"
 import {
     Table,
     TableBody,

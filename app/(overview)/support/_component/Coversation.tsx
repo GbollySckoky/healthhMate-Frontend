@@ -1,4 +1,4 @@
-import { Card, CardText } from '@/components/reusable/Reusable'
+import { Card, CardText } from '@/components/ui/Reusable'
 import React, { useState } from 'react'
 import { CheckCheck } from 'lucide-react';
 import Input from '@/components/Inputs/Input';

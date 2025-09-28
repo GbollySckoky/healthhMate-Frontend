@@ -1,6 +1,6 @@
 import Provider from "@/components/provider/Provider";
-import SideBar from "@/components/SideBar/SideBar";
-import Header from "@/components/header/Header";
+import SideBar from "@/components/ui/SideBar";
+import Header from "@/components/ui/Header";
 
 export default function OverviewLayout({
   children,

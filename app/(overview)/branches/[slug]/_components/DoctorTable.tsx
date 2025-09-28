@@ -9,7 +9,7 @@ import {
   } from "@/components/ui/table"
 import image from '@/assets/Image.png'
 import Image from "next/image";
-import { MinTexts } from "@/components/reusable/Reusable";
+import { MinTexts } from "@/components/ui/Reusable";
 import {  activeStatus } from "@/types/status";
 import {
   Pagination,

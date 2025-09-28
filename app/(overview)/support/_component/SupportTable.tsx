@@ -10,7 +10,7 @@ import {
 import SupportModal from "./SupportModal";
 import image from '@/assets/Image.png'
 import Image from "next/image";
-import { MinTexts } from "@/components/reusable/Reusable";
+import { MinTexts } from "@/components/ui/Reusable";
 import { Status } from "@/types/status";
 import {
   Pagination,

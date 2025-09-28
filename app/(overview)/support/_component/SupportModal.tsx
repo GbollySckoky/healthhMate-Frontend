@@ -1,5 +1,5 @@
 "use client"
-import { Card, CardText, CardTitle } from '@/components/reusable/Reusable'
+import { Card, CardText, CardTitle } from '@/components/ui/Reusable'
 import React, { useState } from 'react'
 import { supportInfo } from '@/components/data'
 import Conversation from './Coversation'

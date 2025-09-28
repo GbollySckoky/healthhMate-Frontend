@@ -2,7 +2,7 @@ import Input from '@/components/Inputs/Inputs';
 import { Branch } from '@/types/branch.schema';
 import React, { FormEvent, useState } from 'react'
 import { newBranch } from '@/components/data';
-import Footer from '@/components/footer/Footer';
+import Footer from '@/components/ui/Footer';
 import { useFormModal } from '@/components/Modal/FormModal';
 
 const AddNewBranch = () => {

@@ -11,7 +11,7 @@ import {
 import {Search } from 'lucide-react'
 import image from '@/assets/Image.png'
 import Image from "next/image";
-import { TableTitle } from "@/components/reusable/Reusable";
+import { TableTitle } from "@/components/ui/Reusable";
 import { paidStatus } from "@/types/status";
 import Input from "@/components/Inputs/Input";
 import MinSelectField from "@/components/Inputs/MinSelectField";

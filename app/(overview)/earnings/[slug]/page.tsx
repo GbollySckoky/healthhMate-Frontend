@@ -1,7 +1,7 @@
 import React from 'react'
 import image from '@/assets/Image.png'
 import Image from 'next/image'
-import { Card, CardText, CardTitle, Info, PageWrapper } from '@/components/reusable/Reusable'
+import { Card, CardText, CardTitle, Info, PageWrapper } from '@/components/ui/Reusable'
 import EarningsTable  from './EarningsTable'
 import { paidStatus } from '@/types/status'
 

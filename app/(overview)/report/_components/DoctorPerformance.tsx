@@ -1,4 +1,4 @@
-import { Card, MediumTitle, MinBar, Text } from '@/components/reusable/Reusable'
+import { Card, MediumTitle, MinBar, Text } from '@/components/ui/Reusable'
 import React from 'react'
 import { doctorPerformannce, recentActivities } from '@/components/data'
 import Image from 'next/image'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PageWrapper } from '@/components/reusable/Reusable'
+import { PageWrapper } from '@/components/ui/Reusable'
 import { Roles } from './Roles'
 import { AdminAccount } from './AdminAccount'
 import HospitalProfile from './HospitalProfile'

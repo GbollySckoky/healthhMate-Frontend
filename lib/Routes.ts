@@ -10,5 +10,6 @@ export const ROUTES = {
     doctors: '/doctors',
     login: '/auth/login',
     forgotPassword: '/auth/forgot-password',
-    
+    signUp: '/auth/sign-up',
+    setUpHospital: '/auth/set-up-hospital',
 }

@@ -1,5 +1,5 @@
 import { overviewCardData } from '@/components/data';
-import { Card, DisplayFlex, MediumText, MediumTitle, PageWrapper, SmallestText, Value } from '@/components/reusable/Reusable';
+import { Card, DisplayFlex, MediumText, MediumTitle, PageWrapper, SmallestText, Value } from '@/components/ui/Reusable';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { EarningsTrend } from './EarningsTrends';

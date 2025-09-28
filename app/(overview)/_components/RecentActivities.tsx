@@ -1,4 +1,4 @@
-import { Card, MediumTitle, Text } from '@/components/reusable/Reusable'
+import { Card, MediumTitle, Text } from '@/components/ui/Reusable'
 import React from 'react'
 import { recentActivities } from '@/components/data'
 const RecentActivities = () => {

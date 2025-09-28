@@ -1,6 +1,6 @@
 "use client"
 import MinSelectField from '@/components/Inputs/MinSelectField'
-import { Button, PageWrapper, TableTitle } from '@/components/reusable/Reusable'
+import { Button, PageWrapper, TableTitle } from '@/components/ui/Reusable'
 import React, { useState } from 'react'
 import {Search } from 'lucide-react'
 import Input from '@/components/Inputs/Input'
