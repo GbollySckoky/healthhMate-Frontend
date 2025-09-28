@@ -8,7 +8,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { paidStatus } from '@/types/status'
-import { Card, Info, TableTitle } from '@/components/reusable/Reusable'
+import { Card, Info, TableTitle } from '@/components/ui/Reusable'
 import { CloudUpload } from 'lucide-react'
 
   // Mock data

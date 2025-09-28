@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, DisplayFlex, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '../../../components/reusable/Reusable'
-import { PageWrapper } from '../../../components/reusable/Reusable'
+import { Card, DisplayFlex, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '../../../components/ui/Reusable'
+import { PageWrapper } from '../../../components/ui/Reusable'
 import {  CalendarDays } from 'lucide-react';
 import { overviewData } from '../../../components/data';
 import { ArrowDown, ArrowUp } from "lucide-react"

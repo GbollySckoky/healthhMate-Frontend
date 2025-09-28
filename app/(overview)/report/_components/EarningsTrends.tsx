@@ -17,7 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { MediumTitle } from "@/components/reusable/Reusable"
+import { MediumTitle } from "@/components/ui/Reusable"
 
 export const description = "A multiple bar chart"
 

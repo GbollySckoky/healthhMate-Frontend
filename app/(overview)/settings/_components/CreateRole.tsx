@@ -1,9 +1,9 @@
-import { Card } from '@/components/reusable/Reusable'
+import { Card } from '@/components/ui/Reusable'
 import React, { useState } from 'react'
 import { role } from '@/components/data'
 import Input from '@/components/Inputs/Inputs';
 import Checkbox from '@/components/Inputs/Checkbox';
-import Footer from '@/components/footer/Footer';
+import Footer from '@/components/ui/Footer';
 import { useFormModal } from '@/components/Modal/FormModal';
 
 

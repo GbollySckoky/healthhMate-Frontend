@@ -1,5 +1,5 @@
 import { appointmentData } from '@/components/data';
-import { Card, MediumText, PageWrapper, Value } from '@/components/reusable/Reusable'
+import { Card, MediumText, PageWrapper, Value } from '@/components/ui/Reusable'
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"

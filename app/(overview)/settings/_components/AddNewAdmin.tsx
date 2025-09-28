@@ -4,7 +4,7 @@ import React, { FormEvent, useState } from 'react';
 import { admin } from '@/components/data';
 import SelectField from '@/components/Inputs/Select';
 import useToggle from '@/hooks/useToggle';
-import Footer from '@/components/footer/Footer';
+import Footer from '@/components/ui/Footer';
 import { useFormModal } from '@/components/Modal/FormModal';
 import TelInput from '@/components/Inputs/TelInput';
 import EmailInput from '@/components/Inputs/EmailInput';

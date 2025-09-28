@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { sideBarData } from './data'
+import { sideBarData } from '@/components/data'
 import Link from 'next/link'
 import image from '../../assets/Group 19156.png'
 import Image from 'next/image'

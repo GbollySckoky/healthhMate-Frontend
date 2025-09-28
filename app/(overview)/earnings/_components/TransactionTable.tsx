@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import Calendar from "@/components/calendar/Calendar"
-import { TableTitle } from "@/components/reusable/Reusable"
+import { TableTitle } from "@/components/ui/Reusable"
 import { paidStatus } from "@/types/status"
 import Input from "@/components/Inputs/Input"
 import MinSelectField from "@/components/Inputs/MinSelectField"

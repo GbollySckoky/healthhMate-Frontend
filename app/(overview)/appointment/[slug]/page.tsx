@@ -1,4 +1,4 @@
-import { Card, Infos, NoteCard, PageWrapper, StatusInfo } from '@/components/reusable/Reusable'
+import { Card, Infos, NoteCard, PageWrapper, StatusInfo } from '@/components/ui/Reusable'
 import React from 'react'
 
 const Page = () => {

@@ -1,4 +1,4 @@
-import { Card, PageWrapper } from '@/components/reusable/Reusable'
+import { Card, PageWrapper } from '@/components/ui/Reusable'
 import React from 'react'
 import BranchDetails from './_components/BranchDetails'
 

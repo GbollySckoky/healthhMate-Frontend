@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { ChevronDown, Eye,  EyeClosed  } from 'lucide-react';
-import { DisplayFlex, MediumText, MediumTitle, SmallestTexts } from '../../../components/reusable/Reusable';
+import { DisplayFlex, MediumText, MediumTitle, SmallestTexts } from '../../../components/ui/Reusable';
 import useToggle from '../../../hooks/useToggle';
 
 

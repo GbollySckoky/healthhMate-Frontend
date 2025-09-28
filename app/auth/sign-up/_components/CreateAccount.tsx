@@ -4,13 +4,13 @@ import AuthEmail from '@/components/Inputs/AuthEmail'
 import AuthPassword from '@/components/Inputs/AuthPassword'
 import AuthInput from '@/components/Inputs/AuthInput'
 import AuthNumber from '@/components/Inputs/AuthNumber'
-import Img from '@/components/ui/Image'
 import { STEP } from '@/lib/step'
+import { Signup } from '@/types/signup.schema'
 
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
-    const [inputValue, setInputValue] = useState({
+    const [inputValue, setInputValue] = useState<Signup>({
         fullName:'',
-        email: '',
+        workEmail: '',
         phoneNumber:'',
         password: '',
         confirmPassword: '',
@@ -49,7 +49,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
         }
     };
 
-    const disabled = isLoading || !inputValue.email || !inputValue.password ||
+    const disabled = isLoading || !inputValue.workEmail || !inputValue.password ||
     !inputValue.confirmPassword || !inputValue.fullName || !inputValue.phoneNumber
     return(
         <div className=' w-full max-w-md'>
@@ -73,7 +73,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                 <AuthEmail
                     label='Work Email'
                     placeholder='admin@example.com'
-                    value={inputValue.email}
+                    value={inputValue.workEmail}
                     name='email'
                     onChange={handleChange}
                 />

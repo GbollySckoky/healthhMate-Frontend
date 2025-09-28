@@ -1,5 +1,5 @@
 "use client";
-import { TableTitle } from "@/components/reusable/Reusable";
+import { TableTitle } from "@/components/ui/Reusable";
 import React, { FormEvent, useState } from "react";
 import UploadLogo from "./UploadLogo";
 import Input from "@/components/Inputs/Inputs";

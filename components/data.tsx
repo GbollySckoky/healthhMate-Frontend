@@ -1,6 +1,9 @@
 import image1 from '@/assets/Image (1).png' 
 import image from '@/assets/Image.png'
-import { permission } from 'process'
+import { House, Wallet, Activity, CalendarDays, HouseWifi, User, Headset, Settings } from 'lucide-react';
+import { ROUTES } from '@/lib/Routes';
+
+
 
 export const overviewData = [
     {
@@ -431,4 +434,61 @@ export const appointmentData = [
         value: '57',
         percent: 10,
     }
+]
+
+export const sideBarData = [
+    {
+        id: 1,
+        icon: <House size={18} />,
+        text: 'Dashboard',
+        url: ROUTES.dashboard
+    },
+    {
+        id: 2,
+        icon: <House size={18} />,
+        text: 'Doctors',
+        url: ROUTES.doctors
+    },
+    {
+        id: 3,
+        icon: <User size={18}  />,
+        text: 'Patients',
+        url: ROUTES.patients
+    },
+    {
+        id: 4,
+        icon: <CalendarDays size={18} />,
+        text: 'Appointments',
+        url: ROUTES.appointment
+    },
+    {
+        id: 5,
+        icon: <Wallet size={18} />,
+        text: 'Earnings & Transactions',
+        url: ROUTES.earnings
+    },
+    {
+        id: 6,
+        icon: <HouseWifi size={18} />,
+        text: 'Branches',
+        url: ROUTES.branches
+    },
+    {
+        id: 7,
+        icon: <Activity size={18} />,
+        text: 'Reports & Analytics',
+        url: ROUTES.report
+    },
+    {
+        id: 8,
+        icon: <Headset size={18} />,
+        text: 'Support',
+        url: ROUTES.support
+    },
+    {
+        id: 9,
+        icon: <Settings size={18} />,
+        text: 'Settings',
+        url: ROUTES.settings
+    },
 ]
