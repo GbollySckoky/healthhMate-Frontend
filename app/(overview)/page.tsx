@@ -1,5 +1,5 @@
 import React from 'react'
-import Overview from './(overview)/_components/Overview'
+import Overview from './_components/Overview'
 
 const page = () => {
   return <Overview />

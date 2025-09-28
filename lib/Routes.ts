@@ -7,5 +7,8 @@ export const ROUTES = {
     earnings: '/earnings',
     appointment: '/appointment',
     patients: '/patients',
-    doctors: '/doctors'
+    doctors: '/doctors',
+    login: '/auth/login',
+    forgotPassword: '/auth/forgot-password',
+    
 }
