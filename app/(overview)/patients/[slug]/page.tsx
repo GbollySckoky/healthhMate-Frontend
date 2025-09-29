@@ -4,18 +4,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Appointments from './Appointments'
 import Image from 'next/image'
 import image from '@/assets/Image.png'
-import { Trash2, ChevronRight  } from 'lucide-react'
+import { Trash2  } from 'lucide-react'
 import Overview from './Overview'
+import DetailsNav from '@/components/ui/DetailsNav'
 
 const Page = () => {
 
   return (
     <PageWrapper >
-        <div className="flex items-center space-x-1 border-b border-borderColor pb-3 pl-5 text-[12px] text-[#717680]">
-            <p>Patients</p>
-            <ChevronRight size={15} />
-            <p className='text-red-800'>Patient Details</p>
-        </div>
+        <DetailsNav text='Patients' detailsText='Patient Details'/>
         <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
             <div className="mb-3 flex items-center justify-between border-b pb-6 border-borderColor">
                 <div className="flex items-center">
