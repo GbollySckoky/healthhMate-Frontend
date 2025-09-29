@@ -27,9 +27,9 @@ const Paginate = () => {
       <PaginationItem>
         <PaginationLink href="#" >3</PaginationLink>
       </PaginationItem>
-      <PaginationItem>
+      {/* <PaginationItem>
         <PaginationEllipsis />
-      </PaginationItem>
+      </PaginationItem> */}
       <PaginationItem>
         <PaginationNext href="#" />
       </PaginationItem>

@@ -16,7 +16,7 @@ const SideBar = () => {
   return (
     <div className="bg-red-900 lg:w-[260px] w-64 h-screen overflow-y-auto text-white z-30 fixed ">
       <div className="mx-2">
-        <div className="flex items-center mt-3">
+        <div className="flex items-center mt-3 pl-3">
           <Image src={image} alt="Logo" width={120} className="" priority />
         </div>
 
@@ -29,9 +29,9 @@ const SideBar = () => {
                   href={url}
                   className={`flex items-center gap-3 no-underline ${
                     activeUrl === url
-                      ? 'bg-red-100 font-medium text-grey-900 rounded-lg mb-3 '
+                      ? 'bg-red-100 font-medium text-grey-900 rounded-lg my-3 '
                       : 'text-white'
-                  } p-4 hover:bg-red-100 hover:text-grey-900 rounded-lg transition-colors duration-200 cursor-pointer`}
+                  } p-4 hover:bg-red-100 hover:text-grey-900 rounded-lg transition-colors duration-200  cursor-pointer`}
                   onClick={() => handleActiveUrl(url)}
                 >
                   <span className="flex-shrink-0">{icon}</span>

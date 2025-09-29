@@ -1,9 +1,11 @@
+import DetailsNav from '@/components/ui/DetailsNav'
 import { Card, Infos, NoteCard, PageWrapper, StatusInfo } from '@/components/ui/Reusable'
 import React from 'react'
 
 const Page = () => {
   return (
     <PageWrapper>
+        <DetailsNav text='Appointments' detailsText='Appointment Details'/>
         <Card>
             <StatusInfo label='Status' value='Completed'/>
             <Infos label='Date & Time' value='2025-08-09 at 10:00 AM'/>

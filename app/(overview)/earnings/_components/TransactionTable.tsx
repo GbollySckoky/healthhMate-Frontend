@@ -17,6 +17,7 @@ import { useState } from "react"
 import useToggle from "@/hooks/useToggle"
 import Paginate from "@/components/ui/paginate"
 import image from "@/assets/Image.png"
+import { useRouter } from "next/navigation"
 
 // Mock data
 const invoices = [
@@ -70,6 +71,7 @@ export function TransactionTable() {
   const [inputValue, setInputValue] = useState<string>("")
   const [selectValue, setSelectValue] = useState("")
   const { isToggle, handleToggle } = useToggle()
+  const router = useRouter()
 
   const handleSelect = (option: string) => {
     setSelectValue((prev) => (prev === option ? "" : option))
@@ -87,7 +89,10 @@ export function TransactionTable() {
     },
   }
 
-  const { specialty, status } = data
+  const {  status } = data
+  const handleNext = () => {
+    router.push(`/earnings/1`)
+  }
 
   return (
     <div className="bg-white rounded-lg w-full border border-borderColor mt-10 ">
@@ -144,11 +149,13 @@ export function TransactionTable() {
               <TableCell className="font-inter text-[12px] text-grey-20">
                 {invoice.invoice}
               </TableCell>
-              <TableCell className="font-inter text-[14px] text-grey-30">
+              <TableCell className="font-inter text-[14px] text-grey-20">
                 {invoice.date}
+                <p className="text-[12px] font-normal">10:00AM</p>
               </TableCell>
               <TableCell className="font-inter text-[14px] text-grey-30">
                 {invoice.doctor}
+                <p className="text-red-800 text-[12px] font-normal">Dermatologist</p>
               </TableCell>
               <TableCell className="font-inter text-[14px] text-grey-30">
                 {invoice.patient}
@@ -168,7 +175,7 @@ export function TransactionTable() {
                   {invoice.paymentStatus}
                 </p>
               </TableCell>
-              <TableCell className="font-inter text-[14px] text-red-800 cursor-pointer">
+              <TableCell className="font-inter text-[14px] text-red-800 cursor-pointer" onClick={handleNext}>
                 View
               </TableCell>
             </TableRow>

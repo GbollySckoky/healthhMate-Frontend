@@ -22,52 +22,38 @@ import { useRouter } from 'next/navigation'
 
   const invoices = [
     {
-      invoice: "INV001",
+      invoice: "Dr. Phoenix Baker",
       paymentStatus: "Paid",
       totalAmount: "$250.00",
       paymentMethod: "Paid",
       image: image,
     },
     {
-      invoice: "INV002",
+      invoice: "Dr. Phoenix Baker",
       paymentStatus: "Pending",
       totalAmount: "$150.00",
       paymentMethod: "Failed",
       image: image,
     },
     {
-      invoice: "INV003",
+      invoice: "Dr. Phoenix",
       paymentStatus: "Unpaid",
       totalAmount: "$350.00",
       paymentMethod: "Pending",
       image: image,
     },
     {
-      invoice: "INV004",
+      invoice: "Dr.Baker",
       paymentStatus: "Paid",
       totalAmount: "$450.00",
       paymentMethod: "In Progress",
       image: image,
     },
     {
-      invoice: "INV005",
+      invoice: "Dr. Phoenix Baker",
       paymentStatus: "Paid",
       totalAmount: "$550.00",
       paymentMethod: "Open",
-      image: image,
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Closed",
-      image: image,
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Closed",
       image: image,
     },
   ]
@@ -161,11 +147,11 @@ import { useRouter } from 'next/navigation'
                             {invoice.invoice}
                         </div>
                     </TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentStatus}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
+                    <TableCell className="font-inter font-normal text-[13px] text-grey-20">General Practitioner</TableCell>
+                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">₦7,000</TableCell>
+                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">₦170,000</TableCell>
+                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">₦1,860</TableCell>
+                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">₦28,475</TableCell>
                     <TableCell > <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === paidStatus.PAID && 'text-green-800 bg-green-100' || invoice.paymentMethod === paidStatus.PENDING && 'text-grey-600 bg-[#F5F5F5]'|| invoice.paymentMethod === paidStatus.FAILED && 'text-red-10 bg-red-100'  }`}>{invoice.paymentMethod} </p></TableCell>
                     <TableCell className="font-inter font-medium text-[14px] text-red-800 cursor-pointer" onClick={handleNext}> View</TableCell>
                     </TableRow>

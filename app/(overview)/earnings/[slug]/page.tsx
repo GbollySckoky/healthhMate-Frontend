@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Card, CardText, CardTitle, Info, PageWrapper } from '@/components/ui/Reusable'
 import EarningsTable  from './EarningsTable'
 import { paidStatus } from '@/types/status'
+import DetailsNav from '@/components/ui/DetailsNav'
 
 
 const getStatusClasses = (status: string) => {
@@ -22,6 +23,7 @@ const getStatusClasses = (status: string) => {
 const SupportDetails = () => {
   return (
     <PageWrapper>
+        <DetailsNav text='Earnings & Transactions' detailsText='Earning & Transaction Details'/>
         <div className="flex justify-between border border-borderColor rounded-lg mb-5 bg-white p-5">
             <div className="flex items-center">
             <Image src={image} alt='Image' className="w-[80px] h-[80px] rounded-full" />

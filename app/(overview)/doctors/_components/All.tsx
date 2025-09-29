@@ -20,8 +20,9 @@ import Paginate from '@/components/ui/paginate'
 import { useRouter } from 'next/navigation'
 import Calendar from '@/components/calendar/Calendar'
 import { Trash2} from 'lucide-react';
-import { useModal } from '@/components/Modal/Modal'
 import DeleteModal from '../../settings/_components/DeleteModal'
+import AddNewDoctor from './AddNewDoctor'
+import { useFormModal } from '@/components/Modal/FormModal'
 
 
 // Types for better type safety
@@ -171,7 +172,7 @@ const All = () => {
             options: ['Cardiologist', 'Neurologist', 'Dermatologist', 'Orthopedic', 'Pediatrics']
         }
     }
-    const {openModal} = useModal()
+    const {openModal} = useFormModal()
 
     return (
         <div className="bg-white rounded-lg w-full border border-borderColor">
@@ -186,7 +187,15 @@ const All = () => {
                         <CloudUpload size={15} />
                         <p className='font-medium text-[14px] font-inter text-[#414651]'>Export</p>
                     </button>
-                    <Button >Add Doctor</Button>
+                    <Button  onClick={() =>
+                        openModal(<AddNewDoctor />, {
+                        title:
+                            'Add New Admin',
+                        className: 'max-w-lg',
+                        onClose: () => {},
+                        // confirmDelete() {},
+                        })
+                    }>Add Doctor</Button>
                 </div>
               
             </div>
