@@ -3,7 +3,7 @@ import AuthPassword from '@/components/Inputs/AuthPassword'
 import { STEP } from '@/lib/step'
 import React, { useState } from 'react'
 
-const NewPassword = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
+const NewPassword = ({handleNextStep}: {handleNextStep: () => void}) => {
     const [inputValue, setInputValue] = useState({
         password: '',
         confirmPassword: ''
@@ -20,7 +20,7 @@ const NewPassword = ({handleNextStep}: {handleNextStep: (value: number) => void}
     console.log(inputValue)
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleNextStep(STEP.THREE)
+        handleNextStep()
         setIsLoading(true);
    
         // try {

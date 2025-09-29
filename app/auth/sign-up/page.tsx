@@ -8,6 +8,7 @@ import GetStarted from './_components/GetStarted'
 import Success from '@/components/ui/Success'
 import {useRouter } from 'next/navigation'
 import Img from '@/components/ui/Image'
+import { ROUTES } from '@/lib/Routes'
 
 const Page = () => {
     const {step, handleNextStep} = useStep()
@@ -22,7 +23,7 @@ const Page = () => {
                 {step === STEP.THREE &&
                 <Success text="You're just a few steps away from setting up your complete hospital management system." 
                 title="Welcome to HealthMate" btnText="Get Started" 
-                onClick={() => router.push('')} /> }
+                onClick={() => router.push(ROUTES.setUpHospital)} /> }
                 </div>
                 <Img />
             </div>

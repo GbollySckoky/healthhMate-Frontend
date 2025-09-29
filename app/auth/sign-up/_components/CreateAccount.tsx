@@ -74,7 +74,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                     label='Work Email'
                     placeholder='admin@example.com'
                     value={inputValue.workEmail}
-                    name='email'
+                    name='workEmail'
                     onChange={handleChange}
                 />
                 <AuthNumber

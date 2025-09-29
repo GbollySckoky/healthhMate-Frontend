@@ -15,7 +15,7 @@ interface SelectFieldProps{
 
 const SelectField = ({ label, value, show, onClick, onSelect, options, title, className }: SelectFieldProps) => {
     return (
-      <div className="h-fit">
+      <div className="">
          <p className='mb-1 font-inter font-normal text-[#414651] text-[14px]'>{title}</p> 
         <div
           className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md p-[7px] ${className}`}
