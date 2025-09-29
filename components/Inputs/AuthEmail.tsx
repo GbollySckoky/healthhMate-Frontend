@@ -11,7 +11,7 @@ interface InputProps{
 }
 const AuthEmail = ({placeholder,value,onChange,className, label, name}: InputProps) => {
   return (
-    <div className='mb-2 block'>
+    <div className='mb-2 block w-full'>
         <label htmlFor={name} className={`font-medium text-[12px] font-inter text-[#414651] ${className} `}>{label}</label>
         <input 
             placeholder={placeholder}

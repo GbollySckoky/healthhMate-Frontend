@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Img from '@/components/ui/Image'
 import { ROUTES } from '@/lib/Routes'
 import { Login } from '@/types/login.schema'
-
+import { useRouter } from 'next/navigation'
 const Page = () => {
     const [inputValue, setInputValue] = useState<Login>({
         workEmail: '',
@@ -14,6 +14,7 @@ const Page = () => {
     })
     const [isLoading, setIsLoading] = useState(false)
     const [rememberMe, setRememberMe] = useState(false)
+    const router = useRouter()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -25,23 +26,24 @@ const Page = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        router.push(ROUTES.dashboard)
         setIsLoading(true);
         
-        try {
-            // Add your authentication logic here
-            console.log('Login attempt:', inputValue);
+        // try {
+        //     // Add your authentication logic here
+        //     console.log('Login attempt:', inputValue);
             
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
+        //     // Simulate API call
+        //     await new Promise(resolve => setTimeout(resolve, 1000));
             
-            // Handle successful login (redirect, etc.)
+        //     // Handle successful login (redirect, etc.)
             
-        } catch (error) {
-            console.error('Login error:', error);
-            // Handle login error
-        } finally {
-            setIsLoading(false);
-        }
+        // } catch (error) {
+        //     console.error('Login error:', error);
+        //     // Handle login error
+        // } finally {
+        //     setIsLoading(false);
+        // }
     };
 
     return (
@@ -64,7 +66,7 @@ const Page = () => {
                             label='Work Email'
                             placeholder='admin@example.com'
                             value={inputValue.workEmail}
-                            name='email'
+                            name='workEmail'
                             onChange={handleChange}
                         />
                         
@@ -104,8 +106,6 @@ const Page = () => {
                     </form>
                 </div>
             </div>
-
-            {/* Right side - Image (exactly as shown in Figma) */}
            <Img />
         </div>
     )

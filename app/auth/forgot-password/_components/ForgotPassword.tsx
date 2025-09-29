@@ -3,13 +3,13 @@ import AuthEmail from '@/components/Inputs/AuthEmail'
 import { STEP } from '@/lib/step'
 import React, { useState } from 'react'
 
-const ForgotPassword = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
+const ForgotPassword = ({handleNextStep}: {handleNextStep: () => void}) => {
     const [inputValue, setInputValue] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleNextStep(STEP.ONE)
+        handleNextStep()
         setIsLoading(true);
    
         // try {
