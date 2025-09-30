@@ -76,6 +76,7 @@ import { ChevronRight } from "lucide-react"
                 return ''
         }
     }
+    
     return (
         <Card>
             <DisplayFlex>
@@ -102,7 +103,7 @@ import { ChevronRight } from "lucide-react"
                         <p className="text-grey-20 text-[12px] font-normal">olivia@untitledui.com</p>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[13px] text-grey-30">
-                        Jul 2, 2025	
+                        <p>Jul 2, 2025</p> 	
                         <p className="text-grey-20 text-[12px]">10:00AM</p>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[12px] text-grey-20">{invoice.paymentMethod}</TableCell>

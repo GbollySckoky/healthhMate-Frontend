@@ -7,6 +7,7 @@ import { ArrowDown, ArrowUp } from "lucide-react"
 import RecentActivities from './RecentActivities';
 import UpcomingAppointment from './UpcomingAppointments';
 import { RecentConsultation } from './RecentConsultation';
+import Earnings from './Earnings';
 
 
 const Overview = () => {
@@ -26,26 +27,29 @@ const Overview = () => {
                 </div>
             </div>
         </div>
-        <Card>
-            <MediumTitle>Overview</MediumTitle>
-            <div className="grid grid-cols-4 gap-4 mt-3">
-                {overviewData.map((overview) => {
-                    const {id,  value,percent, about} = overview;
-                    return(
-                        <Card key={id}>
-                            <MediumText> {about} </MediumText>
-                            <div className="flex items-center justify-between mt-2">
-                                <Value>{value}</Value>
-                                <div className={`flex items-center ${percent > 0 ? 'text-[#05A505]' :'text-[#F04438]'}`}>
-                                    {percent > 0 ? <ArrowUp size={15}  /> : <ArrowDown size={15} />}
-                                    <p>{percent}%</p>
+        <div className='flex items-center h-full gap-5'>
+            <Card className='h-[170px]'>
+                <MediumTitle>Overview</MediumTitle>
+                <div className="grid grid-cols-4 gap-4 mt-3">
+                    {overviewData.map((overview) => {
+                        const {id,  value,percent, about} = overview;
+                        return(
+                            <Card key={id}>
+                                <MediumText> {about} </MediumText>
+                                <div className="flex items-center justify-between mt-2">
+                                    <Value>{value}</Value>
+                                    <div className={`flex items-center ${percent > 0 ? 'text-[#05A505]' :'text-[#F04438]'}`}>
+                                        {percent > 0 ? <ArrowUp size={15}  /> : <ArrowDown size={15} />}
+                                        <p>{percent}%</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </Card>
-                    )
-                })}
-            </div>
-        </Card>
+                            </Card>
+                        )
+                    })}
+                </div>
+            </Card>
+            <Earnings />
+        </div>
         <div className="my-7 flex items-center  gap-5 h-full">
             <UpcomingAppointment />
             <RecentActivities />

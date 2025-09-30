@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { Bell} from 'lucide-react';
-import logo from '../../assets/3d.png'
+import profile from '@/assets/Image.png'
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
@@ -24,12 +24,10 @@ const Header = () => {
                     <span className='bg-red-800  text-white text-xs rounded-full absolute -top-1 -right-2 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center'>4</span>
                 </div>
                 <div className="flex items-center gap-4 pl-3">
-                    <div className='bg-red-100 rounded-full p-2 cursor-pointer hover:bg-red-200 transition-colors'>
-                        <Image src={logo} alt="Logo" priority /> 
-                    </div>
+                        <Image src={profile} alt="Logo" priority width={35} className='rounded-full' /> 
                     <div>
-                        <p className='font-lato font-bold text-[14px]'>Ever Care General Hospital</p>
-                        <p className='font-medium text-[12px] text-red-800 font-lato'>Admin</p>
+                        <p className='font-lato font-bold text-[14px]'>Dr Uche Okoro</p>
+                        <p className='font-medium text-[12px] text-red-800 font-lato'>Dermatologist</p>
                     </div>
                 </div>
             </div>
