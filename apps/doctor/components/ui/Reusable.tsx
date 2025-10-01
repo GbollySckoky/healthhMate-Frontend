@@ -185,7 +185,7 @@ export const Info = ({label, amount}:{label:string, amount: string}) => {
 export const Infos = ({label, value}:{label:string, value: string}) => {
     return(
         <div className='flex items-center justify-between space-y-1'>
-            <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
+            <p className='text-grey-20 text-[16px] font-lato font-normal'>{label}</p>
             <p className='font-lato text-[18px] font-medium text-[#181D27]'>{value}</p>
         </div>
     )
