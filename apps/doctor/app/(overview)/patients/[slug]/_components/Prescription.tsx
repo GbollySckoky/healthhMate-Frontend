@@ -1,18 +1,14 @@
-import { MediumTitle } from '@/components/ui/Reusable'
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import { recentActivities } from '@/components/ui/data'
+import TextArea from '@/components/ui/TextArea'
 
 
-const RecentActivities = () => {
+const Prescription = () => {
+    const [inputValue, setInputValue] = useState('')
   return (
-    <div className="bg-white rounded-lg border border-gray-200 w-full h-[400px] flex flex-col">
-        <div className="sticky top-0 bg-white p-4 border-b border-gray-200 z-10">
-            <div className="flex items-center justify-between">
-                <MediumTitle>Recent Activity</MediumTitle>
-            </div>
-        </div>
-        {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto p-4 pt-0">
+    <div>
+        <div className="flex-1 overflow-y-auto p-4 pt-0 border border-borderColor mb-5">
             {recentActivities.map((recent,id) => {
                 const {title, info, time} = recent
                 return(
@@ -29,9 +25,17 @@ const RecentActivities = () => {
                 )
             })}
         </div>
-        
+        <TextArea 
+            placeholder='Issue a prescription'
+            label='Prescription'
+            value={inputValue}
+            onChange={(e:React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
+        />
+        <div className="flex justify-end mt-3">
+            <button className='bg-red-800 text-white font-medium rounded-lg px-5 py-2'>Add Prescription</button>
+        </div>
     </div>
   )
 }
 
-export default RecentActivities
+export default Prescription
