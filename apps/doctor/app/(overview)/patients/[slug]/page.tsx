@@ -19,8 +19,8 @@ const Page = () => {
                 <p className='font-normal text-[14px] text-grey-20 pt-[2px]'>olivia@untitledui.com</p>
             </div>
         </Card>
-        <Tabs defaultValue="overview" >
-            <TabsList  className="">
+        <Tabs defaultValue="overview"  className="mt-5 w-full">
+            <TabsList className='w-full mb-5'>
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="consultationNotes">Consultation notes</TabsTrigger>
                 <TabsTrigger value="prescription">Prescription</TabsTrigger>
