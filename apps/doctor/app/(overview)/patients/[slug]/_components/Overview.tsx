@@ -3,7 +3,7 @@ import React from 'react'
 
 const Overview = () => {
   return (
-    <div className='mt-5 border border-borderColor p-4 rounded-lg space-y-2'>
+    <div className=' border border-borderColor p-4 rounded-lg space-y-2'>
         <Infos label='Last Consultation ' value='05 Sept 2025'/>
         <Infos label='Type' value='Video'/>
         <Infos label='Primary Health Concern' value='Hypertension'/>
