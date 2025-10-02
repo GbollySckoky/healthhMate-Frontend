@@ -1,7 +1,7 @@
 export const ROUTES = {
     dashboard: '/',
     support: '/support',
-    report: '/report',
+    message: '/messages',
     settings: '/settings',
     profile: '/profile',
     earnings: '/earnings',

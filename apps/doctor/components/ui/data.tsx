@@ -32,13 +32,13 @@ export const sideBarData = [
         id: 5,
         icon: <HouseWifi size={18} />,
         text: 'Messages',
-        url: ROUTES.report
+        url: ROUTES.message
     },
     {
         id: 6,
         icon: <Activity size={18} />,
         text: 'Availability',
-        url: ROUTES.report
+        url: ROUTES.login
     },
     {
         id: 7,
@@ -207,5 +207,14 @@ export const transactionData = [
         about: 'Refunds Issued',
         value: '07',
         percent: 10,
+    }
+]
+
+export const messages = [
+    {
+        name: 'Sharon Johnson',
+        text: 'I would definitely shoot any opportunities I ....',
+        time: '12.30',
+        count: '2'
     }
 ]
