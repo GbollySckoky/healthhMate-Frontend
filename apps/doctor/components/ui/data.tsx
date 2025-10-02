@@ -1,4 +1,4 @@
-import { House, Wallet, Activity, CalendarDays, HouseWifi, User, Headset, Settings } from 'lucide-react';
+import { House, Wallet, CalendarDays, MessageSquareMore, User, Headset, Settings,CircleUserRound, Clock9 } from 'lucide-react';
 import { ROUTES } from '@/lib/routes';
 import image from '@/assets/Image.png'
 import image1 from '@/assets/Image (1).png'
@@ -30,19 +30,19 @@ export const sideBarData = [
     },
     {
         id: 5,
-        icon: <HouseWifi size={18} />,
+        icon: <MessageSquareMore size={18} />,
         text: 'Messages',
         url: ROUTES.message
     },
     {
         id: 6,
-        icon: <Activity size={18} />,
+        icon: <Clock9 size={18} />,
         text: 'Availability',
         url: ROUTES.login
     },
     {
         id: 7,
-        icon: <Activity size={18} />,
+        icon: <CircleUserRound size={18} />,
         text: 'Profile',
         url: ROUTES.profile
     },
