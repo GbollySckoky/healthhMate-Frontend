@@ -23,7 +23,7 @@ const SideBar = () => {
         <div className="flex flex-col justify-between h-[75vh] mt-3">
           {/* First 7 links */}
           <div>
-            {sideBarData.slice(0, 8).map(({ id, icon, text, url }) => (
+            {sideBarData.slice(0, 7).map(({ id, icon, text, url }) => (
               <div key={id}>
                 <Link
                   href={url}
@@ -43,7 +43,7 @@ const SideBar = () => {
 
           {/* Last 2 links */}
           <div>
-            {sideBarData.slice(8, 10).map(({ id, icon, text, url }) => (
+            {sideBarData.slice(7, 9).map(({ id, icon, text, url }) => (
               <div key={id}>
                 <Link
                   href={url}

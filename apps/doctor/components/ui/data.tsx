@@ -12,54 +12,48 @@ export const sideBarData = [
     },
     {
         id: 2,
-        icon: <House size={18} />,
-        text: 'Doctors',
-        url: ROUTES.doctors
-    },
-    {
-        id: 3,
         icon: <User size={18}  />,
         text: 'Patients',
         url: ROUTES.patients
     },
     {
-        id: 4,
+        id: 3,
         icon: <CalendarDays size={18} />,
         text: 'Appointments',
         url: ROUTES.appointment
     },
     {
-        id: 5,
+        id: 4,
         icon: <Wallet size={18} />,
         text: 'Earnings & Transactions',
         url: ROUTES.earnings
     },
     {
-        id: 6,
+        id: 5,
         icon: <HouseWifi size={18} />,
         text: 'Messages',
         url: ROUTES.branches
     },
     {
-        id: 7,
+        id: 6,
         icon: <Activity size={18} />,
         text: 'Availability',
         url: ROUTES.report
     },
     {
-        id: 8,
+        id: 7,
         icon: <Activity size={18} />,
         text: 'Profile',
         url: ROUTES.report
     },
     {
-        id: 9,
+        id: 8,
         icon: <Headset size={18} />,
         text: 'Support',
         url: ROUTES.support
     },
     {
-        id: 10,
+        id: 9,
         icon: <Settings size={18} />,
         text: 'Settings',
         url: ROUTES.settings
@@ -160,4 +154,58 @@ export const upcomingConsultation =[
         img: image,
         patient: 'Janet N.'
     },
+]
+
+export const earningData = [
+    {
+        id: 2,
+        about: 'Total Earnings',
+        value: '₦170,000',
+        percent: 12,
+    },
+    {
+        id: 1,
+        about: 'Earnings this Month',
+        value: '₦70,000',
+        percent: 12,
+    },
+    {
+        id: 3,
+        about: 'Pending Payouts',
+        value: '₦780,000',
+        percent: -14,
+    },
+    {
+        id: 4,
+        about: 'Completed Payouts',
+        value: '₦670,000',
+        percent: 10,
+    }
+]
+
+export const transactionData = [
+    {
+        id: 1,
+        about: 'Total Transactions',
+        value: '142',
+        percent: 12,
+    },
+    {
+        id: 2,
+        about: 'Pending Transactions ',
+        value: '22',
+        percent: 12,
+    },
+    {
+        id: 3,
+        about: 'Failed Transactions',
+        value: '10',
+        percent: -14,
+    },
+    {
+        id: 4,
+        about: 'Refunds Issued',
+        value: '07',
+        percent: 10,
+    }
 ]
