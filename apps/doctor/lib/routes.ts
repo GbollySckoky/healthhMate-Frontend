@@ -3,7 +3,7 @@ export const ROUTES = {
     support: '/support',
     report: '/report',
     settings: '/settings',
-    branches: '/branches',
+    profile: '/profile',
     earnings: '/earnings',
     appointment: '/appointment',
     patients: '/patients',

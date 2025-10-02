@@ -32,7 +32,7 @@ export const sideBarData = [
         id: 5,
         icon: <HouseWifi size={18} />,
         text: 'Messages',
-        url: ROUTES.branches
+        url: ROUTES.report
     },
     {
         id: 6,
@@ -44,7 +44,7 @@ export const sideBarData = [
         id: 7,
         icon: <Activity size={18} />,
         text: 'Profile',
-        url: ROUTES.report
+        url: ROUTES.profile
     },
     {
         id: 8,
