@@ -139,7 +139,7 @@ const AllAppointmentTable = () => {
     }
 
     const handleAppointmentClick = (appointmentId: string) => {
-        router.push(`/appointment/${appointmentId}`)
+        router.push(`/appointments/${appointmentId}`)
     }
 
     // Get status styling
@@ -171,7 +171,7 @@ const AllAppointmentTable = () => {
         <div className="bg-white rounded-lg w-full border border-borderColor">
             {/* Header */}
             <div className='border-b border-borderColor100 p-4 flex items-center justify-between'>
-                <TableTitle>All Appointments</TableTitle>
+                <TableTitle>Allss Appointments</TableTitle>
             </div>
 
             {/* Filters */}
@@ -218,7 +218,6 @@ const AllAppointmentTable = () => {
                             <TableRow 
                                 key={appointment.id}
                                 className="cursor-pointer hover:bg-gray-50"
-                                onClick={() => handleAppointmentClick(appointment.id)}
                             >
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                                     <div>
@@ -240,7 +239,7 @@ const AllAppointmentTable = () => {
                                         {appointment.status}
                                     </span>
                                 </TableCell>
-                                <TableCell className="font-inter font-normal text-[12px] text-red-800">
+                                <TableCell className="font-inter font-normal text-[12px] text-red-800" onClick={() => handleAppointmentClick(appointment.id)}>
                                     View Details
                                 </TableCell>
                             </TableRow>
