@@ -152,3 +152,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.img{
+  background-image: url('../../healthmate-admin/assets/lovely.png');
+  height: 100vh;
+}
