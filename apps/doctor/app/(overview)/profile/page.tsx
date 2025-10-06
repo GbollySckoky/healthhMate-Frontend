@@ -18,11 +18,11 @@ const Page = () => {
             <div className="mb-3  border-b pb-6 border-borderColor">
                 <div className="flex h-fit items-center justify-between">
                     <div className="flex items-center">
-                    <Image src={image} alt='Image' className="w-[50px] h-[50px] rounded-full" />
-                    <div className='ml-2'>
-                        <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr Uche Abiodun</p>
-                        <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
-                    </div>
+                      <Image src={image} alt='Image' className="w-[50px] h-[50px] rounded-full" />
+                      <div className='ml-2'>
+                          <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr Uche Abiodun</p>
+                          <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
+                      </div>
                     </div>
                     <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
                     onClick={() =>

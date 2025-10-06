@@ -5,7 +5,7 @@ export const ROUTES = {
     settings: '/settings',
     profile: '/profile',
     earnings: '/earnings',
-    appointment: '/appointment',
+    appointment: '/appointments',
     patients: '/patients',
     login: '/auth/login',
     forgotPassword: '/auth/forgot-password',
