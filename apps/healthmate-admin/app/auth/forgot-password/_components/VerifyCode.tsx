@@ -44,7 +44,7 @@ const VerifyCode = ({handleNextStep}: {handleNextStep: () => void}) => {
           Verify Reset Code
         </h1>
         <p className="text-sm text-[#645D5D] font-normal font-lato">
-          Enter the 6-digit code we sent to your phone/email.
+          Enter the 6-digit code we sent to your email.
         </p>
       </div>
 

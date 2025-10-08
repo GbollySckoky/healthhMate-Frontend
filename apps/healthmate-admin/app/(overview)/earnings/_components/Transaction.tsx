@@ -1,8 +1,7 @@
-import { earningData, transactionData } from '@/components/data';
-import { Card, MediumText, MediumTitle, Value } from '@/components/ui/Reusable';
+import { transactionData } from '@/components/data';
+import { Card, MediumText, Value } from '@/components/ui/Reusable';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
-import { EarningsTable } from './EarningsTable';
 import { TransactionTable } from './TransactionTable';
 
 
