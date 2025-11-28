@@ -1,5 +1,8 @@
+// 'use client'
 import type { Metadata } from "next";
 import "./globals.css";
+import { ToastContainer} from 'react-toastify';
+import { Providers } from "@/lib/constant/Providers";
 
 export const metadata: Metadata = {
   title: "Healthmate Hospital App",
@@ -11,10 +14,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="font-sans bg-[#FAFAFA]">
+      <Providers>
         {children}
+        <ToastContainer />
+      </Providers>
       </body>
     </html>
   );
