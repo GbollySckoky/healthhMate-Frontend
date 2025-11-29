@@ -1,11 +1,14 @@
 "use client"
-import react, {useState} from 'react'
+import {useState} from 'react'
 import AuthEmail from '@/components/Inputs/AuthEmail'
 import AuthPassword from '@/components/Inputs/AuthPassword'
 import AuthInput from '@/components/Inputs/AuthInput'
 import AuthNumber from '@/components/Inputs/AuthNumber'
 import { STEP } from '@/lib/step'
 import { Signup } from '@/types/signup.schema'
+import { useMutation } from '@tanstack/react-query'
+import { Hospital_Admin } from '@/lib/constant/service'
+import { Signup as SIGN_UP } from '@/lib/interface/signup-interface'
 
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
     const [inputValue, setInputValue] = useState<Signup>({
@@ -16,8 +19,20 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
         confirmPassword: '',
 
     })
-    const [isLoading, setIsLoading] = useState(false)
 
+    const mutation = useMutation({
+        mutationFn: (payload: SIGN_UP) => Hospital_Admin.signup(payload),
+        onSuccess: (response) => {
+            console.log(response.data.access)
+            localStorage.setItem('authToken', response.data.access);
+            handleNextStep(STEP.TWO)
+          // Handle success
+        },
+        onError: (error: any) => {
+            console.log(error)
+          // Handle error
+        }
+    })
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -29,28 +44,21 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleNextStep(STEP.TWO)
-        setIsLoading(true);
         
-        try {
-            // Add your authentication logic here
-            console.log('Login attempt:', inputValue);
-            
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // Handle successful login (redirect, etc.)
-            
-        } catch (error) {
-            console.error('Login error:', error);
-            // Handle login error
-        } finally {
-            setIsLoading(false);
+        const data = {
+            email: inputValue.workEmail ?? '',
+            full_name: inputValue.fullName ?? '',
+            phone_number: Number(inputValue.phoneNumber) ?? 0,
+            password1: inputValue.password ?? '',
+            password2: inputValue.confirmPassword ?? ''
         }
+        await mutation.mutate(data)
     };
 
-    const disabled = isLoading || !inputValue.workEmail || !inputValue.password ||
+    const disabled = mutation.isPending || !inputValue.workEmail || !inputValue.password ||
     !inputValue.confirmPassword || !inputValue.fullName || !inputValue.phoneNumber
+
+    
     return(
         <div className=' w-full max-w-md'>
             <div className='mb-6'>
@@ -61,7 +69,6 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                     Join our platform to manage your doctors digitally
                 </p>
             </div>
-
             <form onSubmit={handleSubmit} className='space-y-4'>
                 <AuthInput
                     label='Full Name'
@@ -105,7 +112,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                     disabled={disabled}
                     className='w-full bg-pink-600  disabled:bg-[#F670C7] disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors duration-200 mt-6 font-inter'
                 >
-                    {isLoading ? 'Creating....' : 'Create Account'}
+                    {mutation.isPending ? 'Creating....' : 'Create Account'}
                 </button>
             </form>
         </div>

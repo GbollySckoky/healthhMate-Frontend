@@ -16,7 +16,6 @@ export default function OverviewLayout({
               <div>{children}</div>
             </div>
         </Provider>
-        
       </div>
   );
 }

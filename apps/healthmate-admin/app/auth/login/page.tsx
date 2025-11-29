@@ -7,6 +7,11 @@ import Img from '@/components/ui/Image'
 import { ROUTES } from '@/lib/Routes'
 import { Login } from '@/types/login.schema'
 import { useRouter } from 'next/navigation'
+import { useMutation } from '@tanstack/react-query'
+import { Hospital_Admin } from '@/lib/constant/service'
+import { LogIn } from '@/lib/interface/login.interface'
+
+
 const Page = () => {
     const [inputValue, setInputValue] = useState<Login>({
         workEmail: '',
@@ -24,27 +29,30 @@ const Page = () => {
         }));
     };
 
+    const mutation = useMutation({
+        mutationFn: (payload: LogIn) => Hospital_Admin.login(payload),
+        onSuccess: (response) => {
+            console.log(response)
+            router.push(ROUTES.dashboard)
+          // Handle success
+        },
+        onError: (error: any) => {
+            console.log(error)
+          // Handle error
+        }
+    })
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        router.push(ROUTES.dashboard)
-        setIsLoading(true);
         
-        // try {
-        //     // Add your authentication logic here
-        //     console.log('Login attempt:', inputValue);
-            
-        //     // Simulate API call
-        //     await new Promise(resolve => setTimeout(resolve, 1000));
-            
-        //     // Handle successful login (redirect, etc.)
-            
-        // } catch (error) {
-        //     console.error('Login error:', error);
-        //     // Handle login error
-        // } finally {
-        //     setIsLoading(false);
-        // }
+        const data = {
+            email: inputValue.workEmail ?? '',
+            password: inputValue.password ?? ''
+        }
+        await mutation.mutate(data)
+        
     };
+
 
     return (
         <div className='min-h-screen flex flex-col lg:flex-row bg-white'>
@@ -98,10 +106,10 @@ const Page = () => {
                         {/* Login button - pink background */}
                         <button 
                             type='submit'
-                            disabled={isLoading || !inputValue.workEmail || !inputValue.password}
+                            disabled={mutation.isPending || !inputValue.workEmail || !inputValue.password}
                             className='w-full bg-pink-600  disabled:bg-[#F670C7] disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors duration-200 mt-6 font-inter'
                         >
-                            {isLoading ? 'Signing In...' : 'Log in'}
+                            {mutation.isPending ? 'Login In...' : 'Log in'}
                         </button>
                     </form>
                 </div>

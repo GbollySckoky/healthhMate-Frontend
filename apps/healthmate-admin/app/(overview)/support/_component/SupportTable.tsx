@@ -12,16 +12,7 @@ import image from '@/assets/Image.png'
 import Image from "next/image";
 import { MinTexts } from "@/components/ui/Reusable";
 import { Status } from "@/types/status";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
-
+import Paginate from "@/components/ui/paginate";
   const invoices = [
     {
       invoice: "INV001",
@@ -118,30 +109,7 @@ import {
               ))}
             </TableBody>
         </Table>
-        <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" isActive>
-              2
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" >3</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-        </Pagination>
+        <Paginate />
     </div>
     )
   }
