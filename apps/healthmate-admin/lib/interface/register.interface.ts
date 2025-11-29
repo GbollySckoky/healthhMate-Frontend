@@ -9,6 +9,6 @@ export interface Register {
     branch_name: string
     branch_address: string
     branch_city_state: string
-    branch_phone_number: string
+    branch_phone_number: number
   }
   

@@ -19,12 +19,12 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
         confirmPassword: '',
 
     })
-    const [isLoading, setIsLoading] = useState(false)
 
     const mutation = useMutation({
         mutationFn: (payload: SIGN_UP) => Hospital_Admin.signup(payload),
         onSuccess: (response) => {
-            console.log(response)
+            console.log(response.data.access)
+            localStorage.setItem('authToken', response.data.access);
             handleNextStep(STEP.TWO)
           // Handle success
         },
@@ -44,7 +44,6 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsLoading(true);
         
         const data = {
             email: inputValue.workEmail ?? '',
@@ -56,8 +55,10 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
         await mutation.mutate(data)
     };
 
-    const disabled = isLoading || !inputValue.workEmail || !inputValue.password ||
+    const disabled = mutation.isPending || !inputValue.workEmail || !inputValue.password ||
     !inputValue.confirmPassword || !inputValue.fullName || !inputValue.phoneNumber
+
+    
     return(
         <div className=' w-full max-w-md'>
             <div className='mb-6'>
@@ -68,7 +69,6 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                     Join our platform to manage your doctors digitally
                 </p>
             </div>
-
             <form onSubmit={handleSubmit} className='space-y-4'>
                 <AuthInput
                     label='Full Name'
