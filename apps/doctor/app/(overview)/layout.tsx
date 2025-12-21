@@ -7,9 +7,11 @@ export default function OverviewLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
       <div className=" flex">
         <Provider>
+
           <Sidebar />
             <div className="flex-1  md:ml-[250px] ml-0">
               <Header />
