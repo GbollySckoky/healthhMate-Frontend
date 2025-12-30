@@ -1,6 +1,6 @@
 import Sidebar from "@/components/ui/Sidebar";
 import Header from "@/components/ui/Header";
-import Provider from "@/components/provider/Provider";
+// import Provider from "@/components/provider/Provider";
 
 export default function OverviewLayout({
   children,
@@ -10,14 +10,13 @@ export default function OverviewLayout({
 
   return (
       <div className=" flex">
-        <Provider>
-
+        {/* <Provider> */}
           <Sidebar />
-            <div className="flex-1  md:ml-[250px] ml-0">
+            <div className="flex-1 md:ml-[250px] ml-0">
               <Header />
               <div>{children}</div>
             </div>
-        </Provider>
+        {/* </Provider> */}
       </div>
   );
 }

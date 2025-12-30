@@ -1,5 +1,6 @@
+"use client"
 import React from 'react'
-import { Card, DisplayFlex, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '@/components/ui/Reusable'
+import { Card, MediumText, MediumTitle, SmallText, SmallTitle, Text, Title, Value } from '@/components/ui/Reusable'
 import { PageWrapper } from '../../../components/ui/Reusable'
 import {  CalendarDays } from 'lucide-react';
 import { overviewData } from '@/components/ui/data';

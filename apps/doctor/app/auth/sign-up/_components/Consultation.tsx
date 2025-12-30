@@ -1,105 +1,151 @@
 "use client"
-import  {useState} from 'react'
+import { useState, useEffect } from 'react'
 import { STEP } from '@/lib/step'
 import { ArrowLeft } from 'lucide-react'
 import AuthNumber from '@/components/ui/AuthNumber'
+import { useDoctorForm } from '@/lib/DoctorFormContext'
 
+const Consultation = ({handleNextStep, handlePreviousStep, isEditing = false}: 
+    {
+        handleNextStep: (value: number) => void, 
+        handlePreviousStep: () => void,
+        isEditing?: boolean
+    }) => {
+    const {
+        doctorFormData, 
+        updateDoctorData, 
+        updateAvailableDays, 
+        updateAvailableTime,
+        toggleAvailableDay,
+        toggleAvailableTime
+    } = useDoctorForm() 
 
-const Consultation = ({handleNextStep, handlePreviousStep}: 
-    {handleNextStep: (value: number) => void, handlePreviousStep: () => void}) => {
-    const [inputValue, setInputValue] = useState({
-        fee:'',
-        types: [],
-    })
-    const [isLoading, setIsLoading] = useState(false)
-
-
-    const handleChange = (e: any) => {
-        const { name, value } = e.target;
-        setInputValue((prev) => ({
-          ...prev,
-          [name]: value
-        }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        handleNextStep(STEP.TWO)
-        setIsLoading(true);
-        
-        try {
-            // Add your authentication logic here
-            console.log('Login attempt:', inputValue);
-            
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // Handle successful login (redirect, etc.)
-            
-        } catch (error) {
-            console.error('Login error:', error);
-            // Handle login error
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const disabled = isLoading || !inputValue.fee 
+    console.log(doctorFormData)
+    
+    const disabled = !doctorFormData.signup.fee 
     
     const availableDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
     const timeSlots = ['8:00am','9:00am','10:00am','11:00am','12:00pm','1:00pm','2:00pm','3:00pm','4:00pm','5:00pm']
-    const consultationType = ['Video', 'Audio', 'In Person']
 
     return(
-        <div className=' w-full max-w-md'>
-          <div className="flex items-center space-x-2 mb-4">
-            <span onClick={handlePreviousStep} className='cursor-pointer'> <ArrowLeft size={15} /> </span>
-            <p className='text-[11px] font-normal text-[#535862]'>Back</p>
-          </div>
-            <h1 className='font-semibold text-2xl sm:text-2xl text-[#1B1818] mb-3 font-lato'>Consultation Setup</h1>
-            <form onSubmit={handleSubmit} className='space-y-4'>
+        <div className='w-full max-w-md'>
+            <div className="flex items-center space-x-2 mb-4">
+                <span onClick={handlePreviousStep} className='cursor-pointer'>
+                    <ArrowLeft size={15} />
+                </span>
+                <p className='text-[11px] font-normal text-[#535862]'>Back</p>
+            </div>
+            
+            <h1 className='font-semibold text-2xl sm:text-2xl text-[#1B1818] mb-3 font-lato'>
+              Consultation Setup
+            </h1>
+            
+            <form className='space-y-4'>
                 <AuthNumber
                     label='Consultation Fee'
                     placeholder='15,000'
-                    value={inputValue.fee}
+                    value={doctorFormData.signup.fee ? String(doctorFormData.signup.fee) : ""}
                     name='fee'
-                    onChange={handleChange}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({fee: e.target.value})}
                 />
+                
                 <div>
-                    <p className='text-[#414651] font-inter font-medium text-[12px] mb-2'>Consultation Types</p>
-                        {consultationType.map((type, index) => (
-                            <div className="flex" key={index}>
-                                <input type="checkbox" />
-                                <p className='text-[14px] text-grey-50 cursor-pointer bg-red-50 rounded-lg p-2 w-fit font-normal'>{type}</p>
-                            </div>
-                        ))}
+                    <p className='text-[#414651] font-inter font-medium text-[12px] mb-2'>
+                        Consultation Types
+                    </p>
+
+                    <label 
+                        className="flex items-center gap-2 cursor-pointer text-sm"
+                    >
+                        <input 
+                            type="checkbox"
+                            checked={doctorFormData.signup.inPerson ? Boolean(doctorFormData.signup.inPerson) : false}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({inPerson: e.target.checked})}
+                            className="w-4 h-4 cursor-pointer"
+                        />
+                        In Person
+                    </label>
+                    <label 
+                        className="flex items-center gap-2 cursor-pointer text-sm"
+                    >
+                        <input 
+                            type="checkbox"
+                            checked={doctorFormData.signup.audio ? Boolean(doctorFormData.signup.audio) : false}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({audio: e.target.checked})}
+                            className="w-4 h-4 cursor-pointer"
+                        />
+                        Audio
+                    </label>
+                    <label  
+                        className="flex items-center gap-2 cursor-pointer text-sm"
+                    >
+                        <input 
+                            type="checkbox"
+                            checked={doctorFormData.signup.video ? Boolean(doctorFormData.signup.video) : false}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({video: e.target.checked})}
+                            className="w-4 h-4 cursor-pointer"
+                        />
+                        Video
+                    </label>
                 </div>
+                
                 <div>
-                    <p className='text-[#414651] font-inter font-medium text-[12px] mb-2'>Availability Days</p>
-                    <div className="flex gap-3 ">
+                    <p className='text-[#414651] font-inter font-medium text-[12px] mb-2'>
+                        Availability Days
+                    </p>
+                    <div className="flex gap-3">
                         {availableDays.map((day, index) => (
-                            <p className='text-[14px] text-grey-50 cursor-pointer bg-red-50 rounded-lg p-2 w-fit font-normal' key={index}>{day}</p>
+                            <p 
+                                key={index}
+                                onClick={() => toggleAvailableDay(day)}
+                                className={`text-[14px] cursor-pointer rounded-lg p-2 w-fit font-normal transition-colors ${
+                                    doctorFormData.availableDays.includes(day)
+                                        ? 'bg-pink-600 text-white'
+                                        : 'bg-red-50 text-grey-50'
+                                }`}
+                            >
+                                {day}
+                            </p>
                         ))}
                     </div>
                 </div>
+                
                 <div className='pb-4'>
-                    <p className='text-[#414651] font-inter font-medium text-[12px] mb-2'>Time Slots</p>
-                    <div className="grid grid-cols-5 gap-3 ">
+                    <p className='text-[#414651] font-inter font-medium text-[12px] mb-2'>
+                        Time Slots
+                    </p>
+                    <div className="grid grid-cols-5 gap-3">
                         {timeSlots.map((slot, index) => (
-                            <p className='text-[14px] text-grey-50 cursor-pointer bg-red-50 rounded-lg p-2 w-fit font-normal' key={index}>{slot}</p>
+                            <p 
+                                key={index}
+                                onClick={() => toggleAvailableTime(slot)}
+                                className={`text-[14px] cursor-pointer rounded-lg p-2 w-fit font-normal transition-colors ${
+                                    doctorFormData.availableTime.includes(slot)
+                                        ? 'bg-pink-600 text-white'
+                                        : 'bg-red-50 text-grey-50'
+                                }`}
+                            >
+                                {slot}
+                            </p>
                         ))}
                     </div>
                 </div>
 
-                {/* Login button - pink background */}
                 <button 
-                    type='submit'
+                    type='button'
                     disabled={disabled}
-                    className='w-full bg-pink-600  disabled:bg-[#F670C7] disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors duration-200 mt-8 font-inter'
+                    onClick={() => handleNextStep(STEP.FOUR)}
+                    className='w-full bg-pink-600 disabled:bg-[#F670C7] disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors duration-200 mt-8 font-inter'
                 >
-                    {isLoading ? 'Creating....' : ' Next'}
+                   Next
                 </button>
-                <p  className='font-inter text-[14px] font-semibold text-center cursor-pointer mt-4 text-[#535862]'>Skip for now </p>
+                
+                <p 
+                    onClick={() => handleNextStep(STEP.FOUR)}
+                    className='font-inter text-[14px] font-semibold text-center cursor-pointer mt-4 text-[#535862]'
+                >
+                    Skip for now
+                </p>
             </form>
         </div>
     )

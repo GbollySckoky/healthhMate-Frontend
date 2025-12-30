@@ -3,7 +3,7 @@ import React from 'react'
 
 interface InputProps{
     placeholder: string;
-    value: string;
+    value: string | number;
     onChange: (e: any) => void;
     className?: string
     label: string 
