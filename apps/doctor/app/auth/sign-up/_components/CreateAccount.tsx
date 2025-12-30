@@ -1,81 +1,46 @@
 "use client"
-import  {useState} from 'react'
+
 import AuthEmail from '@/components/ui/AuthEmail'
 import AuthPassword from '@/components/ui/AuthPassword'
 import AuthInput from '@/components/ui/AuthInput'
 import AuthNumber from '@/components/ui/AuthNumber'
 import { STEP } from '@/lib/step'
-import { Signup } from '@/interface/signup.schema'
+import { useDoctorForm } from '@/lib/DoctorFormContext'
 
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
-    const [inputValue, setInputValue] = useState<Signup>({
-        fullName:'',
-        workEmail: '',
-        phoneNumber:'',
-        password: '',
-        confirmPassword: '',
-        dob: '',
-        gender: ''
-    })
-    const [isLoading, setIsLoading] = useState(false)
+    const {updateDoctorData, doctorFormData} = useDoctorForm()
 
-
-    const handleChange = (e: any) => {
-        const { name, value } = e.target;
-        setInputValue((prev) => ({
-          ...prev,
-          [name]: value
-        }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        handleNextStep(STEP.TWO)
-        setIsLoading(true);
-        
-        try {
-            // Add your authentication logic here
-            console.log('Login attempt:', inputValue);
-            
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // Handle successful login (redirect, etc.)
-            
-        } catch (error) {
-            console.error('Login error:', error);
-            // Handle login error
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const disabled = isLoading || !inputValue.workEmail || !inputValue.password || !inputValue.dob
-    !inputValue.confirmPassword || !inputValue.fullName || !inputValue.phoneNumber || !inputValue.gender
+    const disabled =  !doctorFormData.signup.fullName || !doctorFormData.signup.workEmail || !doctorFormData.signup.gender
+    !doctorFormData.signup.dob || !doctorFormData.signup.phoneNumber || !doctorFormData.signup.password || !doctorFormData.signup.confirmPassword
     
     return(
         <div className=' w-full max-w-md'>
             <h1 className='font-semibold text-2xl sm:text-2xl text-[#1B1818] mb-3 font-lato'>Personal Details</h1>
-            <form onSubmit={handleSubmit} className='space-y-4'>
+            <form className='space-y-4'>
                 <AuthInput
                     label='Full Name'
                     placeholder='Enter your name'
-                    value={inputValue.fullName}
+                    value={doctorFormData.signup.fullName ? String(doctorFormData.signup.fullName) : ''}
                     name='fullName'
-                    onChange={handleChange}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({fullName: e.target.value})}
                 />
                 <AuthEmail
                     label='Work Email'
                     placeholder='admin@example.com'
-                    value={inputValue.workEmail}
+                    value={doctorFormData.signup.workEmail ? String(doctorFormData.signup.workEmail) : ""}
                     name='workEmail'
-                    onChange={handleChange}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({workEmail: e.target.value})}
                 />
                 <div className='w-full'>
                     <p className={`font-medium text-[12px] font-inter text-[#414651] `}>Gender</p>
-                    <select name="gender" id="gender" value={inputValue.gender} onChange={handleChange}  className={`outline-none border border-borderColor100 rounded-md p-[7px] text-[12px] w-full mt-1`} >
+                    <select 
+                        name="gender" 
+                        id="gender" 
+                        value={doctorFormData.signup.gender ? String(doctorFormData.signup.gender) : ""} 
+                        onChange={(e: any) => updateDoctorData({gender: e.target.value})}
+                        className={`outline-none border border-borderColor100 rounded-md p-[7px] text-[12px] w-full mt-1`} >
                         <option value="Male">Male</option>
-                        <option value="FeMale">FeMale</option>
+                        <option value="Female">Female</option>
                     </select>
                 </div>
                 <div className="flex flex-col">
@@ -83,39 +48,41 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                     <input 
                         type="date"
                         className={`outline-none border border-borderColor100 rounded-md p-[7px] text-[12px] w-full mt-1`} 
-                        value={inputValue.dob}
+                        value={doctorFormData.signup.dob ? String(doctorFormData.signup.dob) : ''}
                         name='dob'
-                        onChange={handleChange} />
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({dob: e.target.value})}
+                        />
                 </div>
                 <AuthNumber
                     label='Phone Number (optional)'
                     placeholder='+234907833'
-                    value={inputValue.phoneNumber}
+                    value={doctorFormData.signup.phoneNumber ? String(doctorFormData.signup.phoneNumber) : ""}
                     name='phoneNumber'
-                    onChange={handleChange}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({phoneNumber: e.target.value})}
                 />
                 <AuthPassword
                     label='Password'
                     placeholder='hswj****'
-                    value={inputValue.password}
+                    value={doctorFormData.signup.password ? String(doctorFormData.signup.password) : ""}
                     name='password'
-                    onChange={handleChange}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({password: e.target.value})}
                 />
                 <AuthPassword
                     label='Confirm Password'
                     placeholder='hswj****'
-                    value={inputValue.confirmPassword}
+                    value={doctorFormData.signup.confirmPassword ?  String(doctorFormData.signup.confirmPassword) : ""}
                     name='confirmPassword'
-                    onChange={handleChange}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateDoctorData({confirmPassword: e.target.value})}
                 />
 
                 {/* Login button - pink background */}
                 <button 
-                    type='submit'
-                    disabled={disabled}
+                    type='button'
+                    // disabled={!disabled}
                     className='w-full bg-pink-600  disabled:bg-[#F670C7] disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors duration-200 mt-6 font-inter'
+                    onClick={() =>  handleNextStep(STEP.TWO)}
                 >
-                    {isLoading ? 'Creating....' : ' Next'}
+                    Next
                 </button>
             </form>
         </div>

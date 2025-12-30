@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import Provider from "@/components/provider/Provider";
+import { ToastContainer } from 'react-toastify'
 
 export const metadata: Metadata = {
   title: "Healthmate Doctor App",
@@ -13,10 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <Provider>
       <body className={`font-inter`}>
         {children}
+        <ToastContainer />
       </body>
+      </Provider>
     </html>
   );
 }

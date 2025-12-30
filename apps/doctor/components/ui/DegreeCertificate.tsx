@@ -2,7 +2,7 @@
 import { useDoctorForm } from "@/lib/DoctorFormContext";
 import React, { useState } from "react";
 
-const UploadLogo = () => {
+const DegreeCertificate = () => {
   const [preview, setPreview] = useState("");
   const { updateDoctorData } = useDoctorForm();
 
@@ -11,7 +11,7 @@ const UploadLogo = () => {
     if (!selected) return;
 
     // Save image file in context
-    updateDoctorData({ license: selected });
+    updateDoctorData({ degree_certificate: selected });
 
     // Preview the file
     setPreview(URL.createObjectURL(selected));
@@ -32,4 +32,4 @@ const UploadLogo = () => {
   );
 };
 
-export default UploadLogo;
+export default DegreeCertificate;
