@@ -3,18 +3,12 @@ import AuthNumber from '@/components/Inputs/AuthNumber'
 import AuthEmail from '@/components/Inputs/AuthEmail'
 import AuthInput from '@/components/Inputs/AuthInput'
 import { useHospitalForm } from '@/lib/context/HospitalContextForm'
-import { useMutation } from '@tanstack/react-query'
-import { Register } from '@/lib/interface/register.interface'
-import { Hospital_Admin } from '@/lib/constant/service'
 import Image from './Image'
 
 
 
 const Hospital = ({handleNextStep}: {handleNextStep: () => void}) => {
   const {hospitalFormData, updateHospitalData} = useHospitalForm()
-  console.log(hospitalFormData)
-  
- 
 
   return (
     <div>

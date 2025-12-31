@@ -18,6 +18,14 @@ export const Doctor = {
         const response = await ClientHttps().get(DOCTOR_ENDPOINTS.GET_APPOINTMENT); 
         return await response.data
     },
+    getPayout: async () => {
+        const response = await ClientHttps().get(DOCTOR_ENDPOINTS.GET_PAYMENT); 
+        return await response.data
+    },
+    getEarnings: async () => {
+        const response = await ClientHttps().get(DOCTOR_ENDPOINTS.GET_EARNINGS_SUMMARY); 
+        return await response.data
+    },
     // registerAccount: async (payload: Register) => {
     //     return await adminAPI.post(DOCTOR_ENDPOINTS.REGISTER, payload); 
     // }

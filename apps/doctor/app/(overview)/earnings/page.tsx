@@ -1,12 +1,21 @@
+"use client"
 import { PageWrapper,} from '@/components/ui/Reusable'
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Earnings from './_components/Earnings';
 import { TransactionsPage } from './_components/Transactions';
+import { useQuery } from '@tanstack/react-query';
+import { Doctor } from '@/lib/constant/service';
 
 
 
 const EarningsPage = () => {
+  const {data, isLoading, error, isError} = useQuery({
+    queryKey: ['getPayout'],
+    queryFn: () => Doctor.getPayout()
+  })
+
+  console.log(data)
   return (
     <PageWrapper>
          <Tabs defaultValue="earnings">

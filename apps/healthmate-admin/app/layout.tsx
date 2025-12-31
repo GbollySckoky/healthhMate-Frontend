@@ -17,7 +17,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-sans bg-[#FAFAFA]">
+      <body className="font-sans bg-[#bbb7b7]">
       <Providers>
         {children}
         <ToastContainer />
