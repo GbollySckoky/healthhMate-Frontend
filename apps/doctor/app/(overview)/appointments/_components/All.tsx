@@ -171,7 +171,7 @@ const AllAppointmentTable = () => {
         <div className="bg-white rounded-lg w-full border border-borderColor">
             {/* Header */}
             <div className='border-b border-borderColor100 p-4 flex items-center justify-between'>
-                <TableTitle>Allss Appointments</TableTitle>
+                <TableTitle>All Appointments</TableTitle>
             </div>
 
             {/* Filters */}
