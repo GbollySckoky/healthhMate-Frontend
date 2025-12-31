@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PageWrapper } from '@/components/ui/Reusable'
@@ -5,9 +6,17 @@ import AllAppointmentTable from './_components/All'
 import CompletedTable from './_components/Completed'
 import PendingTable from './_components/PendingTable'
 import CancelledTable from './_components/CancelledTable'
+import { useQuery } from '@tanstack/react-query'
+import { Doctor } from '@/lib/constant/service'
 
 
 const Page = () => {
+  const {data, isLoading, error, isError} = useQuery({
+    queryKey: ['getAppointment'],
+    queryFn: () => Doctor.getAppointment()
+  })
+
+  console.log(data)
   return (
     <PageWrapper>
         <Tabs defaultValue="allAppointment" >

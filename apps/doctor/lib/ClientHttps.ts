@@ -1,16 +1,16 @@
-import React from 'react'
 import axios from 'axios'
+import { storageService } from './storage';
 
 const ClientHttps = () => {
   const api = axios.create({
-    baseURL: process.env.BASE_URL,
+    baseURL: "https://healthteam.onrender.com/api",
     headers:{
       'Content-Type': 'application/json'
     }
   })
 
   api.interceptors.request.use(config => {
-    const authToken = localStorage.getItem('authToken');
+    const authToken = storageService.getAuthToken()
     if (authToken) {
       config.headers.Authorization = `Bearer ${authToken}`;
     }

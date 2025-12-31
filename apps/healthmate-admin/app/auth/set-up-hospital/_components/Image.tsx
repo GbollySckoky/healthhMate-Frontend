@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const Image = () => {
   const [preview, setPreview] = useState("");
-  const { hospitalFormData, updateHospitalData } = useHospitalForm();
+  const { updateHospitalData } = useHospitalForm();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];

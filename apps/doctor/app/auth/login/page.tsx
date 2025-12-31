@@ -8,13 +8,15 @@ import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/lib/routes'
 import Img from '@/components/ui/Image'
 import MinHeader from '@/components/ui/MinHeader'
+import { useMutation } from '@tanstack/react-query'
+import { Doctor } from '@/lib/constant/service'
+import { storageService } from '@/lib/storage'
 
 const Page = () => {
     const [inputValue, setInputValue] = useState<Login>({
         workEmail: '',
         password: ''
     })
-    const [isLoading, setIsLoading] = useState(false)
     const [rememberMe, setRememberMe] = useState(false)
     const router = useRouter()
 
@@ -26,26 +28,30 @@ const Page = () => {
         }));
     };
 
+    const mutation = useMutation({
+        mutationFn: (payload: any) => Doctor.login(payload),
+        onSuccess: (response) => {
+            console.log(response.data)
+            storageService.setAuthToken(response.data.access)
+            // handleNextStep()
+          // Handle success
+          router.push(ROUTES.dashboard)
+        },
+        onError: (error: any) => {
+            console.log(error.response)
+          // Handle error
+        }
+    })
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        router.push(ROUTES.dashboard)
-        setIsLoading(true);
         
-        // try {
-        //     // Add your authentication logic here
-        //     console.log('Login attempt:', inputValue);
-            
-        //     // Simulate API call
-        //     await new Promise(resolve => setTimeout(resolve, 1000));
-            
-        //     // Handle successful login (redirect, etc.)
-            
-        // } catch (error) {
-        //     console.error('Login error:', error);
-        //     // Handle login error
-        // } finally {
-        //     setIsLoading(false);
-        // }
+       const credentials = {
+        email: inputValue.workEmail,
+        password: inputValue.password
+       }
+
+       await mutation.mutate(credentials)
     };
 
     return (
@@ -100,10 +106,10 @@ const Page = () => {
                         {/* Login button - pink background */}
                         <button 
                             type='submit'
-                            disabled={isLoading || !inputValue.workEmail || !inputValue.password}
+                            disabled={mutation.isPending || !inputValue.workEmail || !inputValue.password}
                             className='w-full bg-pink-600  disabled:bg-[#F670C7] disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors duration-200 mt-6 font-inter'
                         >
-                            {isLoading ? 'Login In...' : 'Log in'}
+                            {mutation.isPending ? 'Processing..' : 'Log in'}
                         </button>
                     </form>
                 </div>
