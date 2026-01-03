@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { storageService } from './storage';
+import { ROUTES } from './routes';
 
 const ClientHttps = () => {
   const api = axios.create({
@@ -22,8 +23,9 @@ const ClientHttps = () => {
     error => {
       const status = error.response ? error.response.status : null;
       
-      if (status === 401) {
+      if (status === 401 || !storageService.isAuthenticated()) {
         // Handle unauthorized access
+         window.location.href = ROUTES.login
       } else if (status === 404) {
         // Handle not found errors
       } else {
