@@ -11,12 +11,12 @@ import { Doctor } from '@/lib/constant/service'
 
 
 const Page = () => {
-  const {data, isLoading, error, isError} = useQuery({
-    queryKey: ['getAppointment'],
-    queryFn: () => Doctor.getAppointment()
-  })
+  // const {data, isLoading, error, isError} = useQuery({
+  //   queryKey: ['getAppointment'],
+  //   queryFn: () => Doctor.getAppointment()
+  // })
 
-  console.log(data)
+  // console.log(data)
   return (
     <PageWrapper>
         <Tabs defaultValue="allAppointment" >
