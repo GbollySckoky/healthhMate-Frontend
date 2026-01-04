@@ -17,6 +17,8 @@ const Page = () => {
   })
 
   console.log(data)
+  console.log(isLoading)
+  console.log(error)
   return (
     <PageWrapper>
         <Tabs defaultValue="allAppointment" >
