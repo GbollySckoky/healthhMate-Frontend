@@ -17,7 +17,6 @@ const Page = () => {
   })
 
   console.log(data)
-  console.log(isLoading)
   console.log(error)
   return (
     <PageWrapper>

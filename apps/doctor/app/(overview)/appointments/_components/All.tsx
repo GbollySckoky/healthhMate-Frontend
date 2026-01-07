@@ -17,6 +17,10 @@ import { useRouter } from 'next/navigation'
 import Input from '@/components/ui/Input'
 import Calendar from '@/components/ui/Calendar'
 import MinSelectField from '@/components/ui/MinSelectField'
+import { Doctor } from '@/lib/constant/service'
+import { useQuery } from '@tanstack/react-query'
+import { GetAllAppointment } from '@/interface/get-all-appointment'
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
 // Types for better type safety
 interface Appointment {
@@ -110,6 +114,12 @@ const AllAppointmentTable = () => {
     const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
     const router = useRouter()
 
+    const {data, isLoading, error, isError} = useQuery({
+        queryKey: ['getAppointment'],
+        queryFn: () => Doctor.getAppointment()
+      })
+    
+      console.log(data)
     // Filter data based on search and filters
     const filteredAppointments = appointments.filter((appointment) => {
         const matchesSearch = 
@@ -138,18 +148,18 @@ const AllAppointmentTable = () => {
         console.log('Exporting data...', filteredAppointments)
     }
 
-    const handleAppointmentClick = (appointmentId: string) => {
+    const handleAppointmentClick = (appointmentId: number) => {
         router.push(`/appointments/${appointmentId}`)
     }
 
     // Get status styling
     const getStatusStyle = (status: string) => {
         switch (status) {
-            case 'Completed':
+            case 'completed':
                 return 'text-green-700 bg-green-100'
-            case 'Pending':
+            case 'upcoming':
                 return 'text-gray-700 bg-gray-100'
-            case 'Cancelled':
+            case 'cancelled':
                 return 'text-red-700 bg-red-100'
             default:
                 return ''
@@ -207,46 +217,53 @@ const AllAppointmentTable = () => {
                     <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
                         <TableHead>Patient</TableHead>
                         <TableHead>Date & Time</TableHead>
-                        <TableHead>Type</TableHead>
+                        <TableHead>Consultation Type</TableHead>
                         <TableHead>Status</TableHead>
-                        <TableHead>Type</TableHead>
+                        <TableHead>Health Concern</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {filteredAppointments.length > 0 ? (
-                        filteredAppointments.map((appointment) => (
+                    {isLoading ? (
+                         <TableRow>
+                         <TableCell colSpan={6} className="text-center py-8 text-red-800">
+                             <LoadingSpinner />
+                         </TableCell>
+                     </TableRow>
+                    ) : data?.results?.length > 0 ? (
+                        data?.results.map((appointment: GetAllAppointment) => (
                             <TableRow 
                                 key={appointment.id}
                                 className="cursor-pointer hover:bg-gray-50"
+                                onClick={() => handleAppointmentClick(appointment.id)}
                             >
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                                     <div>
-                                        <p className="font-medium text-[12px]">{appointment.patientName}</p>
-                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.patientEmail}</p>
+                                        <p className="font-medium text-[12px]">{appointment.patient || "N/A"}</p>
+                                        <p className="font-inter font-normal text-[12px] text-grey-20">{"N/A"}</p>
                                     </div>
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-grey-30">
                                     <div>
-                                        <p className="font-medium text-[12px]">{appointment.date}</p> 
-                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.time}</p>
+                                        <p className="font-medium text-[12px]">{appointment.appointment_date || "N/A"}</p> 
+                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.appointment_time || "N/A"}</p>
                                     </div>
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                                    Video Call
+                                   {appointment.consultation_type || "N/A"}
                                 </TableCell>
                                 <TableCell>
                                     <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(appointment.status)}`}>
                                         {appointment.status}
                                     </span>
                                 </TableCell>
-                                <TableCell className="font-inter font-normal text-[12px] text-red-800" onClick={() => handleAppointmentClick(appointment.id)}>
-                                    View Details
+                                <TableCell className="font-inter font-normal text-[12px]">
+                                   {appointment.health_concerns || "N/A"}
                                 </TableCell>
                             </TableRow>
                         ))
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                            <TableCell colSpan={6} className="text-center py-8 text-red-800">
                                 No appointments found matching your criteria
                             </TableCell>
                         </TableRow>
