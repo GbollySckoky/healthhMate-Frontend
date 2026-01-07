@@ -25,7 +25,7 @@ const ClientHttps = () => {
       
       if (status === 401 || !storageService.isAuthenticated()) {
         // Handle unauthorized access
-         window.location.href = ROUTES.login
+        //  window.location.href = ROUTES.login
       } else if (status === 404) {
         // Handle not found errors
       } else {
