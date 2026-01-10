@@ -14,7 +14,7 @@ interface SelectFieldProps{
 
 const MinSelectField = ({ label, value, show, onClick, onSelect, options,  className }: SelectFieldProps) => {
     return (
-      <div className="">
+      <div className="relative bg-slate-600">
         <div
           className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md p-[6px] px-2 ${className}`}
           onClick={onClick}
@@ -26,12 +26,12 @@ const MinSelectField = ({ label, value, show, onClick, onSelect, options,  class
         </div>
   
         {show && (
-          <div className="border border-borderColor100 rounded-md mt-2">
+          <div className="border border-borderColor100 rounded-md mt-2 absolute z-50 bg-red-800 w-full">
             {options.map((option, index) => (
               <div
                 key={index}
                 onClick={() => onSelect(option)}
-                className="px-3 py-1 text-sm text-grey-800 hover:bg-gray-100 cursor-pointer"
+                className="px-3 py-1 text-sm font-normal text-grey-800 hover:bg-gray-100 cursor-pointer text-nowrap"
               >
                 {option}
               </div>

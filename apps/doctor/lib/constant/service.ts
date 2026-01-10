@@ -1,3 +1,4 @@
+import { string } from "zod";
 import ClientHttps from "../ClientHttps";
 import admin from "../admin";
 // import adminAPI from "../admin";
@@ -14,8 +15,14 @@ export const Doctor = {
     login: async (payload: LOGIN) => {
         return await ClientHttps().post(DOCTOR_ENDPOINTS.LOGIN, payload); 
     },
-    getAppointment: async () => {
-        const response = await ClientHttps().get(DOCTOR_ENDPOINTS.GET_APPOINTMENT); 
+    getAppointment: async (status?: string,consultation_type?: string, patient_name?: string, patient_email?: string) => {
+        const params = new URLSearchParams({
+        })
+        if(status) params.append("status", status)
+        if(consultation_type) params.append("consultation_type", consultation_type)
+        if(patient_name) params.append("patient_name", patient_name)
+        if(patient_email) params.append("patient_email", patient_email)
+        const response = await ClientHttps().get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT}?${params}`); 
         return await response.data
     },
     getPayout: async () => {
