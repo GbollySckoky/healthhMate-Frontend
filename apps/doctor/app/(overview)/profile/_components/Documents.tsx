@@ -5,7 +5,7 @@ import certificate from "@/assets/lovely.png"
 import Image from 'next/image';
 
 
-const Documents = () => {
+const Documents = ({doctor_documents}:{doctor_documents: any}) => {
     const datas = [
         {
             title: 'Medical License.pdf',

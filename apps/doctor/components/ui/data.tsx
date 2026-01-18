@@ -38,7 +38,7 @@ export const sideBarData = [
         id: 6,
         icon: <Clock9 size={18} />,
         text: 'Availability',
-        url: ROUTES.login
+        url: ROUTES.availability
     },
     {
         id: 7,

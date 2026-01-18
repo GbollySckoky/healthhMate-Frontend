@@ -9,9 +9,20 @@ import Documents from './_components/Documents'
 import { PencilLine } from 'lucide-react'
 import { useFormModal } from '@/components/modal/FormModal'
 import EditProfile from './_components/EditProfile'
+import { useQuery } from '@tanstack/react-query'
+import { Doctor } from '@/lib/constant/service'
+import { DoctorProfile } from '@/interface/profile-interface'
 
 const Page = () => {
     const {openModal} = useFormModal()
+    const {data, isLoading} = useQuery({
+      queryKey: ['getProfile'],
+      queryFn: () => Doctor.getProfile()
+    })
+    console.log('Data',data)
+    const doctorProfile = data as DoctorProfile
+    console.log("do000",doctorProfile)
+
   return (
     <PageWrapper >
         <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
@@ -20,7 +31,7 @@ const Page = () => {
                     <div className="flex items-center">
                       <Image src={image} alt='Image' className="w-[50px] h-[50px] rounded-full" />
                       <div className='ml-2'>
-                          <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr Uche Abiodun</p>
+                          <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr {doctorProfile?.full_name || 'N/A'}</p>
                           <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
                       </div>
                     </div>
@@ -40,7 +51,7 @@ const Page = () => {
                 </div>
                 <div className='mt-3'>
                     <p className='font-semibold font-libre text-[14px] text-[#414651] pb-[2px]'>About me</p>
-                    <p className='font-inter font-normal text-[14px] text-[#717680]'>I am a General Practitioner with over 8years experience. I help patients manage chronic migraines and sleep issues with comprehensive care approaches.</p>
+                    <p className='font-inter font-normal text-[14px] text-[#717680]'>{doctorProfile?.bio || 'N/A'}</p>
                 </div>
             </div>
             
@@ -49,8 +60,8 @@ const Page = () => {
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="documents">Documents</TabsTrigger>
                 </TabsList>
-                <TabsContent value="overview"><Overview /> </TabsContent>
-                <TabsContent value="documents"> <Documents /> </TabsContent>
+                <TabsContent value="overview"><Overview data={data} isLoading={isLoading} /> </TabsContent>
+                <TabsContent value="documents"> <Documents doctor_documents={data?.doctor_documents}/> </TabsContent>
             </Tabs>
         </div>
     </PageWrapper>
