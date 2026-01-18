@@ -21,7 +21,6 @@ const Page = () => {
     })
     console.log('Data',data)
     const doctorProfile = data as DoctorProfile
-    console.log("do000",doctorProfile)
 
   return (
     <PageWrapper >

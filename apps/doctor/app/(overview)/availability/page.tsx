@@ -6,7 +6,6 @@ import "react-day-picker/style.css";
 import { ChevronRight, ChevronLeft } from 'lucide-react'
 import { cn } from '@/lib/utils';
 
-
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 const page = ({
     className,
@@ -16,7 +15,7 @@ const page = ({
   }: CalendarProps) => {
     const [selected, setSelected] = useState<Date>();
   return (
-    <PageWrapper className='bg-slate-950 w-full'>
+    <PageWrapper className='bg-slate-950 '>
     <DayPicker
         navLayout="around"
         showOutsideDays={showOutsideDays}
@@ -27,7 +26,7 @@ const page = ({
     //     selected ? `Selected: ${selected.toLocaleDateString()}` : "Pick a day."
     //   }
       classNames={{
-        root: "w-full h-full m-0 p-0 bg-red-800",
+        root: "w-full h-full m-0 p-0 bg-red-800 max-w-none",
         month: "relative w-full flex flex-col m-0 p-0",
 
         chevron: "size-5 hover:text-foreground cursor-pointer",
