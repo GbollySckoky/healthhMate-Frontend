@@ -1,11 +1,45 @@
+'use client'
 import { Infos, PageWrapper } from '@/components/ui/Reusable'
 import React from 'react'
 import Image from 'next/image'
 import image from '@/assets/Image.png'
+import { useQuery } from '@tanstack/react-query'
+import { Doctor } from '@/lib/constant/service'
+import { useParams } from 'next/navigation'
+import { AppointmentDetail } from '@/interface/appointmentDetails-interface'
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
 
 
 const Page = () => {
+  const params = useParams();
+  const slug = params.slug as string;
+  const { data, isLoading, error, isError } = useQuery({
+    queryKey: ['getAppointmentDetail', slug],
+    queryFn: () => Doctor.getAppointmentDetail(slug as string),
+    enabled: !!slug,
+  });
+  
+  console.log('Data',data)
+
+  const appointmentDetails = data?.[0] as AppointmentDetail
+  console.log('appointmentDetails', appointmentDetails)
+
+  if(isLoading){
+    return(
+      <div className='w-full h-full flex items-center justify-center'>
+        <LoadingSpinner />
+      </div>
+    )
+  }
+
+  if(isError){
+    return(
+      <div className='w-full h-full flex items-center justify-center text-sm font-medium text-red-800'>
+      {/* {error} */}
+    </div>
+    )
+  }
   return (
     <PageWrapper>
       <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
@@ -13,21 +47,21 @@ const Page = () => {
             <div className="flex items-center">
               <Image src={image} alt='Image' className="w-[60px] h-[60px] rounded-full" />
               <div className='ml-2'>
-                  <p className='font-medium font-libre text-[20px] text-[#211F1F]'>Janet Okeke</p>
+                  <p className='font-medium font-libre text-[20px] text-[#211F1F]'>{appointmentDetails?.patient}</p>
                   <p className='text-[14px] font-inter text-grey-20  py-1'>34 y/o — Female</p>
                   <p className='text-[14px] font-inter text-grey-20  py-1'>olivia@untitledui.com</p>
               </div>
             </div>
-            <p className='text-[#414651] bg-[#f5f5f5] font-medium font-inter text-[14px] rounded-full px-5 py-1 h-fit '>Pending</p>
+            <p className='text-[#414651] bg-[#f5f5f5] font-medium font-inter text-[14px] rounded-full px-5 py-1 h-fit '>{appointmentDetails?.status.toLocaleUpperCase() || "N/A"}</p>
         </div>
       </div>
       {/* Type */}
       <div className='mt-5 border border-borderColor p-4 rounded-lg'>
-          <Infos label='Type' value='Female'/>
-          <Infos label='Date' value='Aug 2, 1985'/>
-          <Infos label='Time:' value='Lekki,Lagos'/>
+          <Infos label='Type' value={appointmentDetails?.consultation_type.replaceAll("-", " ").toLocaleUpperCase()}/>
+          <Infos label='Date' value={appointmentDetails?.appointment_date}/>
+          <Infos label='Time:' value={appointmentDetails?.appointment_time}/>
       </div>
-      <Info label='Health Concern' value='I am have been having pains on my lower abdomen for weeks now, i have taken medications prescribed by a Pharmacist but it has gotten worser. when i try to urinate i feel a sharp pain.' />
+      <Info label='Health Concern' value={appointmentDetails?.health_concerns || "N/A"} />
       <Info label='Consultation Notes' value='Possible Pelvic inflammation. Perform a Abdomino-Pelvic scan to check for any infection,' />
       <Info label='Prescription' value='None' />
       <div className="flex justify-between items-center mt-7">

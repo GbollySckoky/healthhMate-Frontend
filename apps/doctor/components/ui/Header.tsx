@@ -11,7 +11,7 @@ const Header = () => {
     const Title = pathname === ROUTES.dashboard && 'Dashboard' || pathname === ROUTES.patients && 'Patients' || 
     pathname === ROUTES.appointment && 'Appointments' || pathname === ROUTES.earnings && 'Earnings & Transactions' || 
     pathname === ROUTES.profile && 'Profile' || pathname === ROUTES.support && 'Support' || 
-    pathname === ROUTES.settings && 'Settings'  || pathname === ROUTES.message && 'Messages'
+    pathname === ROUTES.settings && 'Settings'  || pathname === ROUTES.message && 'Messages' || pathname === ROUTES.availability && 'Availability' 
   return (
     <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-8 ml-[250px]'>
         <div className="flex items-center justify-between w-full">

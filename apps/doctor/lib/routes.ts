@@ -11,4 +11,5 @@ export const ROUTES = {
     forgotPassword: '/auth/forgot-password',
     signUp: '/auth/sign-up',
     setUpHospital: '/auth/set-up-hospital',
+    availability: '/availability'
 }

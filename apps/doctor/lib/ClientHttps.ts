@@ -4,7 +4,7 @@ import { ROUTES } from './routes';
 
 const ClientHttps = () => {
   const api = axios.create({
-    baseURL: "https://healthteam-1.onrender.com/api/",
+    baseURL: "https://healthteamapi.onrender.com/api/",
     headers:{
       'Content-Type': 'application/json'
     }
@@ -25,7 +25,7 @@ const ClientHttps = () => {
       
       if (status === 401 || !storageService.isAuthenticated()) {
         // Handle unauthorized access
-         window.location.href = ROUTES.login
+        //  window.location.href = ROUTES.login
       } else if (status === 404) {
         // Handle not found errors
       } else {
