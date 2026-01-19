@@ -17,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { GetAllAppointment } from '@/interface/get-all-appointment'
+import { GetAllAppointment } from '@/lib/interface/get-all-appointment'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { useRouter } from 'next/navigation'
 

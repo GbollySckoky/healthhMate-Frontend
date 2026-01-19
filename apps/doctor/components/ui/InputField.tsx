@@ -1,6 +1,4 @@
 import React, { ReactElement } from 'react'
-import { Search } from 'lucide-react';
-
 
 interface InputProps{
     placeholder: string;
@@ -8,7 +6,7 @@ interface InputProps{
     onChange: (e: any) => void;
     className?: string
     label: string 
-    name: string
+    name?: string
 }
 const InputField = ({placeholder,value,onChange,className, label, name}: InputProps) => {
   return (
@@ -18,7 +16,7 @@ const InputField = ({placeholder,value,onChange,className, label, name}: InputPr
             placeholder={placeholder}
             value={value}
             onChange={onChange}
-            className={`outline-none border border-borderColor100 rounded-md p-[7px] ${className} w-full mt-1`} 
+            className={`outline-none border border-borderColor100 rounded-md p-[7px] ${className} w-full mt-1 text-sm font-medium`} 
             name={name}
         />
     </div>
