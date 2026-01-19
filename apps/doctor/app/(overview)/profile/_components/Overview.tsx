@@ -1,6 +1,6 @@
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { Card, Infos } from '@/components/ui/Reusable'
-import { DoctorProfile } from '@/interface/profile-interface'
+import { DoctorProfile } from '@/lib/interface/profile-interface'
 import React from 'react'
 
 // interface DoctorOverview{

@@ -11,7 +11,7 @@ import { useFormModal } from '@/components/modal/FormModal'
 import EditProfile from './_components/EditProfile'
 import { useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
-import { DoctorProfile } from '@/interface/profile-interface'
+import { DoctorProfile } from '@/lib/interface/profile-interface'
 
 const Page = () => {
     const {openModal} = useFormModal()

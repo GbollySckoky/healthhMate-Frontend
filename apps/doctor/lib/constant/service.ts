@@ -6,6 +6,7 @@ import { LOGIN } from "../interface/login.interface";
 // import { Register } from "../interface/register.interface";
 import { SIGNUP } from "../interface/sign-up.interface";
 import { DOCTOR_ENDPOINTS } from "./endpoints";
+import { ApproveAppointment } from "../interface/approve-appointment.interface";
 
 
 export const Doctor = {
@@ -40,6 +41,9 @@ export const Doctor = {
     getAppointmentDetail: async(appointment_id: string) => {
         const response = await ClientHttps().get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/`);
         return response.data
+    },
+    approveAppointment: async(appointment_id: string, payload: ApproveAppointment) => {
+        return await ClientHttps().patch(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/update/`,payload)
     }
     // registerAccount: async (payload: Register) => {
     //     return await adminAPI.post(DOCTOR_ENDPOINTS.REGISTER, payload); 

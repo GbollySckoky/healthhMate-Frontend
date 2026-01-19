@@ -6,5 +6,6 @@ export const DOCTOR_ENDPOINTS = {
     GET_PAYMENT: 'doctor/earnings/payouts/',
     GET_EARNINGS_SUMMARY: "doctor/earnings/summary/",
     GET_PROFILE: 'doctor/profile',
-    GET_APPOINTMENT_DETAILS: 'doctor/appointments/'
+    GET_APPOINTMENT_DETAILS: 'doctor/appointments/',
+    APPROVE_APPOINTMENT: 'doctor/appointments/'
 }

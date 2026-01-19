@@ -19,7 +19,7 @@ import Calendar from '@/components/ui/Calendar'
 import MinSelectField from '@/components/ui/MinSelectField'
 import { Doctor } from '@/lib/constant/service'
 import { useQuery } from '@tanstack/react-query'
-import { GetAllAppointment } from '@/interface/get-all-appointment'
+import { GetAllAppointment } from '@/lib/interface/get-all-appointment'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
 // Types for better type safety
