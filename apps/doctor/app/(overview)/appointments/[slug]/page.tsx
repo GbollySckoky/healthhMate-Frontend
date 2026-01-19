@@ -112,6 +112,8 @@ type ApproveAppointmentVariables = {
   };
 };
 
+// true should be approved and false should be decline
+
 const ApproveAppointment = () => {
   const [inputValue, setInputValue] = useState<FormState>({});
   const [display, setDisplay] = useState({

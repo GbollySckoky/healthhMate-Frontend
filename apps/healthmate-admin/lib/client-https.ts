@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const Clienthttps = () => {
   const api = axios.create({
-    baseURL: 'https://healthteam-1.onrender.com/api/',
+    baseURL: 'https://healthteamapi.onrender.com/api/',
     headers:{
         'Content-Type': 'application/json'
     }
