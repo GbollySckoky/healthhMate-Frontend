@@ -5,7 +5,7 @@ import AuthPassword from '@/components/ui/AuthPassword'
 import AuthInput from '@/components/ui/AuthInput'
 import AuthNumber from '@/components/ui/AuthNumber'
 import { STEP } from '@/lib/step'
-import { useDoctorForm } from '@/lib/DoctorFormContext'
+import { useDoctorForm } from '@/lib/context/DoctorFormContext'
 
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
     const {updateDoctorData, doctorFormData} = useDoctorForm()

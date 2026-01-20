@@ -8,7 +8,7 @@ import Img from '@/components/ui/Image'
 import PersonalInformation from './_components/PersonalInformation'
 import Consultation from './_components/Consultation'
 import Verification from './_components/Verification'
-import { DoctorFormProvider } from '@/lib/DoctorFormContext'
+import { DoctorFormProvider } from '@/lib/context/DoctorFormContext'
 
 const Page = () => {
     const {step, handleNextStep, handlePreviousStep} = useStep()

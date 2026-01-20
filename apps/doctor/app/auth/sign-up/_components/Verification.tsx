@@ -2,7 +2,7 @@
 import { ArrowLeft } from 'lucide-react'
 import AuthNumber from '@/components/ui/AuthNumber'
 import UploadLogo from '@/components/ui/UploadLogo'
-import { useDoctorForm } from '@/lib/DoctorFormContext'
+import { useDoctorForm } from '@/lib/context/DoctorFormContext'
 import DegreeCertificate from '@/components/ui/DegreeCertificate'
 import BoardCertificate from '@/components/ui/BoardCertificate'
 import { Doctor } from '@/lib/constant/service'

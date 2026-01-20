@@ -6,7 +6,7 @@ import { PersonalInformation } from '@/interface/personalInfo.schema'
 import TextArea from '@/components/ui/TextArea'
 import { ArrowLeft } from 'lucide-react'
 import AuthNumber from '@/components/ui/AuthNumber'
-import { useDoctorForm } from '@/lib/DoctorFormContext'
+import { useDoctorForm } from '@/lib/context/DoctorFormContext'
 
 
 const PersonalInformation = ({handleNextStep, handlePreviousStep}: {handleNextStep: (value: number) => void, handlePreviousStep: () => void}) => {

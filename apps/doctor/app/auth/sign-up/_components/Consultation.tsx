@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { STEP } from '@/lib/step'
 import { ArrowLeft } from 'lucide-react'
 import AuthNumber from '@/components/ui/AuthNumber'
-import { useDoctorForm } from '@/lib/DoctorFormContext'
+import { useDoctorForm } from '@/lib/context/DoctorFormContext'
 
 const Consultation = ({handleNextStep, handlePreviousStep, isEditing = false}: 
     {
