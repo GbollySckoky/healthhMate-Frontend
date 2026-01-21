@@ -1,5 +1,5 @@
 
-import { useDoctorForm } from "@/lib/DoctorFormContext";
+import { useDoctorForm } from "@/lib/context/DoctorFormContext";
 import React, { useState } from "react";
 
 const BoardCertificate = () => {

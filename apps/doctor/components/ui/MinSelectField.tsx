@@ -14,7 +14,7 @@ interface SelectFieldProps{
 
 const MinSelectField = ({ label, value, show, onClick, onSelect, options,  className }: SelectFieldProps) => {
     return (
-      <div className="relative bg-slate-600">
+      <div className="relative ">
         <div
           className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md p-[6px] px-2 ${className}`}
           onClick={onClick}

@@ -20,6 +20,7 @@ import useToggle from "@/hooks/useToggle";
 import Paginate from '@/components/ui/Paginate'
 import { useRouter } from 'next/navigation'
 import { STATUS } from '@/types/status'
+import { useAppointment } from '@/lib/context/GetAppointmentContext'
 
 
 const invoices = [
@@ -79,27 +80,25 @@ const Patients = () => {
     const [selectValue, setSelectValue] = useState('')
     const {isToggle, handleToggle} = useToggle()
     const router = useRouter()
- 
+    const {data, isLoading} = useAppointment()
+    console.log(data)
     const handleSelect = (option: string) => {
         setSelectValue((prev) => (prev === option ? '' : option ))
         handleToggle
     }
 
-    const data = {
-        status:{
-            label: 'Status',
-            options: [
-                'Paid',
-                'Failed',
-                'Pending'
-            ]
-        },
+    const status = {
+        label: 'Status',
+        options: [
+            'Paid',
+            'Failed',
+            'Pending'
+        ]
     }
 
     const handleNext = () => {
       router.push(`/patients/1`)
     }
-    const {status } = data
 
     const getStatusStyle = (status: string) => {
         switch (status) {
