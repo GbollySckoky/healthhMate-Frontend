@@ -1,52 +1,68 @@
 "use client"
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { GetAllAppointment } from "../interface/get-all-appointment"
+import { createContext, useContext, useState } from "react";
+import { GetAllAppointment } from "../interface/get-all-appointment";
 import { useQuery } from "@tanstack/react-query";
 import { Doctor } from "../constant/service";
-import { activeStatus } from "@/types/status";
 
-interface GetAppointment {
-    data: GetAllAppointment[],
-    isLoading: boolean,
-    error: Error | null
+interface AppointmentFilters {
+    status?: string;
+    consultation_type?: string;
+    patient_name?: string;
+    patient_email?: string;
 }
 
-export const AppointmentContext = createContext<GetAppointment>({
-    data: [],
-    isLoading: false,
-    error: null
-});
+interface GetAppointment {
+    datas: GetAllAppointment[];
+    isLoading: boolean;
+    error: Error | null;
+    refetch: () => void;
+    filters: AppointmentFilters;
+    setFilters: (filters: AppointmentFilters) => void;
+}
+
+export const AppointmentContext = createContext<GetAppointment | undefined>(undefined);
 
 export const useAppointment = () => {
-    const context = useContext(AppointmentContext)
-    if(!context){
-      throw new Error("useAppointmentF must be used within a AppointmentProvider")
+    const context = useContext(AppointmentContext);
+    if (!context) {
+        throw new Error("useAppointment must be used within an AppointmentProvider");
     }
-    return context
-  }
-  
+    return context;
+}
 
-  // ApiContext.js (continued)
 export const AppointmentProvider = ({
     children,
-  }: {
+    initialFilters = {}
+}: {
     children: React.ReactNode;
-  }) => {
-    const [searchInput, setSearchInput] = useState<string>('')
-    
-    const {data, isLoading, error} = useQuery({
-        queryKey: ['getAppointment'],
-        queryFn: () => Doctor.getAppointment(
-            // activeStatus,
-        )
-    });
+    initialFilters?: AppointmentFilters;
+}) => {
+    const [filters, setFilters] = useState<AppointmentFilters>(initialFilters);
 
-    // Provide the state and loading status to children components
+    const { data, isLoading, error, refetch } = useQuery({
+        queryKey: ['getAppointment', filters],
+        queryFn: () => Doctor.getAppointment(
+            filters.status,
+            filters.consultation_type,
+            filters.patient_name,
+            filters.patient_email
+        ),
+        staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    });
+    
+    const datas = data?.results ?? [];
+
     return (
-      <AppointmentContext.Provider value={{ data, isLoading, error }}>
-        {children}
-      </AppointmentContext.Provider>
+        <AppointmentContext.Provider value={{ 
+            datas, 
+            isLoading, 
+            error: error as Error | null,
+            refetch,
+            filters,
+            setFilters
+        }}>
+            {children}
+        </AppointmentContext.Provider>
     );
-  };
-  
+};

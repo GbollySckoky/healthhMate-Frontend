@@ -90,8 +90,6 @@ const getStatusStyle = (status: string) => {
     )
   })
 
-  console.log("OMO!!", data)
-  console.log("Error",error)
 
   const renderTable = () => {
     return(
