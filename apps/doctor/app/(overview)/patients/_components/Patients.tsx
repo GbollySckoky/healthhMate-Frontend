@@ -21,6 +21,7 @@ import Paginate from '@/components/ui/Paginate'
 import { useRouter } from 'next/navigation'
 import { STATUS } from '@/types/status'
 import { useAppointment } from '@/lib/context/GetAppointmentContext'
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
 
 const invoices = [
@@ -80,8 +81,9 @@ const Patients = () => {
     const [selectValue, setSelectValue] = useState('')
     const {isToggle, handleToggle} = useToggle()
     const router = useRouter()
-    const {data, isLoading} = useAppointment()
-    console.log(data)
+    const {datas, isLoading} = useAppointment()
+    console.log('20203', datas)
+
     const handleSelect = (option: string) => {
         setSelectValue((prev) => (prev === option ? '' : option ))
         handleToggle
@@ -145,21 +147,30 @@ const Patients = () => {
                         <TableHead></TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody>
-                {invoices.map((invoice) => (
-                    <TableRow  key={invoice.invoice}>
+                <TableBody className='cursor-pointer'>
+                {isLoading ? (
+                  <TableRow>
+                  <TableCell colSpan={6} className="text-center py-8 text-red-800">
+                      <LoadingSpinner />
+                  </TableCell>
+              </TableRow>
+              ) : datas?.length > 0 && 
+                  datas?.map((data) => (
+                    <TableRow  key={data.id}>
                     <TableCell className="font-inter font-medium text-[13px] text-grey-30">
-                       <p> Phoenix Baker</p> 
-                        <p className="text-grey-20 text-[12px] font-normal">olivia@untitledui.com</p>
+                       <p> {data.patient}</p> 
+                        <p className="text-grey-20 text-[12px] font-normal">{'N/A'}</p>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[13px] text-grey-30">
-                        <p>Jul 2, 2025</p> 	
-                        <p className="text-grey-20 text-[12px]">10:00AM</p>
+                        <p>{data.appointment_date || "N/A"}</p> 	
+                        <p className="text-grey-20 text-[12px]">{data.appointment_time || "N/A"}</p>
                     </TableCell>
-                    <TableCell className="font-inter font-normal text-[12px] text-grey-20">Video Call</TableCell>
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20"> 
+                      {data.consultation_type.replaceAll("-", " ").toLocaleUpperCase() || "N/A"}
+                    </TableCell>
                     <TableCell>
-                        <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(invoice.status)}`}>
-                            {invoice.status}
+                        <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.status)} text-grey-20`}>
+                        {data.status || 'N/A'}
                         </span>
                     </TableCell>
                     <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer" onClick={handleNext}> View Details</TableCell>
