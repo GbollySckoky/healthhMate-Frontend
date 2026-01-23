@@ -17,7 +17,6 @@ const Page = () => {
         workEmail: '',
         password: ''
     })
-    const [isLoading, setIsLoading] = useState(false)
     const [rememberMe, setRememberMe] = useState(false)
     const router = useRouter()
 
@@ -33,6 +32,7 @@ const Page = () => {
         mutationFn: (payload: LogIn) => Hospital_Admin.login(payload),
         onSuccess: (response) => {
             console.log(response)
+            localStorage.setItem('authToken', response.data.access)
             router.push(ROUTES.dashboard)
           // Handle success
         },
