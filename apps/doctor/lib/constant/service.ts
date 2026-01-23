@@ -44,7 +44,8 @@ export const Doctor = {
     },
     approveAppointment: async(appointment_id: string, payload: ApproveAppointment) => {
         return await ClientHttps().patch(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/update/`,payload)
-    }
+    },
+    
     // registerAccount: async (payload: Register) => {
     //     return await adminAPI.post(DOCTOR_ENDPOINTS.REGISTER, payload); 
     // }

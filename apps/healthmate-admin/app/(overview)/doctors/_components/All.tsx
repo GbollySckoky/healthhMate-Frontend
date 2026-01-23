@@ -23,6 +23,8 @@ import { Trash2} from 'lucide-react';
 import DeleteModal from '../../settings/_components/DeleteModal'
 import AddNewDoctor from './AddNewDoctor'
 import { useFormModal } from '@/components/Modal/FormModal'
+import { useQuery } from '@tanstack/react-query'
+import { Hospital_Admin } from '@/lib/constant/service'
 
 
 // Types for better type safety
@@ -117,6 +119,11 @@ const All = () => {
     const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
     const router = useRouter()
 
+    const {data, isLoading, error} = useQuery({
+        queryKey: ["getAllDoctor"],
+        queryFn: () => Hospital_Admin.getAllDoctor()
+    })
+    console.log(data)
     // Filter data based on search and filters
     const filteredAppointments = appointments.filter((appointment) => {
         const matchesSearch = 
