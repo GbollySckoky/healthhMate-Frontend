@@ -1,5 +1,4 @@
 "use client"
-import { CloudUpload } from 'lucide-react'
 import {
     Table,
     TableBody,
@@ -10,11 +9,11 @@ import {
   } from "@/components/ui/table"
 import {Search } from 'lucide-react'
 import image from '@/assets/Image.png'
-import Image from "next/image";
 import { TableTitle } from "@/components/ui/Reusable";
 import { paidStatus } from "@/types/status";
 import Input from "@/components/ui/Input";
-// import MinSelectField from "@/components/Inputs/MinSelectField";
+import { useQuery } from '@tanstack/react-query';
+import { Doctor } from '@/lib/constant/service';
 import { useState } from "react";
 import useToggle from "@/hooks/useToggle";
 import { useRouter } from 'next/navigation'
@@ -63,13 +62,18 @@ import Paginate from '@/components/ui/Paginate'
     const [selectValue, setSelectValue] = useState('')
     const {isToggle, handleToggle} = useToggle()
     const router = useRouter()
+
+    const {data, isLoading, error, isError} = useQuery({
+      queryKey: ['getPayout'],
+      queryFn: () => Doctor.getPayout()
+    })
  
     const handleSelect = (option: string) => {
         setSelectValue((prev) => (prev === option ? '' : option ))
         handleToggle
     }
 
-    const data = {
+    const dataStatus = {
         status:{
             label: 'Status',
             options: [
@@ -91,7 +95,7 @@ import Paginate from '@/components/ui/Paginate'
     const handleNext = () => {
       router.push(`/earnings/1`)
     }
-    const {specialty,status } = data
+    const {specialty,status } = dataStatus
     return (
         <div className="bg-white rounded-lg w-full border border-borderColor  mt-10">
             <div className='border-b border-borderColor100 p-4'>

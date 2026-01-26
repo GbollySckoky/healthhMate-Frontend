@@ -3,11 +3,52 @@ import { Card, MediumText, Value } from '@/components/ui/Reusable';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { EarningsTable } from './EarningsTable';
+import { Doctor } from '@/lib/constant/service';
+import { useQuery } from '@tanstack/react-query';
+import { EarningSummary } from '@/lib/interface/get-earnings-summary';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 
 const EarningsPage = () => {
+    const {data, isLoading, error, isError} = useQuery({
+        queryKey: ['getEarnings'],
+        queryFn: () => Doctor.getEarnings()
+      })
+
+    const datas = data as EarningSummary
+
+   const earningData = [
+        {
+            id: 2,
+            about: 'Total Earnings',
+            value: `${datas?.total_earnings}`,
+            percent: 12,
+        },
+        {
+            id: 1,
+            about: 'Earnings this Month',
+            value: `${data?.earnings_this_month}`,
+            percent: 12,
+        },
+        {
+            id: 3,
+            about: 'Pending Payouts',
+            value: `${data?.pending_payouts}`,
+            percent: -14,
+        },
+        {
+            id: 4,
+            about: 'Completed Payouts',
+            value: `${data?.completed_payouts}`,
+            percent: 10,
+        }
+    ]
+
   return (
     <div>
+        {isLoading ? (
+            <LoadingSpinner />
+        ): (
         <Card className='flex items-center gap-4'>
             {earningData.map((earning) => {
                 const {id,  value,percent, about} = earning;
@@ -28,6 +69,7 @@ const EarningsPage = () => {
                 )
             })}
         </Card>
+        )}
         <EarningsTable />
     </div>
   )
