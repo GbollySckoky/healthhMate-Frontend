@@ -19,4 +19,8 @@ export const Hospital_Admin = {
         const response = await Clienthttps().get(ADMIN_ENDPOINTS.GET_ALL_DOCTORS);
         return response.data
     },
+    getProfile: async() => {
+        const response = await Clienthttps().get(ADMIN_ENDPOINTS.GET_HOSPITAL_PROFILE);
+        return response.data
+    },
 }
