@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PageWrapper, TableTitle } from '@/components/ui/Reusable'
-import { useQuery } from '@tanstack/react-query'
-import { Doctor } from '@/lib/constant/service'
+// import { useQuery } from '@tanstack/react-query'
+// import { Doctor } from '@/lib/constant/service'
 import Input from '@/components/ui/Input'
 import { Search } from 'lucide-react'
 import MinSelectField from '@/components/ui/MinSelectField'
@@ -17,8 +17,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { GetAllAppointment } from '@/lib/interface/get-all-appointment'
-import LoadingSpinner from '@/components/ui/LoadingSpinner'
+// import { GetAllAppointment } from '@/lib/interface/get-all-appointment'
+// import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { useRouter } from 'next/navigation'
 
 const filterOptions = {
@@ -36,7 +36,8 @@ const Page = () => {
   const [debounceSearchQuery, setDebounceSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState("")
   const [activeStatus, setActiveStatus] = useState<string | undefined>();
-
+  console.log('Active status', activeStatus)
+  console.log('Status filter', debounceSearchQuery)
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -70,25 +71,98 @@ const Page = () => {
 // Get status styling
 const getStatusStyle = (status: string) => {
     switch (status) {
-        case 'completed':
+        case 'Completed':
             return 'text-green-700 bg-green-100'
-        case 'upcoming':
+        case 'Pending':
             return 'text-gray-700 bg-gray-100'
-        case 'cancelled':
+        case 'Cancelled':
             return 'text-red-800 bg-red-100'
         default:
             return ''
     }
 }
-  const {data, isLoading, error, isError} = useQuery({
-    queryKey: ['getAppointment'],
-    queryFn: () => Doctor.getAppointment(
-      activeStatus,
-      statusFilter,
-      debounceSearchQuery,
-      debounceSearchQuery
-    )
-  })
+//   const {data, isLoading, error, isError} = useQuery({
+//     queryKey: ['getAppointment'],
+//     queryFn: () => Doctor.getAppointment(
+//       activeStatus,
+//       statusFilter,
+//       debounceSearchQuery,
+//       debounceSearchQuery
+//     )
+//   })
+
+  const invoices = [
+    {
+      invoice: "INV001",
+      paymentStatus: "27/10/2026",
+      totalAmount: "10:00AM",
+      paymentMethod: "Physical Clinic",
+      status: 'Completed',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      health_concerns: 'Cough'
+    },
+    {
+      invoice: "INV002",
+      paymentStatus: "27/10/2026",
+      totalAmount: "11:00AM",
+      paymentMethod: "Audio Call",
+      status: 'Pending',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      health_concerns: 'Fever, Cough'
+    },
+    {
+      invoice: "INV003",
+      paymentStatus: "27/10/2026",
+      totalAmount: "12:00PM",
+      paymentMethod: "Video Call",
+      status: 'Cancelled',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      health_concerns: 'Fever, Cough'
+    },
+    {
+      invoice: "INV004",
+      paymentStatus: "27/10/2026",
+      totalAmount: "1:00PM",
+      paymentMethod: "Physical Clinic",
+      status: 'Completed',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      health_concerns: 'Fever, Cough'
+    },
+    {
+      invoice: "INV005",
+      paymentStatus: "27/10/2026",
+      totalAmount: "2:00PM",
+      paymentMethod: "Video Call",
+      status: 'Pending',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      health_concerns: 'Fever, Hot temprature'
+    },
+    {
+      invoice: "INV006",
+      paymentStatus: "27/10/2026",
+      totalAmount: "3:00PM",
+      paymentMethod: "Audio Call",
+      status: 'Completed',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      health_concerns: 'Fever, Cold'
+    },
+    {
+      invoice: "INV007",
+      paymentStatus: "27/10/2026",
+      totalAmount: "4:00PM",
+      paymentMethod: "Physical Clinic.",
+      status: 'Cancelled',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      health_concerns: 'Fever, Cough'
+    },
+]
 
 
   const renderTable = () => {
@@ -104,33 +178,27 @@ const getStatusStyle = (status: string) => {
               </TableRow>
           </TableHeader>
           <TableBody>
-              {isLoading ? (
-                  <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-red-800">
-                      <LoadingSpinner />
-                  </TableCell>
-              </TableRow>
-              ) : data?.results?.length > 0 ? (
-                  data?.results.map((appointment: GetAllAppointment) => (
+              { invoices?.length > 0 && (
+                  invoices.map((appointment: any) => (
                       <TableRow 
-                          key={appointment.id}
+                          key={appointment.invoice}
                           className="cursor-pointer hover:bg-gray-50"
-                          onClick={() => handleAppointmentClick(appointment.id)}
+                          onClick={() => handleAppointmentClick(appointment.invoice)}
                       >
                           <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                               <div>
-                                  <p className="font-medium text-[12px]">{appointment.patient || "N/A"}</p>
-                                  <p className="font-inter font-normal text-[12px] text-grey-20">{"N/A"}</p>
+                                  <p className="font-medium text-[12px]">{appointment.name || "N/A"}</p>
+                                  <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.email || "N/A"}</p>
                               </div>
                           </TableCell>
                           <TableCell className="font-inter font-normal text-grey-30">
                               <div>
-                                  <p className="font-medium text-[12px]">{appointment.appointment_date || "N/A"}</p> 
-                                  <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.appointment_time || "N/A"}</p>
+                                  <p className="font-medium text-[12px]">{appointment.paymentStatus || "N/A"}</p> 
+                                  <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.totalAmount || "N/A"}</p>
                               </div>
                           </TableCell>
                           <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                            {appointment.consultation_type || "N/A"}
+                            {appointment.paymentMethod || "N/A"}
                           </TableCell>
                           <TableCell>
                               <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(appointment.status)}`}>
@@ -142,19 +210,19 @@ const getStatusStyle = (status: string) => {
                           </TableCell>
                       </TableRow>
                   ))
-              ) : (
-                  <TableRow>
-                      <TableCell colSpan={6} className="text-center py-8 text-red-800">
-                          No appointments found matching your criteria
-                      </TableCell>
-                  </TableRow>
+            //   ) : (
+            //       <TableRow>
+            //           <TableCell colSpan={6} className="text-center py-8 text-red-800">
+            //               No appointments found matching your criteria
+            //           </TableCell>
+            //       </TableRow>
               )}
           </TableBody>
       </Table>
     )
   }
-  console.log("Search!", searchInput)
-  console.log("Searcssh!", debounceSearchQuery)
+//   console.log("Search!", searchInput)
+//   console.log("Searcssh!", debounceSearchQuery)
   return (
     <PageWrapper>
           <div className="bg-white rounded-lg w-full border border-borderColor">

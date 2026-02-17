@@ -1,6 +1,6 @@
 "use client"
 import { PageWrapper } from '@/components/ui/Reusable'
-import { CloudUpload } from 'lucide-react'
+// import { CloudUpload } from 'lucide-react'
 import {
     Table,
     TableBody,
@@ -10,8 +10,8 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import {Search } from 'lucide-react'
-import image from '@/assets/Image.png'
-import Image from "next/image";
+// import image from '@/assets/Image.png'
+// import Image from "next/image";
 import { TableTitle } from "@/components/ui/Reusable";
 import Input from "@/components/ui/Input";
 import MinSelectField from "@/components/ui/MinSelectField";
@@ -20,73 +20,87 @@ import useToggle from "@/hooks/useToggle";
 import Paginate from '@/components/ui/Paginate'
 import { useRouter } from 'next/navigation'
 import { STATUS } from '@/types/status'
-import { useAppointment } from '@/lib/context/GetAppointmentContext'
-import LoadingSpinner from '@/components/ui/LoadingSpinner'
+// import { useAppointment } from '@/lib/context/GetAppointmentContext'
+// import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
 
 const invoices = [
     {
       invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
+      paymentStatus: "27/10/2026",
+      totalAmount: "10:00AM",
       paymentMethod: "Credit Card",
-      status: 'Completed'
+      status: 'Completed',
+      name: 'John Doe',
+      email: 'john.doe@example.com'
     },
     {
       invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
+      paymentStatus: "27/10/2026",
+      totalAmount: "11:00AM",
       paymentMethod: "PayPal",
-      status: 'Pending'
+      status: 'Pending',
+      name: 'John Doe',
+      email: 'john.doe@example.com'
     },
     {
       invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
+      paymentStatus: "27/10/2026",
+      totalAmount: "12:00PM",
       paymentMethod: "Bank Transfer",
-      status: 'Cancelled'
+      status: 'Cancelled',
+      name: 'John Doe',
+      email: 'john.doe@example.com'
     },
     {
       invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
+      paymentStatus: "27/10/2026",
+      totalAmount: "1:00PM",
       paymentMethod: "Credit Card",
-      status: 'Completed'
+      status: 'Completed',
+      name: 'John Doe',
+      email: 'john.doe@example.com'
     },
     {
       invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
+      paymentStatus: "27/10/2026",
+      totalAmount: "2:00PM",
       paymentMethod: "PayPal",
-      status: 'Pending'
+      status: 'Pending',
+      name: 'John Doe',
+      email: 'john.doe@example.com'
     },
     {
       invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
+      paymentStatus: "27/10/2026",
+      totalAmount: "3:00PM",
       paymentMethod: "Bank Transfer",
-      status: 'Completed'
+      status: 'Completed',
+      name: 'John Doe',
+      email: 'john.doe@example.com'
     },
     {
       invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
+      paymentStatus: "27/10/2026",
+      totalAmount: "4:00PM",
       paymentMethod: "Credit Card",
-      status: 'Cancelled'
+      status: 'Cancelled',
+      name: 'John Doe',
+      email: 'john.doe@example.com'
     },
-  ]
+]
 
 const Patients = () => {
     const [inputValue, setInputValue] = useState<string>('')
     const [selectValue, setSelectValue] = useState('')
     const {isToggle, handleToggle} = useToggle()
     const router = useRouter()
-    const {datas, isLoading} = useAppointment()
-    console.log('20203', datas)
+    // const {datas, isLoading} = useAppointment()
+    // console.log('20203', datas)
 
     const handleSelect = (option: string) => {
         setSelectValue((prev) => (prev === option ? '' : option ))
-        handleToggle
+        // handleToggle
     }
 
     const status = {
@@ -98,8 +112,8 @@ const Patients = () => {
         ]
     }
 
-    const handleNext = () => {
-      router.push(`/patients/1`)
+    const handleNext = (id: string) => {
+      router.push(`/patients/${id}`)
     }
 
     const getStatusStyle = (status: string) => {
@@ -148,32 +162,26 @@ const Patients = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody className='cursor-pointer'>
-                {isLoading ? (
-                  <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-red-800">
-                      <LoadingSpinner />
-                  </TableCell>
-              </TableRow>
-              ) : datas?.length > 0 && 
-                  datas?.map((data) => (
-                    <TableRow  key={data.id}>
+                {invoices?.length > 0 && 
+                  invoices?.map((data) => (
+                    <TableRow  key={data.invoice} onClick={() => handleNext(data.invoice)} className="border-t border-borderColor hover:bg-[#FAFBFF]">
                     <TableCell className="font-inter font-medium text-[13px] text-grey-30">
-                       <p> {data.patient}</p> 
-                        <p className="text-grey-20 text-[12px] font-normal">{'N/A'}</p>
+                       <p> {data.name}</p> 
+                        <p className="text-grey-20 text-[12px] font-normal">{data.email}</p>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[13px] text-grey-30">
-                        <p>{data.appointment_date || "N/A"}</p> 	
-                        <p className="text-grey-20 text-[12px]">{data.appointment_time || "N/A"}</p>
+                        <p>{data.paymentStatus || "N/A"}</p> 	
+                        <p className="text-grey-20 text-[12px]">{data.totalAmount || "N/A"}</p>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[12px] text-grey-20"> 
-                      {data.consultation_type.replaceAll("-", " ").toLocaleUpperCase() || "N/A"}
+                      {data.paymentMethod}
                     </TableCell>
                     <TableCell>
                         <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.status)} text-grey-20`}>
                         {data.status || 'N/A'}
                         </span>
                     </TableCell>
-                    <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer" onClick={handleNext}> View Details</TableCell>
+                    <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer" onClick={() => handleNext(data.invoice)}> View Details</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>

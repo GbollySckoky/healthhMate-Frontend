@@ -3,74 +3,74 @@ import { Infos, PageWrapper } from '@/components/ui/Reusable'
 import React, { FormEvent, useState } from 'react'
 import Image from 'next/image'
 import image from '@/assets/Image.png'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
 import { useParams } from 'next/navigation'
-import { AppointmentDetail } from '@/lib/interface/appointmentDetails-interface'
-import LoadingSpinner from '@/components/ui/LoadingSpinner'
+// import { AppointmentDetail } from '@/lib/interface/appointmentDetails-interface'
+// import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import InputField from '@/components/ui/InputField'
 import SelectField from '@/components/ui/SelectField'
 import { useModal } from '@/components/modal/Modal'
-import { ApproveAppointment } from '@/lib/interface/approve-appointment.interface'
+// import { ApproveAppointment } /from '@/lib/interface/approve-appointment.interface'
 
 
 
 const Page = () => {
-  const params = useParams();
+  // const params = useParams();
   const {openModal} = useModal()
-  const slug = params.slug as string;
-  const { data, isLoading, error, isError } = useQuery({
-    queryKey: ['getAppointmentDetail', slug],
-    queryFn: () => Doctor.getAppointmentDetail(slug as string),
-    enabled: !!slug,
-  });
+  // const slug = params.slug as string;/
+  // const { data, isLoading, error, isError } = useQuery({
+  //   queryKey: ['getAppointmentDetail', slug],
+  //   queryFn: () => Doctor.getAppointmentDetail(slug as string),
+  //   enabled: !!slug,
+  // });
   
-  console.log('Data',data)
+  // console.log('Data',data)
 
-  const appointmentDetails = data?.[0] as AppointmentDetail
-  console.log('appointmentDetails', appointmentDetails)
+  // const appointmentDetails = data?.[0] as AppointmentDetail
+  // console.log('appointmentDetails', appointmentDetails)
 
-  if(isLoading){
-    return(
-      <div className='w-full h-full flex items-center justify-center'>
-        <LoadingSpinner />
-      </div>
-    )
-  }
+  // if(isLoading){
+  //   return(
+  //     <div className='w-full h-full flex items-center justify-center'>
+  //       <LoadingSpinner />
+  //     </div>
+  //   )
+  // }
 
-  if(isError){
-    return(
-      <div className='w-full h-full flex items-center justify-center text-sm font-medium text-red-800'>
-      {/* {error} */}
-    </div>
-    )
-  }
+  // if(isError){
+  //   return(
+  //     <div className='w-full h-full flex items-center justify-center text-sm font-medium text-red-800'>
+  //     {/* {error} */}
+  //   </div>
+  //   )
+  // }
   return (
     <PageWrapper>
       <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
         <div className="flex justify-between">
             <div className="flex items-center">
-              <Image src={image} alt='Image' className="w-[60px] h-[60px] rounded-full" />
+              <Image src={image} alt='Image' className="w-[80px] h-[80px] rounded-full" />
               <div className='ml-2'>
-                  <p className='font-medium font-libre text-[20px] text-[#211F1F]'>{appointmentDetails?.patient}</p>
+                  <p className='font-medium font-libre text-[20px] text-[#211F1F]'>{"Jon Doe"}</p>
                   <p className='text-[14px] font-inter text-grey-20  py-1'>34 y/o — Female</p>
-                  <p className='text-[14px] font-inter text-grey-20  py-1'>olivia@untitledui.com</p>
+                  <p className='text-[14px] font-inter text-grey-20  py-1'>jondoe@gmail.com</p>
               </div>
             </div>
-            <p className='text-[#414651] bg-[#f5f5f5] font-medium font-inter text-[14px] rounded-full px-5 py-1 h-fit '>{appointmentDetails?.status.toLocaleUpperCase() || "N/A"}</p>
+            <p className='text-[#414651] bg-[#f5f5f5] font-medium font-inter text-[14px] rounded-full px-5 py-1 h-fit '>{"Upcoming"}</p>
         </div>
       </div>
       {/* Type */}
       <div className='mt-5 border border-borderColor p-4 rounded-lg'>
-          <Infos label='Type' value={appointmentDetails?.consultation_type.replaceAll("-", " ").toLocaleUpperCase()}/>
-          <Infos label='Date' value={appointmentDetails?.appointment_date}/>
-          <Infos label='Time:' value={appointmentDetails?.appointment_time}/>
+          <Infos label='Type' value={"Video Call"}/>
+          <Infos label='Date' value={'27/10/2026'}/>
+          <Infos label='Time:' value={"10:00AM"}/>
       </div>
-      <Info label='Health Concern' value={appointmentDetails?.health_concerns || "N/A"} />
+      <Info label='Health Concern' value={"Fever, Cough"} />
       <Info label='Consultation Notes' value='Possible Pelvic inflammation. Perform a Abdomino-Pelvic scan to check for any infection,' />
       <Info label='Prescription' value='None' />
       <div className="flex justify-between items-center mt-7">
-        <button className='px-4 py-1 bg-red-800 rounded-lg font-inter text-white text-[14px]' 
+        <button className='px-4 py-2 bg-red-800 rounded-lg font-inter text-white text-[14px]' 
         onClick={() =>
           openModal(<ApproveAppointment
             />, {

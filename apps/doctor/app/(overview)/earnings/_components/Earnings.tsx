@@ -1,54 +1,54 @@
-import { earningData } from '@/components/ui/data';
+// import { earningData } from '@/components/ui/data';
 import { Card, MediumText, Value } from '@/components/ui/Reusable';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { EarningsTable } from './EarningsTable';
-import { Doctor } from '@/lib/constant/service';
-import { useQuery } from '@tanstack/react-query';
-import { EarningSummary } from '@/lib/interface/get-earnings-summary';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
+// import { Doctor } from '@/lib/constant/service';
+// import { useQuery } from '@tanstack/react-query';
+// import { EarningSummary } from '@/lib/interface/get-earnings-summary';
+// import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 
 const EarningsPage = () => {
-    const {data, isLoading, error, isError} = useQuery({
-        queryKey: ['getEarnings'],
-        queryFn: () => Doctor.getEarnings()
-      })
+    // const {data, isLoading, error, isError} = useQuery({
+    //     queryKey: ['getEarnings'],
+    //     queryFn: () => Doctor.getEarnings()
+    //   })
 
-    const datas = data as EarningSummary
+    // const datas = data as EarningSummary
 
    const earningData = [
         {
             id: 2,
             about: 'Total Earnings',
-            value: `${datas?.total_earnings}`,
+            value: `400,000`,
             percent: 12,
         },
         {
             id: 1,
             about: 'Earnings this Month',
-            value: `${data?.earnings_this_month}`,
+            value: `200,000`,
             percent: 12,
         },
         {
             id: 3,
             about: 'Pending Payouts',
-            value: `${data?.pending_payouts}`,
+            value: `100,000`,
             percent: -14,
         },
         {
             id: 4,
             about: 'Completed Payouts',
-            value: `${data?.completed_payouts}`,
+            value: `300,000`,
             percent: 10,
         }
     ]
 
   return (
     <div>
-        {isLoading ? (
+        {/* {isLoading ? (
             <LoadingSpinner />
-        ): (
+        ): ( */}
         <Card className='flex items-center gap-4'>
             {earningData.map((earning) => {
                 const {id,  value,percent, about} = earning;
@@ -69,7 +69,7 @@ const EarningsPage = () => {
                 )
             })}
         </Card>
-        )}
+        {/* )} */}
         <EarningsTable />
     </div>
   )
