@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build:web": "pnpm --filter doctor build",
+    "start:web": "pnpm --filter doctor start",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit"
   },
