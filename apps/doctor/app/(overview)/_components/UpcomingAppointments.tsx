@@ -1,4 +1,4 @@
-import { Card, DisplayFlex, MediumTitle, MinText, SmallestTitle } from '@/components/ui/Reusable'
+import { MediumTitle, MinText, SmallestTitle } from '@/components/ui/Reusable'
 import React from 'react'
 import { ChevronRight } from 'lucide-react';
 import { upcomingConsultation } from '@/components/ui/data';

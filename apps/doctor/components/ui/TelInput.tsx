@@ -1,5 +1,4 @@
-import React, { ReactElement } from 'react'
-import { Search } from 'lucide-react';
+import React from 'react'
 
 
 interface InputProps{

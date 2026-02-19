@@ -1,5 +1,5 @@
 "use client"
-import { CloudUpload, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import {
     Table,
     TableBody,
@@ -134,10 +134,10 @@ const PendingTable = () => {
         toggleSpecialtyDropdown()
     }
 
-    const handleExport = () => {
-        // Export functionality
-        console.log('Exporting data...', filteredAppointments)
-    }
+    // const handleExport = () => {
+    //     // Export functionality
+    //     console.log('Exporting data...', filteredAppointments)
+    // }
 
     const handleAppointmentClick = (appointmentId: string) => {
         router.push(`/appointment/${appointmentId}`)

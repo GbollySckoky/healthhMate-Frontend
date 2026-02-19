@@ -164,7 +164,7 @@ export const Button = ({children, className, onClick}:{children: ReactNode, clas
     )
 }
 
-export const UploadButton = ({text, onClick, className}:{text: ReactNode, onClick?: () => void, className?: string}) => {
+export const UploadButton = ({text, className}:{text: ReactNode, className?: string}) => {
     return(
         <div className={`flex bg-white border border-borderColor100 text-white items-center cursor-pointer p-3 rounded-lg ${className}`}>
         <span> <CloudUpload size={15} /></span>

@@ -10,8 +10,8 @@ import { useDoctorForm } from '@/lib/context/DoctorFormContext'
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
     const {updateDoctorData, doctorFormData} = useDoctorForm()
 
-    const disabled =  !doctorFormData.signup.fullName || !doctorFormData.signup.workEmail || !doctorFormData.signup.gender
-    !doctorFormData.signup.dob || !doctorFormData.signup.phoneNumber || !doctorFormData.signup.password || !doctorFormData.signup.confirmPassword
+    // const disabled =  !doctorFormData.signup.fullName || !doctorFormData.signup.workEmail || !doctorFormData.signup.gender
+    // !doctorFormData.signup.dob || !doctorFormData.signup.phoneNumber || !doctorFormData.signup.password || !doctorFormData.signup.confirmPassword
     
     return(
         <div className=' w-full max-w-md'>

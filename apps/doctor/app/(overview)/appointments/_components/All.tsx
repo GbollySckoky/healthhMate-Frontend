@@ -17,10 +17,10 @@ import { useRouter } from 'next/navigation'
 import Input from '@/components/ui/Input'
 import Calendar from '@/components/ui/Calendar'
 import MinSelectField from '@/components/ui/MinSelectField'
-import { Doctor } from '@/lib/constant/service'
-import { useQuery } from '@tanstack/react-query'
-import { GetAllAppointment } from '@/lib/interface/get-all-appointment'
-import LoadingSpinner from '@/components/ui/LoadingSpinner'
+// import { Doctor } from '@/lib/constant/service'
+// import { useQuery } from '@tanstack/react-query'
+// import { GetAllAppointment } from '@/lib/interface/get-all-appointment'
+// import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
 // Types for better type safety
 interface Appointment {
@@ -34,7 +34,8 @@ interface Appointment {
     type: string
     rating: number
     status: 'Completed' | 'Pending' | 'Cancelled' | 'In Progress' | 'Open' | 'Closed'
-    image: any
+    image: any,
+    health_concerns: string
 }
 
 // Mock data with proper structure
@@ -51,6 +52,7 @@ const appointments: Appointment[] = [
         rating: 4.5,
         status: "Completed",
         image: image,
+        health_concerns: "High blood pressure, chest pain"
     },
     {
         id: "APT002",
@@ -64,6 +66,7 @@ const appointments: Appointment[] = [
         rating: 4.8,
         status: "Pending",
         image: image,
+        health_concerns: "High blood pressure, chest pain"
     },
     {
         id: "APT003",
@@ -77,6 +80,7 @@ const appointments: Appointment[] = [
         rating: 4.2,
         status: "Cancelled",
         image: image,
+        health_concerns: "High blood pressure, chest pain"
     },
     {
         id: "APT004",
@@ -90,6 +94,7 @@ const appointments: Appointment[] = [
         rating: 4.9,
         status: "In Progress",
         image: image,
+        health_concerns: "High blood pressure, chest pain"
     },
     {
         id: "APT005",
@@ -103,6 +108,7 @@ const appointments: Appointment[] = [
         rating: 4.7,
         status: "Open",
         image: image,
+        health_concerns: "High blood pressure, chest pain"
     },
 ]
 
@@ -114,24 +120,24 @@ const AllAppointmentTable = () => {
     const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
     const router = useRouter()
 
-    const {data, isLoading, error, isError} = useQuery({
-        queryKey: ['getAppointment'],
-        queryFn: () => Doctor.getAppointment()
-      })
+    // const {data, isLoading, error, isError} = useQuery({
+    //     queryKey: ['getAppointment'],
+    //     queryFn: () => Doctor.getAppointment()
+    //   })
     
-      console.log(data)
+    //   console.log(data)
     // Filter data based on search and filters
-    const filteredAppointments = appointments.filter((appointment) => {
-        const matchesSearch = 
-            appointment.doctorName.toLowerCase().includes(searchInput.toLowerCase()) ||
-            appointment.specialty.toLowerCase().includes(searchInput.toLowerCase()) ||
-            appointment.patientName.toLowerCase().includes(searchInput.toLowerCase())
+    // const filteredAppointments = appointments.filter((appointment) => {
+    //     const matchesSearch = 
+    //         appointment.doctorName.toLowerCase().includes(searchInput.toLowerCase()) ||
+    //         appointment.specialty.toLowerCase().includes(searchInput.toLowerCase()) ||
+    //         appointment.patientName.toLowerCase().includes(searchInput.toLowerCase())
         
-        const matchesStatus = !statusFilter || appointment.status === statusFilter
-        const matchesSpecialty = !specialtyFilter || appointment.specialty === specialtyFilter
+    //     const matchesStatus = !statusFilter || appointment.status === statusFilter
+    //     const matchesSpecialty = !specialtyFilter || appointment.specialty === specialtyFilter
 
-        return matchesSearch && matchesStatus && matchesSpecialty
-    })
+    //     return matchesSearch && matchesStatus && matchesSpecialty
+    // })
 
     const handleStatusSelect = (option: string) => {
         setStatusFilter(prev => prev === option ? '' : option)
@@ -143,10 +149,10 @@ const AllAppointmentTable = () => {
         toggleSpecialtyDropdown()
     }
 
-    const handleExport = () => {
-        // Export functionality
-        console.log('Exporting data...', filteredAppointments)
-    }
+    // const handleExport = () => {
+    //     // Export functionality
+    //     console.log('Exporting data...', filteredAppointments)
+    // }
 
     const handleAppointmentClick = (appointmentId: number) => {
         router.push(`/appointments/${appointmentId}`)
@@ -216,21 +222,18 @@ const AllAppointmentTable = () => {
                 <TableHeader className="border-t border-borderColor text-grey-20">
                     <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
                         <TableHead>Patient</TableHead>
+                                      <TableHead>Doctor</TableHead>
+                                      <TableHead>Specialty</TableHead>
                         <TableHead>Date & Time</TableHead>
                         <TableHead>Consultation Type</TableHead>
                         <TableHead>Status</TableHead>
+                        <TableHead>Rating</TableHead>
                         <TableHead>Health Concern</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {isLoading ? (
-                         <TableRow>
-                         <TableCell colSpan={6} className="text-center py-8 text-red-800">
-                             <LoadingSpinner />
-                         </TableCell>
-                     </TableRow>
-                    ) : data?.results?.length > 0 ? (
-                        data?.results.map((appointment: GetAllAppointment) => (
+                    { appointments.length > 0 && (
+                        appointments.map((appointment: any) => (
                             <TableRow 
                                 key={appointment.id}
                                 className="cursor-pointer hover:bg-gray-50"
@@ -238,35 +241,38 @@ const AllAppointmentTable = () => {
                             >
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                                     <div>
-                                        <p className="font-medium text-[12px]">{appointment.patient || "N/A"}</p>
-                                        <p className="font-inter font-normal text-[12px] text-grey-20">{"N/A"}</p>
+                                        <p className="font-medium text-[12px]">{appointment.patientName || "N/A"}</p>
+                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.patientEmail || "N/A"}</p>
                                     </div>
+                                </TableCell>
+                                    <TableCell className="font-inter font-normal text-[12px] text-grey-20">
+                                   {appointment.doctorName || "N/A"}
+                                </TableCell>
+                                  <TableCell className="font-inter font-normal text-[12px] text-grey-20">
+                                   {appointment.specialty || "N/A"}
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-grey-30">
                                     <div>
-                                        <p className="font-medium text-[12px]">{appointment.appointment_date || "N/A"}</p> 
-                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.appointment_time || "N/A"}</p>
+                                        <p className="font-medium text-[12px]">{appointment.date || "N/A"}</p> 
+                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.time || "N/A"}</p>
                                     </div>
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                                   {appointment.consultation_type || "N/A"}
+                                   {appointment.type || "N/A"}
                                 </TableCell>
                                 <TableCell>
                                     <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(appointment.status)}`}>
                                         {appointment.status}
                                     </span>
                                 </TableCell>
+                                <TableCell className="font-inter font-normal text-[12px] text-grey-20">
+                                    {appointment.rating || "N/A"}
+                                </TableCell>
                                 <TableCell className="font-inter font-normal text-[12px]">
                                    {appointment.health_concerns || "N/A"}
                                 </TableCell>
                             </TableRow>
                         ))
-                    ) : (
-                        <TableRow>
-                            <TableCell colSpan={6} className="text-center py-8 text-red-800">
-                                No appointments found matching your criteria
-                            </TableCell>
-                        </TableRow>
                     )}
                 </TableBody>
             </Table>

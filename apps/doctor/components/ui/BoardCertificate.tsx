@@ -1,5 +1,6 @@
 
 import { useDoctorForm } from "@/lib/context/DoctorFormContext";
+import Image from "next/image";
 import React, { useState } from "react";
 
 const BoardCertificate = () => {
@@ -22,7 +23,7 @@ const BoardCertificate = () => {
       <input type="file" onChange={handleFileChange} />
 
       {preview && (
-        <img
+        <Image
           src={preview}
           alt="preview"
           className="mt-4 w-40 h-40 object-cover rounded-lg border"

@@ -134,10 +134,10 @@ const CancelledTable = () => {
         toggleSpecialtyDropdown()
     }
 
-    const handleExport = () => {
-        // Export functionality
-        console.log('Exporting data...', filteredAppointments)
-    }
+    // const handleExport = () => {
+    //     // Export functionality
+    //     console.log('Exporting data...', filteredAppointments)
+    // }
 
     const handleAppointmentClick = (appointmentId: string) => {
         router.push(`/appointment/${appointmentId}`)

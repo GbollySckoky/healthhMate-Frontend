@@ -1,4 +1,3 @@
-import { PageWrapper } from '@/components/ui/Reusable'
 import React from 'react'
 import image from '@/assets/Image.png'
 import Image from 'next/image'

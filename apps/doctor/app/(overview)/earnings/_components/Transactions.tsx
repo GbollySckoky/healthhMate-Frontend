@@ -1,5 +1,5 @@
 "use client"
-import { CloudUpload, Search } from "lucide-react"
+import { Search } from "lucide-react"
 import {
   Table,
   TableBody,
@@ -14,7 +14,7 @@ import { paidStatus } from "@/types/status"
 import Input from "@/components/ui/Input"
 // import MinSelectField from "@/components/Inputs/MinSelectField"
 import { useState } from "react"
-import useToggle from "@/hooks/useToggle"
+// import useToggle from "@/hooks/useToggle"
 import image from "@/assets/Image.png"
 import { useRouter } from "next/navigation"
 import Paginate from "@/components/ui/Paginate"
@@ -69,27 +69,27 @@ const getStatusClasses = (status: string) => {
 
 export function TransactionsPage() {
   const [inputValue, setInputValue] = useState<string>("")
-  const [selectValue, setSelectValue] = useState("")
-  const { isToggle, handleToggle } = useToggle()
+  // const [selectValue, setSelectValue] = useState("")
+  // const { isToggle, handleToggle } = useToggle()
   const router = useRouter()
 
-  const handleSelect = (option: string) => {
-    setSelectValue((prev) => (prev === option ? "" : option))
-    handleToggle() // ✅ fixed
-  }
+  // const handleSelect = (option: string) => {
+  //   setSelectValue((prev) => (prev === option ? "" : option))
+  //   handleToggle() // ✅ fixed
+  // }
 
-  const data = {
-    status: {
-      label: "Payment Status",
-      options: ["Paid", "Failed", "Pending"],
-    },
-    specialty: {
-      label: "Date Range",
-      options: ["Today", "This Week", "This Month"],
-    },
-  }
+  // const data = {
+  //   status: {
+  //     label: "Payment Status",
+  //     options: ["Paid", "Failed", "Pending"],
+  //   },
+  //   specialty: {
+  //     label: "Date Range",
+  //     options: ["Today", "This Week", "This Month"],
+  //   },
+  // }
 
-  const {  status } = data
+  // const {  status } = data
   const handleNext = () => {
     router.push(`/earnings/1`)
   }

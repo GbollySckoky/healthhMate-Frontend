@@ -6,4 +6,4 @@ export const PersonalInformationSchema = z.object({
   bio: z.string().min(1, "Bio is required"),
 });
 
-export type PersonalInformation = z.infer<typeof PersonalInformationSchema>;
+export type PersonalInfo = z.infer<typeof PersonalInformationSchema>;

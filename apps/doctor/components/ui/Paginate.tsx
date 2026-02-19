@@ -2,7 +2,7 @@ import React from 'react'
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
+    // PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,

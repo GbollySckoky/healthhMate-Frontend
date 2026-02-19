@@ -1,11 +1,11 @@
 "use client"
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 import { STEP } from '@/lib/step'
 import { ArrowLeft } from 'lucide-react'
 import AuthNumber from '@/components/ui/AuthNumber'
 import { useDoctorForm } from '@/lib/context/DoctorFormContext'
 
-const Consultation = ({handleNextStep, handlePreviousStep, isEditing = false}: 
+const Consultation = ({handleNextStep, handlePreviousStep}: 
     {
         handleNextStep: (value: number) => void, 
         handlePreviousStep: () => void,
@@ -14,8 +14,8 @@ const Consultation = ({handleNextStep, handlePreviousStep, isEditing = false}:
     const {
         doctorFormData, 
         updateDoctorData, 
-        updateAvailableDays, 
-        updateAvailableTime,
+        // updateAvailableDays, 
+        // updateAvailableTime,
         toggleAvailableDay,
         toggleAvailableTime
     } = useDoctorForm() 

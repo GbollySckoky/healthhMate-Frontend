@@ -18,7 +18,6 @@ const Verification = ({ handlePreviousStep}:
         updateDoctorData, 
 
     } = useDoctorForm() 
-    console.log("22222",doctorFormData)
     const router = useRouter()
     
     const mutation = useMutation({

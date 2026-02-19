@@ -11,16 +11,16 @@ import { useFormModal } from '@/components/modal/FormModal'
 import EditProfile from './_components/EditProfile'
 import { useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
-import { DoctorProfile } from '@/lib/interface/profile-interface'
+// import { DoctorProfile } from '@/lib/interface/profile-interface'
 
 const Page = () => {
     const {openModal} = useFormModal()
-    const {data, isLoading} = useQuery({
+    const {data} = useQuery({
       queryKey: ['getProfile'],
       queryFn: () => Doctor.getProfile()
     })
     console.log('Data',data)
-    const doctorProfile = data as DoctorProfile
+    // const doctorProfile = data as DoctorProfile
 
   return (
     <PageWrapper >
@@ -60,7 +60,7 @@ const Page = () => {
                     <TabsTrigger value="documents">Documents</TabsTrigger>
                 </TabsList>
                 <TabsContent value="overview"><Overview  /> </TabsContent>
-                <TabsContent value="documents"> <Documents doctor_documents={data?.doctor_documents}/> </TabsContent>
+                <TabsContent value="documents"> <Documents/> </TabsContent>
             </Tabs>
         </div>
     </PageWrapper>

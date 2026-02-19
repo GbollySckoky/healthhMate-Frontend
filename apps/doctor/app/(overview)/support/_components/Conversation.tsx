@@ -15,7 +15,7 @@ const Coversation = () => {
         <p className='text-[18px] font-semibold font-libre text-grey-30 mb-2'>Conversation</p>
         {/* In message */}
         <div className='bg-red-50 w-fit p-3 rounded-lg my-3'>
-            <CardText className='text-grey-50'>Patient: Hello, I can't start the video call</CardText>
+            <CardText className='text-grey-50'>Patient: Hello, I can&lsquo;t start the video call</CardText>
             <div className="flex items-center justify-end">
                 <p className='font-extralight text-[12px] font-libre text-[#717680] text-end mt-1'>12:10 pm</p>
                 <span className='text-green-900 ml-1'> <CheckCheck size={14} /></span>

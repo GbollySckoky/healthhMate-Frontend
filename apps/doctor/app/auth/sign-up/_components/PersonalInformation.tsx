@@ -1,8 +1,6 @@
 "use client"
-import  {useState} from 'react'
 import AuthInput from '@/components/ui/AuthInput'
 import { STEP } from '@/lib/step'
-import { PersonalInformation } from '@/interface/personalInfo.schema'
 import TextArea from '@/components/ui/TextArea'
 import { ArrowLeft } from 'lucide-react'
 import AuthNumber from '@/components/ui/AuthNumber'

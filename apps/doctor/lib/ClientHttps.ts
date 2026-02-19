@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { storageService } from './storage';
-import { ROUTES } from './routes';
 
 const ClientHttps = () => {
   const api = axios.create({
