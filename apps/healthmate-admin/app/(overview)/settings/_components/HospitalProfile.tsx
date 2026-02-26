@@ -16,7 +16,7 @@ const HospitalProfile = () => {
     workEmail: "",
     phoneNumber: "",
     language: "",
-    logo: null
+    // logo: null
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
