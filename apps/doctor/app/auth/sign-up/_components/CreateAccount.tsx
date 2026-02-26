@@ -37,7 +37,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                         name="gender" 
                         id="gender" 
                         value={doctorFormData.signup.gender ? String(doctorFormData.signup.gender) : ""} 
-                        onChange={(e: w) => updateDoctorData({gender: e.target.value})}
+                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => updateDoctorData({gender: e.target.value})}
                         className={`outline-none border border-borderColor100 rounded-md p-[7px] text-[12px] w-full mt-1`} >
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
