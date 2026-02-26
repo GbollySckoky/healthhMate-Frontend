@@ -36,7 +36,9 @@ const CreateRole = () => {
             />
         </Card>
         <Footer 
-           c
+            closeModal={closeModal}
+            cancelText="Cancel"
+            text="Create Role"
         />
     </form>
 

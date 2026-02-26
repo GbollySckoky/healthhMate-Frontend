@@ -1,9 +1,9 @@
 "use client"
-import react from 'react'
+// import react from 'react'
 import CreateAccount from './_components/CreateAccount'
 import { STEP } from '@/lib/step'
 import useStep from '@/hooks/useStep'
-import VerifyCode from './_components/VerifyCode'
+// import VerifyCode from './_components/VerifyCode'
 import GetStarted from './_components/GetStarted'
 import Success from '@/components/ui/Success'
 import {useRouter } from 'next/navigation'

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { STEP } from '@/lib/step'
 
 
-const VerifyCode = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
+const VerifyCode = () => {
   const [otp, setOtp] = useState(Array(6).fill(''))
   const [isLoading, setIsLoading] = useState(false)
 
@@ -19,7 +19,7 @@ const VerifyCode = ({handleNextStep}: {handleNextStep: (value: number) => void})
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    handleNextStep(STEP.THREE)
+    // handleNextStep(STEP.THREE)
     setIsLoading(true)
 
     // try {
