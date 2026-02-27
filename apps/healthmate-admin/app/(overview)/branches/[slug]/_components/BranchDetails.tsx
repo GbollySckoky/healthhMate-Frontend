@@ -1,4 +1,4 @@
-import { Card, PageWrapper } from '@/components/ui/Reusable'
+import { PageWrapper } from '@/components/ui/Reusable'
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Overview from './Overview'

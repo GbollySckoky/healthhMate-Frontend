@@ -66,7 +66,7 @@ import { useRouter } from 'next/navigation'
  
     const handleSelect = (option: string) => {
         setSelectValue((prev) => (prev === option ? '' : option ))
-        handleToggle
+        handleToggle()
     }
 
     const data = {
@@ -139,8 +139,8 @@ import { useRouter } from 'next/navigation'
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                {invoices.map((invoice) => (
-                    <TableRow  key={invoice.invoice}>
+                {invoices.map((invoice, index) => (
+                    <TableRow  key={index}>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-30 flex items-center">
                         <Image src={invoice.image} alt='Image' width={40} />
                         <div className="ml-2">
