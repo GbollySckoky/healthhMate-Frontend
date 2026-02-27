@@ -120,8 +120,8 @@ import Paginate from '@/components/ui/Paginate'
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                {invoices.map((invoice) => (
-                    <TableRow  key={invoice.invoice} onClick={() => handleNext(invoice.invoice)} className="cursor-pointer hover:bg-gray-50">
+                {invoices.map((invoice, index) => (
+                    <TableRow  key={index} onClick={() => handleNext(invoice.invoice)} className="cursor-pointer hover:bg-gray-50">
                     <TableCell className="font-inter font-normal text-[13px] text-grey-20">12 Aug 2025</TableCell>
                     <TableCell className="font-inter font-normal text-[12px] text-grey-20">₦7,000</TableCell>
                     <TableCell className="font-inter font-normal text-[12px] text-grey-20">₦170,000</TableCell>
