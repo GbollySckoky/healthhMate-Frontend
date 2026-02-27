@@ -11,6 +11,7 @@ import { useParams } from 'next/navigation'
 import InputField from '@/components/ui/InputField'
 import SelectField from '@/components/ui/SelectField'
 import { useModal } from '@/components/modal/Modal'
+import DetailsNav from '@/components/ui/DetailsNav'
 // import { ApproveAppointment } /from '@/lib/interface/approve-appointment.interface'
 
 
@@ -47,6 +48,7 @@ const Page = () => {
   // }
   return (
     <PageWrapper>
+      <DetailsNav text='Appointment Details' detailsText='Appointment Information'/>
       <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
         <div className="flex justify-between">
             <div className="flex items-center">

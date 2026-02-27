@@ -13,7 +13,7 @@ export default function OverviewLayout({
       <div className=" flex">
         {/* <Provider> */}
           <Sidebar />
-            <div className="flex-1 md:ml-[250px] ml-0">
+            <div className="flex-1 md:ml-[250px] ml-[70px]">
               <Header />
               <AppointmentProvider>
                 {children}

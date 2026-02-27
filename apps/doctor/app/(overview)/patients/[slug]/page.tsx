@@ -6,11 +6,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Overview from './_components/Overview'
 import Consultation from './_components/Consultation'
 import Prescription from './_components/Prescription'
+import DetailsNav from '@/components/ui/DetailsNav'
 
 
 const Page = () => {
   return (
     <PageWrapper>
+        <DetailsNav text='Patient Details' detailsText='Patient Information'/>
         <Card className='flex '>
             <Image src={profileImage} alt="Profile Image" className='h-fit w-[50px]'/>
             <div className='ml-2'>

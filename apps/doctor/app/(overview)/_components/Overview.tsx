@@ -35,7 +35,7 @@ const Overview = () => {
                     {overviewData.map((overview) => {
                         const {id,  value,percent, about} = overview;
                         return(
-                            <Card key={id}>
+                            <Card key={id} className='overflow-x-auto text-nowrap'>
                                 <MediumText> {about} </MediumText>
                                 <div className="flex items-center justify-between mt-2">
                                     <Value>{value}</Value>
