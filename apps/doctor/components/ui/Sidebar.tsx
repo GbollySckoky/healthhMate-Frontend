@@ -14,7 +14,7 @@ const SideBar = () => {
   const handleActiveUrl = (url: string) => setActiveUrl(url)
 
   return (
-    <div className="bg-red-900 lg:w-[260px] w-20 h-screen overflow-y-auto text-white z-30 fixed ">
+    <div className="bg-red-900 md:w-[260px] w-20 h-screen overflow-y-auto text-white z-30 fixed ">
       <div className="mx-2">
         <div className="flex items-center mt-3 pl-3">
           <Image src={image} alt="Logo" width={120}  priority />
