@@ -14,7 +14,7 @@ const SideBar = () => {
   const handleActiveUrl = (url: string) => setActiveUrl(url)
 
   return (
-    <div className="bg-red-900 lg:w-[260px] w-64 h-screen overflow-y-auto text-white z-30 fixed ">
+    <div className="bg-red-900 md:w-[260px] w-[64px] h-screen overflow-y-auto text-white z-30 fixed ">
       <div className="mx-2">
         <div className="flex items-center mt-3 pl-3">
           <Image src={image} alt="Logo" width={120} className="" priority />
@@ -35,7 +35,7 @@ const SideBar = () => {
                   onClick={() => handleActiveUrl(url)}
                 >
                   <span className="flex-shrink-0">{icon}</span>
-                  <p className="font-normal text-[14px] font-sans">{text}</p>
+                  <p className="font-normal text-[14px] font-sans hidden md:block">{text}</p>
                 </Link>
               </div>
             ))}
@@ -55,7 +55,7 @@ const SideBar = () => {
                   onClick={() => handleActiveUrl(url)}
                 >
                   <span className="flex-shrink-0">{icon}</span>
-                  <p className="font-normal text-[14px] font-sans">{text}</p>
+                  <p className="font-normal text-[14px] font-sans hidden md:block">{text}</p>
                 </Link>
               </div>
             ))}
@@ -63,10 +63,10 @@ const SideBar = () => {
         </div>
 
         {/* Admin section */}
-        <div className="flex items-center justify-between mt-4 p-2">
+        <div className="flex items-center justify-center md:justify-between mt-4 p-2">
           <div>
-            <p className="font-sans font-semibold text-[14px]">Admin</p>
-            <p className="font-inter text-[14px] font-normal">admin@evercare.com</p>
+            <p className="font-sans font-semibold text-[14px] hidden md:block">Admin</p>
+            <p className="font-inter text-[14px] font-normal hidden md:block">admin@evercare.com</p>
           </div>
           <span className="cursor-pointer">
             <LogOut size={18} />
