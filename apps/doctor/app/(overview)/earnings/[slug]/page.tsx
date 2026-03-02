@@ -1,11 +1,9 @@
-import DetailsNav from '@/components/ui/DetailsNav'
 import { Infos, PageWrapper } from '@/components/ui/Reusable'
 import React from 'react'
 
 const Page = () => {
   return (
     <PageWrapper>
-        <DetailsNav text='Earnings & Transactions' detailsText='Earnings & Transactions Details'/>
         <div className=' border rounded-lg border-borderColor p-4 space-y-2 mt-7'>
             <p className='font-semibold text-[18px] font-libre mb-3'>Payout Breakdown for August</p>
             <Info label='Status' value='Video Call'/>

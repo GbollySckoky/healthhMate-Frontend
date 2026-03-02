@@ -6,49 +6,18 @@ import image from '@/assets/Image.png'
 import { useMutation } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
 import { useParams } from 'next/navigation'
-// import { AppointmentDetail } from '@/lib/interface/appointmentDetails-interface'
-// import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import InputField from '@/components/ui/InputField'
 import SelectField from '@/components/ui/SelectField'
 import { useModal } from '@/components/modal/Modal'
-import DetailsNav from '@/components/ui/DetailsNav'
-// import { ApproveAppointment } /from '@/lib/interface/approve-appointment.interface'
+
 
 
 
 const Page = () => {
-  // const params = useParams();
   const {openModal} = useModal()
-  // const slug = params.slug as string;/
-  // const { data, isLoading, error, isError } = useQuery({
-  //   queryKey: ['getAppointmentDetail', slug],
-  //   queryFn: () => Doctor.getAppointmentDetail(slug as string),
-  //   enabled: !!slug,
-  // });
-  
-  // console.log('Data',data)
 
-  // const appointmentDetails = data?.[0] as AppointmentDetail
-  // console.log('appointmentDetails', appointmentDetails)
-
-  // if(isLoading){
-  //   return(
-  //     <div className='w-full h-full flex items-center justify-center'>
-  //       <LoadingSpinner />
-  //     </div>
-  //   )
-  // }
-
-  // if(isError){
-  //   return(
-  //     <div className='w-full h-full flex items-center justify-center text-sm font-medium text-red-800'>
-  //     {/* {error} */}
-  //   </div>
-  //   )
-  // }
   return (
     <PageWrapper>
-      <DetailsNav text='Appointment Details' detailsText='Appointment Information'/>
       <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
         <div className="flex justify-between">
             <div className="flex items-center">

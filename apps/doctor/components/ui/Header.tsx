@@ -1,21 +1,41 @@
 "use client"
 import React from 'react'
-import { Bell} from 'lucide-react';
+import { Bell, ChevronLeft} from 'lucide-react';
 import profile from '@/assets/Image.png'
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
     const pathname = usePathname()
-    const Title = pathname === ROUTES.dashboard && 'Dashboard' || pathname === ROUTES.patients && 'Patients' || 
-    pathname === ROUTES.appointment && 'Appointments' || pathname === ROUTES.earnings && 'Earnings & Transactions' || 
-    pathname === ROUTES.profile && 'Profile' || pathname === ROUTES.support && 'Support' || 
-    pathname === ROUTES.settings && 'Settings'  || pathname === ROUTES.message && 'Messages' || pathname === ROUTES.availability && 'Availability' 
+    const router = useRouter()
+    const isDetailPage = pathname.split('/').length > 2
+
+
+    const getTitle = (pathname: string) => {
+  if (pathname === ROUTES.dashboard) return 'Dashboard'
+  if (pathname === ROUTES.patients || pathname.startsWith(ROUTES.patients + '/')) return 'Patients'
+  if (pathname === ROUTES.appointment || pathname.startsWith(ROUTES.appointment + '/')) return 'Appointments'
+  if (pathname === ROUTES.earnings || pathname.startsWith(ROUTES.earnings + '/')) return 'Earnings & Transactions'
+  if (pathname === ROUTES.profile) return 'Profile'
+  if (pathname === ROUTES.support) return 'Support'
+  if (pathname === ROUTES.settings) return 'Settings'
+  if (pathname === ROUTES.message || pathname.startsWith(ROUTES.message + '/')) return 'Messages'
+  if (pathname === ROUTES.availability) return 'Availability'
+  return ''
+}
+
+const Title = getTitle(pathname)
   return (
     <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-8 ml-[50px] md:ml-[250px]'>
         <div className="flex items-center justify-between w-full">
-            <p className='font-bold text-[20px] text-health-black font-libre'>{Title}</p>
+            <div className="flex items-center gap-3">
+                {isDetailPage && (
+                <ChevronLeft size={20} className='cursor-pointer' onClick={() => router.back()} />
+                )} 
+                <p className='font-semibold text-[20px] text-health-black font-libre'>{Title}</p>
+            </div>
             <div className='flex items-center space-x-4'>
                 <div className='h-8 w-[1px] bg-slate-300 mr-5'/>
                 <div className='relative cursor-pointer'>
