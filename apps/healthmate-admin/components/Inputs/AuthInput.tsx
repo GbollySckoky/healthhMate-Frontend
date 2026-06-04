@@ -4,7 +4,7 @@ import React from 'react'
 interface InputProps{
     placeholder: string;
     value: string;
-    onChange: (e: any) => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string
     label: string 
     name: string

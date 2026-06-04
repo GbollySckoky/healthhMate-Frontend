@@ -3,7 +3,7 @@ import { storageService } from './storage';
 
 const ClientHttps = () => {
   const api = axios.create({
-    baseURL: "https://healthteamapi.onrender.com/api/",
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers:{
       'Content-Type': 'application/json'
     }

@@ -1,7 +1,7 @@
 import image1 from '@/assets/Image (1).png' 
 import image from '@/assets/Image.png'
 import { House, Wallet, Activity, CalendarDays, HouseWifi, User, Headset, Settings } from 'lucide-react';
-import { ROUTES } from '@/lib/Routes';
+import { ROUTES } from '@/lib/constant/Routes';
 
 
 

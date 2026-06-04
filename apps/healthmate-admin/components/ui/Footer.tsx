@@ -4,9 +4,11 @@ type FooterProps = {
   cancelText: string;
   text: string;
   closeModal: () => void;
+  isLoading?: boolean;
+  disabled?: boolean;
 };
 
-const Footer: React.FC<FooterProps> = ({ cancelText, text, closeModal }) => {
+const Footer: React.FC<FooterProps> = ({ cancelText, text, closeModal, isLoading, disabled }) => {
   return (
     <div className="flex items-center justify-between gap-2 pt-3 bg-white border-t mt-10 sticky bottom-0  z-10">
       <button
@@ -19,9 +21,10 @@ const Footer: React.FC<FooterProps> = ({ cancelText, text, closeModal }) => {
 
       <button
         type="submit"
-        className="text-white bg-pink-600 rounded-lg px-4 py-2"
+        className={`text-white ${isLoading || !disabled  ? 'bg-pink-300 cursor-not-allowed' : 'bg-pink-600'} rounded-lg px-4 py-2`}
+        disabled={isLoading || !disabled}
       >
-        {text}
+        {isLoading ? 'Loading...' : text}
       </button>
     </div>
   )

@@ -4,7 +4,7 @@ import { Bell} from 'lucide-react';
 import logo from '../../assets/3d.png'
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ROUTES } from '@/lib/Routes';
+import { ROUTES } from '@/lib/constant/Routes';
 const Header = () => {
     const pathname = usePathname()
     const Title = pathname === ROUTES.dashboard && 'Dashboard' || pathname === ROUTES.patients && 'Patients' || 

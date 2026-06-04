@@ -9,7 +9,7 @@ import Image from './Image'
 
 const Hospital = ({handleNextStep}: {handleNextStep: () => void}) => {
   const {hospitalFormData, updateHospitalData} = useHospitalForm()
-
+  console.log(hospitalFormData)
   return (
     <div>
       <p className="text-[30px] font-lato font-semibold text-[#1B1818] text-center ">

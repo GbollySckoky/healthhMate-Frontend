@@ -7,13 +7,13 @@ import { DisplayFlex } from '@/components/ui/Reusable'
 import { useHospitalForm } from '@/lib/context/HospitalContextForm'
 import { useMutation } from '@tanstack/react-query'
 import { Register } from '@/lib/interface/register.interface'
-import { Hospital_Admin } from '@/lib/constant/service'
+import { Hospital_Admin } from '@/lib/service/service'
 
 const Doctor = ({handleNextStep}: {handleNextStep: () => void}) => {
     const {hospitalFormData, updateHospitalData} = useHospitalForm()
     
     const mutation = useMutation({
-        mutationFn: (payload: Register) => Hospital_Admin.registerAccount(payload),
+        mutationFn: (payload: Register) => Hospital_Admin.createProfile(payload),
         onSuccess: (response) => {
             console.log(response)
             handleNextStep()
@@ -30,19 +30,20 @@ const Doctor = ({handleNextStep}: {handleNextStep: () => void}) => {
         e.preventDefault();
         
         const formData: any = new FormData();
-            formData.append("hospital_name", String(hospitalFormData.register.hospitalName || ''));
-            formData.append("registration_number", String(hospitalFormData.register.liscenseNumber || ''));
+            formData.append("hospitalName", String(hospitalFormData.register.hospitalName || ''));
+            formData.append("liscenseNumber", String(hospitalFormData.register.liscenseNumber || ''));
             formData.append("address", String(hospitalFormData.register.address || ''));
-            formData.append("city_state", String(hospitalFormData.register.state || ''));
+            formData.append("state", String(hospitalFormData.register.state || ''));
             formData.append("email", String(hospitalFormData.register.email || ''));
-            formData.append("hospital_phone_number", Number(hospitalFormData.register.phoneNumber || 0));
+            formData.append("phoneNumber", Number(hospitalFormData.register.phoneNumber || 0));
             if (hospitalFormData.register.logo instanceof File) {
-                formData.append("logo", hospitalFormData.register.logo);
+                formData.append("profilePicture", hospitalFormData.register.logo);
             }    
-            formData.append("branch_name", String(hospitalFormData.register.branchName || ''));
-            formData.append("branch_address", String(hospitalFormData.register.email || ''));
-            formData.append("branch_city_state", String(hospitalFormData.register.branchAddress || ''));
-            formData.append("branch_phone_number", Number(hospitalFormData.register.branchPhoneNumber || 0));
+            formData.append("branchName", String(hospitalFormData.register.branchName || ''));
+            formData.append("branchAddress", String(hospitalFormData.register.email || ''));
+            formData.append("branchState", String(hospitalFormData.register.branchAddress || ''));
+            formData.append("branchPhoneNumber", Number(hospitalFormData.register.branchPhoneNumber || 0));
+            console.log(formData)
         await mutation.mutate(formData)
     };
 
@@ -96,7 +97,7 @@ const Doctor = ({handleNextStep}: {handleNextStep: () => void}) => {
                     <AuthNumber
                         label='Phone Number (optional)'
                         placeholder='+234907833'
-                        value={hospitalFormData.register.doctorPhoneNumber ? Number(hospitalFormData.register.doctorPhoneNumber) : ''}
+                        value={hospitalFormData.register.doctorPhoneNumber ? String(hospitalFormData.register.doctorPhoneNumber) : ''}
                         name='doctorPhoneNumber'
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
                             updateHospitalData({ doctorPhoneNumber: e.target.value })

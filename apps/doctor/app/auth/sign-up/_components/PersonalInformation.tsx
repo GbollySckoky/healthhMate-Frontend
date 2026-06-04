@@ -46,7 +46,7 @@ const PersonalInformation = ({handleNextStep, handlePreviousStep}: {handleNextSt
                 {/* Login button - pink background */}
                 <button 
                     type='submit'
-                    disabled={disabled}
+                    // disabled={disabled}
                     className='w-full bg-pink-600  disabled:bg-[#F670C7] disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors duration-200 mt-6 font-inter'
                     onClick={() => handleNextStep(STEP.THREE)}
                 >

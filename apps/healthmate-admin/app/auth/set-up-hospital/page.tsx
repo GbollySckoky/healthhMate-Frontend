@@ -2,7 +2,7 @@
 import React from 'react'
 import Hospital from './_components/Hospital'
 import useStep from '@/hooks/useStep'
-import { STEP } from '@/lib/step'
+import { STEP } from '@/lib/interface/step'
 import Branch from './_components/Branch'
 import Doctor from './_components/Doctor'
 import Success from './_components/Success'

@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import image from '@/assets/Group 19156.png'
-import { STEP } from '@/lib/step'
+import { STEP } from '@/lib/interface/step'
 
 const GetStarted = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
   return (

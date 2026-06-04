@@ -3,8 +3,8 @@ import React from 'react'
 
 interface InputProps{
     placeholder: string;
-    value: string | number;
-    onChange: (e: any) => void;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string
     label: string 
     name: string

@@ -11,7 +11,7 @@ export default function OverviewLayout({
       <div className=" flex">
         <SideBar />
         <Provider>
-          <div className="flex-1  md:ml-[250px] ml-[60px]">
+          <div className="flex-1 md:ml-[250px] ml-[60px]">
             <Header />
             <div>{children}</div>
           </div>

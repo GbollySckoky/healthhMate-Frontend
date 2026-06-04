@@ -2,7 +2,7 @@
 import React from 'react'
 import SuccessImage from '@/assets/Group 1000006795.png'
 import Image from 'next/image'
-import { ROUTES } from '@/lib/Routes'
+import { ROUTES } from '@/lib/constant/Routes'
 import { useRouter } from 'next/navigation'
 
 

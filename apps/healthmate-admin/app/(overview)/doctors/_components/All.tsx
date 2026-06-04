@@ -24,7 +24,7 @@ import DeleteModal from '../../settings/_components/DeleteModal'
 import AddNewDoctor from './AddNewDoctor'
 import { useFormModal } from '@/components/Modal/FormModal'
 import { useQuery } from '@tanstack/react-query'
-import { Hospital_Admin } from '@/lib/constant/service'
+import { Hospital_Admin } from '@/lib/service/service'
 
 
 // Types for better type safety

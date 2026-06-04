@@ -1,9 +1,9 @@
-import adminAPI from "../admin";
-import Clienthttps from "../client-https";
+import adminAPI from "./admin";
+import Clienthttps from "./client-https";
 import { LogIn } from "../interface/login.interface";
 import { Register } from "../interface/register.interface";
-import { Signup } from "../interface/signup-interface";
-import { ADMIN_ENDPOINTS } from "./endpoints";
+import { DOCTOR_SIGNUP, Signup } from "../interface/signup-interface";
+import { ADMIN_ENDPOINTS } from "../constant/endpoints";
 
 export const Hospital_Admin = {
     signup: async (payload: Signup) => {
@@ -12,11 +12,18 @@ export const Hospital_Admin = {
     login: async (payload: LogIn) => {
         return await Clienthttps().post(ADMIN_ENDPOINTS.LOGIN, payload); 
     },
-    registerAccount: async (payload: Register) => {
-        return await adminAPI.post(ADMIN_ENDPOINTS.REGISTER, payload); 
+    createProfile: async (payload: Register) => {
+        return await adminAPI.post(ADMIN_ENDPOINTS.CREATE_HOSPITAL_PROFILE, payload); 
     },
     getAllDoctor: async() => {
         const response = await Clienthttps().get(ADMIN_ENDPOINTS.GET_ALL_DOCTORS);
+        return response.data
+    },
+    createDoctor: async (payload: DOCTOR_SIGNUP) => {
+        return await Clienthttps().post(ADMIN_ENDPOINTS.CREATE_DOCTOR, payload);
+    },
+    getAllHospitals: async() => {
+        const response = await Clienthttps().get(ADMIN_ENDPOINTS.GET_ALL_HOSPITALS);
         return response.data
     },
     getProfile: async() => {

@@ -133,7 +133,7 @@ const Consultation = ({handleNextStep, handlePreviousStep}:
 
                 <button 
                     type='button'
-                    disabled={disabled}
+                    // disabled={disabled}
                     onClick={() => handleNextStep(STEP.FOUR)}
                     className='w-full bg-pink-600 disabled:bg-[#F670C7] disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-colors duration-200 mt-8 font-inter'
                 >

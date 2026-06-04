@@ -4,11 +4,11 @@ import AuthPassword from '@/components/Inputs/AuthPassword'
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Img from '@/components/ui/Image'
-import { ROUTES } from '@/lib/Routes'
+import { ROUTES } from '@/lib/constant/Routes'
 import { Login } from '@/types/login.schema'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
-import { Hospital_Admin } from '@/lib/constant/service'
+import { Hospital_Admin } from '@/lib/service/service'
 import { LogIn } from '@/lib/interface/login.interface'
 
 

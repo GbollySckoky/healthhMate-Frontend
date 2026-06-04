@@ -1,6 +1,6 @@
 "use client"
 import AuthEmail from '@/components/Inputs/AuthEmail'
-import { STEP } from '@/lib/step'
+import { STEP } from '@/lib/interface/step'
 import React, { useState } from 'react'
 
 const ForgotPassword = ({handleNextStep}: {handleNextStep: () => void}) => {

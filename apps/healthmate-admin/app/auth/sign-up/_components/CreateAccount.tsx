@@ -4,31 +4,37 @@ import AuthEmail from '@/components/Inputs/AuthEmail'
 import AuthPassword from '@/components/Inputs/AuthPassword'
 import AuthInput from '@/components/Inputs/AuthInput'
 import AuthNumber from '@/components/Inputs/AuthNumber'
-import { STEP } from '@/lib/step'
+import { STEP } from '@/lib/interface/step'
 import { Signup } from '@/types/signup.schema'
 import { useMutation } from '@tanstack/react-query'
-import { Hospital_Admin } from '@/lib/constant/service'
+import { Hospital_Admin } from '@/lib/service/service'
 import { Signup as SIGN_UP } from '@/lib/interface/signup-interface'
+import { AxiosError } from 'axios'
 
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
     const [inputValue, setInputValue] = useState<Signup>({
-        fullName:'',
+        firstName:'',
+        lastName:'',
         workEmail: '',
         phoneNumber:'',
         password: '',
         confirmPassword: '',
 
     })
+    const [displayPassword, setDisplayPassword] = useState({
+        password: false,
+        confirmPassword: false,
+    });
 
     const mutation = useMutation({
         mutationFn: (payload: SIGN_UP) => Hospital_Admin.signup(payload),
         onSuccess: (response) => {
-            console.log(response.data.access)
-            localStorage.setItem('authToken', response.data.access);
+            console.log("hello",response)
+            localStorage.setItem('authToken', response.data.access_token);
             handleNextStep(STEP.TWO)
-          // Handle success
+
         },
-        onError: (error: any) => {
+        onError: (error: AxiosError) => {
             console.log(error)
           // Handle error
         }
@@ -47,16 +53,19 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
         
         const data = {
             email: inputValue.workEmail ?? '',
-            full_name: inputValue.fullName ?? '',
-            phone_number: Number(inputValue.phoneNumber) ?? 0,
-            password1: inputValue.password ?? '',
-            password2: inputValue.confirmPassword ?? ''
+            firstName: inputValue.firstName ?? '',
+            lastName: inputValue.lastName ?? '',
+            phoneNumber: inputValue.phoneNumber ?? "",
+            password: inputValue.password ?? '',
+            confirmPassword: inputValue.confirmPassword ?? ''
         }
+        console.log("Submitting data:", data);
         await mutation.mutate(data)
+        //  handleNextStep(STEP.TWO)
     };
 
     const disabled = mutation.isPending || !inputValue.workEmail || !inputValue.password ||
-    !inputValue.confirmPassword || !inputValue.fullName || !inputValue.phoneNumber
+    !inputValue.confirmPassword || !inputValue.firstName || !inputValue.lastName || !inputValue.phoneNumber
 
     
     return(
@@ -69,12 +78,21 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                     Join our platform to manage your doctors digitally
                 </p>
             </div>
-            <form onSubmit={handleSubmit} className='space-y-4'>
+            <form 
+            onSubmit={handleSubmit} 
+            className='space-y-4'>
                 <AuthInput
-                    label='Full Name'
-                    placeholder='Enter your name'
-                    value={inputValue.fullName}
-                    name='fullName'
+                    label='First Name'
+                    placeholder='Enter your first name'
+                    value={inputValue.firstName}
+                    name='firstName'
+                    onChange={handleChange}
+                />
+                <AuthInput
+                    label='Last Name'
+                    placeholder='Enter your last name'
+                    value={inputValue.lastName}
+                    name='lastName'
                     onChange={handleChange}
                 />
                 <AuthEmail
@@ -91,19 +109,34 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                     name='phoneNumber'
                     onChange={handleChange}
                 />
-                <AuthPassword
-                    label='Password'
-                    placeholder='hswj****'
+               <AuthPassword
+                    label="Password"
+                    placeholder="hswj****"
                     value={inputValue.password}
-                    name='password'
+                    name="password"
                     onChange={handleChange}
+                    showPassword={displayPassword.password}
+                    onClick={() =>
+                        setDisplayPassword((prev) => ({
+                        ...prev,
+                        password: !prev.password,
+                        }))
+                    }
                 />
+
                 <AuthPassword
-                    label='Confirm Password'
-                    placeholder='hswj****'
+                    label="Confirm Password"
+                    placeholder="hswj****"
                     value={inputValue.confirmPassword}
-                    name='confirmPassword'
+                    name="confirmPassword"
                     onChange={handleChange}
+                    showPassword={displayPassword.confirmPassword}
+                    onClick={() =>
+                        setDisplayPassword((prev) => ({
+                        ...prev,
+                        confirmPassword: !prev.confirmPassword,
+                        }))
+                    }
                 />
 
                 {/* Login button - pink background */}

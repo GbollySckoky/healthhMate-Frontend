@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an Axios instance with proper headers
 const admin = axios.create({
-  baseURL: 'https://healthteam.onrender.com/api/',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: { 
     'Content-Type': 'multipart/form-data'
   },
@@ -11,6 +11,7 @@ const admin = axios.create({
 // Request interceptor to attach token
 admin.interceptors.request.use((config) => {
     const authToken = localStorage.getItem('authToken');
+    console.log("Token from interceptor:", authToken); // Debugging log
   if (authToken) {
     config.headers["Authorization"] = `Bearer ${authToken}`;
   }

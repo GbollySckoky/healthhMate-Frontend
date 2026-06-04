@@ -2,7 +2,7 @@
 import VerifyInput from '@/components/ui/VerifyInput'
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { STEP } from '@/lib/step'
+import { STEP } from '@/lib/interface/step'
 
 
 const VerifyCode = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
