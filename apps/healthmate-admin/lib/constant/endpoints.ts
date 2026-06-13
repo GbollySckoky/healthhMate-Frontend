@@ -3,8 +3,9 @@ SIGN_UP: 'auth/hospital/register/',
 REGISTER: 'auth/hospital/signup/',
 LOGIN: 'auth/hospital/login/',
 GET_ALL_HOSPITALS: 'hospital/hospitals',
-GET_ALL_DOCTORS: 'auth/hospital/doctors',
+GET_ALL_DOCTORS: 'doctor/hospital/',
 GET_HOSPITAL_PROFILE: 'hospital/profile',
 CREATE_HOSPITAL_PROFILE: 'hospital/profile/',
-CREATE_DOCTOR: 'auth/hospital/register/',
+CREATE_DOCTOR: 'auth/doctor/register/',
+GET_ALL_APPOINTMENT: 'appointment/appointments/'
 }

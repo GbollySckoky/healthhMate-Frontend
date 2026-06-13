@@ -13,11 +13,8 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { Hospital_Admin } from '@/lib/service/service'
 import { AxiosError } from 'axios'
 import { DOCTOR_SIGNUP } from '@/lib/interface/signup-interface'
+import DateInput from '@/components/Inputs/Date'
 
-interface Hospital {
-  id: number
-  name: string
-}
 
 interface SelectOption {
   value: string
@@ -32,7 +29,7 @@ const GENDER_OPTIONS: SelectOption[] = [
 ]
 
 const SELECT_CLASS =
-  'border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 w-full text-sm'
+  'border border-gray-300 rounded-md py-2 focus:outline-none focus:ring-1  w-full text-sm'
 
 const LABEL_CLASS = 'font-medium text-[12px] font-inter text-[#414651]'
 
@@ -40,10 +37,10 @@ const initialFormState = {
   firstName: '',
   lastName: '',
   email: '',
-//   dob: '',
+  dob: '',
   gender: '',
   phoneNumber: '',
-  hospitalBranch: '',
+  hospital: '',
   password: '',
   confirmPassword: '',
 }
@@ -57,10 +54,12 @@ const AddNewDoctor = () => {
 
   const { closeModal } = useFormModal()
 
-  const { data: hospitals, isLoading: hospitalsLoading } = useQuery<Hospital[]>({
+  const { data: hospitals, isLoading: hospitalsLoading } = useQuery({
     queryKey: ['hospitals'],
     queryFn: () => Hospital_Admin.getAllHospitals(),
   })
+
+  console.log(hospitals, "Hospitals")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -86,14 +85,16 @@ const AddNewDoctor = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+     console.log("DOB:", inputValue.dob);
+  console.log("GENDER:", inputValue.gender);
     mutation.mutate({
       email: inputValue.email,
       firstName: inputValue.firstName,
       lastName: inputValue.lastName,
-      dateOfBirth: "", // inputValue.dob, // Assuming you will implement DateInput later
+      dateOfBirth: new Date(inputValue.dob).toISOString(), // Assuming you will implement DateInput later
       phoneNumber: inputValue.phoneNumber,
       gender: inputValue.gender,
-      hospitalId: inputValue.hospitalBranch,
+      hospitalId: inputValue.hospital,
       password: inputValue.password,
     })
   }
@@ -135,13 +136,13 @@ const AddNewDoctor = () => {
       </DisplayFlex>
 
       <DisplayFlex>
-        {/* <DateInput
+        <DateInput
           label="Date of Birth"
-          placeholder="17/09/1990"
-        //   value={inputValue.dob}
+          placeholder="1990-09-17"
+          value={inputValue.dob}
           name="dob"
           onChange={handleChange}
-        /> */}
+        />
         <div className="block w-full mb-2">
           <label htmlFor="gender" className={LABEL_CLASS}>
             Gender
@@ -151,8 +152,7 @@ const AddNewDoctor = () => {
             name="gender"
             value={inputValue.gender}
             onChange={handleChange}
-            className={SELECT_CLASS}
-          >
+            className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}>
             {GENDER_OPTIONS.map(({ value, label }) => (
               <option key={value} value={value} disabled={value === ''}>
                 {label}
@@ -184,23 +184,24 @@ const AddNewDoctor = () => {
       </DisplayFlex>
 
       <div className="block w-full mb-2">
-        <label htmlFor="hospitalBranch" className={LABEL_CLASS}>
-          Hospital Branch
+        <label htmlFor="hospital" className={LABEL_CLASS}>
+          Hospital
         </label>
         <select
-          id="hospitalBranch"
-          name="hospitalBranch"
-          value={inputValue.hospitalBranch}
+          id="hospital"
+          name="hospital"
+          value={inputValue.hospital}
           onChange={handleChange}
           className={SELECT_CLASS}
           disabled={hospitalsLoading}
         >
-          <option value="" disabled>
+          <option value="">
             {hospitalsLoading ? 'Loading branches...' : 'Select a branch'}
           </option>
-          {hospitals?.map(({ id, name }) => (
-            <option key={id} value={id}>
-              {name}
+
+          {hospitals?.map((hospital: any) => (
+            <option key={hospital.id} value={hospital.id} className="text-gray-900 bg-white">
+              {hospital.email}
             </option>
           ))}
         </select>

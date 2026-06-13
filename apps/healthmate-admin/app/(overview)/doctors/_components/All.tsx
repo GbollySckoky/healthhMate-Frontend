@@ -118,12 +118,14 @@ const All = () => {
     const { isToggle: showStatusDropdown, handleToggle: toggleStatusDropdown } = useToggle()
     const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
     const router = useRouter()
+    const hospitalId = 3;
+    const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['getAllDoctor', hospitalId],
+    queryFn: () => Hospital_Admin.getAllDoctor(hospitalId),
+    enabled: !!hospitalId
+    });
 
-    const {data, isLoading, error} = useQuery({
-        queryKey: ["getAllDoctor"],
-        queryFn: () => Hospital_Admin.getAllDoctor()
-    })
-    console.log(data)
+    console.log('Hospital', data);
     // Filter data based on search and filters
     const filteredAppointments = appointments.filter((appointment) => {
         const matchesSearch = 

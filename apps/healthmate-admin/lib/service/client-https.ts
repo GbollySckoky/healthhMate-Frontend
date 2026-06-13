@@ -9,7 +9,7 @@ const Clienthttps = () => {
   })
 
   api.interceptors.request.use(config => {
-    const authToken = localStorage.getItem('authToken');
+    const authToken = localStorage.getItem('access_token');
     if (authToken) {
       config.headers.Authorization = `Bearer ${authToken}`;
     }

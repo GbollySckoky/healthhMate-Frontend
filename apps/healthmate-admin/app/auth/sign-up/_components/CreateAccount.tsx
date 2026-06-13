@@ -30,7 +30,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
         mutationFn: (payload: SIGN_UP) => Hospital_Admin.signup(payload),
         onSuccess: (response) => {
             console.log("hello",response)
-            localStorage.setItem('authToken', response.data.access_token);
+            localStorage.setItem('access_token', response.data.access_token);
             handleNextStep(STEP.TWO)
 
         },

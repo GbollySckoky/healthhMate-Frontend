@@ -21,8 +21,8 @@ const Footer: React.FC<FooterProps> = ({ cancelText, text, closeModal, isLoading
 
       <button
         type="submit"
-        className={`text-white ${isLoading || !disabled  ? 'bg-pink-300 cursor-not-allowed' : 'bg-pink-600'} rounded-lg px-4 py-2`}
-        disabled={isLoading || !disabled}
+        className={`text-white ${isLoading || disabled ? 'bg-pink-300 cursor-not-allowed' : 'bg-pink-600'} rounded-lg px-4 py-2`}
+        disabled={isLoading || disabled}
       >
         {isLoading ? 'Loading...' : text}
       </button>
