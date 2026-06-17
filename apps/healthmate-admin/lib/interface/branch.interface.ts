@@ -4,3 +4,8 @@ export interface BRANCH_INTERFACE {
     state: string;
     branchAddress: string
 }
+
+export interface ASSIGN_BRANCH{
+    branchId: string;
+    doctorIds: string;
+}

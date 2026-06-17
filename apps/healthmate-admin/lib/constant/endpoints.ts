@@ -9,6 +9,6 @@ CREATE_HOSPITAL_PROFILE: 'hospital/profile/',
 CREATE_DOCTOR: 'auth/doctor/register/',
 GET_ALL_APPOINTMENT: 'appointment/appointments/',
 CREATE_BRANCH: 'hospital/branch',
-GET_BRANCH: 'hospital/branch',
-ASSIGN_DOCTOR_TO_BRANCH: 'hospital/branch/{branchId}/assign-doctors'
+GET_ALL_BRANCH: 'hospital/branches',
+ASSIGN_DOCTOR_TO_BRANCH: 'hospital/branch/assign-doctors'
 }

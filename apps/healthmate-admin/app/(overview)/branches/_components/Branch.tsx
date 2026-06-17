@@ -8,6 +8,7 @@ import BranchTable from './BranchTable'
 import useToggle from '@/hooks/useToggle'
 import AddNewBranch from './AddNewBranch'
 import { useFormModal } from '@/components/Modal/FormModal'
+import AssignBranch from './AssignBranch'
 
 
 const Branch = () => {
@@ -34,15 +35,26 @@ const Branch = () => {
         <div className="bg-white rounded-lg w-full border border-borderColor ">
             <div className="flex justify-between border-b border-borderColor100 p-4">
                 <TableTitle >All Branches</TableTitle>
-                <Button onClick={() =>
-                          openModal(<AddNewBranch />, {
-                            title:
-                              'Add New Admin',
-                            className: 'max-w-lg',
-                            onClose: () => {},
-                            // confirmDelete() {},
-                          })
-                        }>Add New Branch</Button>
+                <div className="flex items-center gap-3">
+                    <Button onClick={() =>
+                        openModal(<AddNewBranch />, {
+                        title:
+                            'Create Branch',
+                        className: 'max-w-lg',
+                        onClose: () => {},
+                        // confirmDelete() {},
+                        })
+                    }>Add New Branch</Button>
+                    <Button onClick={() =>
+                        openModal(<AssignBranch />, {
+                        title:
+                            'Assign Branch To Doctor',
+                        className: 'max-w-lg',
+                        onClose: () => {},
+                        // confirmDelete() {},
+                        })
+                    }>Assign Branch</Button>
+                </div>
             </div>
             <div className="flex space-x-3 mt-4 px-4">
                 <Input 
