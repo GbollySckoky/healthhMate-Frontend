@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import image from '@/assets/Group 19156.png'
 import { STEP } from '@/lib/interface/step'
+// import {useRouter } from 'next/navigation'
 
 const GetStarted = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
   return (

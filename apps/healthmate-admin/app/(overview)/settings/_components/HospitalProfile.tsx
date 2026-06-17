@@ -1,21 +1,22 @@
 "use client";
 import { TableTitle } from "@/components/ui/Reusable";
 import React, { FormEvent, useState } from "react";
-import UploadLogo from "./UploadLogo";
+// import UploadLogo from "./UploadLogo";
 import Input from "@/components/Inputs/Inputs";
 import { Profile } from "@/types/hospitalProfile.schema";
 import { hospitalProfile } from '@/components/data'
-import TelInput from "@/components/Inputs/TelInput";
-import EmailInput from "@/components/Inputs/EmailInput";
 
 
 const HospitalProfile = () => {
-  const {name,email, number, language} = hospitalProfile
+  const {bio,liscenseNumber, address, state, website, specializations} = hospitalProfile
   const [inputValue, setInputValue] = useState<Profile>({
-    hospitalName: "",
-    workEmail: "",
-    phoneNumber: "",
-    language: "",
+    bio: '',
+    liscenseNumber: '',
+    address: "",
+    state: "",
+    profilePicture: "",
+    website: '',
+    specializations: ''
     // logo: null
   });
 
@@ -38,24 +39,42 @@ const HospitalProfile = () => {
     </TableTitle>
     <form className=" pt-5" onSubmit={handleSubmit}>
         <div className="w-[95%] mx-auto py-5">
-            <UploadLogo />
+            {/* <UploadLogo />/ */}
             <Input
-                name="hospitalName"
-                value={inputValue.hospitalName}
+                name="liscenseNumber"
+                value={inputValue.liscenseNumber}
                 onChange={handleChange}
-                {...name}
+                {...liscenseNumber}
             />
-            <EmailInput
-                name="workEmail"
-                value={inputValue.workEmail}
+            <Input
+                name="address"
+                value={inputValue.address}
                 onChange={handleChange}
-                {...email}
+                {...address}
             />
-            <TelInput
-                name="phoneNumber"
-                value={inputValue.phoneNumber}
+            <Input
+                name="state"
+                value={inputValue.state}
                 onChange={handleChange}
-                {...number}
+                {...state}
+            />
+            <Input
+                name="website"
+                value={inputValue.website}
+                onChange={handleChange}
+                {...website}
+            />
+           <Input
+                name="specializations"
+                value={inputValue.specializations}
+                onChange={handleChange}
+                {...specializations}
+            />
+            <Input
+                name="bio"
+                value={inputValue.bio}
+                onChange={handleChange}
+                {...bio}
             />
         </div>
         

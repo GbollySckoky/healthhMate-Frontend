@@ -259,30 +259,36 @@ export const doctorPerformannce = [
 ]
 
 export const hospitalProfile = {
-    name:{
-        label: 'Hospital Name',
-        placeholder: "Ever care Hospital"
-    },
-    email:{
+    liscenseNumber:{
         title: 'Priority',
-        label: 'Work Email',
-        placeholder: 'admin@evergreen.com'
+        label: 'Liscense Number',
+        placeholder: "w2892msmss"
     },
-    number:{
+    address:{
         title: 'Priority',
-        label: 'Phone Number (optional)',
-        placeholder: '0907386282'
+        label: 'Address',
+        placeholder: '23,, Oristhe street'
     },
-    language:{
+    state:{
         title: 'Priority',
-        label: 'Work Email',
-        options: [
-            'Low',
-            'High',
-            'Medium'
-        ]
+        label: 'State',
+        placeholder: 'Lagos'
     },
-    
+    website:{
+        title: 'Priority',
+        label: 'Website',
+        placeholder: 'Lagos'
+    },
+    specializations:{
+        title: 'Priority',
+        label: 'Specializations',
+        placeholder: 'HealthCare'
+    },
+    bio:{
+        title: 'Priority',
+        label: 'Bio',
+        placeholder: 'We are here to serve you'
+    },
 }
 
 export const admin = {

@@ -118,7 +118,7 @@ const All = () => {
     const { isToggle: showStatusDropdown, handleToggle: toggleStatusDropdown } = useToggle()
     const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
     const router = useRouter()
-    const hospitalId = 3;
+    const hospitalId = 1;
     const { data, isLoading, isError, error } = useQuery({
     queryKey: ['getAllDoctor', hospitalId],
     queryFn: () => Hospital_Admin.getAllDoctor(hospitalId),
@@ -241,6 +241,7 @@ const All = () => {
                 <TableHeader className="border-t border-borderColor text-grey-20">
                     <TableRow className="bg-[#FAFBFF] font-inter text-[14px] font-medium">
                         <TableHead>Full Name</TableHead>
+                         <TableHead>Email</TableHead>
                         <TableHead>Specialty</TableHead>
                         <TableHead>Avg.Rating</TableHead>
                         <TableHead>Appointments</TableHead>
@@ -250,60 +251,90 @@ const All = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {filteredAppointments.length > 0 ? (
-                        filteredAppointments.map((appointment) => (
-                            <TableRow 
-                                key={appointment.id}
-                                className="cursor-pointer hover:bg-gray-50"
-                                onClick={() => handleAppointmentClick(appointment.id)}
-                            >
-                                <TableCell className="font-inter font-normal text-[14px] text-grey-30">
-                                    <div className="flex items-center">
-                                        <Image src={appointment.image} alt='Doctor' width={40} height={40} className="rounded-full" />
-                                        <div className="ml-2">
-                                            <p className="font-medium">{appointment.doctorName}</p>  
-                                            <p className='text-red-800 font-inter font-normal text-[12px]'>{appointment.specialty}</p>
-                                        </div>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                                   {appointment.patientName}
-                                </TableCell>
-                                <TableCell className="font-inter font-normal text-[14px] text-grey-20">
-                                    ⭐ {appointment.rating}
-                                </TableCell>
-                                <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                                    {appointment.time}
-                                </TableCell>
-                                <TableCell>
-                                    <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(appointment.status)}`}>
-                                        {appointment.status}
-                                    </span>
-                                </TableCell>
-                                <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                                    {appointment.type}
-                                </TableCell>
-                                <TableCell   onClick={() =>
-                            openModal(<DeleteModal
-                              text="Are you sure you want to deactivate this doctor? They won’t be able to access their dashboard or consult patients."
-                              />, {
-                              title:
-                                'Deactivate this Doctor?',
-                              className: 'max-w-lg',
-                              onClose: () => {},
-                              confirmDelete() {},
-                            })
-                          }> <Trash2 color="#F04438" size={15}/>
-                          </TableCell>
-                            </TableRow>
-                        ))
-                    ) : (
+                    {isLoading && (
                         <TableRow>
-                            <TableCell colSpan={6} className="text-center py-8 text-gray-500">
-                                No appointments found matching your criteria
-                            </TableCell>
+                        <TableCell colSpan={8} className="text-center py-8 text-gray-500">
+                            Loading...
+                        </TableCell>
                         </TableRow>
                     )}
+
+                    {isError && (
+                        <TableRow>
+                        <TableCell colSpan={8} className="text-center py-8 text-red-500">
+                            {error?.message || 'Something went wrong'}
+                        </TableCell>
+                        </TableRow>
+                    )}
+
+                    {!isLoading &&
+                    !isError &&
+                    data?.data?.map((doctor: any) => (
+                    <TableRow
+                        key={doctor.id}
+                        className="cursor-pointer hover:bg-gray-50"
+                        onClick={() => handleAppointmentClick(doctor.id)}
+                    >
+                        <TableCell className="font-inter font-normal text-[14px] text-grey-30">
+                        <div className="flex items-center">
+                            <Image
+                            src={image}
+                            alt="Doctor"
+                            width={40}
+                            height={40}
+                            className="rounded-full"
+                            />
+                            <div className="ml-2">
+                            <p className="font-medium">
+                                {doctor.firstName} {doctor.lastName}
+                            </p>
+                            <p className="text-red-800 font-inter font-normal text-[12px]">
+                                Healthmate
+                            </p>
+                            </div>
+                        </div>
+                        </TableCell>
+
+                        <TableCell className="font-inter font-normal text-[12px] text-grey-20">
+                        {doctor.email}
+                        </TableCell>
+
+                        <TableCell className="font-inter font-normal text-[12px] text-grey-20">
+                        -
+                        </TableCell>
+
+                        <TableCell className="font-inter font-normal text-[14px] text-grey-20">
+                        ⭐ -
+                        </TableCell>
+
+                        <TableCell className="font-inter font-normal text-[12px] text-grey-20">
+                        -
+                        </TableCell>
+
+                        <TableCell>-</TableCell>
+
+                        <TableCell className="font-inter font-normal text-[12px] text-grey-20">
+                        -
+                        </TableCell>
+
+                        <TableCell
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            openModal(
+                            <DeleteModal text="Are you sure you want to deactivate this doctor? They won’t be able to access their dashboard or consult patients." />,
+                            {
+                                title: 'Deactivate this Doctor?',
+                                className: 'max-w-lg',
+                                onClose: () => {},
+                                confirmDelete() {},
+                            },
+                            );
+                        }}
+                        >
+                        <Trash2 color="#F04438" size={15} />
+                        </TableCell>
+                    </TableRow>
+                    ))}
                 </TableBody>
             </Table>
             <Paginate />

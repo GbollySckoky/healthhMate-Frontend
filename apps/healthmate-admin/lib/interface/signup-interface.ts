@@ -1,7 +1,7 @@
 export interface Signup {
   email: string
-  firstName: string
-  lastName: string
+  hospitalName: string
+  dateOfEstablishment: string
   phoneNumber: string
   password: string
   confirmPassword: string
@@ -15,5 +15,5 @@ export interface DOCTOR_SIGNUP {
   dateOfBirth: string
   phoneNumber: string
   gender: string
-  hospitalId: string
+  // hospitalId: string
 }

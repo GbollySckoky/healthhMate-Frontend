@@ -20,7 +20,7 @@ const DateInput = ({placeholder,value,onChange,className, name, label}: InputPro
             name={name}
             value={value}
             onChange={onChange}
-            className={`outline-none border border-borderColor100 rounded-md p-[7px] text-grey-500 text-[12px] w-full ${className}`}
+            className={`outline-none border border-borderColor100 rounded-md p-[7px] text-[12px] w-full ${className}`}
         />
     </div>
   )

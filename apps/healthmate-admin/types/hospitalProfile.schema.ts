@@ -1,11 +1,13 @@
 import * as z from "zod";
 
 export const HospitalProfileSchema = z.object({
-  hospitalName: z.string().min(1, "Hospital name is required"),
-  workEmail: z.string().email("Invalid email address"),
-  phoneNumber: z.string().min(1, "Phone number is required"),
-  language: z.string().min(1, "Language is required"),
-  // logo: z.instanceof(File, { message: "A valid file is required" })
+  bio: z.string().min(1, "Bio is required"),
+  liscenseNumber: z.string().email("Liscense Number is required"),
+  address: z.string().min(1, "Address is required"),
+  state: z.string().min(1, "State is required"),
+  profilePicture: z.string().min(1, "Profile Picture is required"),
+  website: z.string().min(1, "Website is required"),
+  specializations: z.string().min(1, "Specializations is required"),
 });
 
 export type Profile = z.infer<typeof HospitalProfileSchema>;

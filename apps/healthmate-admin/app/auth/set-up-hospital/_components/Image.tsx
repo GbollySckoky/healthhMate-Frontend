@@ -1,7 +1,8 @@
 import { useHospitalForm } from "@/lib/context/HospitalContextForm";
+import Image from "next/image";
 import React, { useState } from "react";
 
-const Image = () => {
+const UploadImage = () => {
   const [preview, setPreview] = useState("");
   const { updateHospitalData } = useHospitalForm();
 
@@ -21,7 +22,7 @@ const Image = () => {
       <input type="file" onChange={handleFileChange} />
 
       {preview && (
-        <img
+        <Image
           src={preview}
           alt="preview"
           className="mt-4 w-40 h-40 object-cover rounded-lg border"
@@ -31,4 +32,4 @@ const Image = () => {
   );
 };
 
-export default Image;
+export default UploadImage;

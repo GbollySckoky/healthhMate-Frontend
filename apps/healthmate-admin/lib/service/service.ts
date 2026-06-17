@@ -4,6 +4,7 @@ import { LogIn } from "../interface/login.interface";
 import { Register } from "../interface/register.interface";
 import { DOCTOR_SIGNUP, Signup } from "../interface/signup-interface";
 import { ADMIN_ENDPOINTS } from "../constant/endpoints";
+import { BRANCH_INTERFACE } from "../interface/branch.interface";
 
 export const Hospital_Admin = {
     signup: async (payload: Signup) => {
@@ -29,5 +30,8 @@ export const Hospital_Admin = {
     getProfile: async() => {
         const response = await Clienthttps().get(ADMIN_ENDPOINTS.GET_HOSPITAL_PROFILE);
         return response.data
+    },
+    createBranch: async (payload: BRANCH_INTERFACE) => {
+        return await Clienthttps().post(ADMIN_ENDPOINTS.CREATE_BRANCH, payload); 
     },
 }

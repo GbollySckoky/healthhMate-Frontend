@@ -10,11 +10,12 @@ import { useMutation } from '@tanstack/react-query'
 import { Hospital_Admin } from '@/lib/service/service'
 import { Signup as SIGN_UP } from '@/lib/interface/signup-interface'
 import { AxiosError } from 'axios'
+import DateInput from '@/components/Inputs/Date'
 
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
     const [inputValue, setInputValue] = useState<Signup>({
-        firstName:'',
-        lastName:'',
+        hospitalName:'',
+        dateOfEstablishment:'',
         workEmail: '',
         phoneNumber:'',
         password: '',
@@ -53,8 +54,8 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
         
         const data = {
             email: inputValue.workEmail ?? '',
-            firstName: inputValue.firstName ?? '',
-            lastName: inputValue.lastName ?? '',
+            hospitalName: inputValue.hospitalName ?? '',
+            dateOfEstablishment: inputValue.dateOfEstablishment ?? '',
             phoneNumber: inputValue.phoneNumber ?? "",
             password: inputValue.password ?? '',
             confirmPassword: inputValue.confirmPassword ?? ''
@@ -65,7 +66,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
     };
 
     const disabled = mutation.isPending || !inputValue.workEmail || !inputValue.password ||
-    !inputValue.confirmPassword || !inputValue.firstName || !inputValue.lastName || !inputValue.phoneNumber
+    !inputValue.confirmPassword || !inputValue.hospitalName || !inputValue.dateOfEstablishment || !inputValue.phoneNumber
 
     
     return(
@@ -82,21 +83,28 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
             onSubmit={handleSubmit} 
             className='space-y-4'>
                 <AuthInput
-                    label='First Name'
+                    label='Hospital Name'
                     placeholder='Enter your first name'
-                    value={inputValue.firstName}
-                    name='firstName'
+                    value={inputValue.hospitalName}
+                    name='hospitalName'
                     onChange={handleChange}
                 />
-                <AuthInput
-                    label='Last Name'
-                    placeholder='Enter your last name'
-                    value={inputValue.lastName}
-                    name='lastName'
+                {/* <AuthInput
+                    label='Date Of Establishment'
+                    placeholder='19/06/2026'
+                    value={inputValue.dateOfEstablishment}
+                    name='dateOfEstablishment'
+                    onChange={handleChange}
+                /> */}
+                <DateInput 
+                    label='Date Of Establishment'
+                    placeholder='19/06/2026'
+                    value={inputValue.dateOfEstablishment}
+                    name='dateOfEstablishment'
                     onChange={handleChange}
                 />
                 <AuthEmail
-                    label='Work Email'
+                    label='Email'
                     placeholder='admin@example.com'
                     value={inputValue.workEmail}
                     name='workEmail'

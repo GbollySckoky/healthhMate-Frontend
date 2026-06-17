@@ -9,7 +9,7 @@ import { DisplayFlex } from '@/components/ui/Reusable'
 import Footer from '@/components/ui/Footer'
 import { useFormModal } from '@/components/Modal/FormModal'
 import { useState } from 'react'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Hospital_Admin } from '@/lib/service/service'
 import { AxiosError } from 'axios'
 import { DOCTOR_SIGNUP } from '@/lib/interface/signup-interface'
@@ -40,7 +40,6 @@ const initialFormState = {
   dob: '',
   gender: '',
   phoneNumber: '',
-  hospital: '',
   password: '',
   confirmPassword: '',
 }
@@ -54,12 +53,12 @@ const AddNewDoctor = () => {
 
   const { closeModal } = useFormModal()
 
-  const { data: hospitals, isLoading: hospitalsLoading } = useQuery({
-    queryKey: ['hospitals'],
-    queryFn: () => Hospital_Admin.getAllHospitals(),
-  })
+  // const { data: hospitals, isLoading: hospitalsLoading } = useQuery({
+  //   queryKey: ['hospitals'],
+  //   queryFn: () => Hospital_Admin.getAllHospitals(),
+  // })
 
-  console.log(hospitals, "Hospitals")
+  // console.log(hospitals, "Hospitals")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -85,19 +84,21 @@ const AddNewDoctor = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-     console.log("DOB:", inputValue.dob);
-  console.log("GENDER:", inputValue.gender);
-    mutation.mutate({
+
+    const data = {
       email: inputValue.email,
       firstName: inputValue.firstName,
       lastName: inputValue.lastName,
       dateOfBirth: new Date(inputValue.dob).toISOString(), // Assuming you will implement DateInput later
       phoneNumber: inputValue.phoneNumber,
       gender: inputValue.gender,
-      hospitalId: inputValue.hospital,
+      // hospitalId: inputValue.hospital,
       password: inputValue.password,
-    })
+    }
+
+    mutation.mutate(data)
   }
+  
   console.log(inputValue)
   return (
     <form onSubmit={handleSubmit}>
@@ -183,7 +184,7 @@ const AddNewDoctor = () => {
         />
       </DisplayFlex>
 
-      <div className="block w-full mb-2">
+      {/* <div className="block w-full mb-2">
         <label htmlFor="hospital" className={LABEL_CLASS}>
           Hospital
         </label>
@@ -195,17 +196,17 @@ const AddNewDoctor = () => {
           className={SELECT_CLASS}
           disabled={hospitalsLoading}
         >
-          <option value="">
-            {hospitalsLoading ? 'Loading branches...' : 'Select a branch'}
+          <option value="" className="text-sm">
+            {hospitalsLoading ? 'Loading branches...' : 'Select an hospital'}
           </option>
 
-          {hospitals?.map((hospital: any) => (
+          {hospitals && hospitals.data.map((hospital: any) => (
             <option key={hospital.id} value={hospital.id} className="text-gray-900 bg-white">
               {hospital.email}
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
 
       <Footer
         cancelText="Cancel"

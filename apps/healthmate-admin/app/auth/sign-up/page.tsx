@@ -23,7 +23,7 @@ const Page = () => {
                 {step === STEP.TWO &&
                 <Success text="You're just a few steps away from setting up your complete hospital management system." 
                 title="Welcome to HealthMate" btnText="Get Started" 
-                onClick={() => router.push(ROUTES.setUpHospital)} /> }
+                onClick={() => router.push(ROUTES.dashboard)} /> }
                 </div>
                 <Img />
             </div>
