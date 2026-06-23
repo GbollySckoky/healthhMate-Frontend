@@ -16,8 +16,8 @@ import { Doctor } from '@/lib/constant/service'
 const Page = () => {
     const {openModal} = useFormModal()
     const {data} = useQuery({
-      queryKey: ['getProfile'],
-      queryFn: () => Doctor.getProfile()
+      queryKey: ['getDoctor'],
+      queryFn: () => Doctor.getDoctor()
     })
     console.log('Data',data)
     // const doctorProfile = data as DoctorProfile

@@ -1,98 +1,134 @@
-"use client"
-import { useFormModal } from '@/components/modal/FormModal'
-import EmailInput from '@/components/ui/EmailInput'
-import Footer from '@/components/ui/Footer'
-import InputField from '@/components/ui/InputField'
-import { DisplayFlex } from '@/components/ui/Reusable'
-import TelInput from '@/components/ui/TelInput'
-import TextArea from '@/components/ui/TextArea'
-import { Profile } from '@/lib/interface/doctor.schema'
-import Image from 'next/image'
-import React, { useState, FormEvent } from 'react'
-import profileImage from '@/assets/Image (1).png'
+"use client";
+
+import { useFormModal } from "@/components/modal/FormModal";
+import Footer from "@/components/ui/Footer";
+import InputField from "@/components/ui/InputField";
+import { DisplayFlex } from "@/components/ui/Reusable";
+import TelInput from "@/components/ui/TelInput";
+import TextArea from "@/components/ui/TextArea";
+import { Profile } from "@/lib/interface/doctor.schema";
+import React, { FormEvent, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { Doctor } from "@/lib/constant/service";
+import UploadImage from "./UploadImage";
+import { AxiosError } from "axios";
+
 const EditProfile = () => {
-    const {closeModal} = useFormModal()
-    const [inputValue, setInputValue] = useState<Profile>({
-        fullName: '',
-        specialty: '',
-        logo: new File([], ''),
-        address: '',
-        phoneNumber: '',
-        bio: '',
-        email: ''
+  const { closeModal } = useFormModal();
 
-    })
+  const [inputValue, setInputValue] = useState<Profile>({
+    yearsOfExperience: 0,
+    specialization: "",
+    logo: new File([], ""),
+    liscenceNumber: "",
+    consultationFee: 0,
+    bio: "",
+  });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setInputValue((prev) => ({
-          ...prev,
-          [name]: value
-        }));
-    };
-    
-      const handleSubmit = (e: FormEvent) =>{
-        e.preventDefault()
-      }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setInputValue((prev) => ({
+      ...prev,
+      [name]:
+        name === "yearsOfExperience" || name === "consultationFee"
+          ? Number(value)
+          : value,
+    }));
+  };
+
+  const mutation = useMutation({
+    mutationFn: (payload: FormData) => Doctor.createProfile(payload),
+    onSuccess: (response) => {
+      console.log(response.data);
+      closeModal();
+    },
+    onError: (error: AxiosError) => {
+      console.log(error?.response?.data);
+    },
+  });
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("bio", inputValue.bio);
+    formData.append("consultationFee", String(inputValue.consultationFee));
+    formData.append("liscenceNumber", inputValue.liscenceNumber);
+    formData.append("specialization", inputValue.specialization);
+    formData.append("yearsOfExperience", String(inputValue.yearsOfExperience));
+
+    if (inputValue.logo) {
+      formData.append("profilePicture", inputValue.logo);
+    }
+
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    await mutation.mutateAsync(formData);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-        <div className="flex justify-center mb-4">
-            <Image src={profileImage} alt='Doctor Image' className='border border-borderColor rounded-full' width={60}/>
-        </div>
-        <DisplayFlex>
-            <InputField
-                name="fullName"
-                value={inputValue.fullName}
-                onChange={handleChange}
-                placeholder='Olivia James'
-                label='full Name'
-            />
-            <EmailInput 
-                name="email"
-                value={inputValue.email}
-                onChange={handleChange}
-                label='Email'
-                placeholder='olivia@untitledui.com'
-            />
-        </DisplayFlex>
-        <DisplayFlex>
-            <TelInput 
-                name="phoneNumber"
-                value={inputValue.phoneNumber}
-                onChange={handleChange}
-                placeholder='+234 (555) 000-0000'
-                label='Phone number'
-            />
-            <InputField 
-                name="specialty"
-                value={inputValue.specialty}
-                onChange={handleChange}
-                placeholder='Dermatologist'
-                label='Specialty'
-            />
-        </DisplayFlex>
-        <InputField
-            name="address"
-            value={inputValue.address}
-            onChange={handleChange}
-            placeholder='12b, Bourdillon Road, Ikoyi, Lagos'
-            label='Address'
-        />
-        <TextArea 
-            name="bio"
-            value={inputValue.bio}
-            onChange={handleChange}
-            placeholder='I am a General Practitioner with over 8years experience. I help patients manage chronic migraines and sleep issues with comprehensive care approaches.'
-            label='bio'
-        />
-        <Footer 
-            closeModal={closeModal}
-            text='Save Changes'
-            cancelText='Cancel'
-        />
-    </form>
-  )
-}
+      <div className="flex justify-center mb-4">
+        <UploadImage inputValue={inputValue} setInputValue={setInputValue} />
+      </div>
 
-export default EditProfile
+      <DisplayFlex>
+        <TelInput
+          name="yearsOfExperience"
+          value={inputValue.yearsOfExperience}
+          onChange={handleChange}
+          placeholder="3"
+          label="Years Of Experience"
+        />
+
+        <InputField
+          name="specialization"
+          value={inputValue.specialization}
+          onChange={handleChange}
+          label="Specialization"
+          placeholder="Doctor"
+        />
+      </DisplayFlex>
+
+      <DisplayFlex>
+        <InputField
+          name="liscenceNumber"
+          value={inputValue.liscenceNumber}
+          onChange={handleChange}
+          placeholder="MED-12345"
+          label="Liscence Number"
+        />
+
+        <TelInput
+          name="consultationFee"
+          value={inputValue.consultationFee}
+          onChange={handleChange}
+          placeholder="20000"
+          label="Consultation Fee"
+        />
+      </DisplayFlex>
+
+      <TextArea
+        name="bio"
+        value={inputValue.bio}
+        onChange={handleChange}
+        placeholder="I am a General Practitioner with over 8 years experience."
+        label="Bio"
+      />
+
+      <Footer
+        closeModal={closeModal}
+        text={mutation.isPending ? "Saving..." : "Save Changes"}
+        cancelText="Cancel"
+      />
+    </form>
+  );
+};
+
+export default EditProfile;

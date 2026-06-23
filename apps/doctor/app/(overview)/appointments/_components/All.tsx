@@ -17,10 +17,7 @@ import { useRouter } from 'next/navigation'
 import Input from '@/components/ui/Input'
 import Calendar from '@/components/ui/Calendar'
 import MinSelectField from '@/components/ui/MinSelectField'
-// import { Doctor } from '@/lib/constant/service'
-// import { useQuery } from '@tanstack/react-query'
-// import { GetAllAppointment } from '@/lib/interface/get-all-appointment'
-// import LoadingSpinner from '@/components/ui/LoadingSpinner'
+
 
 // Types for better type safety
 interface Appointment {
@@ -120,12 +117,7 @@ const AllAppointmentTable = () => {
     const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
     const router = useRouter()
 
-    // const {data, isLoading, error, isError} = useQuery({
-    //     queryKey: ['getAppointment'],
-    //     queryFn: () => Doctor.getAppointment()
-    //   })
     
-    //   console.log(data)
     // Filter data based on search and filters
     // const filteredAppointments = appointments.filter((appointment) => {
     //     const matchesSearch = 
@@ -222,8 +214,8 @@ const AllAppointmentTable = () => {
                 <TableHeader className="border-t border-borderColor text-grey-20">
                     <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
                         <TableHead>Patient</TableHead>
-                                      <TableHead>Doctor</TableHead>
-                                      <TableHead>Specialty</TableHead>
+                        <TableHead>Doctor</TableHead>
+                        <TableHead>Specialty</TableHead>
                         <TableHead>Date & Time</TableHead>
                         <TableHead>Consultation Type</TableHead>
                         <TableHead>Status</TableHead>

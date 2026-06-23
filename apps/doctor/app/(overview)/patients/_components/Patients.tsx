@@ -1,6 +1,5 @@
 "use client"
 import { PageWrapper } from '@/components/ui/Reusable'
-// import { CloudUpload } from 'lucide-react'
 import {
     Table,
     TableBody,
@@ -10,8 +9,6 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import {Search } from 'lucide-react'
-// import image from '@/assets/Image.png'
-// import Image from "next/image";
 import { TableTitle } from "@/components/ui/Reusable";
 import Input from "@/components/ui/Input";
 import MinSelectField from "@/components/ui/MinSelectField";
@@ -20,83 +17,37 @@ import useToggle from "@/hooks/useToggle";
 import Paginate from '@/components/ui/Paginate'
 import { useRouter } from 'next/navigation'
 import { STATUS } from '@/types/status'
-// import { useAppointment } from '@/lib/context/GetAppointmentContext'
-// import LoadingSpinner from '@/components/ui/LoadingSpinner'
+import { Doctor } from '@/lib/constant/service';
+import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
-
-const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "27/10/2026",
-      totalAmount: "10:00AM",
-      paymentMethod: "Credit Card",
-      status: 'Completed',
-      name: 'John Doe',
-      email: 'john.doe@example.com'
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "27/10/2026",
-      totalAmount: "11:00AM",
-      paymentMethod: "PayPal",
-      status: 'Pending',
-      name: 'John Doe',
-      email: 'john.doe@example.com'
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "27/10/2026",
-      totalAmount: "12:00PM",
-      paymentMethod: "Bank Transfer",
-      status: 'Cancelled',
-      name: 'John Doe',
-      email: 'john.doe@example.com'
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "27/10/2026",
-      totalAmount: "1:00PM",
-      paymentMethod: "Credit Card",
-      status: 'Completed',
-      name: 'John Doe',
-      email: 'john.doe@example.com'
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "27/10/2026",
-      totalAmount: "2:00PM",
-      paymentMethod: "PayPal",
-      status: 'Pending',
-      name: 'John Doe',
-      email: 'john.doe@example.com'
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "27/10/2026",
-      totalAmount: "3:00PM",
-      paymentMethod: "Bank Transfer",
-      status: 'Completed',
-      name: 'John Doe',
-      email: 'john.doe@example.com'
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "27/10/2026",
-      totalAmount: "4:00PM",
-      paymentMethod: "Credit Card",
-      status: 'Cancelled',
-      name: 'John Doe',
-      email: 'john.doe@example.com'
-    },
-]
 
 const Patients = () => {
     const [inputValue, setInputValue] = useState<string>('')
     const [selectValue, setSelectValue] = useState('')
     const {isToggle, handleToggle} = useToggle()
     const router = useRouter()
-    // const {datas, isLoading} = useAppointment()
-    // console.log('20203', datas)
+
+    const {data, isLoading, error, isError} = useQuery({
+        queryKey: ['getAppointment'],
+        queryFn: () => Doctor.getAppointment()
+        })
+    
+    if (isLoading) {
+        return (
+        <div className="flex justify-center items-center py-10">
+            <LoadingSpinner />
+        </div>
+        );
+    }
+
+    if (isError) {
+        return (
+        <div className="text-center py-10 text-red-600 text-sm">
+            Failed to load patients. Please try again. {" "} {error.message}
+        </div>
+        );
+    }
 
     const handleSelect = (option: string) => {
         setSelectValue((prev) => (prev === option ? '' : option ))
@@ -162,26 +113,26 @@ const Patients = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody className='cursor-pointer'>
-                {invoices?.length > 0 && 
-                  invoices?.map((data) => (
-                    <TableRow  key={data.invoice} onClick={() => handleNext(data.invoice)} className="border-t border-borderColor hover:bg-[#FAFBFF]">
+                {data?.data.length > 0 && 
+                  data?.data.map((data: any) => (
+                    <TableRow  key={data.id} onClick={() => handleNext(data.id)} className="border-t border-borderColor hover:bg-[#FAFBFF]">
                     <TableCell className="font-inter font-medium text-[13px] text-grey-30">
-                       <p> {data.name}</p> 
-                        <p className="text-grey-20 text-[12px] font-normal">{data.email}</p>
+                       <p> {data.user.firstName || "N/A"}</p> 
+                        <p className="text-grey-20 text-[12px] font-normal">{data.user.email || 'N/A'}</p>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[13px] text-grey-30">
-                        <p>{data.paymentStatus || "N/A"}</p> 	
-                        <p className="text-grey-20 text-[12px]">{data.totalAmount || "N/A"}</p>
+                        <p>{data.date || "N/A"}</p> 	
+                        <p className="text-grey-20 text-[12px]">{data.time || "N/A"}</p>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[12px] text-grey-20"> 
-                      {data.paymentMethod}
+                      {data.consultationType}
                     </TableCell>
                     <TableCell>
                         <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.status)} text-grey-20`}>
                         {data.status || 'N/A'}
                         </span>
                     </TableCell>
-                    <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer" onClick={() => handleNext(data.invoice)}> View Details</TableCell>
+                    <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer" onClick={() => handleNext(data.id)}> View Details</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>

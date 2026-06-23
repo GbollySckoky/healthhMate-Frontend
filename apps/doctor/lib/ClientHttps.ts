@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { storageService } from './storage';
+import { ROUTES } from './routes';
 
-const ClientHttps = () => {
   const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
-    headers:{
-      'Content-Type': 'application/json'
-    }
+    // headers:{
+    //   'Content-Type': 'application/json'
+    // }
   })
 
   api.interceptors.request.use(config => {
@@ -20,22 +20,15 @@ const ClientHttps = () => {
   api.interceptors.response.use(
     response => response,
     error => {
-      const status = error.response ? error.response.status : null;
+      const status =  error.response?.status;
       
-      if (status === 401 || !storageService.isAuthenticated()) {
+      if (status === 401 ) {
         // Handle unauthorized access
-        //  window.location.href = ROUTES.login
-      } else if (status === 404) {
-        // Handle not found errors
-      } else {
-        // Handle other errors
-      }
+        window.location.href = ROUTES.login
+      } 
       
       return Promise.reject(error);
     }
   );
 
-  return api;
-}
-
-export default ClientHttps
+export default api;
