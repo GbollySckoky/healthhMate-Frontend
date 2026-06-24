@@ -11,7 +11,9 @@ import MinHeader from '@/components/ui/MinHeader'
 import { useMutation } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
 import { storageService } from '@/lib/storage'
-import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
+import { LOGIN } from '@/lib/interface/login.interface'
+// import { AxiosError } from 'axios'
 
 const Page = () => {
     const [inputValue, setInputValue] = useState<Login>({
@@ -30,17 +32,15 @@ const Page = () => {
     };
 
     const mutation = useMutation({
-        mutationFn: (payload: any) => Doctor.login(payload),
+        mutationFn: (payload: LOGIN) => Doctor.login(payload),
         onSuccess: (response) => {
             console.log(response.data)
-
-            storageService.setAuthToken(response.data.access)
-            // handleNextStep()
-          // Handle success
+            storageService.setAuthToken(response.data.access_token)
           router.push(ROUTES.dashboard)
         },
-        onError: (error: any) => {
-            toast.error(error.response.data.error[0])
+        onError: (error: unknown) => {
+            console.log(error)
+            // toast.error(error?.response?.data)
           // Handle error
         }
     })

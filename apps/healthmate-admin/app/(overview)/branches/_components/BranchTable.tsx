@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/pagination"
 import { useRouter } from "next/navigation";
 import DeleteModal from "../../settings/_components/DeleteModal";
+import { useQuery } from "@tanstack/react-query";
+import { Hospital_Admin } from "@/lib/service/service";
 
   const invoices = [
     {
@@ -77,6 +79,11 @@ import DeleteModal from "../../settings/_components/DeleteModal";
 const BranchTable = () => {
     const { openModal } = useModal();
     const router = useRouter()
+    const { data, isLoading } = useQuery({
+      queryKey: ['branch'],
+      queryFn: () => Hospital_Admin.getBranch(),
+    })
+     console.log('DATA!!', data)
     return (
         <div>
           <Table>
@@ -91,14 +98,14 @@ const BranchTable = () => {
                   </TableRow>
               </TableHeader>
               <TableBody onClick={() => router.push("/branches/1")}>
-                {invoices.map((invoice) => (
-                    <TableRow  key={invoice.invoice}>
-                    <TableCell className="font-inter font-medium text-[14px] text-grey-20"> {invoice.invoice}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentStatus}</TableCell>
+                {data?.data.map((branch: any) => (
+                    <TableRow  key={branch.id}>
+                    <TableCell className="font-inter font-medium text-[14px] text-grey-20"> {branch.branchName}</TableCell>
+                    {/* <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentStatus}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
                     <TableCell> <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === activeStatus.ACTIVE && 'text-green-800 bg-green-100' || invoice.paymentMethod === activeStatus.IN_ACTIVE && 'text-red-10 bg-red-100' }`}> {invoice.paymentMethod} </p>
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell className="font-inter font-medium text-[14px]  cursor-pointer flex">
                           <span onClick={() =>
                             openModal(<DeleteModal

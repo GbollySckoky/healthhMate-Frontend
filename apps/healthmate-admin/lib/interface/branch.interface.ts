@@ -7,5 +7,5 @@ export interface BRANCH_INTERFACE {
 
 export interface ASSIGN_BRANCH{
     branchId: string;
-    doctorIds: string;
+    doctorIds: string[];
 }

@@ -1,14 +1,12 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PageWrapper, TableTitle } from '@/components/ui/Reusable'
-// import { useQuery } from '@tanstack/react-query'
-// import { Doctor } from '@/lib/constant/service'
 import Input from '@/components/ui/Input'
 import { Search } from 'lucide-react'
-import MinSelectField from '@/components/ui/MinSelectField'
+// import MinSelectField from '@/components/ui/MinSelectField'
 import Calendar from '@/components/ui/Calendar'
-import useToggle from '@/hooks/useToggle'
+// import useToggle from '@/hooks/useToggle'
 import {
   Table,
   TableBody,
@@ -17,34 +15,34 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-// import { GetAllAppointment } from '@/lib/interface/get-all-appointment'
-// import LoadingSpinner from '@/components/ui/LoadingSpinner'
+import { Doctor } from '@/lib/constant/service'
+import { useQuery } from '@tanstack/react-query'
+
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { useRouter } from 'next/navigation'
 
-const filterOptions = {
+// const filterOptions = {
 
-  specialty: {
-      label: 'Status',
-      options: ['Video Call', 'Audio Call', "In-Person"]
-  }
-}
+//   specialty: {
+//       label: 'Status',
+//       options: ['Video Call', 'Audio Call', "In-Person"]
+//   }
+// }
 
 const Page = () => {
   const [searchInput, setSearchInput] = useState<string>('')
   const router = useRouter()
-  const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
-  const [debounceSearchQuery, setDebounceSearchQuery] = useState("")
-  const [statusFilter, setStatusFilter] = useState("")
+  // const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
+  // const [debounceSearchQuery, setDebounceSearchQuery] = useState("")
+  // const [statusFilter, setStatusFilter] = useState("")
   const [activeStatus, setActiveStatus] = useState<string | undefined>();
-  console.log('Active status', activeStatus)
-  console.log('Status filter', debounceSearchQuery)
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebounceSearchQuery(searchInput)
-    },300);
-   return () => clearTimeout(timeout)
-  },[searchInput])
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setDebounceSearchQuery(searchInput)
+  //   },300);
+  //  return () => clearTimeout(timeout)
+  // },[searchInput])
 
   const handleTabChange = (status: string) => {
       const statusMap: Record<string, string | undefined> = {
@@ -60,9 +58,9 @@ const Page = () => {
       setActiveStatus(statusMap[status])
   }
 
-  const handleSelectConsultationType = (type: string) => {
-    setStatusFilter(prev => prev === type ? '' : type)
-  }
+  // const handleSelectConsultationType = (type: string) => {
+  //   setStatusFilter(prev => prev === type ? '' : type)
+  // }
 
   const handleAppointmentClick = (appointmentId: number) => {
     router.push(`/appointments/${appointmentId}`)
@@ -81,143 +79,86 @@ const getStatusStyle = (status: string) => {
             return ''
     }
 }
-//   const {data, isLoading, error, isError} = useQuery({
-//     queryKey: ['getAppointment'],
-//     queryFn: () => Doctor.getAppointment(
-//       activeStatus,
-//       statusFilter,
-//       debounceSearchQuery,
-//       debounceSearchQuery
-//     )
-//   })
+  const {data, isLoading, error, isError} = useQuery({
+    queryKey: ['getAppointment'],
+    queryFn: () => Doctor.getAppointment()
+  })
 
-  const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "27/10/2026",
-      totalAmount: "10:00AM",
-      paymentMethod: "Physical Clinic",
-      status: 'Completed',
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      health_concerns: 'Cough'
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "27/10/2026",
-      totalAmount: "11:00AM",
-      paymentMethod: "Audio Call",
-      status: 'Pending',
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      health_concerns: 'Fever, Cough'
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "27/10/2026",
-      totalAmount: "12:00PM",
-      paymentMethod: "Video Call",
-      status: 'Cancelled',
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      health_concerns: 'Fever, Cough'
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "27/10/2026",
-      totalAmount: "1:00PM",
-      paymentMethod: "Physical Clinic",
-      status: 'Completed',
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      health_concerns: 'Fever, Cough'
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "27/10/2026",
-      totalAmount: "2:00PM",
-      paymentMethod: "Video Call",
-      status: 'Pending',
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      health_concerns: 'Fever, Hot temprature'
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "27/10/2026",
-      totalAmount: "3:00PM",
-      paymentMethod: "Audio Call",
-      status: 'Completed',
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      health_concerns: 'Fever, Cold'
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "27/10/2026",
-      totalAmount: "4:00PM",
-      paymentMethod: "Physical Clinic.",
-      status: 'Cancelled',
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      health_concerns: 'Fever, Cough'
-    },
-]
+if (isLoading) {
+  return (
+    <div className="flex justify-center items-center py-10">
+      <LoadingSpinner />
+    </div>
+  );
+}
 
+if (isError) {
+  return (
+    <div className="text-center py-10 text-red-600 text-sm">
+      Failed to load appointments. Please try again. {" "} {error.message}
+    </div>
+  );
+}
 
   const renderTable = () => {
+
     return(
-      <Table>
-          <TableHeader className="border-t border-borderColor text-grey-20">
-              <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
-                  <TableHead>Patient</TableHead>
-                  <TableHead>Date & Time</TableHead>
-                  <TableHead>Consultation Type</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Health Concern</TableHead>
+     <Table>
+        <TableHeader className="border-t border-borderColor text-grey-20">
+          <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
+            <TableHead>Patient</TableHead>
+            <TableHead>Date & Time</TableHead>
+            <TableHead>Consultation Type</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Health Concern</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {data.data.length > 0 ? (
+            data.data.map((appointment: any) => (
+              <TableRow
+                key={appointment.id}
+                className="cursor-pointer hover:bg-gray-50"
+                onClick={() => handleAppointmentClick(appointment.id)}
+              >
+                <TableCell>
+                  <p className="font-medium text-[12px]">
+                    {appointment.user?.firstName || 'N/A'} {appointment.user?.lastName || 'N/A'}
+                  </p>
+                  <p className="text-[12px] text-grey-20">
+                    {appointment.user?.email || 'N/A'}
+                  </p>
+                </TableCell>
+
+                <TableCell>
+                  <p className="font-medium text-[12px]">{appointment.date || 'N/A'}</p>
+                  <p className="text-[12px] text-grey-20">{appointment.time || 'N/A'}</p>
+                </TableCell>
+
+                <TableCell className="text-[12px] text-grey-20">
+                  {appointment.consultationType || 'N/A'}
+                </TableCell>
+
+                <TableCell>
+                  <span className={`rounded-full text-[12px] py-1 px-3 ${getStatusStyle(appointment.status)}`}>
+                    {appointment.status || 'N/A'}
+                  </span>
+                </TableCell>
+
+                <TableCell className="text-[12px]">
+                  {appointment.healthConcern || 'N/A'}
+                </TableCell>
               </TableRow>
-          </TableHeader>
-          <TableBody>
-              { invoices?.length > 0 && (
-                  invoices.map((appointment: any) => (
-                      <TableRow 
-                          key={appointment.invoice}
-                          className="cursor-pointer hover:bg-gray-50"
-                          onClick={() => handleAppointmentClick(appointment.invoice)}
-                      >
-                          <TableCell className="font-inter font-normal text-[14px] text-grey-30">
-                              <div>
-                                  <p className="font-medium text-[12px]">{appointment.name || "N/A"}</p>
-                                  <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.email || "N/A"}</p>
-                              </div>
-                          </TableCell>
-                          <TableCell className="font-inter font-normal text-grey-30">
-                              <div>
-                                  <p className="font-medium text-[12px]">{appointment.paymentStatus || "N/A"}</p> 
-                                  <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.totalAmount || "N/A"}</p>
-                              </div>
-                          </TableCell>
-                          <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                            {appointment.paymentMethod || "N/A"}
-                          </TableCell>
-                          <TableCell>
-                              <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(appointment.status)}`}>
-                                  {appointment.status}
-                              </span>
-                          </TableCell>
-                          <TableCell className="font-inter font-normal text-[12px]">
-                            {appointment.health_concerns || "N/A"}
-                          </TableCell>
-                      </TableRow>
-                  ))
-            //   ) : (
-            //       <TableRow>
-            //           <TableCell colSpan={6} className="text-center py-8 text-red-800">
-            //               No appointments found matching your criteria
-            //           </TableCell>
-            //       </TableRow>
-              )}
-          </TableBody>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                No appointments found
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
       </Table>
     )
   }
@@ -239,14 +180,14 @@ const getStatusStyle = (status: string) => {
                     onChange={(e) => setSearchInput(e.target.value)}
                     icon={<Search size={17} color="#C11574" />}
                 />
-                <MinSelectField
+                {/* <MinSelectField
                     {...filterOptions.specialty}
-                    value={statusFilter}
+                    // value={statusFilter}
                     show={showSpecialtyDropdown}
-                    onSelect={handleSelectConsultationType}
+                    // onSelect={handleSelectConsultationType}
                     onClick={toggleSpecialtyDropdown}
                     className='w-fit'
-                />
+                /> */}
                 {/* <MinSelectField 
                     {...filterOptions.status}
                     value={statusFilter}

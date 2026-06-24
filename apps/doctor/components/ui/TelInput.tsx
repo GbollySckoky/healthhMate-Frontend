@@ -3,7 +3,7 @@ import React from 'react'
 
 interface InputProps{
     placeholder: string;
-    value: string;
+    value: string | number;
     onChange: (e: any) => void;
     className?: string
     label: string 
@@ -19,7 +19,7 @@ const TelInput = ({placeholder,value,onChange,className, label, name}: InputProp
             onChange={onChange}
             className={`outline-none border border-borderColor100 rounded-md p-[7px] text-sm ${className} w-full mt-1`} 
             name={name}
-            type="tel"
+            type="number"
         />
     </div>
   )
