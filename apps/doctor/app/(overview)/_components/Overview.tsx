@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { Card, MediumText, MediumTitle, SmallText, SmallTitle, Text, Title, Value } from '@/components/ui/Reusable'
-import { PageWrapper } from '../../../components/ui/Reusable'
+// import { PageWrapper } from '../../../components/ui/Reusable'
 import {  CalendarDays } from 'lucide-react';
 import { overviewData } from '@/components/ui/data';
 import { ArrowDown, ArrowUp } from "lucide-react"
@@ -21,8 +21,7 @@ const Overview = () => {
     console.log(today) 
     const {greeting} = useGreeting()
   return (
-    <PageWrapper>
-        {/*  */}
+    <div className="p-8 min-h-screen bg-[#FAFAFA] mt-[65px]">
         <div className="flex items-center justify-between mb-5">
             <div>
                 <Title>{greeting}, Dr. Uche </Title>
@@ -64,7 +63,7 @@ const Overview = () => {
             <RecentActivities />
         </div>
         <RecentConsultation />
-    </PageWrapper>
+    </div>
   )
 }
 

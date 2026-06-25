@@ -3,19 +3,30 @@ import { Infos, PageWrapper } from '@/components/ui/Reusable'
 import React, { FormEvent, useState } from 'react'
 import Image from 'next/image'
 import image from '@/assets/Image.png'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
 import { useParams } from 'next/navigation'
 import InputField from '@/components/ui/InputField'
-import SelectField from '@/components/ui/SelectField'
 import { useModal } from '@/components/modal/Modal'
+import SelectField from '@/components/ui/SelectField'
 
 
 
 
 const Page = () => {
   const {openModal} = useModal()
-
+  const params = useParams();
+  console.log(params.slug)
+  const id = Number(params.slug);
+  console.log(id)
+  const {data, isLoading, error, isError} = useQuery({
+    queryKey: ['getAppointment'],
+    queryFn: () => Doctor.getAppointment()
+  })
+  const appointmentData = data?.data
+  console.log("appointmnt", appointmentData)
+  const appointment = appointmentData?.find((appointment: any) => appointment.id === id)
+  console.log(appointment)
   return (
     <PageWrapper>
       <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
@@ -23,9 +34,9 @@ const Page = () => {
             <div className="flex items-center">
               <Image src={image} alt='Image' className="w-[80px] h-[80px] rounded-full" />
               <div className='ml-2'>
-                  <p className='font-medium font-libre text-[20px] text-[#211F1F]'>{"Jon Doe"}</p>
-                  <p className='text-[14px] font-inter text-grey-20  py-1'>34 y/o — Female</p>
-                  <p className='text-[14px] font-inter text-grey-20  py-1'>jondoe@gmail.com</p>
+                  <p className='font-medium font-libre text-[20px] text-[#211F1F]'>{appointment?.user?.firstName || "N/A"} {appointment?.user?.lastName || "N/A"}</p>
+                  <p className='text-[14px] font-inter text-grey-20  py-1'>34 y/o  Female</p>
+                  <p className='text-[14px] font-inter text-grey-20  py-1'>{appointment?.user?.email || "N/A"}</p>
               </div>
             </div>
             <p className='text-[#414651] bg-[#f5f5f5] font-medium font-inter text-[14px] rounded-full px-5 py-1 h-fit '>{"Upcoming"}</p>
@@ -33,13 +44,13 @@ const Page = () => {
       </div>
       {/* Type */}
       <div className='mt-5 border border-borderColor p-4 rounded-lg'>
-          <Infos label='Type' value={"Video Call"}/>
-          <Infos label='Date' value={'27/10/2026'}/>
-          <Infos label='Time:' value={"10:00AM"}/>
+          <Infos label='Type' value={appointment?.consultationType}/>
+          <Infos label='Date' value={appointment?.date}/>
+          <Infos label='Time:' value={appointment?.time}/>
       </div>
-      <Info label='Health Concern' value={"Fever, Cough"} />
-      <Info label='Consultation Notes' value='Possible Pelvic inflammation. Perform a Abdomino-Pelvic scan to check for any infection,' />
-      <Info label='Prescription' value='None' />
+      <Info label='Health Concern' value={appointment?.healthConcern} />
+      {/* <Info label='Consultation Notes' value='Possible Pelvic inflammation. Perform a Abdomino-Pelvic scan to check for any infection,' />
+      <Info label='Prescription' value='None' /> */}
       <div className="flex justify-between items-center mt-7">
         <button className='px-4 py-2 bg-red-800 rounded-lg font-inter text-white text-[14px]' 
         onClick={() =>
@@ -69,7 +80,7 @@ const Info = ({label, value}:{label:string, value: string}) => {
 }
 
 type FormState = {
-  diagnosis?: string;
+  note?: string;
   approved?: boolean;
   status?: string;
 };
@@ -78,7 +89,7 @@ type ApproveAppointmentVariables = {
   appointment_id: string;
   payload: {
     status: string;
-    diagnosis: string;
+    note: string;
     approved: boolean;
   };
 };
@@ -131,7 +142,7 @@ const ApproveAppointment = () => {
     
     const payload = {
       status: String(inputValue.status),
-      diagnosis: String(inputValue.diagnosis),
+      note: String(inputValue.note),
       approved: Boolean(inputValue.approved),
     };
     
@@ -144,13 +155,13 @@ const ApproveAppointment = () => {
   return (
     <form onSubmit={handleSubmit}>
       <InputField
-        placeholder="Poor protein"
-        label="Diagnosis"
-        value={inputValue.diagnosis ?? ""}
+        placeholder="I will have a proper discussion with you"
+        label="Consultation Note"
+        value={inputValue.note ?? ""}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          updateInputValue("diagnosis", e.target.value)
+          updateInputValue("note", e.target.value)
         }
-        name="diagnosis"
+        name="note"
       />
       <SelectField
         label="Approved"
