@@ -1,32 +1,29 @@
 // import LoadingSpinner from '@/components/ui/LoadingSpinner'
-import {  Infos } from '@/components/ui/Reusable'
-// import { DoctorProfile } from '@/lib/interface/profile-interface'
+import { Infos } from '@/components/ui/Reusable'
+import { DOCTOR_PROFILE } from '@/interface/get-doctor-profile.interface'
 import React from 'react'
 
-// interface DoctorOverview{
-//   data: DoctorProfile
-// }
-const Overview = () => {
 
+const Overview = ({profileData}:{profileData:DOCTOR_PROFILE}) => {
   return (
     <div>
           {/* ACCOUNT DETAILS */}
           <div className='mt-5 border-b border-borderColor pb-4'>
               <p className='font-semibold text-[18px] font-libre mb-3'>Account Details</p>
-              <Infos label='Name:' value="Gbolahan Coker"/>
-              <Infos label='Email:' value="gbolahan.coker@healthmate.com"/>
-              <Infos label='Phone Number:' value='+234 803 456 7890'/>
+              <Infos label='Name:' value={profileData?.firstName || profileData?.lastName || "N/A" }  />
+              <Infos label='Email:' value={profileData?.email}/>
+              <Infos label='Phone Number:' value={profileData?.phoneNumber}/>
           </div>
           {/* DOCTOR INFORMATION */}
           <div className='mt-5 border-b border-borderColor pb-4'>
               <p className='font-semibold text-[18px] font-libre mb-3'>Personal Information</p>
-              <Infos label='Gender:' value={'Male'}/>
-              <Infos label='Date of Birth:' value={"12th June, 2025"}/>
-              <Infos label='Branch:' value={"Downtown Branch"}/>
-              <Infos label='Department:' value={'Cardiology'}/>
-              <Infos label='License Number:' value={"LIC-2025-001"}/>
-              <Infos label='Address:' value={"123 Health Street, Downtown, City"}/>
-              <Infos label='Hospital:' value={"HealthMate Hospital"}/>
+              <Infos label='Gender:' value={profileData?.gender || 'N/A'}/> 
+              <Infos label='Consultation Fee:' value={profileData?.profile?.consultationFee || 'N/A'}/>
+              <Infos label='Years Of Experience:' value={profileData?.profile?.yearsOfExperience > 1 ? `${profileData?.profile?.yearsOfExperience} Years` : `${profileData?.profile?.yearsOfExperience}  Year`}/>
+              <Infos label='Specialization:' value={profileData?.profile?.specialization || 'N/A'}/>
+              <Infos label='License Number:' value={profileData?.profile?.liscenceNumber || 'N/A'}/>
+              {/* <Infos label='Address:' value={"123 Health Street, Downtown, City"}/> */}
+              <Infos label='Hospital:' value={profileData?.hospital?.hospitalName || 'N/A'}/>
           </div>
         {/* ACCOUNT ACTIVITY */}
         <div className='mt-5'>
@@ -35,7 +32,7 @@ const Overview = () => {
             <Infos label='Avg Rating:' value={`⭐ 4.0 (29 reviews)`}/>
             <Infos label='Status:' value='Active'/>
             <Infos label='Last Login:' value='Today, 2:30 PM'/>
-            <Infos label='Date Joined:' value={"12th June, 2025"}/>
+            <Infos label='Date Joined:' value={new Date(profileData?.createdAt).toLocaleDateString() || 'N/A'}/>
         </div>
     </div>
   )

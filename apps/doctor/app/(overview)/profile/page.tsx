@@ -11,6 +11,7 @@ import { useFormModal } from '@/components/modal/FormModal'
 import EditProfile from './_components/EditProfile'
 import { useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
+import { DOCTOR_PROFILE } from '@/interface/get-doctor-profile.interface'
 // import { DoctorProfile } from '@/lib/interface/profile-interface'
 
 const Page = () => {
@@ -21,7 +22,7 @@ const Page = () => {
     })
     console.log('Data',data)
     // const doctorProfile = data as DoctorProfile
-
+    const profileData: DOCTOR_PROFILE = data?.data
   return (
     <PageWrapper >
         <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
@@ -30,7 +31,7 @@ const Page = () => {
                     <div className="flex items-center">
                       <Image src={image} alt='Image' className="w-[50px] h-[50px] rounded-full" />
                       <div className='ml-2'>
-                          <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr Uche Okoro</p>
+                          <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr {profileData?.firstName || "N/A"} {profileData?.lastName || "N/A"} </p>
                           <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
                       </div>
                     </div>
@@ -50,7 +51,7 @@ const Page = () => {
                 </div>
                 <div className='mt-3'>
                     <p className='font-semibold font-libre text-[14px] text-[#414651] pb-[2px]'>About me</p>
-                    <p className='font-inter font-normal text-[14px] text-[#717680]'>{'Be cautious of the information you share with others. This is a sample about me text.'}</p>
+                    <p className='font-inter font-normal text-[14px] text-[#717680]'>{profileData?.profile?.bio || "N/A"}</p>
                 </div>
             </div>
             
@@ -59,7 +60,7 @@ const Page = () => {
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="documents">Documents</TabsTrigger>
                 </TabsList>
-                <TabsContent value="overview"><Overview  /> </TabsContent>
+                <TabsContent value="overview"><Overview  profileData={profileData} /> </TabsContent>
                 <TabsContent value="documents"> <Documents/> </TabsContent>
             </Tabs>
         </div>
