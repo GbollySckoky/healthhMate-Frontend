@@ -16,7 +16,7 @@ import useToggle from "@/hooks/useToggle"
 import Paginate from '@/components/ui/Paginate'
 import { useRouter } from 'next/navigation'
 import Input from '@/components/ui/Input'
-import Calendar from '@/components/ui/Calendar'
+import Calendar from '@/components/ui/DateCalendar'
 import MinSelectField from '@/components/ui/MinSelectField'
 
 // Types for better type safety

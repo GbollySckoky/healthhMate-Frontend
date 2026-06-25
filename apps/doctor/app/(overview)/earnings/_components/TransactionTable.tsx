@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import Calendar from "@/components/ui/Calendar"
+import Calendar from "@/components/ui/DateCalendar"
 import { TableTitle } from "@/components/ui/Reusable"
 import { paidStatus } from "@/types/status"
 import Input from "@/components/ui/Input"

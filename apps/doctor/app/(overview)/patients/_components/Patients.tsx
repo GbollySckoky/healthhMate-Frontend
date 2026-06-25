@@ -1,5 +1,5 @@
 "use client"
-import { PageWrapper } from '@/components/ui/Reusable'
+import { FlexWrapper, PageWrapper } from '@/components/ui/Reusable'
 import {
     Table,
     TableBody,
@@ -82,63 +82,65 @@ const Patients = () => {
 
   return (
     <PageWrapper>
-        <div className="bg-white rounded-lg w-full border border-borderColor  mt-10">
-            <div className='border-b border-borderColor100 p-4 flex items-center justify-between '>
-                <TableTitle >All Patients</TableTitle>
-            </div>
-            <div className="flex space-x-3 my-4 px-4 ">
-                <Input 
-                    value={inputValue}
-                    placeholder='Search by Name, Specialty'
-                    onChange={(e) => setInputValue(e.target.value)}
-                    icon={<Search size={17} color="#C11574" />}
+        <FlexWrapper>
+            <div className="bg-white rounded-lg  border border-borderColor">
+                <div className='border-b border-borderColor100 p-4 flex items-center justify-between '>
+                    <TableTitle >All Patients</TableTitle>
+                </div>
+                <div className="flex space-x-3 my-4 px-4 ">
+                    <Input 
+                        value={inputValue}
+                        placeholder='Search by Name, Specialty'
+                        onChange={(e) => setInputValue(e.target.value)}
+                        icon={<Search size={17} color="#C11574" />}
+                    />
+                <MinSelectField 
+                    {...status}
+                    value={selectValue}
+                    show={isToggle}
+                    onSelect={handleSelect}
+                    onClick={handleToggle}
+                    className='w-fit'
                 />
-            <MinSelectField 
-                {...status}
-                value={selectValue}
-                show={isToggle}
-                onSelect={handleSelect}
-                onClick={handleToggle}
-                className='w-fit'
-            />
+                </div>
+                <Table>
+                    <TableHeader className="border-t border-borderColor ">
+                        <TableRow className="bg-[#FAFBFF] font-inter text-[14px] font-medium text-grey-20">
+                            <TableHead >Patient </TableHead>
+                            <TableHead>Date & Time</TableHead>
+                            <TableHead>Type</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead></TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody className='cursor-pointer'>
+                    {data?.data.length > 0 && 
+                    data?.data.map((data: any) => (
+                        <TableRow  key={data.id} onClick={() => handleNext(data.id)} className="border-t border-borderColor hover:bg-[#FAFBFF]">
+                        <TableCell className="font-inter font-medium text-[13px] text-grey-30">
+                        <p> {data.user.firstName || "N/A"}</p> 
+                            <p className="text-grey-20 text-[12px] font-normal">{data.user.email || 'N/A'}</p>
+                        </TableCell>
+                        <TableCell className="font-inter font-normal text-[13px] text-grey-30">
+                            <p>{data.date || "N/A"}</p> 	
+                            <p className="text-grey-20 text-[12px]">{data.time || "N/A"}</p>
+                        </TableCell>
+                        <TableCell className="font-inter font-normal text-[12px] text-grey-20"> 
+                        {data.consultationType}
+                        </TableCell>
+                        <TableCell>
+                            <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.status)} text-grey-20`}>
+                            {data.status || 'N/A'}
+                            </span>
+                        </TableCell>
+                        <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer" onClick={() => handleNext(data.id)}> View Details</TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+                <Paginate />
             </div>
-            <Table>
-                <TableHeader className="border-t border-borderColor ">
-                    <TableRow className="bg-[#FAFBFF] font-inter text-[14px] font-medium text-grey-20">
-                        <TableHead >Patient </TableHead>
-                        <TableHead>Date & Time</TableHead>
-                        <TableHead>Type</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead></TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className='cursor-pointer'>
-                {data?.data.length > 0 && 
-                  data?.data.map((data: any) => (
-                    <TableRow  key={data.id} onClick={() => handleNext(data.id)} className="border-t border-borderColor hover:bg-[#FAFBFF]">
-                    <TableCell className="font-inter font-medium text-[13px] text-grey-30">
-                       <p> {data.user.firstName || "N/A"}</p> 
-                        <p className="text-grey-20 text-[12px] font-normal">{data.user.email || 'N/A'}</p>
-                    </TableCell>
-                    <TableCell className="font-inter font-normal text-[13px] text-grey-30">
-                        <p>{data.date || "N/A"}</p> 	
-                        <p className="text-grey-20 text-[12px]">{data.time || "N/A"}</p>
-                    </TableCell>
-                    <TableCell className="font-inter font-normal text-[12px] text-grey-20"> 
-                      {data.consultationType}
-                    </TableCell>
-                    <TableCell>
-                        <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.status)} text-grey-20`}>
-                        {data.status || 'N/A'}
-                        </span>
-                    </TableCell>
-                    <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer" onClick={() => handleNext(data.id)}> View Details</TableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-            <Paginate />
-        </div>
+        </FlexWrapper>
     </PageWrapper>
   )
 }

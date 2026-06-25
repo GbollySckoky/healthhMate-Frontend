@@ -1,5 +1,5 @@
 export interface ApproveAppointment {
   status: string,
-  diagnosis: string,
+  note: string,
   approved: boolean
 }

@@ -1,3 +1,4 @@
+"use client"
 import { Card, DisplayFlex } from "@/components/ui/Reusable"
 import {
     Table,
@@ -7,82 +8,43 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import { STATUS } from "@/types/status"
+// import { STATUS } from "@/types/status"
 import { ChevronRight } from "lucide-react"
-  
-  const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Credit Card",
-      status: 'Completed'
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "PayPal",
-      status: 'Pending'
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "Bank Transfer",
-      status: 'Cancelled'
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "Credit Card",
-      status: 'Completed'
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "PayPal",
-      status: 'Pending'
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Bank Transfer",
-      status: 'Completed'
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Credit Card",
-      status: 'Cancelled'
-    },
-  ]
+// import Image from 'next/image'
+// import image from '@/assets/Image.png';
+import { Doctor } from '@/lib/constant/service';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/lib/routes';
+import Link from "next/link"
+
   
   export function RecentConsultation() {
-    // Get status styling
-    const getStatusStyle = (status: string) => {
-        switch (status) {
-            case STATUS.COMPLETED:
-                return 'text-green-700 bg-green-100'
-            case STATUS.PENDING:
-                return 'text-gray-700 bg-gray-100'
-            case STATUS.CANCELLED:
-                return 'text-red-700 bg-red-100'
-            default:
-                return ''
-        }
-    }
-    
+    const router = useRouter()
+    // const getStatusStyle = (status: string) => {
+    //     switch (status) {
+    //         case STATUS.COMPLETED:
+    //             return 'text-green-700 bg-green-100'
+    //         case STATUS.PENDING:
+    //             return 'text-gray-700 bg-gray-100'
+    //         case STATUS.CANCELLED:
+    //             return 'text-red-700 bg-red-100'
+    //         default:
+    //             return ''
+    //     }
+    // }
+    const {data, isLoading, error, isError} = useQuery({
+      queryKey: ['getAppointment'],
+      queryFn: () => Doctor.getAppointment()
+    })
+
+    const recentConsultation = data?.data
     return (
         <Card>
             <DisplayFlex>
                 <p className="font-lato font-medium text-[18px] text-30">Recent Consultation</p>
                 <div className="flex items-center text-red-800 cursor-pointer hover:text-red-600">
-                    <p className='font-semibold text-[15px]'>See all</p>
+                    <Link className='font-semibold text-[15px]' href={ROUTES.patients}>See all</Link>
                     <ChevronRight size={18} />
                 </div>
             </DisplayFlex> 
@@ -96,23 +58,28 @@ import { ChevronRight } from "lucide-react"
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                {invoices.map((invoice) => (
-                    <TableRow  key={invoice.invoice}>
+                {recentConsultation?.map((consult: any) => (
+                    <TableRow  key={consult.id}>
                     <TableCell className="font-inter font-medium text-[13px] text-grey-30">
-                        Phoenix Baker
-                        <p className="text-grey-20 text-[12px] font-normal">olivia@untitledui.com</p>
+                        {consult?.user?.firstName || "N/A"} {" "} {consult?.user?.lastName || "N/A"}
+                        <p className="text-grey-20 text-[12px] font-normal">{consult?.user?.email || "N/A"}</p>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[13px] text-grey-30">
-                        <p>Jul 2, 2025</p> 	
-                        <p className="text-grey-20 text-[12px]">10:00AM</p>
+                        <p>{consult?.date}</p> 	
+                        <p className="text-grey-20 text-[12px]">{consult?.time}</p>
                     </TableCell>
-                    <TableCell className="font-inter font-normal text-[12px] text-grey-20">{invoice.paymentMethod}</TableCell>
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20">{consult?.consultationType}</TableCell>
                     <TableCell>
-                        <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(invoice.status)}`}>
+                        {/* <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(invoice.status)}`}>
                             {invoice.status}
-                        </span>
+                        </span> */}
                     </TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-red-800">View Details</TableCell>
+                    <TableCell className="font-inter font-normal text-[14px] text-red-800">
+                      <button
+                        onClick={() => router.push(`${ROUTES.patients}/${consult.id}`)}>
+                          View Details
+                        </button> 
+                    </TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
