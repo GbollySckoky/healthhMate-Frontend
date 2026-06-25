@@ -182,7 +182,7 @@ export const Info = ({label, amount}:{label:string, amount: string}) => {
     )
 }
 
-export const Infos = ({label, value}:{label:string, value: string}) => {
+export const Infos = ({label, value}:{label:string, value: string | number}) => {
     return(
         <div className='flex items-center justify-between space-y-1'>
             <p className='text-grey-20 text-[16px] font-lato font-normal'>{label}</p>
@@ -208,3 +208,7 @@ export const StatusInfo = ({label, value}:{label:string, value: string}) => {
         </div>
     )
 }
+
+export const capitalizeFirstLetter = (text: string) => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
