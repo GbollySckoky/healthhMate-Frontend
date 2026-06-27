@@ -1,10 +1,27 @@
-// import LoadingSpinner from '@/components/ui/LoadingSpinner'
-import { Infos } from '@/components/ui/Reusable'
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { FlexWrapper, Infos, PageWrapper } from '@/components/ui/Reusable'
 import { DOCTOR_PROFILE } from '@/interface/get-doctor-profile.interface'
 import React from 'react'
 
 
-const Overview = ({profileData}:{profileData:DOCTOR_PROFILE}) => {
+const Overview = ({profileData, isLoading, isError, error}:{profileData:DOCTOR_PROFILE, isLoading: boolean,isError: boolean, error: Error}) => {
+    if (isLoading) {
+        return (
+        <PageWrapper>
+          <FlexWrapper>
+            <LoadingSpinner />
+          </FlexWrapper>
+        </PageWrapper>
+        );
+    }
+
+    if (isError) {
+        return (
+        <div className="text-center py-10 text-red-600 text-sm">
+            Failed to load patients. Please try again. {" "} {error.message}
+        </div>
+        );
+    }
   return (
     <div>
           {/* ACCOUNT DETAILS */}
