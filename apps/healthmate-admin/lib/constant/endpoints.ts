@@ -1,0 +1,14 @@
+export const ADMIN_ENDPOINTS = {
+SIGN_UP: 'auth/hospital/register/',
+REGISTER: 'auth/hospital/signup/',
+LOGIN: 'auth/hospital/login/',
+GET_ALL_HOSPITALS: 'hospital/hospitals',
+GET_ALL_DOCTORS: 'doctor/hospital/',
+GET_HOSPITAL_PROFILE: 'hospital/profile',
+CREATE_HOSPITAL_PROFILE: 'hospital/profile/',
+CREATE_DOCTOR: 'auth/doctor/register/',
+GET_ALL_APPOINTMENT: 'appointment/appointments/',
+CREATE_BRANCH: 'hospital/branch',
+GET_ALL_BRANCH: 'hospital/branches',
+ASSIGN_DOCTOR_TO_BRANCH: 'hospital/branch/assign-doctors'
+}

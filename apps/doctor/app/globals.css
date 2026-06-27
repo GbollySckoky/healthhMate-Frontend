@@ -1,0 +1,159 @@
+/* CDN Font imports */
+@import url('https://fonts.cdnfonts.com/css/lato');
+@import url('https://fonts.cdnfonts.com/css/libre-franklin');
+@import url('https://fonts.cdnfonts.com/css/inter');
+
+/* Tailwind directives */
+@tailwind base;
+@tailwind components; 
+@tailwind utilities;
+
+/* Global styles */
+/* * {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+} */
+
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* CSS Custom Properties for additional styling */
+:root {
+  /* red */
+  --red-900: #851651;
+  --red-800: #C11574;
+  --red-700: #B42318;
+  --red-600: #DF0000;
+  --red-200: #FAA7E0;
+  --red-100: #FFECE5;
+  --red-50: #FDF2FA;
+  --red-10: #F04438;
+
+  /* gray */
+  --grey-900: #101928;
+  --grey-800: #211F1F; 
+  --grey-700: #344054;
+  --grey-600: #475367;
+  --grey-500: #6B7280;
+  --grey-400: #A4A7AE;
+  --grey-300: #8A8A8A;
+  --grey-200: #333333;
+  --grey-100: #434343;
+  --grey-50: #252B37;
+  --grey-30: #181D27;
+  --grey-20: #535862;
+  --grey-10: #211F1F;
+
+  /* greeen */
+  --green-900: #05A505;
+  --green-800: #027A48;
+  --green-100: #ECFDF3;
+
+  /* black */
+  --black:  #000000;
+  --health-black: #25282B;
+
+  /* border color */
+  --borderColor: #F1F1F1;
+  --borderColor--100: #D5D7DA;
+
+  /* blue */
+  --blue-900: #3538CD;
+  --blue-200: #4D8BF8;
+  --blue-100: #7CA1FE;
+  --blue-50: #EEF4FF;
+
+  /* purple */
+  --purple-900: #6938EF;
+  
+
+  /* orange */
+  --orange-900: #CC400C;
+  --orange-400: #F56630;
+  --orange-200:#FA9874;
+
+  /* Pink */
+  --pink-600: #DD2590;
+
+
+  --font-inter: 'Inter', sans-serif;
+  --font-lato: 'Lato', sans-serif;
+  --font-libre: 'Libre Franklin', sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.img{
+  background-image: url('../../healthmate-admin/assets/lovely.png');
+  height: 100vh;
+}

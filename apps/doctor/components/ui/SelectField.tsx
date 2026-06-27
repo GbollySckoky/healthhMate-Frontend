@@ -1,0 +1,51 @@
+import React from 'react'
+import { ChevronDown } from 'lucide-react';
+
+
+interface SelectFieldProps{
+    label: string | boolean;
+    value: string | boolean;
+    show: boolean;
+    onClick: () => void;
+    onSelect: (value: string) => void
+    options: string[]  
+    title?: string
+    className?: string
+}
+
+const SelectField = ({ label, value, show, onClick, onSelect, options, title, className }: SelectFieldProps) => {
+    return (
+      <div className="">
+         <p className='mb-1 font-inter font-medium text-[#414651] text-[14px]'>{title}</p> 
+        <div
+          className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md p-[7px] ${className}`}
+          onClick={onClick}
+        >
+          <p className="font-inter text-[#717680] font-medium pr-3 text-sm ">
+            {value || label}
+          </p>
+          <ChevronDown size={15} />
+        </div>
+  
+        {show && (
+          <div className="border border-borderColor100 rounded-md mt-2 mb-3">
+            {options.map((option, index) => (
+              <div
+                key={index}
+                onClick={() => { 
+                  onSelect(option)
+                  onClick()
+                }}
+                className="px-3 py-1 text-sm text-grey-800 hover:bg-gray-100 cursor-pointer"
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+  
+
+export default SelectField
