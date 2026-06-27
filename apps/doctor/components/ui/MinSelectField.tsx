@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react';
 
 interface SelectFieldProps{
     label: string;
-    value: string;
+    value: string | undefined;
     show: boolean;
     onClick: () => void;
     onSelect: (value: string) => void
