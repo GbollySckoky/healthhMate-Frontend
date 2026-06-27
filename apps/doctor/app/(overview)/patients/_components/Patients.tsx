@@ -38,28 +38,6 @@ const Patients = () => {
     });
     const [activeStatus, setActiveStatus] = useState<string | undefined>();
 
-
-    // const {data, isLoading, error, isError} = useQuery({
-    //     queryKey: ['getAppointment'],
-    //     queryFn: () => Doctor.getAppointment()
-    //     })
-    
-    // if (isLoading) {
-    //     return (
-    //     <div className="flex justify-center items-center py-10">
-    //         <LoadingSpinner />
-    //     </div>
-    //     );
-    // }
-
-    // if (isError) {
-    //     return (
-    //     <div className="text-center py-10 text-red-600 text-sm">
-    //         Failed to load patients. Please try again. {" "} {error.message}
-    //     </div>
-    //     );
-    // }
-
     const handleSelect = (option: string) => {
         setActiveStatus((prev) => (prev === option ? '' : option ))
         // handleToggle

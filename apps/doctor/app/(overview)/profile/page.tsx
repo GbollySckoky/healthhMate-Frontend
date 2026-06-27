@@ -1,5 +1,5 @@
 'use client'
-import { PageWrapper,} from '@/components/ui/Reusable'
+import { FlexWrapper, PageWrapper,} from '@/components/ui/Reusable'
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Image from 'next/image'
@@ -12,19 +12,19 @@ import EditProfile from './_components/EditProfile'
 import { useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
 import { DOCTOR_PROFILE } from '@/interface/get-doctor-profile.interface'
-// import { DoctorProfile } from '@/lib/interface/profile-interface'
 
 const Page = () => {
     const {openModal} = useFormModal()
-    const {data} = useQuery({
+    const {data, isLoading, isError, error } = useQuery({
       queryKey: ['getDoctor'],
       queryFn: () => Doctor.getDoctor()
     })
-    console.log('Data',data)
-    // const doctorProfile = data as DoctorProfile
     const profileData: DOCTOR_PROFILE = data?.data
+
+
   return (
-    <PageWrapper >
+    <PageWrapper>
+      <FlexWrapper>
         <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
             <div className="mb-3  border-b pb-6 border-borderColor">
                 <div className="flex h-fit items-center justify-between">
@@ -60,10 +60,11 @@ const Page = () => {
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="documents">Documents</TabsTrigger>
                 </TabsList>
-                <TabsContent value="overview"><Overview  profileData={profileData} /> </TabsContent>
+                <TabsContent value="overview"><Overview  profileData={profileData} isLoading={isLoading} isError={isError} error={error} /> </TabsContent>
                 <TabsContent value="documents"> <Documents/> </TabsContent>
             </Tabs>
         </div>
+      </FlexWrapper>
     </PageWrapper>
   )
 }
