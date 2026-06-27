@@ -8,12 +8,15 @@ import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
+import { Appointment } from '@/interface/doctor-apppointment.interface';
+import { STATUS } from '@/types/status';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 const UpcomingAppointment = () => {
   const router = useRouter()
    const {data, isLoading, error, isError} = useQuery({
       queryKey: ['getAppointment'],
-      queryFn: () => Doctor.getAppointment()
+      queryFn: () => Doctor.getAppointment(1, 10, STATUS.UPCOMING)
     })
 
     const upcomingConsultation = data?.data
@@ -35,9 +38,21 @@ const UpcomingAppointment = () => {
     
     {/* Scrollable content */}
     <div className="flex-1 overflow-y-auto p-4 pt-0">
-      {upcomingConsultation?.slice(0, 10)?.map((consultation:any) => {
-        return(
-          <div key={consultation.id} className="flex items-center justify-between py-4 border-t border-gray-200 first:border-t-0">
+      {isLoading ? (
+        <div className="flex justify-center py-8">
+          <LoadingSpinner />
+        </div>
+        ) : isError ? (
+          <div className="text-center py-20">
+            {error.message}
+          </div>
+        ) : upcomingConsultation.length === 0 ? (
+          <div className="text-center py-8 text-gray-500">
+            No upcoming appointments found
+          </div>
+        ) : upcomingConsultation?.slice(0, 10)?.map((consultation:Appointment) => {
+       return(
+        <div key={consultation.id} className="flex items-center justify-between py-4 border-t border-gray-200 first:border-t-0">
           <div className="flex">
             <Image 
               src={image} 
@@ -60,7 +75,7 @@ const UpcomingAppointment = () => {
           </div>
           <button 
             className='font-semibold text-[14px] border p-2 rounded-md font-libre text-[#414651] cursor-pointer hover:text-red-800'
-            c>
+            onClick={() => router.push(`${ROUTES.appointment}/${consultation.id}`)}>
             View Details
           </button>
           </div>

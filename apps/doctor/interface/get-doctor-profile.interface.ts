@@ -37,3 +37,20 @@ export interface Profile {
   createdAt: string
   updatedAt: string
 }
+
+
+export interface SEARCH_QUERY{
+  healthConcern: string;
+  consultationType: string
+  user: User
+  hospital: Hospital
+}
+
+export interface User{
+  firstName:  string;
+  lastName: string
+}
+
+export interface Hospital{
+  hospitalName:  string;
+}

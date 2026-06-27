@@ -8,37 +8,39 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-// import { STATUS } from "@/types/status"
 import { ChevronRight } from "lucide-react"
-// import Image from 'next/image'
-// import image from '@/assets/Image.png';
 import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
 import Link from "next/link"
+import { Appointment } from "@/interface/doctor-apppointment.interface";
+import { STATUS } from "@/types/status";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
   
   export function RecentConsultation() {
     const router = useRouter()
-    // const getStatusStyle = (status: string) => {
-    //     switch (status) {
-    //         case STATUS.COMPLETED:
-    //             return 'text-green-700 bg-green-100'
-    //         case STATUS.PENDING:
-    //             return 'text-gray-700 bg-gray-100'
-    //         case STATUS.CANCELLED:
-    //             return 'text-red-700 bg-red-100'
-    //         default:
-    //             return ''
-    //     }
-    // }
+    const getStatusStyle = (status: string) => {
+        switch (status) {
+            case STATUS.COMPLETED:
+                return 'text-green-700 bg-green-100'
+            case STATUS.PENDING:
+                return 'text-gray-700 bg-gray-100'
+            case STATUS.CANCELLED:
+                return 'text-red-700 bg-red-100'
+            default:
+                return ''
+        }
+    }
     const {data, isLoading, error, isError} = useQuery({
       queryKey: ['getAppointment'],
       queryFn: () => Doctor.getAppointment()
     })
 
-    const recentConsultation = data?.data
+    const recentConsultation = data?.data ?? []
+    const completedConsultation = recentConsultation?.filter((consult: Appointment) => consult.status === STATUS.PENDING || consult.status === STATUS.CANCELLED || consult.status === STATUS.REJECTED)
+    console.log(completedConsultation)
     return (
         <Card>
             <DisplayFlex>
@@ -58,21 +60,39 @@ import Link from "next/link"
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                {recentConsultation?.map((consult: any) => (
+                {isLoading ? (
+                  <TableRow>
+                    <TableCell colSpan={5}>
+                      <LoadingSpinner />
+                    </TableCell>
+                  </TableRow>
+                ) : isError ? (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center py-8">
+                      {error.message}
+                    </TableCell>
+                  </TableRow>
+                ): completedConsultation.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                      No recent consultation found
+                    </TableCell>
+                  </TableRow>
+                ) : completedConsultation?.slice(0, 10)?.map((consult: Appointment) => (
                     <TableRow  key={consult.id}>
                     <TableCell className="font-inter font-medium text-[13px] text-grey-30">
-                        {consult?.user?.firstName || "N/A"} {" "} {consult?.user?.lastName || "N/A"}
-                        <p className="text-grey-20 text-[12px] font-normal">{consult?.user?.email || "N/A"}</p>
+                        {consult.user.firstName || "N/A"} {" "} {consult.user.lastName || "N/A"}
+                        <p className="text-grey-20 text-[12px] font-normal">{consult.user.email || "N/A"}</p>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[13px] text-grey-30">
-                        <p>{consult?.date}</p> 	
-                        <p className="text-grey-20 text-[12px]">{consult?.time}</p>
+                        <p>{consult.date}</p> 	
+                        <p className="text-grey-20 text-[12px]">{consult.time}</p>
                     </TableCell>
-                    <TableCell className="font-inter font-normal text-[12px] text-grey-20">{consult?.consultationType}</TableCell>
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20">{consult.consultationType}</TableCell>
                     <TableCell>
-                        {/* <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(invoice.status)}`}>
-                            {invoice.status}
-                        </span> */}
+                        <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(consult.status)}`}>
+                            {consult.status}
+                        </span>
                     </TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-red-800">
                       <button

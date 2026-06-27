@@ -4,7 +4,6 @@ import { SIGNUP } from "../interface/sign-up.interface";
 import { DOCTOR_ENDPOINTS } from "./endpoints";
 import { ApproveAppointment } from "../interface/approve-appointment.interface";
 import api from "../ClientHttps";
-// import { DOCTOR_PROFILE } from "@/interface/doctor-profile.interface";
 
 
 export const Doctor = {
@@ -15,15 +14,19 @@ export const Doctor = {
         return await api.post(DOCTOR_ENDPOINTS.LOGIN, payload); 
     },
     getAppointment: async (
-        // status?: string,consultation_type?: string, patient_name?: string, patient_email?: string
+       page = 1, limit = 10, status?: string, q?: string
     ) => {
-        // const params = new URLSearchParams({
-        // })
-        // if(status) params.append("status", status)
-        // if(consultation_type) params.append("consultation_type", consultation_type)
-        // if(patient_name) params.append("patient_name", patient_name)
-        // if(patient_email) params.append("patient_email", patient_email)
-        const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT}`); 
+        const params = new URLSearchParams({
+        })
+        params.append("page", String(page))
+        params.append("limit", String(limit))
+        if(status) params.append("status", status)
+        if(q) params.append("q", q)
+        // if(q?.healthConcern) params.append("healthConcern", q.healthConcern)
+        // if(q?.user?.firstName) params.append("firstName", q?.user?.firstName)
+        // if(q?.user?.lastName) params.append("lastName", q?.user?.lastName)
+        // if(q?.hospital?.hospitalName) params.append("hospitalName", q?.hospital?.hospitalName)
+        const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT}?${params.toString()}`); 
         return await response.data
     },
     getPayout: async () => {
