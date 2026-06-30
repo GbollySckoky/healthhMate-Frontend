@@ -97,7 +97,7 @@ const Patients = () => {
     const patients = data?.data ?? []
     console.log(patients)
 
-    const activePatients = patients?.filter((patient: Appointment) => patient.status === STATUS.PENDING || patient.status === STATUS.CANCELLED ||  patient.status === STATUS.REJECTED)
+    const activePatients = patients?.filter((patient: Appointment) => patient.status !== STATUS.PENDING )
     console.log(activePatients)
     const handleNext = (id: number) => {
       router.push(`/patients/${id}`)

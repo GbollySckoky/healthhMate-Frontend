@@ -43,13 +43,13 @@ const UpcomingAppointment = () => {
           <LoadingSpinner />
         </div>
         ) : isError ? (
-          <div className="text-center py-20">
+          <p className="text-center py-20 text-sm">
             {error.message}
-          </div>
+          </p>
         ) : upcomingConsultation.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
+          <p className="text-center py-8 text-gray-500 text-sm">
             No upcoming appointments found
-          </div>
+          </p>
         ) : upcomingConsultation?.slice(0, 10)?.map((consultation:Appointment) => {
        return(
         <div key={consultation.id} className="flex items-center justify-between py-4 border-t border-gray-200 first:border-t-0">

@@ -167,7 +167,7 @@ const Page = () => {
                 </TableCell>
               </TableRow>
             ) : (
-              appointments.map((appointment: Appointment) => (
+              appointments?.map((appointment: Appointment) => (
                 <TableRow
                   key={appointment.id}
                   className="cursor-pointer hover:bg-gray-50"

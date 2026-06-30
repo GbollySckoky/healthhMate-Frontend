@@ -28,13 +28,13 @@ const RecentActivities = () => {
               <LoadingSpinner />
             </div>
             ) : isError ? (
-              <div className="text-center py-20">
+              <p className="text-center text-sm text-gray-500 py-20">
                 {error.message}
-              </div>
+              </p>
             ) : recentActivities.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
+              <p className="text-center py-8 text-gray-500 text-sm">
                 No recent activities found
-              </div>
+              </p>
             ) : recentActivities?.map((recent: Appointment) => {
             return(
                 <div key={recent.id} className='flex items-center justify-between p-3'>

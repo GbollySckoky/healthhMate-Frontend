@@ -20,7 +20,7 @@ const Page = () => {
       queryFn: () => Doctor.getDoctor()
     })
     const profileData: DOCTOR_PROFILE = data?.data
-
+    console.log(profileData)
 
   return (
     <PageWrapper>
@@ -35,8 +35,24 @@ const Page = () => {
                           <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
                       </div>
                     </div>
-                    <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
-                    onClick={() =>
+                    {profileData?.profile === null && (
+                      <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
+                        onClick={() =>
+                        openModal(<EditProfile
+                          />, {
+                          title:
+                            'Edit Profile',
+                          className: 'max-w-lg',
+                          onClose: () => {},
+                        })
+                      }>
+                        {/* <PencilLine size={15} className='mr-2' /> */}
+                          Create Profile
+                        </button>
+                    )}
+                    {profileData?.profile !== null && (
+                      <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
+                        onClick={() =>
                         openModal(<EditProfile
                           />, {
                           title:
@@ -48,6 +64,7 @@ const Page = () => {
                         <PencilLine size={15} className='mr-2' />
                         Edit Profile
                     </button>
+                    )}
                 </div>
                 <div className='mt-3'>
                     <p className='font-semibold font-libre text-[14px] text-[#414651] pb-[2px]'>About me</p>
