@@ -17,8 +17,8 @@ export const Hospital_Admin = {
     createProfile: async (payload: Register) => {
         return await adminAPI.post(ADMIN_ENDPOINTS.CREATE_HOSPITAL_PROFILE, payload); 
     },
-    getAllDoctor: async(hospitalId: number) => {
-        const response = await api.get(`${ADMIN_ENDPOINTS.GET_ALL_DOCTORS}${hospitalId}`);
+    getAllDoctor: async() => {
+        const response = await api.get(ADMIN_ENDPOINTS.GET_ALL_DOCTORS);
         return response.data
     },
     createDoctor: async (payload: DOCTOR_SIGNUP) => {
