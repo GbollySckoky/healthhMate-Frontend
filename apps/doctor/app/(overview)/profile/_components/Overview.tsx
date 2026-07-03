@@ -4,7 +4,7 @@ import { DOCTOR_PROFILE } from '@/interface/get-doctor-profile.interface'
 import React from 'react'
 
 
-const Overview = ({profileData, isLoading, isError, error}:{profileData:DOCTOR_PROFILE, isLoading: boolean,isError: boolean, error: Error}) => {
+const Overview = ({profileData, isLoading, isError, error}:{profileData:DOCTOR_PROFILE, isLoading: boolean,isError: boolean, error: Error | null}) => {
     if (isLoading) {
         return (
         <PageWrapper>
@@ -18,7 +18,7 @@ const Overview = ({profileData, isLoading, isError, error}:{profileData:DOCTOR_P
     if (isError) {
         return (
         <div className="text-center py-10 text-red-600 text-sm">
-            Failed to load patients. Please try again. {" "} {error.message}
+            Failed to load patients. Please try again. {" "} {error?.message}
         </div>
         );
     }

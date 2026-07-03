@@ -57,7 +57,7 @@ const EditProfile = () => {
 
     formData.append("bio", inputValue.bio);
     formData.append("consultationFee", String(inputValue.consultationFee));
-    formData.append("liscenceNumber", inputValue.liscenceNumber);
+    formData.append("licenseNumber", inputValue.liscenceNumber);
     formData.append("specialization", inputValue.specialization);
     formData.append("yearsOfExperience", String(inputValue.yearsOfExperience));
 
@@ -81,7 +81,7 @@ const EditProfile = () => {
       <DisplayFlex>
         <InputField
           name="yearsOfExperience"
-          value={inputValue.yearsOfExperience}
+          value={String(inputValue.yearsOfExperience)}
           onChange={handleChange}
           placeholder="3"
           label="Years Of Experience"
@@ -107,7 +107,7 @@ const EditProfile = () => {
 
         <InputField
           name="consultationFee"
-          value={inputValue.consultationFee}
+          value={String(inputValue.consultationFee)}
           onChange={handleChange}
           placeholder="20000"
           label="Consultation Fee"

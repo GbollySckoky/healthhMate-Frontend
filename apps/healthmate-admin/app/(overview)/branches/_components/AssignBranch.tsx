@@ -47,16 +47,16 @@ const AssignBranch = () => {
     })
     console.log('DATA!!', data)
 
-    const hospitalId = 1;
+    // const hospitalId = 1;
     const { data: doc, isLoading: docLoading } = useQuery({
-        queryKey: ['getAllDoctor', hospitalId],
-        queryFn: () => Hospital_Admin.getAllDoctor(hospitalId),
-        enabled: !!hospitalId
+        queryKey: ['getAllDoctor'],
+        queryFn: () => Hospital_Admin.getAllDoctor(),
+        // enabled: !!hospitalId
     });
     console.log(doc)
     const mutation = useMutation({
         mutationFn: (payload: ASSIGN_BRANCH) => Hospital_Admin.assignBranch(payload),
-        onSuccess: (response: any) => {
+        onSuccess: (response) => {
             console.log('Doctor created successfully:', response)
             closeModal()
         },
@@ -70,8 +70,9 @@ const AssignBranch = () => {
 
         const data = {
             branchId: inputValue.branchId,
-            doctorIds: [inputValue.doctorIds],
+            doctorIds: inputValue.doctorIds,
         };
+        mutation.mutate(data)
         console.log("DATA!!", data)
         // await mutation.mutateAsync(data) 
     }
@@ -93,7 +94,7 @@ const AssignBranch = () => {
                     {isLoading ? 'Loading branches...' : 'Select a Branch'}
                 </option>
 
-                {data && data.data.map((branch: any) => (
+                {data && data.data.map((branch: { id: number; branchName: string }) => (
                     <option key={branch.id} value={branch.id} className="text-gray-900 bg-white">
                     {branch.branchName}
                     </option>
@@ -116,7 +117,7 @@ const AssignBranch = () => {
                     {isLoading ? 'Loading doctors...' : 'Select a Doctor'}
                 </option>
 
-                {doc?.data && doc.data.map((doctor: any) => (
+                {doc?.data && doc.data.map((doctor: { id: number; firstName: string; lastName: string }) => (
                     <option key={doctor.id} value={doctor.id} className="text-gray-900 bg-white">
                     {doctor.firstName} {" "} {doctor.lastName}
                     </option>

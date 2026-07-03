@@ -143,11 +143,11 @@ const All = () => {
                     <TableRow className="bg-[#FAFBFF] font-inter text-[14px] font-medium">
                         <TableHead>Full Name</TableHead>
                          <TableHead>Email</TableHead>
-                        <TableHead>Specialty</TableHead>
-                        <TableHead>Avg.Rating</TableHead>
-                        <TableHead>Appointments</TableHead>
-                        <TableHead>Availability</TableHead>
-                        <TableHead>Branch</TableHead>
+                        <TableHead>PhoneNumber</TableHead>
+                        <TableHead>Gender</TableHead>
+                        <TableHead>Specialization</TableHead>
+                        <TableHead>License Number</TableHead>
+                        <TableHead>Consultation Fee</TableHead>
                         <TableHead></TableHead>
                     </TableRow>
                 </TableHeader>
@@ -190,32 +190,32 @@ const All = () => {
                                 {doctor.firstName} {doctor.lastName}
                             </p>
                             <p className="text-red-800 font-inter font-normal text-[12px]">
-                                Healthmate
+                                {doctor.hospital.hospitalName || "-"}
                             </p>
                             </div>
                         </div>
                         </TableCell>
 
                         <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                        {doctor.email}
+                        {doctor.email || "-"}
                         </TableCell>
 
                         <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                        -
+                        {doctor.phoneNumber || "-"}
                         </TableCell>
 
                         <TableCell className="font-inter font-normal text-[14px] text-grey-20">
-                        ⭐ -
+                        {doctor.gender || "-"}
                         </TableCell>
 
                         <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                        -
+                        {doctor.profile.specialization || "-"}
                         </TableCell>
 
-                        <TableCell>-</TableCell>
+                        <TableCell className="font-inter font-normal text-[12px] text-grey-20">{doctor.profile.licenseNumber || "-"}</TableCell>
 
                         <TableCell className="font-inter font-normal text-[12px] text-grey-20">
-                        -
+                        {doctor.profile.consultationFee || "-"}
                         </TableCell>
 
                         <TableCell
