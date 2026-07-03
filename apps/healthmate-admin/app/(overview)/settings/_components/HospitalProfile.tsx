@@ -1,90 +1,181 @@
 "use client";
+
 import { TableTitle } from "@/components/ui/Reusable";
 import React, { FormEvent, useState } from "react";
-// import UploadLogo from "./UploadLogo";
 import Input from "@/components/Inputs/Inputs";
-import { Profile } from "@/types/hospitalProfile.schema";
-import { hospitalProfile } from '@/components/data'
+import Image from "next/image";
+import { useMutation } from "@tanstack/react-query";
+import { Hospital_Admin } from "@/lib/service/service";
+import { AxiosError } from "axios";
+import { Profile } from "@/lib/interface/register.interface";
 
+
+type HospitalProfileForm = {
+  hospitalName: string;
+  licenseNumber: string;
+  address: string;
+  state: string;
+  phoneNumber: string;
+  email: string;
+  profilePicture: File | null;
+};
 
 const HospitalProfile = () => {
-  const {bio,liscenseNumber, address, state, website, specializations} = hospitalProfile
-  const [inputValue, setInputValue] = useState<Profile>({
-    bio: '',
-    liscenseNumber: '',
+  const [inputValue, setInputValue] = useState<HospitalProfileForm>({
+    hospitalName: "",
+    licenseNumber: "",
     address: "",
     state: "",
-    profilePicture: "",
-    website: '',
-    specializations: ''
-    // logo: null
+    phoneNumber: "",
+    email: "",
+    profilePicture: null,
   });
+
+  const [preview, setPreview] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setInputValue((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e: FormEvent) =>{
-    e.preventDefault()
-  }
-  
+  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    setInputValue((prev) => ({
+      ...prev,
+      profilePicture: file,
+    }));
+
+    setPreview(URL.createObjectURL(file));
+  };
+
+  const mutation = useMutation({
+    mutationFn: (payload: Profile) => Hospital_Admin.createProfile(payload),
+    onSuccess: (response) => {
+      console.log(response.data);
+    //   closeModal();
+    },
+    onError: (error: AxiosError) => {
+      console.log(error?.response?.data);
+    },
+  });
+
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("hospitalName", inputValue.hospitalName);
+    formData.append("licenseNumber", inputValue.licenseNumber);
+    formData.append("address", inputValue.address);
+    formData.append("state", inputValue.state);
+    formData.append("phoneNumber", inputValue.phoneNumber);
+    formData.append("email", inputValue.email);
+
+    if (inputValue.profilePicture) {
+      formData.append("profilePicture", inputValue.profilePicture);
+    }
+
+    // call your API here
+    mutation.mutate(formData as unknown as Profile);
+    // console.log(Object.fromEntries(formData));
+  };
+
   return (
     <div className="bg-white rounded-lg border border-borderColor w-[70%] mx-auto">
-    <TableTitle className="border-b border-borderColor100 p-4">
+      <TableTitle className="border-b border-borderColor100 p-4">
         Hospital Profile
-    </TableTitle>
-    <form className=" pt-5" onSubmit={handleSubmit}>
+      </TableTitle>
+
+      <form className="pt-5" onSubmit={handleSubmit}>
         <div className="w-[95%] mx-auto py-5">
-            {/* <UploadLogo />/ */}
-            <Input
-                name="liscenseNumber"
-                value={inputValue.liscenseNumber}
-                onChange={handleChange}
-                {...liscenseNumber}
-            />
-            <Input
-                name="address"
-                value={inputValue.address}
-                onChange={handleChange}
-                {...address}
-            />
-            <Input
-                name="state"
-                value={inputValue.state}
-                onChange={handleChange}
-                {...state}
-            />
-            <Input
-                name="website"
-                value={inputValue.website}
-                onChange={handleChange}
-                {...website}
-            />
-           <Input
-                name="specializations"
-                value={inputValue.specializations}
-                onChange={handleChange}
-                {...specializations}
-            />
-            <Input
-                name="bio"
-                value={inputValue.bio}
-                onChange={handleChange}
-                {...bio}
-            />
-        </div>
-        
-        <div className="border-t border-r border-borderColor100 p-4 flex justify-end">
-            <button className="text-white bg-pink-600 rounded-lg px-4 py-2">
-                Save Changes
-            </button>
+          <div className="flex justify-center mb-6">
+            <label className="cursor-pointer flex flex-col items-center gap-3">
+              <div className="w-28 h-28 rounded-full border border-borderColor100 overflow-hidden flex items-center justify-center bg-gray-50">
+                {preview ? (
+                  <Image
+                    src={preview}
+                    alt="Hospital logo"
+                    className="w-full h-full object-cover"
+                    width={200}
+                    height={200}
+                  />
+                ) : (
+                  <span className="text-sm text-gray-500">Upload Logo</span>
+                )}
+              </div>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleLogoChange}
+                className="hidden"
+              />
+            </label>
+          </div>
+
+          <Input
+            name="hospitalName"
+            value={inputValue.hospitalName}
+            onChange={handleChange}
+            label="Hospital Name"
+            placeholder="Enter hospital name"
+          />
+
+          <Input
+            name="licenseNumber"
+            value={inputValue.licenseNumber}
+            onChange={handleChange}
+            label="License Number"
+            placeholder="Enter license number"
+          />
+
+          <Input
+            name="address"
+            value={inputValue.address}
+            onChange={handleChange}
+            label="Address"
+            placeholder="Enter hospital address"
+          />
+
+          <Input
+            name="state"
+            value={inputValue.state}
+            onChange={handleChange}
+            label="State"
+            placeholder="Enter state"
+          />
+
+          <Input
+            name="phoneNumber"
+            value={inputValue.phoneNumber}
+            onChange={handleChange}
+            label="Phone Number"
+            placeholder="Enter phone number"
+          />
+
+          <Input
+            name="email"
+            value={inputValue.email}
+            onChange={handleChange}
+            label="Email"
+            placeholder="Enter email address"
+          />
         </div>
 
-    </form>
+        <div className="border-t border-r border-borderColor100 p-4 flex justify-end">
+          <button className={`text-white rounded-lg px-4 py-2 ${mutation.isPending || mutation.isPending ? 'bg-pink-300 cursor-not-allowed' : 'bg-pink-600 cursor-pointer'}`} disabled={mutation.isPending}>
+            {mutation.isPending ? 'Saving...' : 'Save Changes'}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

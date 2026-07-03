@@ -89,23 +89,22 @@ const BranchTable = () => {
           <Table>
               <TableHeader className="border-t border-borderColor text-[#535862]">
                   <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium ">
+                      <TableHead>Id</TableHead>
                       <TableHead >Branch Name</TableHead>
-                      <TableHead>Doctor Name</TableHead>
+                      <TableHead>Branch Address</TableHead>
                       <TableHead>Phone Number</TableHead>
                       <TableHead>Location</TableHead>
-                      <TableHead>Status</TableHead>
                       <TableHead></TableHead>
                   </TableRow>
               </TableHeader>
               <TableBody onClick={() => router.push("/branches/1")}>
                 {data?.data.map((branch: any) => (
                     <TableRow  key={branch.id}>
+                    <TableCell className="font-inter font-medium text-[14px] text-grey-20"> {branch.id}</TableCell>
                     <TableCell className="font-inter font-medium text-[14px] text-grey-20"> {branch.branchName}</TableCell>
-                    {/* <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentStatus}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{invoice.paymentMethod}</TableCell>
-                    <TableCell> <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === activeStatus.ACTIVE && 'text-green-800 bg-green-100' || invoice.paymentMethod === activeStatus.IN_ACTIVE && 'text-red-10 bg-red-100' }`}> {invoice.paymentMethod} </p>
-                    </TableCell> */}
+                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{branch.branchAddress}</TableCell>
+                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{branch.phoneNumber}</TableCell>
+                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{branch.state}</TableCell>
                     <TableCell className="font-inter font-medium text-[14px]  cursor-pointer flex">
                           <span onClick={() =>
                             openModal(<DeleteModal

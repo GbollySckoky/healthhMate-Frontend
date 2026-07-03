@@ -7,8 +7,9 @@ GET_ALL_DOCTORS: 'hospital/doctors',
 GET_HOSPITAL_PROFILE: 'hospital/profile',
 CREATE_HOSPITAL_PROFILE: 'hospital/profile/',
 CREATE_DOCTOR: 'auth/doctor/register/',
-GET_ALL_APPOINTMENT: 'appointment/appointments/',
+GET_ALL_APPOINTMENT: 'appointment/hospital/appointments/',
 CREATE_BRANCH: 'hospital/branch',
 GET_ALL_BRANCH: 'hospital/branches',
-ASSIGN_DOCTOR_TO_BRANCH: 'hospital/branch/assign-doctors'
+ASSIGN_DOCTOR_TO_BRANCH: 'hospital/branch/assign-doctors',
+GET_STATS: "appointment/hospital/stats",
 }

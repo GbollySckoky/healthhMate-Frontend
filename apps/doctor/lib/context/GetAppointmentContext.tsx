@@ -6,10 +6,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Doctor } from "../constant/service";
 
 interface AppointmentFilters {
-    status?: string;
-    consultation_type?: string;
-    patient_name?: string;
-    patient_email?: string;
+    status?: string | undefined;
+    q?: string | undefined;
+    // patient_name?: string;
+    // patient_email?: string;
 }
 
 interface GetAppointment {
@@ -39,20 +39,23 @@ export const AppointmentProvider = ({
     initialFilters?: AppointmentFilters;
 }) => {
     const [filters, setFilters] = useState<AppointmentFilters>(initialFilters);
-
+    const [pagination, setPagination] = useState(
+    { page: 1, limit: 10, totalCount: 0, totalPages: 0 });
     const { data, isLoading, error, refetch } = useQuery({
-        queryKey: ['getAppointment', filters],
+        queryKey: ['getAppointment', filters, pagination],
         queryFn: () => Doctor.getAppointment(
+            pagination.page,
+            pagination.limit,
             filters.status,
-            filters.consultation_type,
-            filters.patient_name,
-            filters.patient_email
+            filters.q,
+            // filters.patient_name,
+            // filters.patient_email
         ),
         staleTime: 5 * 60 * 1000, // Cache for 5 minutes
     });
     
-    const datas = data?.results ?? [];
-
+    const datas = data?.data ?? [];
+    
     return (
         <AppointmentContext.Provider value={{ 
             datas, 

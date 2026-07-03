@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { Card, DisplayFlex, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '../../../components/ui/Reusable'
 import { PageWrapper } from '../../../components/ui/Reusable'
@@ -10,8 +11,71 @@ import { ConsultDept } from './ConsultDept';
 import UpcomingConsultation from './UpcomingConsultation';
 import RecentActivities from './RecentActivities';
 import { TopDoctors } from './TopDoctors';
+import { useQuery } from '@tanstack/react-query';
+import { Hospital_Admin } from '@/lib/service/service';
 
 const Overview = () => {
+    const { data, isLoading, isError, error } = useQuery({
+        queryKey: ['stats'],
+        queryFn: () => Hospital_Admin.getStats(),
+    })
+    console.log('DATA!!', data?.data)
+
+    const stats = data?.data;
+    const overviewData = [
+    {
+        id: 1,
+        about: 'Total Doctors',
+        value: stats?.totalDoctors ?? 0,
+        percent: 12,
+    },
+    {
+        id: 2,
+        about: 'Registered Patients',
+        value: stats?.totalPatients ?? 0,
+        percent: 12,
+    },
+    {
+        id: 3,
+        about: 'Appointments Today',
+        value: stats?.totalAppointmentsToday ?? 0,
+        percent: -14,
+    },
+    {
+        id: 4,
+        about: 'Branches',
+        value: stats?.branches ?? 0,
+        percent: 10,
+    },
+    {
+        id: 5,
+            about: 'Completed Consults',
+            value: stats?.appointments?.completedConsultation?.count ?? 0,
+        percent: stats?.appointments?.completedConsultation?.percentage ?? 0,
+        month: 'this month',
+    },
+    {
+        id: 6,
+        about: 'In Progress Consults',
+        value: stats?.appointments?.pendingRequest?.count ?? 0,
+        percent: stats?.appointments?.pendingRequest?.percentage ?? 0,
+        month: 'this month',
+    },
+    {
+        id: 7,
+        about: 'Canceled Consults',
+        value: stats?.appointments?.canceledConsultation?.count ?? 0,
+        percent: stats?.appointments?.canceledConsultation?.percentage ?? 0,
+        month: 'this month',
+    },
+    {
+        id: 8,
+        about: 'Pending Consults',
+        value: stats?.appointments?.pendingConsultation?.count ?? 0,
+        percent: stats?.appointments?.pendingConsultation?.percentage ?? 0,
+        month: 'this month',
+    },
+]
   return (
     <PageWrapper>
         {/*  */}
@@ -30,7 +94,13 @@ const Overview = () => {
         </div>
         {/* Overview */}
         <div className="flex justify-between gap-4 mb-7">
-            <Card>
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : (
+                isError ? (
+                 <p>Error: {error.message}</p>
+                ) : (
+                      <Card>
                 <MediumTitle>Overview</MediumTitle>
                 <div className="grid grid-cols-4 gap-4 mt-3">
                     {overviewData.map((overview) => {
@@ -54,6 +124,8 @@ const Overview = () => {
                     })}
                 </div>
             </Card>
+            ))}
+          
             <Earnings />
         </div>
         {/* Charts */}
