@@ -57,5 +57,9 @@ export const Doctor = {
     },
     rejectAppointment: async (appointment_id: number, payload: ApproveAppointment) => {
         return await api.patch(`${DOCTOR_ENDPOINTS.REJECT_APPOINTMENT}${appointment_id}/reject`, payload); 
-    }
+    },
+    getStats: async() => {
+        const response = await api.get(DOCTOR_ENDPOINTS.GET_APPOINTMENT_STATS);
+        return response.data
+    },
 }

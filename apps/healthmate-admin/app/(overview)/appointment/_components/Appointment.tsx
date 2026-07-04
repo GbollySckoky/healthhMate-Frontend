@@ -8,18 +8,11 @@ import AllAppointmentTable from './AllAppointmentTable';
 import CompletedTable from './CompletedTable';
 import PendingTable from './PendingTable';
 import CancelledTable from './CancelledTable';
-import { useQuery } from '@tanstack/react-query';
-import { Hospital_Admin } from '@/lib/service/service';
 
 
 
 const Appointment = () => {
-    const { data, isLoading, isError, error } = useQuery({
-        queryKey: ['appointment'],
-        queryFn: () => Hospital_Admin.getPatients(),
-    })
-    console.log('DATA!!', data?.data)
-    const appointments = data?.data || []
+   
     // {isLoading ? (
     //         <div className="flex justify-center py-8">
     //           <LoadingSpinner />

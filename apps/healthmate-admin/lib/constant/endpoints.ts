@@ -12,4 +12,5 @@ CREATE_BRANCH: 'hospital/branch',
 GET_ALL_BRANCH: 'hospital/branches',
 ASSIGN_DOCTOR_TO_BRANCH: 'hospital/branch/assign-doctors',
 GET_STATS: "appointment/hospital/stats",
+GET_DOCTOR_DETAILS: 'hospital/doctor/',
 }

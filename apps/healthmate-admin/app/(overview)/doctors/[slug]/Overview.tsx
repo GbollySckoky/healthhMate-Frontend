@@ -1,25 +1,27 @@
-import { Card, Infos } from '@/components/ui/Reusable'
+import { Infos } from '@/components/ui/Reusable'
+import { Data } from '@/lib/interface/doctor_details.interface'
 import React from 'react'
 
-const Overview = () => {
+const Overview = ({ doctorDetails }: { doctorDetails: Data }) => {
   return (
+    
     <div>
         {/* ACCOUNT DETAILS */}
         <div className='mt-5 border-b border-borderColor pb-4'>
             <p className='font-semibold text-[18px] font-libre mb-3'>Account Details</p>
-            <Infos label='Name:' value='Dr. Sarah Johnson'/>
-            <Infos label='Email:' value='sarah.johnson@hospital.com'/>
-            <Infos label='Phone Number:' value='0907563932'/>
+            <Infos label='Name:' value={`${doctorDetails.firstName} ${doctorDetails.lastName}`}/>
+            <Infos label='Email:' value={doctorDetails.email || '-'}/>
+            <Infos label='Phone Number:' value={doctorDetails.phoneNumber || '-'}/>
         </div>
-        {/* PATIENT INFORMATION */}
+        {/* PERSONAL INFORMATION */}
         <div className='mt-5 border-b border-borderColor pb-4'>
             <p className='font-semibold text-[18px] font-libre mb-3'>Personal Information</p>
-            <Infos label='Gender:' value='Female'/>
+            <Infos label='Gender:' value={doctorDetails.gender || '-'}/>
             <Infos label='Date of Birth:' value='Aug 2, 1985'/>
             <Infos label='Branch:' value='Lekki,Lagos'/>
             <Infos label='Department:' value='Cardiology'/>
-            <Infos label='License Number:' value='MDCN-2356215'/>
-            <Infos label='Address:' value='12b, Bourdillon Road, Ikoyi, Lagos'/>
+            <Infos label='License Number:' value={doctorDetails.profile?.licenseNumber || '-'}/>
+            {/* <Infos label='Address:' value={doctorDetails.profile?.address || '-'}/>   */}
         </div>
         {/* ACCOUNT ACTIVITY */}
         <div className='mt-5'>

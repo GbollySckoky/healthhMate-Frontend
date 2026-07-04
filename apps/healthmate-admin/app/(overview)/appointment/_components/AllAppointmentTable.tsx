@@ -9,9 +9,8 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import image from '@/assets/Image.png'
-import Image from "next/image"
+// import Image from "next/image"
 import { TableTitle } from "@/components/ui/Reusable"
-import { STATUS } from "@/types/status"
 import Input from "@/components/Inputs/Input"
 import MinSelectField from "@/components/Inputs/MinSelectField"
 import { useState } from "react"
@@ -19,90 +18,11 @@ import useToggle from "@/hooks/useToggle"
 import Paginate from '@/components/ui/paginate'
 import { useRouter } from 'next/navigation'
 import Calendar from '@/components/calendar/Calendar'
+import { useQuery } from '@tanstack/react-query';
+import { Hospital_Admin } from '@/lib/service/service';
+import { GET_ALL_APPOINTMENTS } from '@/lib/interface/get_all_appointyment'
+import { STATUS } from '@/types/status'
 
-// Types for better type safety
-interface Appointment {
-    id: string
-    doctorName: string
-    specialty: string
-    patientName: string
-    patientEmail: string
-    date: string
-    time: string
-    type: string
-    rating: number
-    status: 'Completed' | 'Pending' | 'Cancelled' | 'In Progress' | 'Open' | 'Closed'
-    image: any
-}
-
-// Mock data with proper structure
-const appointments: Appointment[] = [
-    {
-        id: "APT001",
-        doctorName: "Dr. Sarah Wilson",
-        specialty: "Cardiologist",
-        patientName: "John Doe",
-        patientEmail: "john@gmail.com",
-        date: "2024-01-15",
-        time: "10:00 AM",
-        type: "Consultation",
-        rating: 4.5,
-        status: "Completed",
-        image: image,
-    },
-    {
-        id: "APT002",
-        doctorName: "Dr. Michael Chen",
-        specialty: "Neurologist",
-        patientName: "Jane Smith",
-        patientEmail: "jane@gmail.com",
-        date: "2024-01-16",
-        time: "2:30 PM",
-        type: "Follow-up",
-        rating: 4.8,
-        status: "Pending",
-        image: image,
-    },
-    {
-        id: "APT003",
-        doctorName: "Dr. Emily Johnson",
-        specialty: "Dermatologist",
-        patientName: "Bob Wilson",
-        patientEmail: "bob@gmail.com",
-        date: "2024-01-17",
-        time: "9:15 AM",
-        type: "Check-up",
-        rating: 4.2,
-        status: "Cancelled",
-        image: image,
-    },
-    {
-        id: "APT004",
-        doctorName: "Dr. David Brown",
-        specialty: "Orthopedic",
-        patientName: "Alice Davis",
-        patientEmail: "alice@gmail.com",
-        date: "2024-01-18",
-        time: "11:45 AM",
-        type: "Surgery",
-        rating: 4.9,
-        status: "In Progress",
-        image: image,
-    },
-    {
-        id: "APT005",
-        doctorName: "Dr. Lisa Garcia",
-        specialty: "Pediatrics",
-        patientName: "Tommy Lee",
-        patientEmail: "tommy@gmail.com",
-        date: "2024-01-19",
-        time: "3:00 PM",
-        type: "Vaccination",
-        rating: 4.7,
-        status: "Open",
-        image: image,
-    },
-]
 
 const AllAppointmentTable = () => {
     const [searchInput, setSearchInput] = useState<string>('')
@@ -112,18 +32,24 @@ const AllAppointmentTable = () => {
     const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
     const router = useRouter()
 
-    // Filter data based on search and filters
-    const filteredAppointments = appointments.filter((appointment) => {
-        const matchesSearch = 
-            appointment.doctorName.toLowerCase().includes(searchInput.toLowerCase()) ||
-            appointment.specialty.toLowerCase().includes(searchInput.toLowerCase()) ||
-            appointment.patientName.toLowerCase().includes(searchInput.toLowerCase())
-        
-        const matchesStatus = !statusFilter || appointment.status === statusFilter
-        const matchesSpecialty = !specialtyFilter || appointment.specialty === specialtyFilter
-
-        return matchesSearch && matchesStatus && matchesSpecialty
+     const { data, isLoading, isError, error } = useQuery({
+        queryKey: ['appointment'],
+        queryFn: () => Hospital_Admin.getAllAppointments(),
     })
+    console.log('DATA!!', data?.data)
+    const appointments = data?.data || []
+    // Filter data based on search and filters
+    // const filteredAppointments = appointments.filter((appointment) => {
+    //     const matchesSearch = 
+    //         appointment.doctorName.toLowerCase().includes(searchInput.toLowerCase()) ||
+    //         appointment.specialty.toLowerCase().includes(searchInput.toLowerCase()) ||
+    //         appointment.patientName.toLowerCase().includes(searchInput.toLowerCase())
+        
+    //     const matchesStatus = !statusFilter || appointment.status === statusFilter
+    //     const matchesSpecialty = !specialtyFilter || appointment.specialty === specialtyFilter
+
+    //     return matchesSearch && matchesStatus && matchesSpecialty
+    // })
 
     const handleStatusSelect = (option: string) => {
         setStatusFilter(prev => prev === option ? '' : option)
@@ -135,23 +61,23 @@ const AllAppointmentTable = () => {
         toggleSpecialtyDropdown()
     }
 
-    const handleExport = () => {
-        // Export functionality
-        console.log('Exporting data...', filteredAppointments)
-    }
+    // const handleExport = () => {
+    //     // Export functionality
+    //     console.log('Exporting data...', filteredAppointments)
+    // }
 
-    const handleAppointmentClick = (appointmentId: string) => {
+    const handleAppointmentClick = (appointmentId: number) => {
         router.push(`/appointment/${appointmentId}`)
     }
 
     // Get status styling
     const getStatusStyle = (status: string) => {
         switch (status) {
-            case 'Completed':
+            case STATUS.COMPLETED:
                 return 'text-green-700 bg-green-100'
-            case 'Pending':
+            case STATUS.PENDING:
                 return 'text-gray-700 bg-gray-100'
-            case 'Cancelled':
+            case STATUS.CANCELLED:
                 return 'text-red-700 bg-red-100'
             default:
                 return ''
@@ -161,7 +87,7 @@ const AllAppointmentTable = () => {
     const filterOptions = {
         status: {
             label: 'Status',
-            options: ['Completed', 'Pending', 'Cancelled', 'In Progress', 'Open', 'Closed']
+            options: [STATUS.COMPLETED, STATUS.PENDING, STATUS.CANCELLED, 'In Progress', 'Open', 'Closed']
         },
         specialty: {
             label: 'Specialty',
@@ -175,7 +101,7 @@ const AllAppointmentTable = () => {
             <div className='border-b border-borderColor100 p-4 flex items-center justify-between'>
                 <TableTitle>All Appointments</TableTitle>
                 <button 
-                    onClick={handleExport}
+                    // onClick={handleExport}
                     className='border border-borderColor100 rounded-lg flex items-center px-3 cursor-pointer py-2 gap-2 hover:bg-gray-50 transition-colors'
                 >
                     <CloudUpload size={15} />
@@ -215,16 +141,17 @@ const AllAppointmentTable = () => {
                 <TableHeader className="border-t border-borderColor text-grey-20">
                     <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
                         <TableHead>Doctor Name</TableHead>
-                        <TableHead>Patient</TableHead>
+                        <TableHead>Patient Name</TableHead>
+                        <TableHead>Health Concern</TableHead>
                         <TableHead>Date & Time</TableHead>
                         <TableHead>Type</TableHead>
-                        <TableHead>Rating</TableHead>
+                        <TableHead>Amount</TableHead>
                         <TableHead>Status</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {filteredAppointments.length > 0 ? (
-                        filteredAppointments.map((appointment) => (
+                    {appointments.length > 0 ? (
+                        appointments.map((appointment:  GET_ALL_APPOINTMENTS) => (
                             <TableRow 
                                 key={appointment.id}
                                 className="cursor-pointer hover:bg-gray-50"
@@ -232,30 +159,33 @@ const AllAppointmentTable = () => {
                             >
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                                     <div className="flex items-center">
-                                        <Image src={appointment.image} alt='Doctor' width={40} height={40} className="rounded-full" />
+                                        {/* <Image src={appointment.image} alt='Doctor' width={40} height={40} className="rounded-full" /> */}
                                         <div className="ml-2">
-                                            <p className="font-medium">{appointment.doctorName}</p>  
-                                            <p className='text-red-800 font-inter font-normal text-[12px]'>{appointment.specialty}</p>
+                                            <p className="font-medium">{appointment.doctor.firstName} {appointment.doctor.lastName}</p>  
+                                            <p className='text-red-800 font-inter font-normal text-[12px]'>{appointment.doctor.email || '-'}</p>
                                         </div>
                                     </div>
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                                     <div>
-                                        <p className="font-medium">{appointment.patientName}</p>
-                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.patientEmail}</p>
+                                        <p className="font-medium">{appointment.user.firstName} {appointment.user.lastName}</p>
+                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.user.email || '-'}</p>
                                     </div>
+                                </TableCell>
+                                 <TableCell className="font-inter font-normal text-[14px] text-grey-20">
+                                    {appointment.healthConcern || "-"}
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                                     <div>
-                                        <p className="font-medium">{appointment.date}</p> 
-                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.time}</p>
+                                        <p className="font-medium">{appointment.date || '-'}</p> 
+                                        <p className="font-inter font-normal text-[12px] text-grey-20">{appointment.time || '-'}</p>
                                     </div>
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-20">
-                                    {appointment.type}
+                                    {appointment.consultationType || "-"}
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-20">
-                                    ⭐ {appointment.rating}
+                                    {appointment.amount.toLocaleString() || "-"}
                                 </TableCell>
                                 <TableCell>
                                     <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(appointment.status)}`}>

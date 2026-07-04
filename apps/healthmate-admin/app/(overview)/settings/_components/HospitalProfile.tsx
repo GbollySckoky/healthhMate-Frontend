@@ -11,23 +11,23 @@ import { Profile } from "@/lib/interface/register.interface";
 
 
 type HospitalProfileForm = {
-  hospitalName: string;
+  specializations: string;
   licenseNumber: string;
   address: string;
   state: string;
-  phoneNumber: string;
-  email: string;
+  bio: string;
+  website: string;
   profilePicture: File | null;
 };
 
 const HospitalProfile = () => {
   const [inputValue, setInputValue] = useState<HospitalProfileForm>({
-    hospitalName: "",
+    specializations: "",
     licenseNumber: "",
     address: "",
     state: "",
-    phoneNumber: "",
-    email: "",
+    bio: "",
+    website: "",
     profilePicture: null,
   });
 
@@ -72,12 +72,12 @@ const HospitalProfile = () => {
 
     const formData = new FormData();
 
-    formData.append("hospitalName", inputValue.hospitalName);
+    formData.append("specializations", inputValue.specializations);
     formData.append("licenseNumber", inputValue.licenseNumber);
     formData.append("address", inputValue.address);
     formData.append("state", inputValue.state);
-    formData.append("phoneNumber", inputValue.phoneNumber);
-    formData.append("email", inputValue.email);
+    formData.append("bio", inputValue.bio);
+    formData.append("website", inputValue.website);
 
     if (inputValue.profilePicture) {
       formData.append("profilePicture", inputValue.profilePicture);
@@ -122,11 +122,11 @@ const HospitalProfile = () => {
           </div>
 
           <Input
-            name="hospitalName"
-            value={inputValue.hospitalName}
+            name="specializations"
+            value={inputValue.specializations}
             onChange={handleChange}
-            label="Hospital Name"
-            placeholder="Enter hospital name"
+            label="Specializations"
+            placeholder="Enter specializations"
           />
 
           <Input
@@ -154,19 +154,19 @@ const HospitalProfile = () => {
           />
 
           <Input
-            name="phoneNumber"
-            value={inputValue.phoneNumber}
+            name="bio"
+            value={inputValue.bio}
             onChange={handleChange}
-            label="Phone Number"
-            placeholder="Enter phone number"
+            label="Bio"
+            placeholder="Enter bio"
           />
 
           <Input
-            name="email"
-            value={inputValue.email}
+            name="website"
+            value={inputValue.website}
             onChange={handleChange}
-            label="Email"
-            placeholder="Enter email address"
+            label="Website"
+            placeholder="Enter website URL"
           />
         </div>
 
