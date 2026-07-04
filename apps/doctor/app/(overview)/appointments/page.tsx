@@ -16,12 +16,12 @@ import {
 } from "@/components/ui/table";
 import { Doctor } from "@/lib/constant/service";
 import { useQuery } from "@tanstack/react-query";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { useRouter } from "next/navigation";
 import Paginate from "@/components/ui/Paginate";
 import { Appointment } from "@/interface/doctor-apppointment.interface";
 import { Pagination } from "@/interface/pagination.interfac";
 import { STATUS } from "@/types/status";
+import AppointmentTableSkeleton from "@/components/ui/AppointmentTableSkeleton";
 
 
 const Page = () => {
@@ -139,80 +139,84 @@ const Page = () => {
         <Table>
           <TableHeader className="border-t border-borderColor text-grey-20">
             <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
-              <TableHead>Patient</TableHead>
+              <TableHead>Patient Name</TableHead>
+              <TableHead>Hospital Name</TableHead>
+              <TableHead>Doctor Name</TableHead>
               <TableHead>Date & Time</TableHead>
               <TableHead>Consultation Type</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Health Concern</TableHead>
             </TableRow>
           </TableHeader>
-
-          <TableBody>
-            {isLoading ? (
-              <TableRow>
-                <TableCell colSpan={5} className="text-center py-8">
-                  <LoadingSpinner />
-                </TableCell>
-              </TableRow>
-            ) : isError ? (
-              <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-gray-500">
-                  {error.message}
-                </TableCell>
-              </TableRow>
-            ) : appointments.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-gray-500">
-                  No appointments found
-                </TableCell>
-              </TableRow>
-            ) : (
-              appointments?.map((appointment: Appointment) => (
-                <TableRow
-                  key={appointment.id}
-                  className="cursor-pointer hover:bg-gray-50"
-                  onClick={() => handleAppointmentClick(appointment.id)}
-                >
-                  <TableCell>
-                    <p className="font-medium text-[12px]">
-                      {appointment.user?.firstName || "N/A"}{" "}
-                      {appointment.user?.lastName || ""}
-                    </p>
-                    <p className="text-[12px] text-grey-20">
-                      {appointment.user?.email || "N/A"}
-                    </p>
-                  </TableCell>
-
-                  <TableCell>
-                    <p className="font-medium text-[12px]">
-                      {appointment.date || "N/A"}
-                    </p>
-                    <p className="text-[12px] text-grey-20">
-                      {appointment.time || "N/A"}
-                    </p>
-                  </TableCell>
-
-                  <TableCell className="text-[12px] text-grey-20">
-                    {appointment.consultationType || "N/A"}
-                  </TableCell>
-
-                  <TableCell>
-                    <span
-                      className={`rounded-full text-[12px] py-1 px-3 ${getStatusStyle(
-                        appointment.status
-                      )}`}
-                    >
-                      {appointment.status || "N/A"}
-                    </span>
-                  </TableCell>
-
-                  <TableCell className="text-[12px]">
-                    {appointment.healthConcern || "N/A"}
+          {isLoading ? (
+            <AppointmentTableSkeleton />
+          ) : (
+            <TableBody>
+              {isError ? (
+                <TableRow>
+                  <TableCell colSpan={8} className="text-center py-8 text-grey-500">
+                    {error.message}
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
+              ) : appointments.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={8} className="text-center py-8 text-gray-500">
+                    No appointments found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                appointments.map((appointment: Appointment) => (
+                  <TableRow
+                    key={appointment.id}
+                    className="cursor-pointer hover:bg-gray-50"
+                    onClick={() => handleAppointmentClick(appointment.id)}
+                  >
+                    <TableCell>
+                      <p className="text-[12px] text-grey-20">
+                        {appointment.user?.firstName || "N/A"}{" "}
+                        {appointment.user?.lastName || ""}
+                      </p>
+                      <p className="text-[12px] text-grey-20">
+                        {appointment.user?.email || "N/A"}
+                      </p>
+                    </TableCell>
+                     <TableCell className="text-[12px] text-grey-20">
+                      {appointment.hospital.hospitalName || "N/A"}
+                    </TableCell>
+                     <TableCell className="text-[12px] text-grey-20">
+                      {appointment.doctor?.firstName || "N/A"} {appointment.doctor?.lastName || "N/A"}
+                    </TableCell>
+                    <TableCell>
+                      <p className="text-[12px] text-grey-20">
+                        {appointment.date || "N/A"}
+                      </p>
+                      <p className="text-[12px] text-grey-20">
+                        {appointment.time || "N/A"}
+                      </p>
+                    </TableCell>
+
+                    <TableCell className="text-[12px] text-grey-20">
+                      {appointment.consultationType || "N/A"}
+                    </TableCell>
+
+                    <TableCell>
+                      <span
+                        className={`rounded-full text-[12px] py-1 px-3 ${getStatusStyle(
+                          appointment.status
+                        )}`}
+                      >
+                        {appointment.status || "N/A"}
+                      </span>
+                    </TableCell>
+
+                    <TableCell className="text-[12px]">
+                      {appointment.healthConcern || "N/A"}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          )}
         </Table>
 
         <div className="flex items-center justify-between px-4 py-4 border-t border-borderColor">

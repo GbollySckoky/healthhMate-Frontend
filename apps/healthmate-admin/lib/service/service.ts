@@ -46,8 +46,12 @@ export const Hospital_Admin = {
         const response = await api.get(ADMIN_ENDPOINTS.GET_STATS);
         return response.data
     },
-    getPatients: async() => {
+    getAllAppointments: async() => {
         const response = await api.get(ADMIN_ENDPOINTS.GET_ALL_APPOINTMENT);
+        return response.data
+    },
+    getDoctorDetails: async(id: number) => {
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_DOCTOR_DETAILS}${id}`);
         return response.data
     },
 }

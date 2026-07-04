@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
 import { Appointment } from '@/interface/doctor-apppointment.interface';
 import { STATUS } from '@/types/status';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { AppointmentCardSkeleton } from '@/components/ui/DashboardSkeleton';
 
 const UpcomingAppointment = () => {
   const router = useRouter()
@@ -39,9 +39,7 @@ const UpcomingAppointment = () => {
     {/* Scrollable content */}
     <div className="flex-1 overflow-y-auto p-4 pt-0">
       {isLoading ? (
-        <div className="flex justify-center py-8">
-          <LoadingSpinner />
-        </div>
+        <AppointmentCardSkeleton />
         ) : isError ? (
           <p className="text-center py-20 text-sm">
             {error.message}

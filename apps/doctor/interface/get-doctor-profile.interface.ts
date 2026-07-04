@@ -29,7 +29,7 @@ export interface Profile {
   id: number
   doctorId: number
   consultationFee: number
-  liscenceNumber: string
+  licenseNumber: string
   profilePicture: string
   yearsOfExperience: number
   bio: string

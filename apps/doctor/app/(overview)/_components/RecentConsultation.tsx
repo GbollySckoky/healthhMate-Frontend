@@ -16,7 +16,7 @@ import { ROUTES } from '@/lib/routes';
 import Link from "next/link"
 import { Appointment } from "@/interface/doctor-apppointment.interface";
 import { STATUS } from "@/types/status";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { RecentConsultationTableSkeleton } from "@/components/ui/DashboardSkeleton";
 
   
   export function RecentConsultation() {
@@ -40,7 +40,7 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
     const recentConsultation = data?.data ?? []
     const completedConsultation = recentConsultation?.filter((consult: Appointment) => consult.status === STATUS.PENDING || consult.status === STATUS.CANCELLED || consult.status === STATUS.REJECTED)
-    console.log(completedConsultation)
+
     return (
         <Card>
             <DisplayFlex>
@@ -61,20 +61,16 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
                 </TableHeader>
                 <TableBody>
                 {isLoading ? (
-                  <TableRow>
-                    <TableCell colSpan={5}>
-                      <LoadingSpinner />
-                    </TableCell>
-                  </TableRow>
+                  <RecentConsultationTableSkeleton />
                 ) : isError ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8">
+                    <TableCell colSpan={8} className="text-center py-8">
                       {error.message}
                     </TableCell>
                   </TableRow>
                 ): completedConsultation.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={8} className="text-center py-8 text-gray-500">
                       No recent consultation found
                     </TableCell>
                   </TableRow>

@@ -26,7 +26,7 @@ const Page = () => {
     queryKey: ['getAppointment'],
     queryFn: () => Doctor.getAppointment()
   })
-  const appointmentData = data?.data
+  const appointmentData = data?.data ?? []
   console.log("appointmnt", appointmentData)
   const appointment = appointmentData?.find((appointment: AppointmentDetails) => appointment.id === id)
   console.log(appointment)
