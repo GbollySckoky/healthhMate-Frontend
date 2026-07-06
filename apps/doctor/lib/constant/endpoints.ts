@@ -7,7 +7,7 @@ export const DOCTOR_ENDPOINTS = {
     GET_EARNINGS_SUMMARY: "doctor/earnings/summary/",
     GET_DOCTOR: 'doctor/me',
     CREATE_PROFILE: 'doctor/profile',
-    GET_APPOINTMENT_DETAILS: 'appointment/',
+    GET_APPOINTMENT_DETAILS: 'appointment/doctor/',
     // APPROVE_APPOINTMENT: 'doctor/appointments/',
     CREATE_DOCTOR_AVAILABILITY: 'doctor/availability',
     APPROVE_APPOINTMENT: 'doctor/',

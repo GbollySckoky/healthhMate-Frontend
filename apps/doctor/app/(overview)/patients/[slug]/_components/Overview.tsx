@@ -6,21 +6,18 @@ import DetailSkeleton from '@/components/ui/DetailsSkeleton'
 
 const Overview = ({appointmentDetails, isLoading}:{appointmentDetails: Appointment, isLoading: boolean}) => {
 
-  //   if (isLoading) {
-  //   return <DetailSkeleton />;
-  // }
   return (
     <div>
       {isLoading ? (
          <DetailSkeleton />
       ) : (
-        <div className="space-y-4">
+        <div>
           <div className=' border border-borderColor p-4 rounded-lg space-y-2'>
               <Infos label='Consultation Date' value={appointmentDetails?.date}/>
               <Infos label='Consultation Time' value={appointmentDetails?.time}/>
               <Infos label='Consultation Type' value={appointmentDetails?.consultationType}/>
               <Infos label='Primary Health Concern' value={appointmentDetails?.healthConcern}/>
-              <Infos label='Consultation Fee' value={appointmentDetails?.amount}/>
+              <Infos label='Consultation Fee' value={appointmentDetails?.amount.toLocaleString()}/>
           </div>
           <div className=' border border-borderColor p-4 rounded-lg space-y-2'>
               <Infos label='Patient Name' value={appointmentDetails?.user?.firstName + ' ' + appointmentDetails?.user?.lastName || '-'}/>

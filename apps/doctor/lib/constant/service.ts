@@ -43,7 +43,7 @@ export const Doctor = {
         return response.data
     },
     getAppointmentDetail: async(appointment_id: number) => {
-        const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/`);
+        const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/appointments`);
         return response.data
     },
     approveAppointment: async(appointment_id: number, payload: ApproveAppointment) => {
