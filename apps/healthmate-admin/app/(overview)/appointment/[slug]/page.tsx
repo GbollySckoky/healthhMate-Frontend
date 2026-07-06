@@ -1,38 +1,55 @@
+"use client"
 import DetailsNav from '@/components/ui/DetailsNav'
 import { Card, Infos, NoteCard, PageWrapper, StatusInfo } from '@/components/ui/Reusable'
+import { GET_ALL_APPOINTMENTS } from '@/lib/interface/get_all_appointyment'
+import { Hospital_Admin } from '@/lib/service/service'
+import { useQuery } from '@tanstack/react-query'
+// import { useParams } from 'next/dist/client/components/navigation'
+import { useParams } from 'next/navigation'
 import React from 'react'
 
 const Page = () => {
+    const params = useParams()
+    const id = Number(params?.slug)
+    console.log(id)
+    const { data, isLoading, isError, error } = useQuery({
+        queryKey: ['appointment'],
+        queryFn: () => Hospital_Admin.getAllAppointments(),
+    })
+    console.log('DATA!!', data?.data)
+    const appointments = data?.data || []
+    const appointment = appointments?.find((appointment: GET_ALL_APPOINTMENTS) => appointment.id === id)
+    console.log(appointment)
   return (
     <PageWrapper>
         <DetailsNav text='Appointments' detailsText='Appointment Details'/>
         <Card>
-            <StatusInfo label='Status' value='Completed'/>
-            <Infos label='Date & Time' value='2025-08-09 at 10:00 AM'/>
-            <Infos label='Duration' value='30 minutes'/>
-            <Infos label='Type' value='Video Appointment'/>
+            <StatusInfo label='Status' value={appointment?.status}/>
+            <Infos label='Date & Time' value={`${appointment?.date} at ${appointment?.time}`}/>
+            <Infos label='Duration' value={appointment?.duration || "-"}/>
+            <Infos label='Type' value={appointment?.consultationType || "-"}/>
         </Card>
 
         {/* Doctor Info */}
         <Card className='mt-5'>
             <p className='font-semibold text-[18px] font-libre mb-3'>Doctor Information</p>
-            <Infos label='Name' value='Dr. Sarah Johnson'/>
-            <Infos label='Specialty' value='Cardiology'/>
-            <Infos label='Email' value='sarah.johnson@hospital.com'/>
+            <Infos label='Name' value={appointment?.doctor?.firstName + " " + appointment?.doctor?.lastName}/>
+            <Infos label='Specialty' value={appointment?.doctor?.specialization || "-"}/>
+            <Infos label='Email' value={appointment?.doctor?.email || "-"}/>
         </Card>
 
         {/* Patient Info */}
         <Card className='mt-5'>
             <p className='font-semibold text-[18px] font-libre mb-3'>Patient Information</p>
-            <Infos label='Name' value='Dr. Sarah Johnson'/>
-            <Infos label='Email' value='Cardiology'/>
+            <Infos label='Name' value={appointment?.user?.firstName + " " + appointment?.user?.lastName}/>
+            <Infos label='Email' value={appointment?.user?.email || "-"}/>
         </Card>
         
         {/* Patient Note */}
-        <NoteCard className='mt-5' label='Patient Notes' value="I am have been having pains on my lower abdomen for weeks now, i have taken medications prescribed by a Pharmacist but it has gotten worser. when i try to urinate i feel a sharp pain."/>
+        <NoteCard className='mt-5' label='Patient Notes' value={appointment?.healthConcern || "-"}/>
 
         {/* Consultation */}
-        <NoteCard className='mt-5' label='Consultation Diagnosis and Next Step' value="Possible Pelvic inflammation. Perform a Abdomino-Pelvic scan to check for any infection,"/>
+        <NoteCard className='mt-5' label='Consultation Diagnosis and Next Step' value={appointment?.consultationDiagnosis}/>
 
         {/* Feedback */}
         <div className={`border border-borderColor rounded-lg p-3 bg-white mt-5` }>

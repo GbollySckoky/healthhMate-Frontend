@@ -19,10 +19,10 @@ import { useRouter } from 'next/navigation'
 import { STATUS } from '@/types/status'
 import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
+// import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Pagination } from '@/interface/pagination.interfac';
 import { Appointment } from '@/interface/doctor-apppointment.interface';
-
+import PatientTableSkeleton from "@/components/ui/PatientTableSkeleton";
 
 const Patients = () => {
     const [inputValue, setInputValue] = useState<string>('')
@@ -97,7 +97,7 @@ const Patients = () => {
     const patients = data?.data ?? []
     console.log(patients)
 
-    const activePatients = patients?.filter((patient: Appointment) => patient.status === STATUS.PENDING || patient.status === STATUS.CANCELLED ||  patient.status === STATUS.REJECTED)
+    const activePatients = patients?.filter((patient: Appointment) => patient.status !== STATUS.PENDING )
     console.log(activePatients)
     const handleNext = (id: number) => {
       router.push(`/patients/${id}`)
@@ -130,28 +130,27 @@ const Patients = () => {
                     <TableHeader className="border-t border-borderColor ">
                         <TableRow className="bg-[#FAFBFF] font-inter text-[14px] font-medium text-grey-20">
                             <TableHead >Patient </TableHead>
+                             <TableHead>Hospital Name</TableHead>
+                            <TableHead>Doctor Name</TableHead>
                             <TableHead>Date & Time</TableHead>
-                            <TableHead>Type</TableHead>
+                            <TableHead>Consultation Type</TableHead>
                             <TableHead>Status</TableHead>
+                            <TableHead>Health Concern</TableHead>
                             <TableHead></TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody className='cursor-pointer'>
                     {isLoading ? (
-                        <TableRow>
-                            <TableCell colSpan={5}>
-                                <LoadingSpinner />
-                            </TableCell>
-                        </TableRow>
+                       <PatientTableSkeleton />
                     ) : isError ? (
                         <TableRow>
-                            <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                            <TableCell colSpan={8} className="text-center py-8 text-gray-500">
                                 {error.message}
                             </TableCell>
                         </TableRow>
                     ) : activePatients.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                            <TableCell colSpan={8} className="text-center py-8 text-gray-500">
                                 No patients found
                             </TableCell>
                         </TableRow>
@@ -160,6 +159,12 @@ const Patients = () => {
                         <TableCell className="font-inter font-medium text-[13px] text-grey-30">
                         <p> {data.user.firstName || "N/A"}</p> 
                             <p className="text-grey-20 text-[12px] font-normal">{data.user.email || 'N/A'}</p>
+                        </TableCell>
+                         <TableCell className="text-[12px] text-grey-20">
+                            {data.hospital.hospitalName || "N/A"}
+                        </TableCell>
+                            <TableCell className="text-[12px] text-grey-20">
+                            {data.doctor?.firstName || "N/A"} {data.doctor?.lastName || "N/A"}
                         </TableCell>
                         <TableCell className="font-inter font-normal text-[13px] text-grey-30">
                             <p>{data.date || "N/A"}</p> 	

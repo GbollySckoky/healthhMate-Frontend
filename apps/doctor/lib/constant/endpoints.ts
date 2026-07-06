@@ -8,6 +8,10 @@ export const DOCTOR_ENDPOINTS = {
     GET_DOCTOR: 'doctor/me',
     CREATE_PROFILE: 'doctor/profile',
     GET_APPOINTMENT_DETAILS: 'doctor/appointments/',
-    APPROVE_APPOINTMENT: 'doctor/appointments/',
-    DOCTOR_PROFILE: ''
+    // APPROVE_APPOINTMENT: 'doctor/appointments/',
+    CREATE_DOCTOR_AVAILABILITY: 'doctor/availability',
+    APPROVE_APPOINTMENT: 'doctor/',
+    REJECT_APPOINTMENT: 'doctor/',
+    DOCTOR_PROFILE: '',
+    GET_APPOINTMENT_STATS: 'appointment/doctor/stats'
 }

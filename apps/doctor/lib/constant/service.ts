@@ -4,6 +4,7 @@ import { SIGNUP } from "../interface/sign-up.interface";
 import { DOCTOR_ENDPOINTS } from "./endpoints";
 import { ApproveAppointment } from "../interface/approve-appointment.interface";
 import api from "../ClientHttps";
+import { Availability } from "../interface/availability.interface";
 
 
 export const Doctor = {
@@ -45,14 +46,20 @@ export const Doctor = {
         const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/`);
         return response.data
     },
-    approveAppointment: async(appointment_id: string, payload: ApproveAppointment) => {
-        return await api.patch(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/update/`,payload)
+    approveAppointment: async(appointment_id: number, payload: ApproveAppointment) => {
+        return await api.patch(`${DOCTOR_ENDPOINTS.APPROVE_APPOINTMENT}${appointment_id}/approve`,payload)
     },
     createProfile: async (payload: FormData) => {
         return await api.post(DOCTOR_ENDPOINTS.CREATE_PROFILE, payload); 
-    }
-    
-    // registerAccount: async (payload: Register) => {
-    //     return await adminAPI.post(DOCTOR_ENDPOINTS.REGISTER, payload); 
-    // }
+    },
+    createDoctorAvailability: async (payload: Availability) => {
+        return await api.post(DOCTOR_ENDPOINTS.CREATE_DOCTOR_AVAILABILITY, payload); 
+    },
+    rejectAppointment: async (appointment_id: number, payload: ApproveAppointment) => {
+        return await api.patch(`${DOCTOR_ENDPOINTS.REJECT_APPOINTMENT}${appointment_id}/reject`, payload); 
+    },
+    getStats: async() => {
+        const response = await api.get(DOCTOR_ENDPOINTS.GET_APPOINTMENT_STATS);
+        return response.data
+    },
 }

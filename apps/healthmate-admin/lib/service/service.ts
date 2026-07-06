@@ -1,6 +1,6 @@
 import adminAPI from "./admin";
 import { LogIn } from "../interface/login.interface";
-import { Register } from "../interface/register.interface";
+import { Profile } from "../interface/register.interface";
 import { DOCTOR_SIGNUP, Signup } from "../interface/signup-interface";
 import { ADMIN_ENDPOINTS } from "../constant/endpoints";
 import { BRANCH_INTERFACE, ASSIGN_BRANCH } from "../interface/branch.interface";
@@ -14,11 +14,11 @@ export const Hospital_Admin = {
     login: async (payload: LogIn) => {
         return await api.post(ADMIN_ENDPOINTS.LOGIN, payload); 
     },
-    createProfile: async (payload: Register) => {
+    createProfile: async (payload: Profile) => {
         return await adminAPI.post(ADMIN_ENDPOINTS.CREATE_HOSPITAL_PROFILE, payload); 
     },
-    getAllDoctor: async(hospitalId: number) => {
-        const response = await api.get(`${ADMIN_ENDPOINTS.GET_ALL_DOCTORS}${hospitalId}`);
+    getAllDoctor: async() => {
+        const response = await api.get(ADMIN_ENDPOINTS.GET_ALL_DOCTORS);
         return response.data
     },
     createDoctor: async (payload: DOCTOR_SIGNUP) => {
@@ -41,5 +41,17 @@ export const Hospital_Admin = {
     },
      assignBranch: async (payload: ASSIGN_BRANCH) => {
         return await api.post(ADMIN_ENDPOINTS.ASSIGN_DOCTOR_TO_BRANCH, payload); 
+    },
+    getStats: async() => {
+        const response = await api.get(ADMIN_ENDPOINTS.GET_STATS);
+        return response.data
+    },
+    getAllAppointments: async() => {
+        const response = await api.get(ADMIN_ENDPOINTS.GET_ALL_APPOINTMENT);
+        return response.data
+    },
+    getDoctorDetails: async(id: number) => {
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_DOCTOR_DETAILS}${id}`);
+        return response.data
     },
 }

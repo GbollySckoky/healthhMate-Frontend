@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Edit2, Trash2, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Edit2, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,111 +9,65 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import useGetCalendarDays from "@/hooks/useGetCalendarDays";
 import { FlexWrapper, PageWrapper } from "@/components/ui/Reusable";
+import { Doctor } from "@/lib/constant/service";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 const timeSlots = [
-  "8:00am",
-  "9:00am",
-  "10:00am",
-  "11:00am",
-  "12:00pm",
-  "1:00pm",
-  "2:00pm",
-  "3:00pm",
-  "4:00pm",
-  "5:00pm",
-  "6:00pm",
-  "7:00pm",
+  "08:00",
+  "09:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+  "17:00",
+  "18:00",
+  "19:00",
 ];
 
-const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const weekDays = [
+  "SUNDAY",
+  "MONDAY",
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+  "SATURDAY",
+];
 
 const consultations = [
-  {label: "Physical Appointment", value: "in_person"},
-  {label: "Video Call", value: "video_call"},
-  {label: "Audio Call", value: "audio_call"},
-]
-
-type AvailabilityEvent = {
-  date: string;
-  times: string[];
-};
-
-const initialAvailabilityEvents: AvailabilityEvent[] = [
-  {
-    date: "2025-07-18",
-    times: ["9:00am", "11:00am", "12:00pm", "2:00pm"],
-  },
-  {
-    date: "2025-07-25",
-    times: ["8:00am", "10:00am", "1:00pm", "4:00pm"],
-  },
-  {
-    date: "2025-07-28",
-    times: ["9:00am", "3:00pm", "5:00pm"],
-  },
+  { label: "Physical Appointment", value: "in_person" },
+  { label: "Video Call", value: "video_call" },
+  { label: "Audio Call", value: "audio_call" },
 ];
 
-const formatDateKey = (date: Date) => {
-  return date.toLocaleDateString("en-CA");
-};
-
-const isSameDate = (firstDate: Date, secondDate: Date) => {
-  return firstDate.toDateString() === secondDate.toDateString();
+type Availability = {
+  dayOfWeek: string;
+  availableTimeSlots: string[];
+  consultationType: string[];
 };
 
 export default function AvailabilityPage() {
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 6));
-  const [selectedDate, setSelectedDate] = useState(new Date(2025, 6, 25));
-
-  const [availabilityEvents, setAvailabilityEvents] = useState<
-    AvailabilityEvent[]
-  >(initialAvailabilityEvents);
-
+  const [selectedDay, setSelectedDay] = useState("MONDAY");
   const [openModal, setOpenModal] = useState(false);
   const [draftTimes, setDraftTimes] = useState<string[]>([]);
-  const {getCalendarDays} = useGetCalendarDays()
-  const calendarDays = getCalendarDays(currentDate);
-  const selectedDateKey = formatDateKey(selectedDate);
-
+  const [draftConsultationTypes, setDraftConsultationTypes] = useState<string[]>([]);
+  const [availabilityEvents, setAvailabilityEvents] = useState<Availability[]>([]);
+  console.log(draftConsultationTypes)
   const selectedEvent = availabilityEvents.find(
-    (event) => event.date === selectedDateKey
+    (event) => event.dayOfWeek === selectedDay
   );
 
-  const selectedDateTimes = selectedEvent?.times || [];
+  const selectedDayTimes = selectedEvent?.availableTimeSlots || [];
+  const selectedConsultations = selectedEvent?.consultationType || [];
 
-  const monthName = currentDate.toLocaleDateString("en-US", {
-    month: "long",
-    year: "numeric",
-  });
-
-  const selectedDateText = selectedDate.toLocaleDateString("en-US", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
-  const prevMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
-    );
-  };
-
-  const nextMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
-    );
-  };
-
-  const hasEvent = (date: Date) => {
-    const dateKey = formatDateKey(date);
-    return availabilityEvents.some((event) => event.date === dateKey);
-  };
-
-  const openTimeModal = () => {
-    setDraftTimes(selectedDateTimes);
+  const openEditModal = () => {
+    setDraftTimes(selectedDayTimes);
+    setDraftConsultationTypes(selectedConsultations);
     setOpenModal(true);
   };
 
@@ -125,18 +79,30 @@ export default function AvailabilityPage() {
     );
   };
 
-  const saveTimeSlots = () => {
+  const toggleConsultationType = (type: string) => {
+    setDraftConsultationTypes((prev) =>
+      prev.includes(type)
+        ? prev.filter((item) => item !== type)
+        : [...prev, type]
+    );
+  };
+
+  const saveAvailability = () => {
     setAvailabilityEvents((prev) => {
-      const dateExists = prev.some((event) => event.date === selectedDateKey);
+      const dayExists = prev.some((event) => event.dayOfWeek === selectedDay);
 
       if (draftTimes.length === 0) {
-        return prev.filter((event) => event.date !== selectedDateKey);
+        return prev.filter((event) => event.dayOfWeek !== selectedDay);
       }
 
-      if (dateExists) {
+      if (dayExists) {
         return prev.map((event) =>
-          event.date === selectedDateKey
-            ? { ...event, times: draftTimes }
+          event.dayOfWeek === selectedDay
+            ? {
+                ...event,
+                availableTimeSlots: draftTimes,
+                consultationType: draftConsultationTypes,
+              }
             : event
         );
       }
@@ -144,8 +110,9 @@ export default function AvailabilityPage() {
       return [
         ...prev,
         {
-          date: selectedDateKey,
-          times: draftTimes,
+          dayOfWeek: selectedDay,
+          availableTimeSlots: draftTimes,
+          consultationType: draftConsultationTypes,
         },
       ];
     });
@@ -153,59 +120,67 @@ export default function AvailabilityPage() {
     setOpenModal(false);
   };
 
-  const deleteSelectedDateSlots = () => {
+  const deleteSelectedDaySlots = () => {
     setAvailabilityEvents((prev) =>
-      prev.filter((event) => event.date !== selectedDateKey)
+      prev.filter((event) => event.dayOfWeek !== selectedDay)
     );
   };
+
+  // const submitAvailability = async () => {
+  //   await Doctor.createDoctorAvailability(availabilityEvents);
+  // };
+
+  const mutation = useMutation({
+    mutationKey: ['createAvailability'],
+    mutationFn: (payload: Availability) => Doctor.createDoctorAvailability(payload),
+    onSuccess: (response) => {
+      console.log(response)
+    },
+    onError: (error: AxiosError) => {
+      console.log(error)
+    }
+  })
+
+  const submitAvailability = async () => {
+    const payload = {
+      dayOfWeek: selectedDay,
+      availableTimeSlots: draftTimes,
+      consultationType: draftConsultationTypes
+    }
+
+    console.log("JAMES", payload)
+    await mutation.mutateAsync(payload)
+  }
 
   return (
     <PageWrapper>
       <FlexWrapper>
         <section className="space-y-6">
-          <div className="rounded-xl border bg-white">
-            <div className="flex items-center gap-4 border-b px-8 py-5">
-              <Button variant="outline" size="icon" onClick={prevMonth}>
-                <ChevronLeft size={16} />
-              </Button>
+          <div className="rounded-xl border bg-white p-8">
+            <p className="mb-4 text-sm font-medium">Select Available Day</p>
 
-              <p className="font-medium">{monthName}</p>
-
-              <Button variant="outline" size="icon" onClick={nextMonth}>
-                <ChevronRight size={16} />
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-7 gap-y-8 px-16 py-10 text-center">
-              {weekDays.map((day) => (
-                <p key={day} className="font-medium text-[#111827]">
-                  {day}
-                </p>
-              ))}
-
-              {calendarDays.map((item, index) => {
-                const isSelected = isSameDate(item.date, selectedDate);
-                const eventExists = hasEvent(item.date);
+            <div className="flex flex-wrap gap-3">
+              {weekDays.map((day) => {
+                const active = selectedDay === day;
+                const hasAvailability = availabilityEvents.some(
+                  (event) => event.dayOfWeek === day
+                );
 
                 return (
-                  <div key={index} className="flex flex-col items-center gap-2">
-                    <button
-                      onClick={() => setSelectedDate(item.date)}
-                      className={`h-10 min-w-20 rounded-2xl text-sm transition ${
-                        isSelected
-                          ? "bg-[#FFE8E0] text-[#111827]"
-                          : !item.currentMonth
-                          ? "text-gray-400"
-                          : "text-[#111827]"
-                      }`}
-                    >
-                      {item.day}
-                    </button>
-
-                    {eventExists && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#D92D8A]" />
+                  <button
+                    key={day}
+                    onClick={() => setSelectedDay(day)}
+                    className={`rounded-md border px-5 py-2 text-sm ${
+                      active
+                        ? "border-[#D92D8A] bg-[#FFE7E1]"
+                        : "border-gray-300 bg-white"
+                    }`}
+                  >
+                    {day}
+                    {hasAvailability && (
+                      <span className="ml-2 text-[#D92D8A]">●</span>
                     )}
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -214,12 +189,12 @@ export default function AvailabilityPage() {
           <div className="rounded-xl border bg-white p-8">
             <div className="mb-4 flex items-center justify-between">
               <p className="text-sm font-medium">Available Time Slots</p>
-              <p className="text-sm text-gray-500">{selectedDateText}</p>
+              <p className="text-sm text-gray-500">{selectedDay}</p>
             </div>
 
-            {selectedDateTimes.length > 0 ? (
+            {selectedDayTimes.length > 0 ? (
               <div className="flex max-w-3xl flex-wrap gap-3">
-                {selectedDateTimes.map((slot) => (
+                {selectedDayTimes.map((slot) => (
                   <button
                     key={slot}
                     className="rounded-md border border-gray-400 px-5 py-2 text-sm"
@@ -230,58 +205,90 @@ export default function AvailabilityPage() {
               </div>
             ) : (
               <p className="text-sm text-gray-500">
-                No time slot selected for this date.
+                No time slot selected for this day.
               </p>
             )}
 
             <div className="mt-8 flex gap-6 text-gray-600">
-              <button onClick={deleteSelectedDateSlots}>
+              <button onClick={deleteSelectedDaySlots}>
                 <Trash2 size={18} />
               </button>
 
-              <button onClick={openTimeModal}>
+              <button onClick={openEditModal}>
                 <Edit2 size={18} />
               </button>
             </div>
           </div>
 
-           <SelectConsultation />
+          <div className="rounded-xl border bg-white p-8">
+            <p className="text-sm font-medium">Consultation Type</p>
+
+            {selectedConsultations.length > 0 ? (
+              <div className="mt-4 flex max-w-3xl flex-wrap gap-3">
+                {selectedConsultations.map((type) => (
+                  <button
+                    key={type}
+                    className="rounded-md border border-gray-400 px-5 py-2 text-sm"
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="mt-4 text-sm text-gray-500">
+                No consultation type selected.
+              </p>
+            )}
+          </div>
+
+          <Button
+            onClick={submitAvailability}
+            className="bg-[#D92D8A] hover:bg-[#C01F78]"
+          >
+            Save Doctor Availability
+          </Button>
         </section>
       </FlexWrapper>
 
-      <TimeSlotModal
+      <AvailabilityModal
         open={openModal}
         setOpen={setOpenModal}
-        selectedDateText={selectedDateText}
+        selectedDay={selectedDay}
         draftTimes={draftTimes}
+        draftConsultationTypes={draftConsultationTypes}
         toggleDraftTime={toggleDraftTime}
-        saveTimeSlots={saveTimeSlots}
+        toggleConsultationType={toggleConsultationType}
+        saveAvailability={saveAvailability}
       />
     </PageWrapper>
   );
 }
 
-function TimeSlotModal({
+function AvailabilityModal({
   open,
   setOpen,
-  selectedDateText,
+  selectedDay,
   draftTimes,
+  draftConsultationTypes,
   toggleDraftTime,
-  saveTimeSlots,
+  toggleConsultationType,
+  saveAvailability,
 }: {
   open: boolean;
   setOpen: (value: boolean) => void;
-  selectedDateText: string;
+  selectedDay: string;
   draftTimes: string[];
+  draftConsultationTypes: string[];
   toggleDraftTime: (slot: string) => void;
-  saveTimeSlots: () => void;
+  toggleConsultationType: (type: string) => void;
+  saveAvailability: () => void;
 }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-xl p-0">
         <DialogHeader className="border-b px-6 py-5">
           <div className="flex items-center justify-between">
-            <DialogTitle>Edit Time Slot</DialogTitle>
+            <DialogTitle>Edit Availability</DialogTitle>
 
             <button onClick={() => setOpen(false)}>
               <X size={20} />
@@ -291,7 +298,7 @@ function TimeSlotModal({
 
         <div className="space-y-6 px-6 py-5">
           <div className="rounded-lg border py-4 text-center font-medium">
-            {selectedDateText}
+            {selectedDay}
           </div>
 
           <div>
@@ -305,13 +312,39 @@ function TimeSlotModal({
                   <button
                     key={slot}
                     onClick={() => toggleDraftTime(slot)}
-                    className={`rounded-md border px-4 py-3 text-sm transition ${
+                    className={`rounded-md border px-4 py-3 text-sm ${
                       active
                         ? "border-[#FFE7E1] bg-[#FFE7E1]"
                         : "border-gray-200 bg-white"
                     }`}
                   >
                     {slot}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <p className="mb-4 text-sm font-medium">Consultation Type</p>
+
+            <div className="flex flex-wrap gap-3">
+              {consultations.map((consultation) => {
+                const active = draftConsultationTypes.includes(
+                  consultation.value
+                );
+
+                return (
+                  <button
+                    key={consultation.value}
+                    onClick={() => toggleConsultationType(consultation.value)}
+                    className={`rounded-md border px-5 py-2 text-sm ${
+                      active
+                        ? "border-[#D92D8A] bg-[#FFE7E1]"
+                        : "border-gray-300 bg-white"
+                    }`}
+                  >
+                    {consultation.label}
                   </button>
                 );
               })}
@@ -325,7 +358,7 @@ function TimeSlotModal({
           </Button>
 
           <Button
-            onClick={saveTimeSlots}
+            onClick={saveAvailability}
             className="bg-[#D92D8A] hover:bg-[#C01F78]"
           >
             Save Changes
@@ -334,19 +367,4 @@ function TimeSlotModal({
       </DialogContent>
     </Dialog>
   );
-}
-
-const SelectConsultation = () => {
-  return(
-   <div className="rounded-xl border bg-white p-8">
-      <p className="text-sm font-medium">Consultation Type</p>
-      <div className="flex max-w-3xl flex-wrap gap-3 mt-4">
-        {consultations.map((consultation) => (
-          <button className="rounded-md border border-gray-400 px-5 py-2 text-sm" key={consultation.value}>
-            {consultation.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  )
 }

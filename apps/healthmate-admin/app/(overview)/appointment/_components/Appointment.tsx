@@ -1,3 +1,4 @@
+"use client"
 import { appointmentData } from '@/components/data';
 import { Card, MediumText, PageWrapper, Value } from '@/components/ui/Reusable'
 import React from 'react'
@@ -11,10 +12,24 @@ import CancelledTable from './CancelledTable';
 
 
 const Appointment = () => {
+   
+    // {isLoading ? (
+    //         <div className="flex justify-center py-8">
+    //           <LoadingSpinner />
+    //         </div>
+    //         ) : isError ? (
+    //           <p className="text-center text-sm text-gray-500 py-20">
+    //             {error.message}
+    //           </p>
+    //         ) : recentActivities.length === 0 ? (
+    //           <p className="text-center py-8 text-gray-500 text-sm">
+    //             No recent activities found
+    //           </p>
+    //         ) :
   return (
     <PageWrapper>
         <Card className='flex items-center gap-4 mb-5'>
-            {appointmentData.map((appointment) => {
+            {appointmentData.map((appointment: any) => {
                 const {id,  value,percent, about} = appointment;
                 return(
                     <Card key={id}>

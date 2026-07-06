@@ -1,3 +1,4 @@
+"use client"
 import { PageWrapper,} from '@/components/ui/Reusable'
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -8,9 +9,23 @@ import { Trash2 } from 'lucide-react'
 import Overview from './Overview'
 import Documents from './Documents'
 import DetailsNav from '@/components/ui/DetailsNav'
+import { useQuery } from '@tanstack/react-query'
+import { Hospital_Admin } from '@/lib/service/service'
+import { useParams } from "next/navigation";
+
 
 const Page = () => {
+    const params = useParams();
 
+    const hospitalId = params?.slug; // Access the hospitalId from the URL parameters
+    const { data, isLoading } = useQuery({
+        queryKey: ['getAllDoctor', hospitalId],
+        queryFn: () => Hospital_Admin.getDoctorDetails(Number(hospitalId)),
+        enabled: !!hospitalId
+    });
+    console.log('DATA!!', data?.data)
+    const doctorDetails = data?.data || {}
+    console.log('DOCTOR DETAILS!!', doctorDetails)
   return (
     <PageWrapper >
         <DetailsNav text='Doctors' detailsText='Doctor Details'/>
@@ -19,8 +34,8 @@ const Page = () => {
                 <div className="flex items-center">
                 <Image src={image} alt='Image' className="w-[50px] h-[50px] rounded-full" />
                 <div className='ml-2'>
-                    <p className='font-medium font-libre text-[14px] text-grey-800 mb-1'>Uche Abiodun</p>
-                    <p className='text-[12px] font-inter text-grey-20'>olivia@untitledui.com</p>
+                    <p className='font-medium font-libre text-[14px] text-grey-800 mb-1'>{doctorDetails.firstName} {doctorDetails.lastName}</p>
+                    <p className='text-[12px] font-inter text-grey-20'>{doctorDetails.email || '-'}</p>
                 </div>
                 </div>
                 <button className='text-inter font-semibold text-[14px] text-white flex items-center space-x-2 bg-red-600 rounded-lg p-3 cursor-pointer '>
@@ -35,8 +50,8 @@ const Page = () => {
                     <TabsTrigger value="availabilty">Availability</TabsTrigger>
                     <TabsTrigger value="documents">Documents</TabsTrigger>
                 </TabsList>
-                <TabsContent value="overview"><Overview /> </TabsContent>
-                <TabsContent value="appointments"> <Appointment /> </TabsContent>
+                <TabsContent value="overview"><Overview doctorDetails={doctorDetails}/> isLoading={isLoading} </TabsContent>
+                <TabsContent value="appointments"> <Appointment appointments={doctorDetails.appointments}/> </TabsContent>
                 <TabsContent value="availabilty">  </TabsContent>
                 <TabsContent value="documents"> <Documents /> </TabsContent>
             </Tabs>

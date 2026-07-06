@@ -4,7 +4,7 @@ import { useFormModal } from "@/components/modal/FormModal";
 import Footer from "@/components/ui/Footer";
 import InputField from "@/components/ui/InputField";
 import { DisplayFlex } from "@/components/ui/Reusable";
-import TelInput from "@/components/ui/TelInput";
+// import TelInput from "@/components/ui/TelInput";
 import TextArea from "@/components/ui/TextArea";
 import { Profile } from "@/lib/interface/doctor.schema";
 import React, { FormEvent, useState } from "react";
@@ -57,7 +57,7 @@ const EditProfile = () => {
 
     formData.append("bio", inputValue.bio);
     formData.append("consultationFee", String(inputValue.consultationFee));
-    formData.append("liscenceNumber", inputValue.liscenceNumber);
+    formData.append("licenseNumber", inputValue.liscenceNumber);
     formData.append("specialization", inputValue.specialization);
     formData.append("yearsOfExperience", String(inputValue.yearsOfExperience));
 
@@ -79,9 +79,9 @@ const EditProfile = () => {
       </div>
 
       <DisplayFlex>
-        <TelInput
+        <InputField
           name="yearsOfExperience"
-          value={inputValue.yearsOfExperience}
+          value={String(inputValue.yearsOfExperience)}
           onChange={handleChange}
           placeholder="3"
           label="Years Of Experience"
@@ -105,9 +105,9 @@ const EditProfile = () => {
           label="Liscence Number"
         />
 
-        <TelInput
+        <InputField
           name="consultationFee"
-          value={inputValue.consultationFee}
+          value={String(inputValue.consultationFee)}
           onChange={handleChange}
           placeholder="20000"
           label="Consultation Fee"

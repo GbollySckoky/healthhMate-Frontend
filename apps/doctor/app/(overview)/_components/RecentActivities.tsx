@@ -4,7 +4,7 @@ import React from 'react'
 import { Doctor } from '@/lib/constant/service'
 import { useQuery } from '@tanstack/react-query'
 import { Appointment } from '@/interface/doctor-apppointment.interface'
-import LoadingSpinner from '@/components/ui/LoadingSpinner'
+import { RecentActivitySkeleton } from '@/components/ui/DashboardSkeleton'
 
 
 const RecentActivities = () => {
@@ -24,17 +24,15 @@ const RecentActivities = () => {
         {/* Scrollable content */}
         <div className="flex-1 overflow-y-auto p-4 pt-0">
           {isLoading ? (
-            <div className="flex justify-center py-8">
-              <LoadingSpinner />
-            </div>
+            <RecentActivitySkeleton />
             ) : isError ? (
-              <div className="text-center py-20">
+              <p className="text-center text-sm text-gray-500 py-20">
                 {error.message}
-              </div>
+              </p>
             ) : recentActivities.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
+              <p className="text-center py-8 text-gray-500 text-sm">
                 No recent activities found
-              </div>
+              </p>
             ) : recentActivities?.map((recent: Appointment) => {
             return(
                 <div key={recent.id} className='flex items-center justify-between p-3'>
