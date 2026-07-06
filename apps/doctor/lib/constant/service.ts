@@ -42,7 +42,7 @@ export const Doctor = {
         const response = await api.get(DOCTOR_ENDPOINTS.GET_DOCTOR);
         return response.data
     },
-    getAppointmentDetail: async(appointment_id: string) => {
+    getAppointmentDetail: async(appointment_id: number) => {
         const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/`);
         return response.data
     },
