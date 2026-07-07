@@ -1,0 +1,80 @@
+'use client'
+import React, { useState } from 'react'
+import { sideBarData } from '@/lib/components/data'
+import Link from 'next/link'
+import image from '../../../assets/Group 19156.png'
+import Image from 'next/image'
+import { LogOut } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+
+const SideBar = () => {
+  const pathname = usePathname()
+  const [activeUrl, setActiveUrl] = useState<string>(pathname || '')
+
+  const handleActiveUrl = (url: string) => setActiveUrl(url)
+
+  return (
+    <div className="fixed inset-y-0 left-0 z-30 h-screen w-[64px] overflow-y-auto bg-red-900 text-white transition-[width] duration-200 md:w-[260px]">
+      <div className="mx-2 flex h-full flex-col">
+        <div className="mt-3 flex items-center pl-3">
+          <Image src={image} alt="Logo" width={120} className="" priority />
+        </div>
+
+        <div className="mt-3 flex flex-1 flex-col justify-between">
+          {/* First 7 links */}
+          <div>
+            {sideBarData.slice(0, 7).map(({ id, icon, text, url }) => (
+              <div key={id}>
+                <Link
+                  href={url}
+                  className={`flex items-center gap-3 no-underline ${
+                    activeUrl === url
+                      ? 'bg-red-100 font-medium text-grey-900 rounded-lg my-3 '
+                      : 'text-white'
+                  } p-4 hover:bg-red-100 hover:text-grey-900 rounded-lg transition-colors duration-200  cursor-pointer`}
+                  onClick={() => handleActiveUrl(url)}
+                >
+                  <span className="flex-shrink-0">{icon}</span>
+                  <p className="font-normal text-[14px] font-sans hidden md:block">{text}</p>
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          {/* Last 2 links */}
+          <div>
+            {sideBarData.slice(7, 9).map(({ id, icon, text, url }) => (
+              <div key={id}>
+                <Link
+                  href={url}
+                  className={`flex items-center gap-3 no-underline ${
+                    activeUrl === url
+                      ? 'bg-red-100 font-medium text-grey-900 rounded-lg mb-3 '
+                      : 'text-white'
+                  } p-4 hover:bg-red-100 hover:text-grey-900 rounded-lg transition-colors duration-200 cursor-pointer`}
+                  onClick={() => handleActiveUrl(url)}
+                >
+                  <span className="flex-shrink-0">{icon}</span>
+                  <p className="font-normal text-[14px] font-sans hidden md:block">{text}</p>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Admin section */}
+        <div className="flex items-center justify-center md:justify-between mt-4 p-2">
+          <div>
+            <p className="font-sans font-semibold text-[14px] hidden md:block">Admin</p>
+            <p className="font-inter text-[14px] font-normal hidden md:block">admin@evercare.com</p>
+          </div>
+          <span className="cursor-pointer">
+            <LogOut size={18} />
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default SideBar
