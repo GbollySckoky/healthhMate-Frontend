@@ -1,10 +1,30 @@
-import { Card, DisplayFlex, MediumTitle, MinText, SmallestTitle } from '@/components/ui/Reusable'
+"use client"
+import { MediumTitle, MinText, SmallestTitle } from '@/components/ui/Reusable'
 import React from 'react'
 import { ChevronRight } from 'lucide-react';
-import { upcomingConsultation } from '@/components/data';
+import image from '@/assets/Image.png'
+import { Hospital_Admin } from '@/lib/service/service';
+import { useQuery } from '@tanstack/react-query';
+import { STATUS } from '@/types/status';
+import { GET_ALL_APPOINTMENTS } from '@/lib/interface/get_all_appointyment'
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/lib/constant/Routes';
+import { AppointmentCardSkeleton } from '@/components/ui/DashboardSkeleton';
 import Image from 'next/image';
-
+// import Image from 'nex'
 const UpcomingConsultation = () => {
+  const router = useRouter()
+  const {data, isLoading, error, isError} = useQuery({
+    queryKey: ['appointment', 1, 10],
+    queryFn: () => Hospital_Admin.getAllAppointments(1, 10)
+  })
+
+  
+  const datas = data?.data ?? []
+  const upcomingConsultation = datas.filter(
+    (item: GET_ALL_APPOINTMENTS) => item.status === STATUS.UPCOMING
+  )
+  console.log(upcomingConsultation, "DATA!!")
   return (
     <div className="bg-white rounded-lg border border-gray-200 w-full h-[400px] flex flex-col">
     {/* Fixed header */}
@@ -22,32 +42,43 @@ const UpcomingConsultation = () => {
     </div>
     
     {/* Scrollable content */}
-    <div className="flex-1 overflow-y-auto p-4 pt-0">
-      {upcomingConsultation.map((consultation, index) => {
-        const { title, time, date, img, callType, patient} = consultation;
-        return(
-          <div key={index} className="flex items-center justify-between py-4 border-t border-gray-200 first:border-t-0">
+   <div className="flex-1 overflow-y-auto p-4 pt-0">
+      {isLoading ? (
+        <AppointmentCardSkeleton />
+        ) : isError ? (
+          <p className="text-center py-20 text-sm">
+            {error.message}
+          </p>
+        ) : upcomingConsultation.length === 0 ? (
+          <p className="text-center py-8 text-gray-500 text-sm">
+            No upcoming appointments found
+          </p>
+        ) : upcomingConsultation?.slice(0, 10)?.map((consultation: GET_ALL_APPOINTMENTS) => {
+       return(
+        <div key={consultation.id} className="flex items-center justify-between py-4 border-t border-gray-200 first:border-t-0">
           <div className="flex">
-            <Image 
-              src={img} 
-              alt={`${title} profile`} 
+            <Image
+              src={image} 
+              alt={`${consultation.id} profile`} 
               className='w-10 h-10 rounded-full object-cover flex-shrink-0'
             />
             <div className='flex flex-col ml-3 flex-1 min-w-0'>
-              <SmallestTitle>{title}</SmallestTitle>
+              <SmallestTitle>{consultation?.doctor?.firstName || "N/A"} {consultation?.doctor?.lastName || "N/A"}</SmallestTitle>
               <div className="flex items-center space-x-2 ">
-                <MinText className='text-red-800 font-medium'>{time}</MinText>
+                <MinText className='text-red-800 font-medium'>{consultation?.time || "N/A"}</MinText>
                 <MinText className='text-gray-500'>|</MinText>
-                <MinText className='text-gray-500'>{date}</MinText>
+                <MinText className='text-gray-500'>{consultation?.date || "N/A"}</MinText>
                 <MinText className='text-gray-500'>|</MinText>
-                <MinText className='text-gray-500'>{callType}</MinText>
+                <MinText className='text-gray-500'>{consultation?.consultationType || "N/A"}</MinText>
               </div>
               <MinText className='text-gray-500 truncate'>
-                Patient: {patient}
+                Patient: {consultation?.user?.firstName || "N/A"} {" "} {consultation?.user?.lastName || "N/A"}
               </MinText>
             </div>
           </div>
-          <button className='font-semibold text-[14px] border p-2 rounded-md font-libre text-[#414651] cursor-pointer'>
+          <button 
+            className='font-semibold text-[14px] border p-2 rounded-md font-libre text-[#414651] cursor-pointer hover:text-red-800'
+            onClick={() => router.push(`${ROUTES.appointment}/${consultation.id}`)}>
             View Details
           </button>
           </div>

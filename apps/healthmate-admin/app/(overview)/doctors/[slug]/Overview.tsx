@@ -47,6 +47,18 @@ const Overview = ({
           label="License Number:"
           value={doctorDetails?.profile?.licenseNumber || "-"}
         />
+        <Infos
+          label="consultation Fee:"
+          value={doctorDetails?.profile?.consultationFee.toLocaleString() || "-"}
+        />
+        <Infos
+          label="Years Of Experience:"
+          value={doctorDetails?.profile?.yearsOfExperience || "-"}
+        />
+        <Infos
+          label="Bio:"
+          value={doctorDetails?.profile?.bio || "-"}
+        />
       </div>
 
       <div className="mt-5">

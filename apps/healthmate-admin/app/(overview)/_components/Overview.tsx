@@ -3,7 +3,6 @@ import React from 'react'
 import { Card, DisplayFlex, FlexWrapper, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '../../../lib/components/ui/Reusable'
 import { PageWrapper } from '../../../lib/components/ui/Reusable'
 import {  CalendarDays } from 'lucide-react';
-import { overviewData } from '../../../lib/components/data';
 import { ArrowDown, ArrowUp } from "lucide-react"
 import Earnings from './Earnings';
 import { AppointmentTrends } from './AppointmentTrends';
@@ -13,6 +12,7 @@ import RecentActivities from './RecentActivities';
 import { TopDoctors } from './TopDoctors';
 import { useQuery } from '@tanstack/react-query';
 import { Hospital_Admin } from '@/lib/service/service';
+import { OverviewStatsSkeleton } from '@/components/ui/DashboardSkeleton';
 
 const Overview = () => {
     const { data, isLoading, isError, error } = useQuery({
@@ -94,38 +94,38 @@ const Overview = () => {
             </div>
             {/* Overview */}
             <div className="flex justify-between gap-4 mb-7">
-                {isLoading ? (
-                    <p>Loading...</p>
-                ) : (
-                    isError ? (
-                    <p>Error: {error.message}</p>
-                    ) : (
-                        <Card>
+                <Card>
                     <MediumTitle>Overview</MediumTitle>
-                    <div className="grid grid-cols-4 gap-4 mt-3">
-                        {overviewData.map((overview) => {
-                            const {id,  value,percent,month, about} = overview;
-                            return(
-                                <Card key={id}>
-                                    <MediumText> {about} </MediumText>
-                                    <div className="flex items-center justify-between mt-2">
-                                        <div className="flex items-center space-x-2">
-                                            <Value>{value}</Value>
-                                            {month && <SmallestText>{month} </SmallestText>}
+                    {isLoading ? (
+                        <OverviewStatsSkeleton />
+                    ): isError ? (
+                        <div className="text-center text-grey-500">
+                            {error.message || 'An error occurred while fetching overview data.'}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-4 gap-4 mt-3">
+                            {overviewData.map((overview) => {
+                                const {id,  value,percent,month, about} = overview;
+                                return(
+                                    <Card key={id}>
+                                        <MediumText> {about} </MediumText>
+                                        <div className="flex items-center justify-between mt-2">
+                                            <div className="flex items-center space-x-2">
+                                                <Value>{value}</Value>
+                                                {month && <SmallestText>{month} </SmallestText>}
+                                            </div>
+                                            <div className={`flex items-center ${percent > 0 ? 'text-[#05A505]' :'text-[#F04438]'}`}>
+                                                {percent > 0 ? <ArrowUp size={15}  /> : <ArrowDown size={15} />}
+                                                <p>{percent}%</p>
+                                            </div>
+                                            
                                         </div>
-                                        <div className={`flex items-center ${percent > 0 ? 'text-[#05A505]' :'text-[#F04438]'}`}>
-                                            {percent > 0 ? <ArrowUp size={15}  /> : <ArrowDown size={15} />}
-                                            <p>{percent}%</p>
-                                        </div>
-                                        
-                                    </div>
-                                </Card>
-                            )
-                        })}
-                    </div>
+                                    </Card>
+                                )
+                            })}
+                        </div>
+                    )}
                 </Card>
-                ))}
-            
                 <Earnings />
             </div>
             {/* Charts */}

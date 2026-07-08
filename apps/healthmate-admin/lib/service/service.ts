@@ -59,7 +59,7 @@ export const Hospital_Admin = {
         return response.data
     },
      getAppointmentDetails: async(id: number) => {
-        const response = await api.get(`${ADMIN_ENDPOINTS.GET_APPOINTMENT_DETAILS.replace('id', `${id}`)}`);
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_APPOINTMENT_DETAILS}${id}/appointments`);
          return response.data
     }
 }
