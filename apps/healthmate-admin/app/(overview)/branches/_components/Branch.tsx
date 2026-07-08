@@ -1,90 +1,97 @@
-"use client"
-import MinSelectField from '@/components/Inputs/MinSelectField'
-import { Button, PageWrapper, TableTitle } from '@/components/ui/Reusable'
-import React, { useState } from 'react'
-import {Search } from 'lucide-react'
-import Input from '@/components/Inputs/Input'
-import BranchTable from './BranchTable'
-import useToggle from '@/hooks/useToggle'
-import AddNewBranch from './AddNewBranch'
-import { useFormModal } from '@/components/Modal/FormModal'
-import AssignBranch from './AssignBranch'
+"use client";
 
+import MinSelectField from "@/lib/components/Inputs/MinSelectField";
+import Input from "@/lib/components/Inputs/Input";
+import {
+  Button,
+  FlexWrapper,
+  PageWrapper,
+  TableTitle,
+} from "@/lib/components/ui/Reusable";
+import React, { useState } from "react";
+import { Search } from "lucide-react";
+import BranchTable from "./BranchTable";
+import useToggle from "@/hooks/useToggle";
+import AddNewBranch from "./AddNewBranch";
+import AssignBranch from "./AssignBranch";
+import { useFormModal } from "@/lib/components/Modal/FormModal";
 
 const Branch = () => {
-    const [inputValue, setInputValue] = useState<string>('')
-    const {isToggle, handleToggle} = useToggle()
-    const [selectValue, setSelectValue] = useState('')
-    const {openModal} = useFormModal()
-    const handleSelect = (option: string) => {
-        setSelectValue((prev) => (prev === option ? '' : option ))
-        handleToggle
-    }
+  const [inputValue, setInputValue] = useState("");
+  const [selectValue, setSelectValue] = useState<string | undefined>();
 
-    const allStatus ={
-        label: 'Status',
-        options: [
-            'Active',
-            'In Active',
-            'Open'
-        ]
-    }
-    
+  const { isToggle, handleToggle } = useToggle();
+  const { openModal } = useFormModal();
+
+  const handleSelect = (option: string | undefined) => {
+    setSelectValue(option);
+    handleToggle();
+  };
+
+  const allStatus = {
+    label: "Status",
+    options: ["Active", "Inactive", "Open"],
+  };
+
   return (
     <PageWrapper>
-        <div className="bg-white rounded-lg w-full border border-borderColor ">
-            <div className="flex justify-between border-b border-borderColor100 p-4">
-                <TableTitle >All Branches</TableTitle>
-                <div className="flex items-center gap-3">
-                    <Button onClick={() =>
-                        openModal(<AddNewBranch />, {
-                        title:
-                            'Create Branch',
-                        className: 'max-w-lg',
-                        onClose: () => {},
-                        // confirmDelete() {},
-                        })
-                    }>Add New Branch</Button>
-                    <Button onClick={() =>
-                        openModal(<AssignBranch />, {
-                        title:
-                            'Assign Branch To Doctor',
-                        className: 'max-w-lg',
-                        onClose: () => {},
-                        // confirmDelete() {},
-                        })
-                    }>Assign Branch</Button>
-                </div>
-            </div>
-            <div className="flex space-x-3 mt-4 px-4">
-                <Input 
-                    value={inputValue}
-                    placeholder='Search by Name'
-                    onChange={(e) => setInputValue(e.target.value)}
-                    icon={<Search size={17} color="#C11574" />}
-                />
-                <MinSelectField 
-                    {...allStatus}
-                    value={selectValue}
-                    show={isToggle}
-                    onSelect={handleSelect}
-                    onClick={handleToggle}
-                    className='w-fit'
-                />
-                 {/* <MinSelectField 
-                    {...allRoles}
-                    value={selectValue}
-                    show={displayValues}
-                    onSelect={handleClick}
-                    onClick={handleDisplayValues}
-                /> */}
-            </div>
-            <div className="p-4">
-                <BranchTable />
-            </div>
-        </div>
-    </PageWrapper>
-  )
-}
+      <FlexWrapper>
+        <div className="w-full rounded-lg border border-borderColor bg-white">
+          <div className="flex items-center justify-between border-b border-borderColor100 p-4">
+            <TableTitle>All Branches</TableTitle>
 
-export default Branch
+            <div className="flex items-center gap-3">
+              <Button
+                onClick={() =>
+                  openModal(<AddNewBranch />, {
+                    title: "Create Branch",
+                    className: "max-w-lg",
+                    onClose: () => {},
+                  })
+                }
+              >
+                Add New Branch
+              </Button>
+
+              <Button
+                onClick={() =>
+                  openModal(<AssignBranch />, {
+                    title: "Assign Branch To Doctor",
+                    className: "max-w-lg",
+                    onClose: () => {},
+                  })
+                }
+              >
+                Assign Branch
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 px-4 py-4">
+            <Input
+              value={inputValue}
+              placeholder="Search by branch name"
+              onChange={(e) => setInputValue(e.target.value)}
+              icon={<Search size={17} color="#C11574" />}
+            />
+
+            <MinSelectField
+              {...allStatus}
+              value={selectValue}
+              show={isToggle}
+              onSelect={handleSelect}
+              onClick={handleToggle}
+              className="w-fit"
+            />
+          </div>
+
+          <div className="p-4">
+            <BranchTable searchQuery={inputValue} status={selectValue} />
+          </div>
+        </div>
+      </FlexWrapper>
+    </PageWrapper>
+  );
+};
+
+export default Branch;

@@ -1,154 +1,196 @@
-"use client"
-import { useModal } from "@/components/Modal/Modal";
+"use client";
+
+import { useModal } from "@/lib/components/Modal/Modal";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
-import image from '@/assets/Image.png'
-import { Trash2, Pencil } from 'lucide-react';
-import { activeStatus } from "@/types/status";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/lib/components/ui/table";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
+} from "@/lib/components/ui/pagination";
+import { Trash2, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
-import DeleteModal from "../../settings/_components/DeleteModal";
 import { useQuery } from "@tanstack/react-query";
+
+import DeleteModal from "../../settings/_components/DeleteModal";
 import { Hospital_Admin } from "@/lib/service/service";
+import BranchTableSkeleton from "@/components/ui/BranchPageSkeleton";
+import { Branch } from "@/lib/interface/branch";
 
-  const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Open",
-      image: image,
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "Closed",
-      image: image,
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "In Progress",
-      image: image,
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "In Progress",
-      image: image,
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "Active",
-      image: image,
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Inactive",
-      image: image,
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Closed",
-      image: image,
-    },
-  ]
-const BranchTable = () => {
-    const { openModal } = useModal();
-    const router = useRouter()
-    const { data, isLoading } = useQuery({
-      queryKey: ['branch'],
-      queryFn: () => Hospital_Admin.getBranch(),
-    })
-     console.log('DATA!!', data)
-    return (
-        <div>
-          <Table>
-              <TableHeader className="border-t border-borderColor text-[#535862]">
-                  <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium ">
-                      <TableHead>Id</TableHead>
-                      <TableHead >Branch Name</TableHead>
-                      <TableHead>Branch Address</TableHead>
-                      <TableHead>Phone Number</TableHead>
-                      <TableHead>Location</TableHead>
-                      <TableHead></TableHead>
-                  </TableRow>
-              </TableHeader>
-              <TableBody onClick={() => router.push("/branches/1")}>
-                {data?.data.map((branch: any) => (
-                    <TableRow  key={branch.id}>
-                    <TableCell className="font-inter font-medium text-[14px] text-grey-20"> {branch.id}</TableCell>
-                    <TableCell className="font-inter font-medium text-[14px] text-grey-20"> {branch.branchName}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{branch.branchAddress}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{branch.phoneNumber}</TableCell>
-                    <TableCell className="font-inter font-normal text-[14px] text-grey-20">{branch.state}</TableCell>
-                    <TableCell className="font-inter font-medium text-[14px]  cursor-pointer flex">
-                          <span onClick={() =>
-                            openModal(<DeleteModal
-                              text="Are you sure you want to delete this branch? All the data would be permanently deleted "
-                              />, {
-                              title:
-                                'Delete Ikoyi Center?',
-                              className: 'max-w-lg',
-                              onClose: () => {},
-                              confirmDelete() {},
-                            })
-                          }> <Trash2 color="#F04438" size={15}/></span>
-                         <span className="ml-3"> <Pencil size={15} /></span>
-                    </TableCell>
-                    </TableRow>
-                ))}
-              </TableBody>
-          </Table>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" >3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
-    )
-}
+type BranchTableProps = {
+  searchQuery?: string;
+  status?: string;
+};
 
-export default BranchTable
+const BranchTable = ({ searchQuery = "", status }: BranchTableProps) => {
+  const { openModal } = useModal();
+  const router = useRouter();
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["branch", searchQuery, status],
+    queryFn: () => Hospital_Admin.getBranch(),
+  });
+
+  const branches = data?.data ?? [];
+
+  const filteredBranches = branches.filter((branch: any) => {
+    const search = searchQuery.toLowerCase();
+
+    const matchesSearch =
+      branch.branchName?.toLowerCase().includes(search) ||
+      branch.branchAddress?.toLowerCase().includes(search) ||
+      branch.phoneNumber?.toLowerCase().includes(search) ||
+      branch.state?.toLowerCase().includes(search);
+
+    const matchesStatus = status ? branch.status === status : true;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  const handleDeleteClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    branchName: string
+  ) => {
+    e.stopPropagation();
+
+    openModal(
+      <DeleteModal text="Are you sure you want to delete this branch? All the data would be permanently deleted." />,
+      {
+        title: `Delete ${branchName || "Branch"}?`,
+        className: "max-w-lg",
+        onClose: () => {},
+        confirmDelete() {},
+      }
+    );
+  };
+
+  const handleEditClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    branchId: number
+  ) => {
+    e.stopPropagation();
+    router.push(`/branches/${branchId}/edit`);
+  };
+
+  return (
+    <div>
+      <Table>
+        <TableHeader className="border-t border-borderColor text-[#535862]">
+          <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
+            <TableHead>Id</TableHead>
+            <TableHead>Branch Name</TableHead>
+            <TableHead>Branch Address</TableHead>
+            <TableHead>Phone Number</TableHead>
+            <TableHead>Location</TableHead>
+            <TableHead></TableHead>
+          </TableRow>
+        </TableHeader>
+
+        {isLoading ? (
+          <BranchTableSkeleton />
+        ) : (
+          <TableBody>
+            {isError ? (
+              <TableRow>
+                <TableCell
+                  colSpan={6}
+                  className="py-8 text-center text-sm text-red-600"
+                >
+                  {error.message}
+                </TableCell>
+              </TableRow>
+            ) : filteredBranches.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={6}
+                  className="py-8 text-center text-sm text-gray-500"
+                >
+                  No branches found
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredBranches.map((branch: Branch) => (
+                <TableRow
+                  key={branch.id}
+                  onClick={() => router.push(`/branches/${branch.id}`)}
+                  className="cursor-pointer hover:bg-[#FAFBFF]"
+                >
+                  <TableCell className="font-inter text-[14px] font-medium text-grey-20">
+                    {branch.id}
+                  </TableCell>
+
+                  <TableCell className="font-inter text-[14px] font-medium text-grey-20">
+                    {branch.branchName || "-"}
+                  </TableCell>
+
+                  <TableCell className="font-inter text-[14px] font-normal text-grey-20">
+                    {branch.branchAddress || "-"}
+                  </TableCell>
+
+                  <TableCell className="font-inter text-[14px] font-normal text-grey-20">
+                    {branch.phoneNumber || "-"}
+                  </TableCell>
+
+                  <TableCell className="font-inter text-[14px] font-normal text-grey-20">
+                    {branch.state || "-"}
+                  </TableCell>
+
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={(e) =>
+                          handleDeleteClick(e, branch.branchName)
+                        }
+                      >
+                        <Trash2 color="#F04438" size={15} />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={(e) => handleEditClick(e, branch.id)}
+                      >
+                        <Pencil size={15} />
+                      </button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        )}
+      </Table>
+
+      <div className="mt-5">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" />
+            </PaginationItem>
+
+            <PaginationItem>
+              <PaginationLink href="#" isActive>
+                1
+              </PaginationLink>
+            </PaginationItem>
+
+            <PaginationItem>
+              <PaginationNext href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
+    </div>
+  );
+};
+
+export default BranchTable;
