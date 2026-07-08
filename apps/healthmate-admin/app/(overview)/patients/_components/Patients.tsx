@@ -71,7 +71,7 @@ const Patients = () => {
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [
-      "patients",
+      "appointment",
       pagination.page,
       pagination.limit,
       debounceSearchQuery,

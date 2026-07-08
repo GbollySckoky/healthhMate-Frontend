@@ -172,7 +172,7 @@ export const Button = ({children, className, onClick}:{children: ReactNode, clas
     )
 }
 
-export const UploadButton = ({text, onClick, className}:{text: ReactNode, onClick?: () => void, className?: string}) => {
+export const UploadButton = ({text, className}:{text: ReactNode, className?: string}) => {
     return(
         <div className={`flex bg-white border border-borderColor100 text-white items-center cursor-pointer p-3 rounded-lg ${className}`}>
         <span> <CloudUpload size={15} /></span>
@@ -185,7 +185,7 @@ export const Info = ({label, amount}:{label:string, amount: string}) => {
     return(
         <div className='flex items-center justify-between space-y-1'>
             <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
-            <p className='font-lato text-[18px] font-medium'>{amount}</p>
+            <p className='font-lato text-[16px] font-medium'>{amount}</p>
         </div>
     )
 }
@@ -194,7 +194,7 @@ export const Infos = ({label, value}:{label:string, value: string}) => {
     return(
         <div className='flex items-center justify-between space-y-1'>
             <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
-            <p className='font-lato text-[18px] font-medium text-[#181D27]'>{value}</p>
+            <p className='font-lato text-[16px] font-medium text-[#181D27]'>{value}</p>
         </div>
     )
 }
@@ -203,7 +203,7 @@ export const NoteCard = ({label, value, className}:{label:string, value: string,
     return(
         <div className={`border border-borderColor rounded-lg p-3 bg-white ${className}` }>
             <p className='text-[#535862] text-[16px] font-lato font-normal'>{label}</p>
-            <p className='font-lato text-[18px] font-medium text-grey-30 mt-3'>{value}</p>
+            <p className='font-lato text-[16px] font-medium text-grey-30 mt-3'>{value}</p>
         </div>
     )
 }

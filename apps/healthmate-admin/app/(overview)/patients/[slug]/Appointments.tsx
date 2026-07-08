@@ -131,7 +131,7 @@ const Appointments = () => {
         </div>
         <Table>
             <TableHeader className="border-t border-borderColor text-grey-20">
-                <TableRow className="bg-[#FAFBFF] font-inter text-[14px] font-medium ">
+                <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium ">
                     <TableHead >Doctor Name</TableHead>
                     <TableHead>Date & Time</TableHead>
                     <TableHead>Type</TableHead>

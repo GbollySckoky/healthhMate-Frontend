@@ -91,8 +91,12 @@ const Page = () => {
               />
               <Infos label="Duration" value={appointment?.duration || "-"} />
               <Infos
-                label="Type"
+                label="Consultation Type"
                 value={appointment?.consultationType || "-"}
+              />
+               <Infos
+                label="Consultation Fee"
+                value={appointment?.amount.toLocaleString() || "-"}
               />
             </Card>
 
@@ -109,9 +113,10 @@ const Page = () => {
               />
               <Infos
                 label="Specialty"
-                value={appointment?.doctor?.specialization || "-"}
+                value={appointment?.doctor?.profile?.specialization || "-"}
               />
               <Infos label="Email" value={appointment?.doctor?.email || "-"} />
+              <Infos label="Gender" value={appointment?.doctor?.gender || "-"} />
             </Card>
 
             <Card className="mt-5">
@@ -126,18 +131,20 @@ const Page = () => {
                 }`.trim() || "-"}
               />
               <Infos label="Email" value={appointment?.user?.email || "-"} />
+              {/* <Infos label="Email" value={appointment?.user?.profile ? appointment?.user?.profile?.gender : "-"} />
+              <Infos label="Email" value={appointment?.user?.profile ? appointment?.user?.profile?.healthCondition : "-"} /> */}
             </Card>
 
             <NoteCard
               className="mt-5"
-              label="Patient Notes"
+              label="Patient Note"
               value={appointment?.healthConcern || "-"}
             />
 
             <NoteCard
               className="mt-5"
-              label="Consultation Diagnosis and Next Step"
-              value={appointment?.consultationDiagnosis || "-"}
+              label="Consultation Note and Next Step"
+              value={appointment?.note || "-"}
             />
 
             <div className="mt-5 rounded-lg border border-borderColor bg-white p-3">

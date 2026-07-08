@@ -22,7 +22,7 @@ const Page = () => {
   const id = Number(params.slug);
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["patient-details"],
+    queryKey: ["appointment"],
     queryFn: () => Hospital_Admin.getAllAppointments(),
   });
 
