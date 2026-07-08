@@ -20,4 +20,5 @@ export const STATUS = {
     CANCELLED: 'CANCELLED',
     PENDING: 'PENDING',
     UPCOMING: 'UPCOMING',
+    REJECTED: 'REJECTED'
 } 

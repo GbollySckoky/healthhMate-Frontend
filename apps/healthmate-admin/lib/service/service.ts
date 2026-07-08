@@ -6,7 +6,6 @@ import { ADMIN_ENDPOINTS } from "../constant/endpoints";
 import { BRANCH_INTERFACE, ASSIGN_BRANCH } from "../interface/branch.interface";
 import api from "./client-https";
 
-
 export const Hospital_Admin = {
     signup: async (payload: Signup) => {
         return await api.post(ADMIN_ENDPOINTS.SIGN_UP, payload); 
@@ -46,12 +45,21 @@ export const Hospital_Admin = {
         const response = await api.get(ADMIN_ENDPOINTS.GET_STATS);
         return response.data
     },
-    getAllAppointments: async() => {
-        const response = await api.get(ADMIN_ENDPOINTS.GET_ALL_APPOINTMENT);
+    getAllAppointments: async(page = 1, limit = 10, q?: string, status?: string) => {
+        const params = new URLSearchParams({})
+        params.append('page', String(page));
+        params.append('limit', String(limit))
+        if(q) params.append("q", q);
+        if(status) params.append("status", status)
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_ALL_APPOINTMENT}?${params.toString()}`);
         return response.data
     },
     getDoctorDetails: async(id: number) => {
         const response = await api.get(`${ADMIN_ENDPOINTS.GET_DOCTOR_DETAILS}${id}`);
         return response.data
     },
+     getAppointmentDetails: async(id: number) => {
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_APPOINTMENT_DETAILS.replace('id', `${id}`)}`);
+         return response.data
+    }
 }

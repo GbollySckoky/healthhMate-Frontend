@@ -1,8 +1,8 @@
 "use client";
 
-import { TableTitle } from "@/components/ui/Reusable";
+import { TableTitle } from "@/lib/components/ui/Reusable";
 import React, { FormEvent, useState } from "react";
-import Input from "@/components/Inputs/Inputs";
+import Input from "@/lib/components/Inputs/Inputs";
 import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
