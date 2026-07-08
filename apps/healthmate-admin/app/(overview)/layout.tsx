@@ -1,4 +1,4 @@
-import Provider from "@/components/provider/Provider";
+import Provider from "@/lib/components/provider/Provider";
 import SideBar from "@/components/ui/SideBar";
 import Header from "@/components/ui/Header";
 
@@ -9,13 +9,14 @@ export default function OverviewLayout({
 }>) {
   return (
       <div className=" flex">
-        <SideBar />
         <Provider>
+          <SideBar />
           <div className="flex-1 md:ml-[250px] ml-[60px]">
             <Header />
-            <div>{children}</div>
+            {children}
           </div>
         </Provider>
       </div>
   );
 }
+

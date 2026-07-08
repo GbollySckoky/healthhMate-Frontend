@@ -73,7 +73,7 @@ const AddNewDoctor = () => {
 
   const mutation = useMutation({
     mutationFn: (payload: DOCTOR_SIGNUP) => Hospital_Admin.createDoctor(payload),
-    onSuccess: (response: any) => {
+    onSuccess: (response) => {
         console.log('Doctor created successfully:', response)
         closeModal()
     },

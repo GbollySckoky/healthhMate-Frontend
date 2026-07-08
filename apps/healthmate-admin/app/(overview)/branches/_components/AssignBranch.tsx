@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Footer from '@/components/ui/Footer';
-import { useFormModal } from '@/components/Modal/FormModal';
+import Footer from '@/lib/components/ui/Footer';
+import { useFormModal } from '@/lib/components/Modal/FormModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Hospital_Admin } from '@/lib/service/service';
 import { ASSIGN_BRANCH } from '@/lib/interface/branch.interface';
