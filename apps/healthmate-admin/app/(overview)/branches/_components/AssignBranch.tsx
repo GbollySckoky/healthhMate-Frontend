@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Footer from '@/lib/components/ui/Footer';
-import { useFormModal } from '@/lib/components/Modal/FormModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Hospital_Admin } from '@/lib/service/service';
 import { ASSIGN_BRANCH } from '@/lib/interface/branch.interface';
 import { AxiosError } from 'axios';
+import { useModal } from '@/components/Modal/Modal';
 
 const SELECT_CLASS =
   'border border-gray-300 rounded-md py-2 focus:outline-none focus:ring-1  w-full text-sm'
@@ -16,7 +16,7 @@ interface Branch {
   doctorIds: string[];
 } 
 const AssignBranch = () => {
-    const { closeModal} = useFormModal()
+    const { closeModal} = useModal()
 
     const [inputValue, setInputValue] = useState<Branch>({
         branchId: "",

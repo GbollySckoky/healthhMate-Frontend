@@ -42,11 +42,11 @@ export const Doctor = {
         const response = await api.get(DOCTOR_ENDPOINTS.GET_DOCTOR);
         return response.data
     },
-    getAppointmentDetail: async(appointment_id: number) => {
+    getAppointmentDetail: async(appointment_id: string) => {
         const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/appointments`);
         return response.data
     },
-    approveAppointment: async(appointment_id: number, payload: ApproveAppointment) => {
+    approveAppointment: async(appointment_id: string, payload: ApproveAppointment) => {
         return await api.patch(`${DOCTOR_ENDPOINTS.APPROVE_APPOINTMENT}${appointment_id}/approve`,payload)
     },
     createProfile: async (payload: FormData) => {
@@ -55,7 +55,7 @@ export const Doctor = {
     createDoctorAvailability: async (payload: Availability) => {
         return await api.post(DOCTOR_ENDPOINTS.CREATE_DOCTOR_AVAILABILITY, payload); 
     },
-    rejectAppointment: async (appointment_id: number, payload: ApproveAppointment) => {
+    rejectAppointment: async (appointment_id: string, payload: ApproveAppointment) => {
         return await api.patch(`${DOCTOR_ENDPOINTS.REJECT_APPOINTMENT}${appointment_id}/reject`, payload); 
     },
     getStats: async() => {

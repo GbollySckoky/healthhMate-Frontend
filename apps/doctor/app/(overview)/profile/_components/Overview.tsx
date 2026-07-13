@@ -14,6 +14,7 @@ const Overview = ({
   isError: boolean;
   error: Error | null;
 }) => {
+
   if (isLoading) {
     return <LoaadingSkeleton />;
   }
@@ -36,8 +37,8 @@ const Overview = ({
 
         <Infos
           label="Name:"
-          value={`${profileData?.firstName || ""} ${
-            profileData?.lastName || ""
+          value={`${profileData?.firstName.charAt(0).toUpperCase() + profileData?.firstName.slice(1) || ""} ${
+            profileData?.lastName.charAt(0).toUpperCase() + profileData?.lastName.slice(1) || ""
           }`.trim() || "N/A"}
         />
         <Infos label="Email:" value={profileData?.email || "N/A"} />
@@ -53,7 +54,7 @@ const Overview = ({
         <Infos label="Gender:" value={profileData?.gender || "N/A"} />
         <Infos
           label="Consultation Fee:"
-          value={profileData?.profile?.consultationFee || "N/A"}
+          value={profileData?.profile?.consultationFee.toLocaleString() || "N/A"}
         />
         <Infos
           label="Years Of Experience:"

@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { Hospital_Admin } from '@/lib/service/service'
 import { LogIn } from '@/lib/interface/login.interface'
+import { AxiosError } from 'axios'
 
 
 const Page = () => {
@@ -32,11 +33,11 @@ const Page = () => {
         mutationFn: (payload: LogIn) => Hospital_Admin.login(payload),
         onSuccess: (response) => {
             console.log(response)
-            localStorage.setItem('authToken', response.data.access)
+            localStorage.setItem('access_token', response.data.access_token)
             router.push(ROUTES.dashboard)
           // Handle success
         },
-        onError: (error: any) => {
+        onError: (error: AxiosError) => {
             console.log(error)
           // Handle error
         }

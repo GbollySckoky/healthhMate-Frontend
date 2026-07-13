@@ -19,15 +19,15 @@ import { useRouter } from "next/navigation";
 import Calendar from "@/lib/components/calendar/Calendar";
 import DeleteModal from "../../settings/_components/DeleteModal";
 import AddNewDoctor from "./AddNewDoctor";
-import { useFormModal } from "@/lib/components/Modal/FormModal";
 import { useQuery } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
 import DoctorTableSkeleton from "@/components/ui/DoctorPageSkeleton";
+import { useModal } from "@/components/Modal/Modal";
 
 const All = () => {
   const [searchInput, setSearchInput] = useState("");
   const router = useRouter();
-  const { openModal } = useFormModal();
+  const { openModal } = useModal();
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["getAllDoctor"],
@@ -70,7 +70,7 @@ const All = () => {
         title: "Deactivate this Doctor?",
         className: "max-w-lg",
         onClose: () => {},
-        confirmDelete() {},
+        // confirmDelete() {},
       }
     );
   };

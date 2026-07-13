@@ -14,14 +14,14 @@ import BranchTable from "./BranchTable";
 import useToggle from "@/hooks/useToggle";
 import AddNewBranch from "./AddNewBranch";
 import AssignBranch from "./AssignBranch";
-import { useFormModal } from "@/lib/components/Modal/FormModal";
+import { useModal } from "@/components/Modal/Modal";
 
 const Branch = () => {
   const [inputValue, setInputValue] = useState("");
   const [selectValue, setSelectValue] = useState<string | undefined>();
 
   const { isToggle, handleToggle } = useToggle();
-  const { openModal } = useFormModal();
+  const { openModal } = useModal();
 
   const handleSelect = (option: string | undefined) => {
     setSelectValue(option);

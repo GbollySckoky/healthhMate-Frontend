@@ -1,4 +1,3 @@
-import adminAPI from "./admin";
 import { LogIn } from "../interface/login.interface";
 import { Profile } from "../interface/register.interface";
 import { DOCTOR_SIGNUP, Signup } from "../interface/signup-interface";
@@ -14,7 +13,7 @@ export const Hospital_Admin = {
         return await api.post(ADMIN_ENDPOINTS.LOGIN, payload); 
     },
     createProfile: async (payload: Profile) => {
-        return await adminAPI.post(ADMIN_ENDPOINTS.CREATE_HOSPITAL_PROFILE, payload); 
+        return await api.post(ADMIN_ENDPOINTS.CREATE_HOSPITAL_PROFILE, payload); 
     },
     getAllDoctor: async() => {
         const response = await api.get(ADMIN_ENDPOINTS.GET_ALL_DOCTORS);

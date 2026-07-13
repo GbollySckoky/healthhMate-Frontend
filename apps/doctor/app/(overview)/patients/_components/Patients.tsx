@@ -99,7 +99,7 @@ const Patients = () => {
 
     const activePatients = patients?.filter((patient: Appointment) => patient.status !== STATUS.PENDING )
     console.log(activePatients)
-    const handleNext = (id: number) => {
+    const handleNext = (id: string) => {
       router.push(`/patients/${id}`)
     }
 
@@ -128,7 +128,7 @@ const Patients = () => {
                 </div>
                 <Table>
                     <TableHeader className="border-t border-borderColor ">
-                        <TableRow className="bg-[#FAFBFF] font-inter text-[14px] font-medium text-grey-20">
+                        <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium text-grey-20">
                             <TableHead >Patient </TableHead>
                              <TableHead>Hospital Name</TableHead>
                             <TableHead>Doctor Name</TableHead>
@@ -151,27 +151,28 @@ const Patients = () => {
                     ) : activePatients.length === 0 ? (
                         <TableRow>
                             <TableCell colSpan={8} className="text-center py-8 text-gray-500">
-                                No patients found
+                                No active patients found
                             </TableCell>
                         </TableRow>
                     ) :activePatients.map((data: Appointment) => (
                         <TableRow  key={data.id} onClick={() => handleNext(data.id)} className="border-t border-borderColor hover:bg-[#FAFBFF]">
-                        <TableCell className="font-inter font-medium text-[13px] text-grey-30">
-                        <p> {data.user.firstName || "N/A"}</p> 
+                        <TableCell className="font-inter font-medium text-[12px] text-grey-20">
+                        <p> {data.user.firstName || "N/A"}  {data.user.lastName || "N/A"}</p> 
                             <p className="text-grey-20 text-[12px] font-normal">{data.user.email || 'N/A'}</p>
                         </TableCell>
                          <TableCell className="text-[12px] text-grey-20">
                             {data.hospital.hospitalName || "N/A"}
                         </TableCell>
                             <TableCell className="text-[12px] text-grey-20">
-                            {data.doctor?.firstName || "N/A"} {data.doctor?.lastName || "N/A"}
+                            {data.doctor?.firstName.charAt(0).toUpperCase() + data.doctor?.firstName.slice(1) || "N/A"} {" "}
+                            {data.doctor?.lastName.charAt(0).toUpperCase() + data.doctor?.lastName.slice(1) || "N/A"}
                         </TableCell>
-                        <TableCell className="font-inter font-normal text-[13px] text-grey-30">
+                        <TableCell className="font-inter font-normal text-[12px] text-grey-20">
                             <p>{data.date || "N/A"}</p> 	
                             <p className="text-grey-20 text-[12px]">{data.time || "N/A"}</p>
                         </TableCell>
                         <TableCell className="font-inter font-normal text-[12px] text-grey-20"> 
-                        {data.consultationType}
+                        {data.consultationType.charAt(0).toUpperCase() + data.consultationType.slice(1).replaceAll("_", " ")  || "N/A"}
                         </TableCell>
                         <TableCell>
                             <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.status)} text-grey-20`}>

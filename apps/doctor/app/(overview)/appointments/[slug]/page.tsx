@@ -10,7 +10,6 @@ import { useParams } from "next/navigation";
 import InputField from "@/components/ui/InputField";
 import { useModal } from "@/components/modal/Modal";
 import { AxiosError } from "axios";
-// import { AppointmentDetails } from "@/lib/interface/appointment-details";
 import { STATUS } from "@/types/status";
 import DetailSkeleton from "@/components/ui/DetailsSkeleton";
 import { Appointment } from "@/interface/doctor-apppointment.interface";
@@ -19,8 +18,8 @@ import PatientCardSkeleton from "@/components/ui/PatientCardSkeleton";
 const Page = () => {
   const { openModal } = useModal();
   const params = useParams();
-  const id = Number(params.slug);
-
+  const id = String(params.slug);
+console.log(id)
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["getAppointmentDetails", id],
     queryFn: () => Doctor.getAppointmentDetail(id),
@@ -28,10 +27,10 @@ const Page = () => {
   });
 
   const appointmentDetails: Appointment | undefined = data?.data;
-
+  
   if (isError) {
     return (
-      <div className="text-center py-20 text-red-600 flex items-center justify-center min-h-screen">
+      <div className="text-center  py-20 text-grey-500 flex items-center justify-center min-h-screen">
         Failed to load appointment details. {error.message}
       </div>
     );
@@ -89,8 +88,9 @@ const Page = () => {
               <Infos label="Consultation Time" value={appointmentDetails?.time || "-"} />
               <Infos
                 label="Consultation Type"
-                value={appointmentDetails?.consultationType || "-"}
+                value={appointmentDetails?.consultationType.charAt(0).toUpperCase() + appointmentDetails?.consultationType.slice(1).replaceAll("_", " ") || "-"}
               />
+              {/* <Infos label='Consultation Type' value={appointmentDetails?.consultationType.charAt(0).toUpperCase() + appointmentDetails?.consultationType.slice(1).replaceAll("_", " ")}/> */}
               <Infos
                 label="Primary Health Concern"
                 value={appointmentDetails?.healthConcern || "-"}
@@ -168,7 +168,7 @@ const Page = () => {
 export default Page;
 
 type ApprovePayload = {
-  appointment_id: number;
+  appointment_id: string;
   payload: {
     note: string;
     status: string;
@@ -178,7 +178,7 @@ type ApprovePayload = {
 const ApproveAppointment = () => {
   const [inputValue, setInputValue] = useState("");
   const params = useParams();
-  const appointment_id = Number(params.slug);
+  const appointment_id = String(params.slug);
   const { closeModal } = useModal();
 
   const mutation = useMutation({

@@ -1,5 +1,5 @@
 export interface Appointment {
-  id: number
+  id: string
   date: string
   time: string
   consultationType: string
@@ -13,7 +13,7 @@ export interface Appointment {
 }
 
 export interface User {
-  id: number
+  id: string
   firstName: string
   lastName: string
   email: string
@@ -21,14 +21,14 @@ export interface User {
 }
 
 export interface Doctor {
-  id: number
+  id: string
   firstName: string
   lastName: string
   email: string
 }
 
 export interface Hospital {
-  id: number
+  id: string
   hospitalName: string
   email: string
 }

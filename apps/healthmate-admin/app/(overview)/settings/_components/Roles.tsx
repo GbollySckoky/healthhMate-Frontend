@@ -12,7 +12,6 @@ import {
 import { Trash2, Pencil } from 'lucide-react';
 import DeleteModal from "./DeleteModal";
 import CreateRole from "./CreateRole";
-import { useFormModal } from "@/components/Modal/FormModal";
 
 
   const invoices = [
@@ -61,8 +60,8 @@ import { useFormModal } from "@/components/Modal/FormModal";
   ]
   
   export function Roles() {
-    const {openModal} = useFormModal()
-    const {openModal: open} = useModal()
+    // const {openModal} = useFormModal()
+    const {openModal} = useModal()
     return (
         <Card>
             <div className="flex items-center justify-between">
@@ -74,7 +73,7 @@ import { useFormModal } from "@/components/Modal/FormModal";
                               'Delete Role?',
                             className: 'max-w-lg',
                             onClose: () => {},
-                            confirmDelete() {},
+                            // confirmDelete() {},
                           })
                         }>Create new role</Button>
                 </div>
@@ -106,7 +105,7 @@ import { useFormModal } from "@/components/Modal/FormModal";
                               'Delete Role?',
                             className: 'max-w-lg',
                             onClose: () => {},
-                            confirmDelete() {},
+                            // confirmDelete() {},
                           })
                         }> <Trash2 color="#F04438" size={15}/></span>
                        <span className="ml-3"> <Pencil size={15} /></span>
