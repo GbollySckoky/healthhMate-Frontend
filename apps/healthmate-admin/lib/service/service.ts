@@ -4,6 +4,8 @@ import { DOCTOR_SIGNUP, Signup } from "../interface/signup-interface";
 import { ADMIN_ENDPOINTS } from "../constant/endpoints";
 import { BRANCH_INTERFACE, ASSIGN_BRANCH } from "../interface/branch.interface";
 import api from "./client-https";
+import { SUPPORT_TICKET } from "../interface/supportTicket";
+
 
 export const Hospital_Admin = {
     signup: async (payload: Signup) => {
@@ -53,12 +55,19 @@ export const Hospital_Admin = {
         const response = await api.get(`${ADMIN_ENDPOINTS.GET_ALL_APPOINTMENT}?${params.toString()}`);
         return response.data
     },
-    getDoctorDetails: async(id: number) => {
+    getDoctorDetails: async(id: string) => {
         const response = await api.get(`${ADMIN_ENDPOINTS.GET_DOCTOR_DETAILS}${id}`);
         return response.data
     },
-     getAppointmentDetails: async(id: number) => {
+    getAppointmentDetails: async(id: string) => {
         const response = await api.get(`${ADMIN_ENDPOINTS.GET_APPOINTMENT_DETAILS}${id}/appointments`);
          return response.data
-    }
+    },
+    createSupportTicket: async (payload: SUPPORT_TICKET) => {
+        return await api.post(ADMIN_ENDPOINTS.CREATE_SUPPORT_TICKET, payload)
+    },
+    getMe: async() => {
+        const response = await api.get(ADMIN_ENDPOINTS.GET_ME);
+        return response.data
+    },
 }

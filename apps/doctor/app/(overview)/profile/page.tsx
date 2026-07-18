@@ -22,7 +22,7 @@ const Page = () => {
     const profileData: DOCTOR_PROFILE = data?.data
     console.log(profileData)
 
-    const BASE_URL = 'https://healthcare-backend-5y5b.onrender.com/api/v1';
+    const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
     const resolveUrl = (path: string) => {
       if(!path) return image

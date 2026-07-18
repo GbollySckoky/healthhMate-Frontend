@@ -14,4 +14,7 @@ ASSIGN_DOCTOR_TO_BRANCH: 'hospital/branch/assign-doctors',
 GET_STATS: "appointment/hospital/stats",
 GET_DOCTOR_DETAILS: 'hospital/doctor/',
 GET_APPOINTMENT_DETAILS: 'appointment/hospital/',
+CREATE_SUPPORT_TICKET: 'support/hospital',
+GET_ME: 'hospital/me',
+GET_ALL_SUPPORT_PATIEINT: 'support/patient/mine'
 }

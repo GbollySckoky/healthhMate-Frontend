@@ -1,5 +1,6 @@
 "use client";
 
+import { useModal } from "@/components/Modal/Modal";
 import {
   Card,
   FlexWrapper,
@@ -12,6 +13,7 @@ import { Hospital_Admin } from "@/lib/service/service";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import React from "react";
+import CreateSupport from "./CreateSupport";
 
 const AppointmentDetailsSkeleton = () => {
   return (
@@ -50,7 +52,8 @@ const AppointmentDetailsSkeleton = () => {
 
 const Page = () => {
   const params = useParams();
-  const id = Number(params?.slug);
+  const {openModal} = useModal()
+  const id = String(params?.slug);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["getAppointmentDetails", id],
@@ -75,6 +78,23 @@ const Page = () => {
   return (
     <PageWrapper>
       <FlexWrapper>
+        <div className="flex items-center justify-end mb-6">
+          <button 
+            className="w-fit bg-red-900 rounded-lg text-white text-sm px-5 py-3"
+            onClick={() => {
+              openModal(
+                <CreateSupport appointment={appointment} />, {
+                  title:
+                  'Create Support Ticket',
+                  className: 'max-w-lg',
+                  onClose: () => {},
+                }
+              )
+            }}
+          >
+            Report an Issue
+          </button>
+        </div>
         {isLoading ? (
           <AppointmentDetailsSkeleton />
         ) : (

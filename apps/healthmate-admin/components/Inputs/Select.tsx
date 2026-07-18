@@ -16,12 +16,12 @@ interface SelectFieldProps{
 const SelectField = ({ label, value, show, onClick, onSelect, options, title, className }: SelectFieldProps) => {
     return (
       <div className="">
-         <p className='mb-1 font-inter font-normal text-[#414651] text-[14px]'>{title}</p> 
+         <p className='mb-1 font-inter font-normal text-[14px]'>{title}</p> 
         <div
           className={`flex items-center justify-between border border-borderColor100 cursor-pointer rounded-md p-[7px] ${className}`}
           onClick={onClick}
         >
-          <p className="font-inter text-[16px] text-[#717680] font-normal pr-3">
+          <p className="font-inter text-[14px] font-normal pr-3">
             {value || label}
           </p>
           <ChevronDown size={15} />
@@ -33,7 +33,7 @@ const SelectField = ({ label, value, show, onClick, onSelect, options, title, cl
               <div
                 key={index}
                 onClick={() => onSelect(option)}
-                className="px-3 py-1 text-sm text-grey-800 hover:bg-gray-100 cursor-pointer"
+                className="px-3 py-1 text-sm  hover:bg-gray-100 cursor-pointer"
               >
                 {option}
               </div>

@@ -160,12 +160,15 @@ export const supportInfo = {
         ]
     },
     priority:{
-        title: 'Priority',
-        label: 'Low',
+        title: 'Category',
+        label: 'Category',
         options: [
-            'Low',
-            'High',
-            'Medium'
+            'ACCOUNT',
+            'APPOINTMENT',
+            'BILLING',
+            'TECHNICAL',
+            'MEDICAL',
+            'OTHER'
         ]
     }
 }
