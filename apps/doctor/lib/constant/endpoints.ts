@@ -13,5 +13,9 @@ export const DOCTOR_ENDPOINTS = {
     APPROVE_APPOINTMENT: 'doctor/',
     REJECT_APPOINTMENT: 'doctor/',
     DOCTOR_PROFILE: '',
-    GET_APPOINTMENT_STATS: 'appointment/doctor/stats'
+    GET_APPOINTMENT_STATS: 'appointment/doctor/stats',
+    CREATE_SUPPORT: 'support/doctor',
+    GET_SUPPORT: 'support/doctor/mine',
+    GET_SUPPORT_DETAILS: 'support/staff/',
+    REPLY_TICKET: 'support/staff/'
 }

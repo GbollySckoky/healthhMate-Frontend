@@ -12,8 +12,9 @@ import { useModal } from "@/components/modal/Modal";
 import { AxiosError } from "axios";
 import { STATUS } from "@/types/status";
 import DetailSkeleton from "@/components/ui/DetailsSkeleton";
-import { Appointment } from "@/interface/doctor-apppointment.interface";
+// import { Appointment } from "@/interface/doctor-apppointment.interface";
 import PatientCardSkeleton from "@/components/ui/PatientCardSkeleton";
+import CreateSupport from "./CreateSupport";
 
 const Page = () => {
   const { openModal } = useModal();
@@ -26,7 +27,7 @@ console.log(id)
     enabled: !!id,
   });
 
-  const appointmentDetails: Appointment | undefined = data?.data;
+  const appointmentDetails = data?.data;
   
   if (isError) {
     return (
@@ -160,6 +161,23 @@ console.log(id)
             </button>
           </div>
         )}
+        <div className="flex items-center justify-end mb-6">
+          <button 
+            className="w-fit bg-red-900 rounded-lg text-white text-sm px-5 py-3"
+            onClick={() => {
+              openModal(
+                <CreateSupport appointmentDetails={appointmentDetails} />, {
+                  title:
+                  'Create Support Ticket',
+                  className: 'max-w-lg',
+                  onClose: () => {},
+                }
+              )
+            }}
+          >
+            Report an Issue
+          </button>
+        </div>
       </FlexWrapper>
     </PageWrapper>
   );

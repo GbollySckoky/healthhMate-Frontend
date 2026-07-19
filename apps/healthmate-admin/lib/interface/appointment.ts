@@ -61,3 +61,5 @@ export interface Hospital {
   hospitalName: string
   email: string
 }
+
+

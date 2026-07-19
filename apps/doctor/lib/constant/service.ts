@@ -5,6 +5,7 @@ import { DOCTOR_ENDPOINTS } from "./endpoints";
 import { ApproveAppointment } from "../interface/approve-appointment.interface";
 import api from "../ClientHttps";
 import { Availability } from "../interface/availability.interface";
+import { ReplyToTicket, SUPPORT_TICKET } from "../interface/support";
 
 
 export const Doctor = {
@@ -61,5 +62,22 @@ export const Doctor = {
     getStats: async() => {
         const response = await api.get(DOCTOR_ENDPOINTS.GET_APPOINTMENT_STATS);
         return response.data
+    },
+    createSupportTicket: async (payload: SUPPORT_TICKET) => {
+        return await api.post(DOCTOR_ENDPOINTS.CREATE_SUPPORT, payload)
+    },
+    getSupportTicket: async() => {
+        const response = await api.get(DOCTOR_ENDPOINTS.GET_SUPPORT);
+        return response.data
+    },
+    getSupportDetails: async(id: string) => {
+        const response = await api.get(`${DOCTOR_ENDPOINTS.GET_SUPPORT_DETAILS}${id}`);
+        return response.data
+    },
+    replyToTicket: async (id: string, payload: ReplyToTicket) => {
+        return await api.post(`support/staff/${id}/replies`, payload)
+    },
+    addInternalNote: async (id: string, message: string) => {
+        return await api.post(`support/staff/${id}/internal-notes`, message)
     },
 }
