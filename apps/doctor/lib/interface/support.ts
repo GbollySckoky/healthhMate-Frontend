@@ -43,6 +43,10 @@ export interface ReplyToTicket {
   attachmentName: string
 }
 
+export interface Message {
+    message: string
+}
+
 // enum CATEGTORY {
 //     ACCOUNT = 'ACCOUNT',
 //     APPOINTMENT = 'APPOINTMENT',

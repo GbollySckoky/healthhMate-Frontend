@@ -8,7 +8,7 @@ export const DOCTOR_ENDPOINTS = {
     GET_DOCTOR: 'doctor/me',
     CREATE_PROFILE: 'doctor/profile',
     GET_APPOINTMENT_DETAILS: 'appointment/doctor/',
-    // APPROVE_APPOINTMENT: 'doctor/appointments/',
+    GET_DOCTOR_AVAILABILITY: 'doctor/availability/me',
     CREATE_DOCTOR_AVAILABILITY: 'doctor/availability',
     APPROVE_APPOINTMENT: 'doctor/',
     REJECT_APPOINTMENT: 'doctor/',
@@ -17,5 +17,8 @@ export const DOCTOR_ENDPOINTS = {
     CREATE_SUPPORT: 'support/doctor',
     GET_SUPPORT: 'support/doctor/mine',
     GET_SUPPORT_DETAILS: 'support/staff/',
-    REPLY_TICKET: 'support/staff/'
+    REPLY_TICKET: 'support/staff/',
+    GET_NOTIFICATIONS: 'notifications',
+    UN_READ_NOTIFICATIONS: 'notifications/unread-count',
+    READ_ALL_NOTIFICATIONS: 'notifications/read-all',
 }

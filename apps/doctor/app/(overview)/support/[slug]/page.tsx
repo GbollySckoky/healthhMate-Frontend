@@ -5,10 +5,11 @@ import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { ArrowLeft, Paperclip, Send, StickyNote } from 'lucide-react'
 import { AxiosError } from 'axios'
-import { ReplyToTicket } from '@/lib/interface/support'
+import { Message, ReplyToTicket } from '@/lib/interface/support'
 import Link from 'next/link'
 import { FlexWrapper, PageWrapper } from '@/components/ui/Reusable'
-import InputField from '@/components/ui/InputField'
+// import InputField from '@/components/ui/InputField'
+import SupportField from '@/components/ui/SupportField'
 
 type SupportMessage = {
   id: string
@@ -67,13 +68,18 @@ function Badge({ text, styleMap }: { text: string; styleMap: Record<string, stri
 
 function DetailSkeleton() {
   return (
-    <div className="max-w-3xl mx-auto p-6 animate-pulse space-y-6">
-      <div className="h-4 w-16 bg-gray-200 rounded" />
-      <div className="h-6 w-56 bg-gray-200 rounded" />
-      <div className="h-24 bg-gray-100 rounded-lg" />
-      <div className="h-40 bg-gray-100 rounded-lg" />
-      <div className="h-24 bg-gray-100 rounded-lg" />
-    </div>
+    <PageWrapper>
+        <FlexWrapper>
+            <div className="max-w-3xl mx-auto p-6 animate-pulse space-y-6">
+            <div className="h-4 w-16 bg-gray-200 rounded" />
+            <div className="h-6 w-56 bg-gray-200 rounded" />
+            <div className="h-24 bg-gray-100 rounded-lg" />
+            <div className="h-40 bg-gray-100 rounded-lg" />
+            <div className="h-24 bg-gray-100 rounded-lg" />
+            </div>
+        </FlexWrapper>
+    </PageWrapper>
+   
   )
 }
 
@@ -83,23 +89,26 @@ const Page = () => {
   const queryClient = useQueryClient()
   const id = String(params?.slug)
 
-  const [replyMessage, setReplyMessage] = useState('')
-  const [noteMessage, setNoteMessage] = useState('')
+//   const [replyMessage, setReplyMessage] = useState('')
+  const [message, setNoteMessage] = useState('')
   const [inputValue, setInputValue] = useState({
     message: '',
     attachmentUrl: '',
     attachmentName: '',
   })
+
   const { data, isLoading, isError, error } = useQuery<{ data: SupportTicketDetail }>({
     queryKey: ['getSupportDetails', id],
     queryFn: () => Doctor.getSupportDetails(id),
     enabled: !!id,
   })
 
+  const isDisabled = Object.values(inputValue).some((v) => v === '')
+
   const replyMutation = useMutation({
     mutationFn: (payload: ReplyToTicket) => Doctor.replyToTicket(id, payload),
-    onSuccess: () => {
-      setReplyMessage('')
+    onSuccess: (response) => {
+        console.log(response)
       queryClient.invalidateQueries({ queryKey: ['getSupportDetails', id] })
     },
     onError: (err: AxiosError<{ message: string }>) => {
@@ -108,7 +117,7 @@ const Page = () => {
   })
 
   const noteMutation = useMutation({
-    mutationFn: (message: string) => Doctor.addInternalNote(id, message ),
+    mutationFn: (message: Message) => Doctor.addInternalNote(id, message ),
     onSuccess: () => {
       setNoteMessage('')
       queryClient.invalidateQueries({ queryKey: ['getSupportDetails', id] })
@@ -128,7 +137,7 @@ const Page = () => {
 
   const handleReplySubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!replyMessage.trim()) return
+    // if (!replyMessage.trim()) return
     const payload = {
         message: inputValue.message,
         attachmentUrl: inputValue.attachmentUrl,
@@ -139,8 +148,11 @@ const Page = () => {
 
   const handleNoteSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!noteMessage.trim()) return
-    noteMutation.mutate(noteMessage)
+    if (!message.trim()) return
+    const data = {
+        message: message
+    }
+    noteMutation.mutate(data)
   }
 
   if (isLoading) return <DetailSkeleton />
@@ -154,7 +166,7 @@ const Page = () => {
         >
           <ArrowLeft size={16} /> Back
         </button>
-        <div className="text-center py-12 text-red-600 text-sm">
+        <div className="text-center py-12 text-grey-500 text-sm">
           {(error as AxiosError<{ message: string }>)?.response?.data?.message ??
             'Failed to load support ticket'}
         </div>
@@ -168,14 +180,7 @@ const Page = () => {
   return (
     <PageWrapper>
         <FlexWrapper>
-            <div className="max-w-3xl mx-auto p-6 font-inter">
-        <button
-            onClick={() => router.back()}
-            className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-6"
-        >
-            <ArrowLeft size={16} /> Back
-        </button>
-
+        <div className="max-w-3xl mx-auto p-6 font-inter">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
             <div>
@@ -249,14 +254,19 @@ const Page = () => {
         <div className="mb-8">
             <p className="text-xs text-gray-400 mb-3">Reply to this ticket</p>
             <form onSubmit={handleReplySubmit} className="flex flex-col gap-2">
-            <textarea
-                value={replyMessage}
-                onChange={handleChange}
-                placeholder="Type your reply..."
-                rows={3}
-                className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
-            />
-            <InputField
+            <div>
+                <label htmlFor="message" className='text-xs text-gray-400 font-inter'>Message</label>
+                <textarea
+                    value={inputValue.message}
+                    onChange={handleChange}
+                    placeholder="Type your reply..."
+                    rows={3}
+                    className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:ring-1 focus:ring-red-300"
+                    name='message'
+                    id='message'
+                />
+            </div>
+            <SupportField
                 label="Attachment Url"
                 value={inputValue.attachmentUrl}
                 onChange={handleChange}
@@ -264,7 +274,7 @@ const Page = () => {
                 type="url"
                 name="attachmentUrl"
             />
-            <InputField 
+            <SupportField 
                 label="Attachment Name"
                 value={inputValue.attachmentName}
                 onChange={handleChange}
@@ -274,8 +284,8 @@ const Page = () => {
             />
             <button
                 type="submit"
-                disabled={replyMutation.isPending || !replyMessage.trim()}
-                className="self-end flex items-center gap-1.5 bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
+                disabled={replyMutation.isPending || isDisabled}
+                className="self-end flex items-center gap-1.5 bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-red-900 transition"
             >
                 <Send size={14} />
                 {replyMutation.isPending ? 'Sending...' : 'Send reply'}
@@ -289,7 +299,7 @@ const Page = () => {
             <div className="space-y-3 mb-3">
             {ticket.internalNotes?.length ? (
                 ticket.internalNotes.map((note) => (
-                <div key={note.id} className="bg-yellow-50 border border-yellow-100 rounded-lg p-3">
+                <div key={note.id} className="bg-red-100 rounded-lg p-3">
                     <p className="text-sm text-gray-800">{note.message}</p>
                     <p className="text-xs text-gray-400 mt-1">
                     {new Date(note.createdAt).toLocaleString()}
@@ -302,16 +312,16 @@ const Page = () => {
             </div>
             <form onSubmit={handleNoteSubmit} className="flex flex-col gap-2">
             <textarea
-                value={noteMessage}
+                value={message}
                 onChange={(e) => setNoteMessage(e.target.value)}
                 placeholder="Note visible only to hospital/doctor staff..."
                 rows={2}
-                className="w-full border border-yellow-200 bg-yellow-50/40 rounded-lg p-3 text-sm focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                className="w-full border border-border rounded-lg p-3 text-sm focus:outline-none focus:ring-1 focus:ring-red-300"
             />
             <button
                 type="submit"
-                disabled={noteMutation.isPending || !noteMessage.trim()}
-                className="self-end flex items-center gap-1.5 bg-yellow-500 text-white text-sm font-medium px-4 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-yellow-600 transition"
+                disabled={noteMutation.isPending || !message.trim()}
+                className="self-end flex items-center gap-1.5 bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-red-800 transition"
             >
                 <StickyNote size={14} />
                 {noteMutation.isPending ? 'Saving...' : 'Add note'}

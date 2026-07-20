@@ -9,15 +9,15 @@ interface InputProps{
     name?: string
     type?: string
 }
-const InputField = ({placeholder,value,onChange,className, label, name, type}: InputProps) => {
+const SupportField = ({placeholder,value,onChange,className, label, name, type}: InputProps) => {
   return (
     <div className='mb-4 block w-full'>
-        <label htmlFor={name} className='font-medium text-[14px] font-inter text-[#414651]'>{label}</label>
+        <label htmlFor={name} className='text-xs text-gray-400 font-inter'>{label}</label>
         <input 
             placeholder={placeholder}
             value={value}
             onChange={onChange}
-            className={`outline-none border border-borderColor100 rounded-md p-[7px] ${className} w-full mt-1 text-sm font-medium focus:ring-red-300`} 
+            className={`outline-none border border-borderColor100 rounded-md p-[7px] ${className} w-full mt-1 text-xs  focus:ring-red-300`} 
             name={name}
             type={type}
         />
@@ -25,4 +25,4 @@ const InputField = ({placeholder,value,onChange,className, label, name, type}: I
   )
 }
 
-export default InputField
+export default SupportField
