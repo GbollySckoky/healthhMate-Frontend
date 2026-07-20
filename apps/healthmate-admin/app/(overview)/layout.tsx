@@ -1,6 +1,6 @@
-import Provider from "@/lib/components/provider/Provider";
 import SideBar from "@/components/ui/SideBar";
 import Header from "@/components/ui/Header";
+import { ModalProvider } from "@/components/Modal/Modal";
 
 export default function OverviewLayout({
   children,
@@ -9,13 +9,13 @@ export default function OverviewLayout({
 }>) {
   return (
       <div className=" flex">
-        <Provider>
+        <ModalProvider>
           <SideBar />
           <div className="flex-1 md:ml-[250px] ml-[60px]">
             <Header />
             {children}
           </div>
-        </Provider>
+        </ModalProvider>
       </div>
   );
 }

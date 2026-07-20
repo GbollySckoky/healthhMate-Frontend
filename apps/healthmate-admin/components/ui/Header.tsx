@@ -5,6 +5,8 @@ import logo from '../../assets/3d.png'
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/constant/Routes';
+import useGetMe from '@/lib/hooks/useGetMe';
+import MeSkeleton from './MeSkeleton';
 const Header = () => {
     const pathname = usePathname()
     const Title = pathname === ROUTES.dashboard && 'Dashboard' || pathname === ROUTES.patients && 'Patients' || 
@@ -12,6 +14,9 @@ const Header = () => {
     pathname === ROUTES.report && 'Reports & Analytics' || pathname === ROUTES.support && 'Support' || 
     pathname === ROUTES.settings && 'Settings' || pathname === ROUTES.doctors && 'Doctors' || 
     pathname === ROUTES.branches && 'Branches'
+
+    const {myData:data, isLoading} = useGetMe()
+      console.log('data!!!', data)
   return (
     <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-8 ml-[50px] md:ml-[250px]'>
         <div className="flex items-center justify-between w-full">
@@ -22,15 +27,19 @@ const Header = () => {
                     <Bell size={22} className="text-gray-600 hover:text-gray-800" />
                     <span className='bg-red-800  text-white text-xs rounded-full absolute -top-1 -right-2 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center'>4</span>
                 </div>
-                <div className="flex items-center gap-4 pl-3">
-                    <div className='bg-red-100 rounded-full p-2 cursor-pointer hover:bg-red-200 transition-colors'>
-                        <Image src={logo} alt="Logo" priority /> 
+                 {isLoading ? (
+                    <MeSkeleton />
+                ) : (
+                    <div className="flex items-center gap-4 pl-3">
+                        <div className='bg-red-100 rounded-full p-2 cursor-pointer hover:bg-red-200 transition-colors'>
+                            <Image src={logo} alt="Logo" priority /> 
+                        </div>
+                        <div>
+                            <p className='font-lato font-bold text-[14px]'>{data?.hospitalName ?? '-'}</p>
+                            <p className='font-medium text-[12px] text-red-800 font-lato'>{data?.email ?? '-'}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p className='font-lato font-bold text-[14px]'>Ever Care General Hospital</p>
-                        <p className='font-medium text-[12px] text-red-800 font-lato'>Admin</p>
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     </div>

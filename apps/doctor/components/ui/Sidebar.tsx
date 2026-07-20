@@ -6,12 +6,15 @@ import image from '@/assets/Group 19156.png'
 import Image from 'next/image'
 import { LogOut } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import useGetMe from '@/hooks/useGetMe'
+import MeSkeleton from './MeSkeleton'
 
 const SideBar = () => {
   const pathname = usePathname()
   const [activeUrl, setActiveUrl] = useState<string>(pathname || '')
 
   const handleActiveUrl = (url: string) => setActiveUrl(url)
+  const {myData:data, isLoading} = useGetMe()
 
   return (
     <div className="bg-red-900 md:w-[260px] w-20 h-screen overflow-y-auto text-white z-30 fixed ">
@@ -23,7 +26,7 @@ const SideBar = () => {
         <div className="flex flex-col justify-between h-[75vh] mt-3">
           {/* First 7 links */}
           <div>
-            {sideBarData.slice(0, 7).map(({ id, icon, text, url }) => (
+            {sideBarData.slice(0, 8).map(({ id, icon, text, url }) => (
               <div key={id}>
                 <Link
                   href={url}
@@ -43,7 +46,7 @@ const SideBar = () => {
 
           {/* Last 2 links */}
           <div>
-            {sideBarData.slice(7, 9).map(({ id, icon, text, url }) => (
+            {sideBarData.slice(8, 10).map(({ id, icon, text, url }) => (
               <div key={id}>
                 <Link
                   href={url}
@@ -62,16 +65,20 @@ const SideBar = () => {
           </div>
         </div>
 
-        {/* Admin section */}
-        <div className="flex items-center justify-center md:justify-between mt-4 p-2">
-          <div>
-            <p className="font-sans font-semibold text-[14px] hidden md:block">Doctor</p>
-            <p className="font-inter text-[14px] font-normal hidden md:block">admin@evercare.com</p>
+
+        {isLoading ? (
+          <MeSkeleton />
+        ) : (
+          <div className="flex items-center justify-center md:justify-between mt-4 p-2">
+            <div>
+              <p className="font-sans font-semibold text-[14px] hidden md:block">{data?.profile.specialization ?? 'N/A'}</p>
+              <p className="font-inter text-[14px] font-normal hidden md:block">{data?.email ?? 'N/A'}</p>
+            </div>
+            <span className="cursor-pointer">
+              <LogOut size={18} />
+            </span>
           </div>
-          <span className="cursor-pointer">
-            <LogOut size={18} />
-          </span>
-        </div>
+        )}
       </div>
     </div>
   )

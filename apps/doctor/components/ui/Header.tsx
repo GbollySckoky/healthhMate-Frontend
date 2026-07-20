@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
 import { useRouter } from 'next/navigation';
+import useGetMe from '@/hooks/useGetMe';
 
 const Header = () => {
     const pathname = usePathname()
@@ -14,17 +15,21 @@ const Header = () => {
 
 
     const getTitle = (pathname: string) => {
-  if (pathname === ROUTES.dashboard) return 'Dashboard'
-  if (pathname === ROUTES.patients || pathname.startsWith(ROUTES.patients + '/')) return 'Patients'
-  if (pathname === ROUTES.appointment || pathname.startsWith(ROUTES.appointment + '/')) return 'Appointments'
-  if (pathname === ROUTES.earnings || pathname.startsWith(ROUTES.earnings + '/')) return 'Earnings & Transactions'
-  if (pathname === ROUTES.profile) return 'Profile'
-  if (pathname === ROUTES.support) return 'Support'
-  if (pathname === ROUTES.settings) return 'Settings'
-  if (pathname === ROUTES.message || pathname.startsWith(ROUTES.message + '/')) return 'Messages'
-  if (pathname === ROUTES.availability) return 'Availability'
+    if (pathname === ROUTES.dashboard) return 'Dashboard'
+    if (pathname === ROUTES.patients || pathname.startsWith(ROUTES.patients + '/')) return 'Patients'
+    if (pathname === ROUTES.appointment || pathname.startsWith(ROUTES.appointment + '/')) return 'Appointments'
+    if (pathname === ROUTES.earnings || pathname.startsWith(ROUTES.earnings + '/')) return 'Earnings & Transactions'
+    if (pathname === ROUTES.profile) return 'Profile'
+    if (pathname === ROUTES.support) return 'Support'
+    if (pathname === ROUTES.settings) return 'Settings'
+    if (pathname === ROUTES.message || pathname.startsWith(ROUTES.message + '/')) return 'Messages'
+    if (pathname === ROUTES.availability) return 'Availability'
+    if (pathname === ROUTES.notifications) return 'Notification'
   return ''
 }
+
+    const {myData:data, isLoading} = useGetMe()
+    console.log('data!!!', data)
 
 const Title = getTitle(pathname)
   return (

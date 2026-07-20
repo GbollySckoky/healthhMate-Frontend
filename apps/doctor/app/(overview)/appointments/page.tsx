@@ -94,7 +94,7 @@ const Page = () => {
     }));
   };
 
-  const handleAppointmentClick = (appointmentId: number) => {
+  const handleAppointmentClick = (appointmentId: string) => {
     router.push(`/appointments/${appointmentId}`);
   };
 
@@ -164,7 +164,7 @@ const Page = () => {
                     No appointments found
                   </TableCell>
                 </TableRow>
-              ) : (
+              ) : (    
                 appointments.map((appointment: Appointment) => (
                   <TableRow
                     key={appointment.id}
@@ -184,7 +184,8 @@ const Page = () => {
                       {appointment.hospital.hospitalName || "N/A"}
                     </TableCell>
                      <TableCell className="text-[12px] text-grey-20">
-                      {appointment.doctor?.firstName || "N/A"} {appointment.doctor?.lastName || "N/A"}
+                      {appointment.doctor?.firstName.charAt(0).toUpperCase() + appointment.doctor?.firstName.slice(1)  || "N/A"} {" "}
+                      {appointment.doctor?.lastName.charAt(0).toUpperCase() + appointment.doctor?.lastName.slice(1) || "N/A"}
                     </TableCell>
                     <TableCell>
                       <p className="text-[12px] text-grey-20">
@@ -196,7 +197,7 @@ const Page = () => {
                     </TableCell>
 
                     <TableCell className="text-[12px] text-grey-20">
-                      {appointment.consultationType || "N/A"}
+                      {appointment.consultationType.charAt(0).toUpperCase() + appointment.consultationType.slice(1).replaceAll("_", " ")  || "N/A"}
                     </TableCell>
 
                     <TableCell>

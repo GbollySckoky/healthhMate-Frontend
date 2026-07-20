@@ -7,13 +7,13 @@ import AuthInput from '@/components/Inputs/AuthInput'
 import AuthPassword from '@/components/Inputs/AuthPassword'
 import { DisplayFlex } from '@/components/ui/Reusable'
 import Footer from '@/components/ui/Footer'
-import { useFormModal } from '@/components/Modal/FormModal'
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { Hospital_Admin } from '@/lib/service/service'
 import { AxiosError } from 'axios'
 import { DOCTOR_SIGNUP } from '@/lib/interface/signup-interface'
 import DateInput from '@/components/Inputs/Date'
+import { useModal } from '@/components/Modal/Modal'
 
 
 interface SelectOption {
@@ -51,7 +51,7 @@ const AddNewDoctor = () => {
     confirmPassword: false,
   })
 
-  const { closeModal } = useFormModal()
+  const { closeModal } = useModal()
 
   // const { data: hospitals, isLoading: hospitalsLoading } = useQuery({
   //   queryKey: ['hospitals'],

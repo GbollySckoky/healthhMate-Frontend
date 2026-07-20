@@ -22,6 +22,15 @@ const Page = () => {
     const profileData: DOCTOR_PROFILE = data?.data
     console.log(profileData)
 
+    const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
+    const resolveUrl = (path: string) => {
+      if(!path) return image
+      if(path?.startsWith('http://') || path?.startsWith('https://')){
+        return path
+      }
+      return `${BASE_URL}${path}`;
+    }
   return (
     <PageWrapper>
       <FlexWrapper>
@@ -29,7 +38,7 @@ const Page = () => {
             <div className="mb-3  border-b pb-6 border-borderColor">
                 <div className="flex h-fit items-center justify-between">
                     <div className="flex items-center">
-                      <Image src={image} alt='Image' className="w-[50px] h-[50px] rounded-full" />
+                      <Image src={resolveUrl(profileData?.profile?.profilePicture)} alt={profileData?.firstName} className="w-[50px] h-[50px] rounded-full" width={300} height={300} />
                       <div className='ml-2'>
                           <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr {profileData?.firstName || "N/A"} {profileData?.lastName || "N/A"} </p>
                           <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>

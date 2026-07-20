@@ -3,15 +3,16 @@ import { Branch } from '@/types/branch.schema';
 import React, { useState } from 'react'
 import { newBranch } from '@/components/data';
 import Footer from '@/components/ui/Footer';
-import { useFormModal } from '@/components/Modal/FormModal';
+// import { useFormModal } from '@/components/Modal/FormModal';
 import { useMutation } from '@tanstack/react-query';
 import { Hospital_Admin } from '@/lib/service/service';
 import { BRANCH_INTERFACE } from '@/lib/interface/branch.interface';
 import { AxiosError } from 'axios';
+import { useModal } from '@/components/Modal/Modal';
 
 const AddNewBranch = () => {
     const {branchName,branchAddress, number, city} = newBranch;
-    const { closeModal} = useFormModal()
+    const { closeModal} = useModal()
 
     const [inputValue, setInputValue] = useState<Branch>({
         branchName: "",
@@ -32,7 +33,7 @@ const AddNewBranch = () => {
 
     const mutation = useMutation({
         mutationFn: (payload: BRANCH_INTERFACE) => Hospital_Admin.createBranch(payload),
-        onSuccess: (response: any) => {
+        onSuccess: (response) => {
             console.log('Doctor created successfully:', response)
             closeModal()
         },

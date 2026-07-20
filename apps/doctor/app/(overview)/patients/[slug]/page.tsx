@@ -17,7 +17,7 @@ import PatientCardSkeleton from '@/components/ui/PatientCardSkeleton'
 
 const Page = () => {
    const params = useParams()
-    const id = Number(params.slug)
+    const id = String(params.slug)
     console.log(id);
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['getAppointmentDetails', id],

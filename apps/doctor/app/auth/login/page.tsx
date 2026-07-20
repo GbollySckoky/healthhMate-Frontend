@@ -13,6 +13,7 @@ import { Doctor } from '@/lib/constant/service'
 import { storageService } from '@/lib/storage'
 // import { toast } from 'react-toastify'
 import { LOGIN } from '@/lib/interface/login.interface'
+import { AxiosError } from 'axios'
 // import { AxiosError } from 'axios'
 
 const Page = () => {
@@ -38,7 +39,7 @@ const Page = () => {
             storageService.setAuthToken(response.data.access_token)
           router.push(ROUTES.dashboard)
         },
-        onError: (error: unknown) => {
+        onError: (error: AxiosError) => {
             console.log(error)
             // toast.error(error?.response?.data)
           // Handle error

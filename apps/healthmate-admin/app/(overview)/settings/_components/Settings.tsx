@@ -4,10 +4,12 @@ import { PageWrapper } from '@/components/ui/Reusable'
 import { Roles } from './Roles'
 import { AdminAccount } from './AdminAccount'
 import HospitalProfile from './HospitalProfile'
+import { FlexWrapper } from '@/lib/components/ui/Reusable'
 
 const Settings = () => {
   return (
     <PageWrapper>
+      <FlexWrapper>
         <Tabs defaultValue="general">
             <TabsList  className="mb-5">
                 <TabsTrigger value="general">General</TabsTrigger>
@@ -18,6 +20,7 @@ const Settings = () => {
             <TabsContent value="roles"><Roles /> </TabsContent>
             <TabsContent value="account"><AdminAccount /> </TabsContent>
         </Tabs>
+      </FlexWrapper>
     </PageWrapper>
   )
 }
