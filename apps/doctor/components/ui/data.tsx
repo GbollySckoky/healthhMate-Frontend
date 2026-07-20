@@ -41,6 +41,12 @@ export const sideBarData = [
         url: ROUTES.availability
     },
     {
+        id: 17,
+        icon: <CircleUserRound size={18} />,
+        text: 'Notifications',
+        url: ROUTES.notifications
+    },
+    {
         id: 7,
         icon: <CircleUserRound size={18} />,
         text: 'Profile',

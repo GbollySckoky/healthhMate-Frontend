@@ -5,7 +5,7 @@ import { DOCTOR_ENDPOINTS } from "./endpoints";
 import { ApproveAppointment } from "../interface/approve-appointment.interface";
 import api from "../ClientHttps";
 import { Availability } from "../interface/availability.interface";
-import { ReplyToTicket, SUPPORT_TICKET } from "../interface/support";
+import { Message, ReplyToTicket, SUPPORT_TICKET } from "../interface/support";
 
 
 export const Doctor = {
@@ -77,7 +77,30 @@ export const Doctor = {
     replyToTicket: async (id: string, payload: ReplyToTicket) => {
         return await api.post(`support/staff/${id}/replies`, payload)
     },
-    addInternalNote: async (id: string, message: string) => {
+    addInternalNote: async (id: string, message: Message) => {
         return await api.post(`support/staff/${id}/internal-notes`, message)
     },
+    getMe: async () => {
+        const response = await api.get(DOCTOR_ENDPOINTS.GET_DOCTOR);
+        return response.data
+    },
+    getNotification: async () => {
+        const response = await api.get(DOCTOR_ENDPOINTS.GET_NOTIFICATIONS);
+        return response.data
+    },
+    markNotificationAsRead: async (id: string) => {
+        const response = await api.patch(`notifications/${id}/read`);
+        return response.data
+    },
+    unReadNotifications: async () => {
+        const response = await api.get(DOCTOR_ENDPOINTS.UN_READ_NOTIFICATIONS);
+        return response.data
+    },
+    markAllNotificationAsRead: async () => {
+        return await api.patch(DOCTOR_ENDPOINTS.READ_ALL_NOTIFICATIONS);
+    },
+    getDoctorAvailability: async () => {
+        const response = await api.get(DOCTOR_ENDPOINTS.GET_DOCTOR_AVAILABILITY)
+        return response.data
+    }
 }
