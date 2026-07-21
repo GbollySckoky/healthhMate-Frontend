@@ -1,4 +1,4 @@
-import { Infos, PageWrapper } from '@/components/ui/Reusable'
+import { Infos, PageWrapper } from '@/lib/components/ui/Reusable'
 import React from 'react'
 
 const Page = () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import image from '@/assets/Image.png'
 import Image from 'next/image'
-import { messages } from '@/components/ui/data'
+import { messages } from '@/lib/components/ui/data'
 
 const All = () => {
   return (

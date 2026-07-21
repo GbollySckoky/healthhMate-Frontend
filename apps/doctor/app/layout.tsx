@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Provider from "@/components/provider/Provider";
+import Provider from "@/lib/components/provider/Provider";
 import { ToastContainer } from 'react-toastify'
 
 export const metadata: Metadata = {

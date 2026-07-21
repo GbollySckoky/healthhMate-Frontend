@@ -1,10 +1,10 @@
 "use client"
-import { MediumTitle } from '@/components/ui/Reusable'
+import { MediumTitle } from '@/lib/components/ui/Reusable'
 import React from 'react'
 import { Doctor } from '@/lib/constant/service'
 import { useQuery } from '@tanstack/react-query'
-import { Appointment } from '@/interface/doctor-apppointment.interface'
-import { RecentActivitySkeleton } from '@/components/ui/DashboardSkeleton'
+import { Appointment } from '@/lib/interface/doctor-apppointment.interface'
+import { RecentActivitySkeleton } from '@/lib/components/ui/DashboardSkeleton'
 
 
 const RecentActivities = () => {

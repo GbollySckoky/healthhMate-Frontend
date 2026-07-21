@@ -1,6 +1,6 @@
 "use client"
-import InputField from '@/components/ui/InputField'
-import { Card, TableTitle } from '@/components/ui/Reusable'
+import InputField from '@/lib/components/ui/InputField'
+import { Card, TableTitle } from '@/lib/components/ui/Reusable'
 import React, { useState } from 'react'
 
 const ChangePassword = () => {

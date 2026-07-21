@@ -5,40 +5,12 @@ import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { ArrowLeft, Paperclip, Send, StickyNote } from 'lucide-react'
 import { AxiosError } from 'axios'
-import { Message, ReplyToTicket } from '@/lib/interface/support'
+import { Message, ReplyToTicket, SupportTicketDetail } from '@/lib/interface/support'
 import Link from 'next/link'
-import { FlexWrapper, PageWrapper } from '@/components/ui/Reusable'
+import { FlexWrapper, PageWrapper } from '@/lib/components/ui/Reusable'
 // import InputField from '@/components/ui/InputField'
-import SupportField from '@/components/ui/SupportField'
+import SupportField from '@/lib/components/ui/SupportField'
 
-type SupportMessage = {
-  id: string
-  senderType: 'PATIENT' | 'DOCTOR' | 'HOSPITAL'
-  message: string
-  attachmentUrl: string | null
-  attachmentName: string | null
-  createdAt: string
-}
-
-type SupportInternalNote = {
-  id: string
-  message: string
-  createdAt: string
-}
-
-type SupportTicketDetail = {
-  id: string
-  ticketNumber: string
-  subject: string
-  category: string
-  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
-  status: 'OPEN' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED'
-  description: string
-  creatorType: string
-  createdAt: string
-  messages: SupportMessage[]
-  internalNotes: SupportInternalNote[]
-}
 
 const statusStyles: Record<string, string> = {
   OPEN: 'bg-blue-50 text-blue-700 border-blue-200',
@@ -180,7 +152,6 @@ const Page = () => {
   return (
     <PageWrapper>
         <FlexWrapper>
-        <div className="max-w-3xl mx-auto p-6 font-inter">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
             <div>
@@ -328,8 +299,7 @@ const Page = () => {
             </button>
             </form>
         </div>
-            </div>
-        </FlexWrapper>
+      </FlexWrapper>
     </PageWrapper>
   )
 }

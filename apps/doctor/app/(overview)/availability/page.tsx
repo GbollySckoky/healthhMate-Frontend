@@ -2,19 +2,19 @@
 
 import { useState } from "react";
 import { Edit2, Trash2, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/lib/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { FlexWrapper, PageWrapper } from "@/components/ui/Reusable";
+} from "@/lib/components/ui/dialog";
+import { FlexWrapper, PageWrapper } from "@/lib/components/ui/Reusable";
 import { Doctor } from "@/lib/constant/service";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import useGetDoctorAvailability from "@/hooks/useGetDoctorAvailability";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import useGetDoctorAvailability from "@/lib/hooks/useGetDoctorAvailability";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/lib/components/ui/table";
 
 const timeSlots = [
   "08:00",

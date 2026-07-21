@@ -5,7 +5,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-} from "@/components/ui/table";
+} from "@/lib/components/ui/table";
 
 const AppointmentTableSkeleton = () => {
   return (

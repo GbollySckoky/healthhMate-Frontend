@@ -1,5 +1,5 @@
 "use client"
-import { MediumTitle, MinText, SmallestTitle } from '@/components/ui/Reusable'
+import { MediumTitle, MinText, SmallestTitle } from '@/lib/components/ui/Reusable'
 import React from 'react'
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image'
@@ -8,9 +8,9 @@ import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
-import { Appointment } from '@/interface/doctor-apppointment.interface';
+import { Appointment } from '@/lib/interface/doctor-apppointment.interface';
 import { STATUS } from '@/types/status';
-import { AppointmentCardSkeleton } from '@/components/ui/DashboardSkeleton';
+import { AppointmentCardSkeleton } from '@/lib/components/ui/DashboardSkeleton';
 
 const UpcomingAppointment = () => {
   const router = useRouter()

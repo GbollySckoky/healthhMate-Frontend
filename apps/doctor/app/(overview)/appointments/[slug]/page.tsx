@@ -1,19 +1,19 @@
 "use client";
 
-import { FlexWrapper, Infos, PageWrapper } from "@/components/ui/Reusable";
+import { FlexWrapper, Infos, PageWrapper } from "@/lib/components/ui/Reusable";
 import React, { FormEvent, useState } from "react";
 import Image from "next/image";
 import profileImage from "@/assets/Image (1).png";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Doctor } from "@/lib/constant/service";
 import { useParams } from "next/navigation";
-import InputField from "@/components/ui/InputField";
-import { useModal } from "@/components/modal/Modal";
+import InputField from "@/lib/components/ui/InputField";
+import { useModal } from "@/lib/components/modal/Modal";
 import { AxiosError } from "axios";
 import { STATUS } from "@/types/status";
-import DetailSkeleton from "@/components/ui/DetailsSkeleton";
+import DetailSkeleton from "@/lib/components/ui/DetailsSkeleton";
 // import { Appointment } from "@/interface/doctor-apppointment.interface";
-import PatientCardSkeleton from "@/components/ui/PatientCardSkeleton";
+import PatientCardSkeleton from "@/lib/components/ui/PatientCardSkeleton";
 import CreateSupport from "./CreateSupport";
 
 const Page = () => {
@@ -119,8 +119,8 @@ console.log(id)
               />
               <Infos
                 label="Doctor Name"
-                value={`${appointmentDetails?.doctor?.firstName || ""} ${
-                  appointmentDetails?.doctor?.lastName || ""
+                value={`${appointmentDetails?.doctor?.firstName.charAt(0).toUpperCase() + appointmentDetails?.doctor?.firstName.slice(1).toLowerCase() || ""} ${
+                  appointmentDetails?.doctor?.lastName.charAt(0).toUpperCase() + appointmentDetails?.doctor?.lastName.slice(1).toLowerCase() || ""
                 }`.trim() || "-"}
               />
               <Infos
@@ -142,8 +142,8 @@ console.log(id)
           </div>
         )}
 
-        {!isLoading && appointmentDetails?.status === STATUS.PENDING && (
-          <div className="flex justify-between items-center mt-7">
+        <div className="flex items-center justify-between mt-7">
+          {!isLoading && appointmentDetails?.status === STATUS.PENDING && (
             <button
               className="px-4 py-2 bg-red-800 rounded-lg font-inter text-white text-[14px]"
               onClick={() =>
@@ -159,11 +159,9 @@ console.log(id)
             >
               Update Appointment Status
             </button>
-          </div>
-        )}
-        <div className="flex items-center justify-end mb-6">
+          )}
           <button 
-            className="w-fit bg-red-900 rounded-lg text-white text-sm px-5 py-3"
+            className="w-fit bg-red-800 rounded-lg text-white text-sm px-5 py-2"
             onClick={() => {
               openModal(
                 <CreateSupport appointmentDetails={appointmentDetails} />, {

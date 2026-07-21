@@ -1,5 +1,5 @@
 "use client"
-import AuthEmail from '@/components/ui/AuthEmail'
+import AuthEmail from '@/lib/components/ui/AuthEmail'
 import React, { useState } from 'react'
 
 const ForgotPassword = ({handleNextStep}: {handleNextStep: () => void}) => {

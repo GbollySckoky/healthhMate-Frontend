@@ -1,5 +1,5 @@
-import Sidebar from "@/components/ui/Sidebar";
-import Header from "@/components/ui/Header";
+import Sidebar from "@/lib/components/ui/Sidebar";
+import Header from "@/lib/components/ui/Header";
 import { AppointmentProvider } from "@/lib/context/GetAppointmentContext";
 // import Provider from "@/components/provider/Provider";
 

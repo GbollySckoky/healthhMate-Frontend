@@ -1,17 +1,17 @@
 "use client"
-import { Card, FlexWrapper, PageWrapper } from '@/components/ui/Reusable'
+import { Card, FlexWrapper, PageWrapper } from '@/lib/components/ui/Reusable'
 import React from 'react'
 import Image from 'next/image'
 import profileImage from '@/assets/Image (1).png'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs"
 import Overview from './_components/Overview'
 import Consultation from './_components/Consultation'
 import Prescription from './_components/Prescription'
 import { useParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
-import { Appointment } from '@/interface/doctor-apppointment.interface'
-import PatientCardSkeleton from '@/components/ui/PatientCardSkeleton'
+import { Appointment } from '@/lib/interface/doctor-apppointment.interface'
+import PatientCardSkeleton from '@/lib/components/ui/PatientCardSkeleton'
 // import DetailSkeleton from '@/components/ui/DetailsSkeleton'
 
 

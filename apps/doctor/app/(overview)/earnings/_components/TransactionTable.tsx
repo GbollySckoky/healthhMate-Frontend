@@ -7,17 +7,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import Calendar from "@/components/ui/DateCalendar"
-import { TableTitle } from "@/components/ui/Reusable"
+} from "@/lib/components/ui/table"
+import Calendar from "@/lib/components/ui/DateCalendar"
+import { TableTitle } from "@/lib/components/ui/Reusable"
 import { paidStatus } from "@/types/status"
-import Input from "@/components/ui/Input"
+import Input from "@/lib/components/ui/Input"
 // import MinSelectField from "@/components/Inputs/MinSelectField"
 import { useState } from "react"
 // import useToggle from "@/hooks/useToggle"
 import image from "@/assets/Image.png"
 import { useRouter } from "next/navigation"
-import Paginate from "@/components/ui/Paginate"
+import Paginate from "@/lib/components/ui/Paginate"
 
 // Mock data
 const invoices = [

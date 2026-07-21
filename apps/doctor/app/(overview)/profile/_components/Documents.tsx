@@ -1,4 +1,4 @@
-import { MediumTitle, TableTitle } from '@/components/ui/Reusable'
+import { MediumTitle, TableTitle } from '@/lib/components/ui/Reusable'
 import React from 'react'
 import { Download } from 'lucide-react';
 import certificate from "@/assets/lovely.png"

@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FlexWrapper, PageWrapper, TableTitle } from "@/components/ui/Reusable";
-import Input from "@/components/ui/Input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs";
+import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable";
+import Input from "@/lib/components/ui/Input";
 import { Search } from "lucide-react";
-import Calendar from "@/components/ui/DateCalendar";
+import Calendar from "@/lib/components/ui/DateCalendar";
 import {
   Table,
   TableBody,
@@ -13,15 +13,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/lib/components/ui/table";
 import { Doctor } from "@/lib/constant/service";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import Paginate from "@/components/ui/Paginate";
-import { Appointment } from "@/interface/doctor-apppointment.interface";
-import { Pagination } from "@/interface/pagination.interfac";
+import Paginate from "@/lib/components/ui/Paginate";
+import { Appointment } from "@/lib/interface/doctor-apppointment.interface";
+import { Pagination } from "@/lib/interface/pagination.interfac";
 import { STATUS } from "@/types/status";
-import AppointmentTableSkeleton from "@/components/ui/AppointmentTableSkeleton";
+import AppointmentTableSkeleton from "@/lib/components/ui/AppointmentTableSkeleton";
 
 
 const Page = () => {

@@ -1,11 +1,11 @@
 "use client";
 
-import { useFormModal } from "@/components/modal/FormModal";
-import Footer from "@/components/ui/Footer";
-import InputField from "@/components/ui/InputField";
-import { DisplayFlex } from "@/components/ui/Reusable";
+import { useFormModal } from "@/lib/components/modal/FormModal";
+import Footer from "@/lib/components/ui/Footer";
+import InputField from "@/lib/components/ui/InputField";
+import { DisplayFlex } from "@/lib/components/ui/Reusable";
 // import TelInput from "@/components/ui/TelInput";
-import TextArea from "@/components/ui/TextArea";
+import TextArea from "@/lib/components/ui/TextArea";
 import { Profile } from "@/lib/interface/doctor.schema";
 import React, { FormEvent, useState } from "react";
 import { useMutation } from "@tanstack/react-query";

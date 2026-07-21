@@ -1,11 +1,11 @@
 "use client"
-import { Card} from '@/components/ui/Reusable'
+import { Card} from '@/lib/components/ui/Reusable'
 import React, { useState } from 'react'
-import SelectField from '@/components/ui/SelectField'
-import InputField from '@/components/ui/InputField'
-import TextArea from '@/components/ui/TextArea'
-import Footer from '@/components/ui/Footer'
-import { useFormModal } from '@/components/modal/FormModal'
+import SelectField from '@/lib/components/ui/SelectField'
+import InputField from '@/lib/components/ui/InputField'
+import TextArea from '@/lib/components/ui/TextArea'
+import Footer from '@/lib/components/ui/Footer'
+import { useFormModal } from '@/lib/components/modal/FormModal'
 
 const SupportModal = () => {
   const {closeModal} = useFormModal()

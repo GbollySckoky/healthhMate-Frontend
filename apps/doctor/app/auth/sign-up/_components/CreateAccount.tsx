@@ -1,9 +1,9 @@
 "use client"
 
-import AuthEmail from '@/components/ui/AuthEmail'
-import AuthPassword from '@/components/ui/AuthPassword'
-import AuthInput from '@/components/ui/AuthInput'
-import AuthNumber from '@/components/ui/AuthNumber'
+import AuthEmail from '@/lib/components/ui/AuthEmail'
+import AuthPassword from '@/lib/components/ui/AuthPassword'
+import AuthInput from '@/lib/components/ui/AuthInput'
+import AuthNumber from '@/lib/components/ui/AuthNumber'
 import { STEP } from '@/lib/step'
 import { useDoctorForm } from '@/lib/context/DoctorFormContext'
 

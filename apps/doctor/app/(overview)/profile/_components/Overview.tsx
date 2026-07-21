@@ -1,6 +1,6 @@
-import LoaadingSkeleton from "@/components/ui/LoaadingSkeleton";
-import { Infos } from "@/components/ui/Reusable";
-import { DOCTOR_PROFILE } from "@/interface/get-doctor-profile.interface";
+import LoaadingSkeleton from "@/lib/components/ui/LoaadingSkeleton";
+import { Infos } from "@/lib/components/ui/Reusable";
+// import { DOCTOR_PROFILE } from "@/lib/interface/get-doctor-profile.interface";
 import React from "react";
 
 const Overview = ({
@@ -9,7 +9,7 @@ const Overview = ({
   isError,
   error,
 }: {
-  profileData: DOCTOR_PROFILE;
+  profileData: any;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -86,7 +86,7 @@ const Overview = ({
           Account Activity
         </p>
 
-        <Infos label="Total Consultations:" value="10" />
+        <Infos label="Total Consultations:" value={profileData?.appointments.length ?? 0} />
         <Infos label="Avg Rating:" value="⭐ 4.0 (29 reviews)" />
         <Infos label="Status:" value="Active" />
         <Infos label="Last Login:" value="Today, 2:30 PM" />

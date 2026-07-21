@@ -1,77 +1,82 @@
 "use client"
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
-// import Conversation from "./Conversation";
-// import image from '@/assets/Image.png'
-// import { Status } from "@/types/status";
-import Paginate from "@/components/ui/Paginate";
-// import { useFormModal } from "@/components/modal/FormModal";
-import useGetSupport from "@/hooks/useGetSupport";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/lib/components/ui/table"
+import Paginate from "@/lib/components/ui/Paginate";
+import useGetSupport from "@/lib/hooks/useGetSupport";
 import { SupportTicket } from "@/lib/interface/support";
-import SupportTableSkeleton from "@/components/ui/SupportTableSkeleton";
+import SupportTableSkeleton from "@/lib/components/ui/SupportTableSkeleton";
 import { useRouter } from "next/navigation";
 
-  
-  export function SupportTable() {
-    // const { openModal } = useFormModal();
-    const router = useRouter()
-    const {supportData, isLoading, isError, error} = useGetSupport()
-    console.log(supportData, "12333")
-    return (
-      <div>
-        <Table>
-            <TableHeader className="border-t border-borderColor text-[#535862]">
-                <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium ">
-                   <TableHead>ID</TableHead>
-                    <TableHead>Subject</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Priority</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Creator Type</TableHead>
-                    {/* <TableHead>Creator Type</TableHead> */}
-                </TableRow>
-            </TableHeader>
+export function SupportTable() {
+  const router = useRouter()
+  const { supportData, isLoading, isError, error } = useGetSupport()
+
+  return (
+    <div>
+      <div className="overflow-x-auto">
+        <Table className="table-fixed w-full">
+          <TableHeader className="border-t border-borderColor text-[#535862]">
+            <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
+              <TableHead className="w-28">Id</TableHead>
+              <TableHead className="w-32">Appointment Id</TableHead>
+              <TableHead className="w-40">Subject</TableHead>
+              <TableHead className="w-24">Category</TableHead>
+              <TableHead className="w-20">Priority</TableHead>
+              <TableHead className="w-64">Description</TableHead>
+              <TableHead className="w-28">Creator Type</TableHead>
+              <TableHead className="w-32">Patient Id</TableHead>
+              <TableHead className="w-32">Hospital Id</TableHead>
+            </TableRow>
+          </TableHeader>
+
+          {isLoading ? (
+            <SupportTableSkeleton />
+          ) : (
             <TableBody>
-              {isLoading ? (
-                <SupportTableSkeleton />
-              ) : ( isError ? (
+              {isError ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-8">
+                  <TableCell colSpan={9} className="text-center py-8 text-gray-500">
                     {error?.message}
                   </TableCell>
                 </TableRow>
-              ): supportData.length === 0 ? (
+              ) : supportData.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-8 text-gray-500">
+                  <TableCell colSpan={9} className="text-center py-8 text-gray-500">
                     No recent support ticket found
                   </TableCell>
                 </TableRow>
-              ) :  supportData.map((support: SupportTicket) => (
-                  <TableRow  key={support.ticketNumber}>
-                  <TableCell className="font-inter font-normal text-[12px] text-grey-20">{support.ticketNumber}</TableCell>
-                  <TableCell className="font-inter font-normal text-[12px] text-grey-20">{support.subject}</TableCell>
-                  <TableCell className="font-inter font-medium text-[12px] text-grey-20">{support?.category}</TableCell>
-                  <TableCell className="font-inter font-medium text-[12px] text-grey-20">{support?.priority}</TableCell>
-                  <TableCell className="font-inter font-medium text-[12px] text-grey-20 w-70 truncate">{support?.description}</TableCell>
-                  <TableCell className="font-inter font-medium text-[12px] text-grey-20">{support?.creatorType}</TableCell>
-                  {/* <TableCell className="font-inter font-medium text-[12px] text-grey-800">{support?.subject}</TableCell> */}
-                  <TableCell >
-                  </TableCell>
-                  <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer"
-                      onClick={() => router.push(`/support/${support.id}`)}>
-                      View Details</TableCell>
+              ) : (
+                supportData.map((support: SupportTicket) => (
+                  <TableRow
+                    key={support.ticketNumber}
+                    className="cursor-pointer hover:bg-gray-50"
+                    onClick={() => router.push(`/support/${support.id}`)}
+                  >
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.ticketNumber}</TableCell>
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.appointmentId}</TableCell>
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.subject}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.category.charAt(0).toUpperCase() + support?.category.slice(1).toLocaleLowerCase()}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.priority.charAt(0).toUpperCase() + support?.priority.slice(1).toLocaleLowerCase()}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate" title={support?.description}>
+                      {support?.description}
+                    </TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.creatorType.charAt(0).toUpperCase() + support?.creatorType.slice(1).toLocaleLowerCase()}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.patientId}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.hospitalId}</TableCell>
                   </TableRow>
-              )))}
+                ))
+              )}
             </TableBody>
+          )}
         </Table>
-        <Paginate />
+      </div>
+      <Paginate />
     </div>
-    )
-  }
-  
+  )
+}
