@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import Hospital from './_components/Hospital'
-import useStep from '@/hooks/useStep'
+import useStep from '@/lib/hooks/useStep'
 import { STEP } from '@/lib/interface/step'
 import Branch from './_components/Branch'
 import Doctor from './_components/Doctor'

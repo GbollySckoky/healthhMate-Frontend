@@ -25,7 +25,7 @@ import {
 import { Hospital_Admin } from "@/lib/service/service";
 import { GET_ALL_APPOINTMENTS } from "@/lib/interface/get_all_appointyment";
 import { STATUS } from "@/types/status";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/lib/hooks/useToggle";
 
 const getStatusStyle = (status: string) => {
   switch (status) {
