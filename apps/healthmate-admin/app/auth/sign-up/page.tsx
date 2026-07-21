@@ -2,7 +2,7 @@
 // import react from 'react'
 import CreateAccount from './_components/CreateAccount'
 import { STEP } from '@/lib/interface/step'
-import useStep from '@/hooks/useStep'
+import useStep from '@/lib/hooks/useStep'
 // import VerifyCode from './_components/VerifyCode'
 import GetStarted from './_components/GetStarted'
 import Success from '@/components/ui/Success'

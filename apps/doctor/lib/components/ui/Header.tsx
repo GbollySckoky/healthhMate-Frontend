@@ -63,7 +63,7 @@ const Header = () => {
                             <p className='font-lato font-bold text-[14px]'>Dr. 
                                 {`${data?.firstName.charAt(0)?.toUpperCase() + data?.firstName?.slice(1)?.toLowerCase()} 
                                 ${data?.lastName.charAt(0)?.toUpperCase() + data?.lastName?.slice(1)?.toLowerCase()}`}</p>
-                            <p className='font-medium text-[12px] text-red-800 font-lato'>{data?.profile.specialization ?? '-'}</p>
+                            <p className='font-medium text-[12px] text-red-800 font-lato'>{data?.profile?.specialization ?? '-'}</p>
                         </div>
                     </div>
                 )}

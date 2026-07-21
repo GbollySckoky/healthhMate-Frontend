@@ -13,10 +13,10 @@ const Header = () => {
     pathname === ROUTES.appointment && 'Appointments' || pathname === ROUTES.earnings && 'Earnings & Transactions' || 
     pathname === ROUTES.report && 'Reports & Analytics' || pathname === ROUTES.support && 'Support' || 
     pathname === ROUTES.settings && 'Settings' || pathname === ROUTES.doctors && 'Doctors' || 
-    pathname === ROUTES.branches && 'Branches'
+    pathname === ROUTES.branches && 'Branches' || pathname === ROUTES.notifications && 'Notifications'
 
     const {myData:data, isLoading} = useGetMe()
-      console.log('data!!!', data)
+
   return (
     <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-8 ml-[50px] md:ml-[250px]'>
         <div className="flex items-center justify-between w-full">

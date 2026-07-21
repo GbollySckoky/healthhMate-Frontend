@@ -1,8 +1,7 @@
 import image1 from '@/assets/Image (1).png' 
 import image from '@/assets/Image.png'
-import { House, Wallet, Activity, CalendarDays, HouseWifi, User, Headset, Settings } from 'lucide-react';
+import { House, Wallet, Activity, CalendarDays, HouseWifi, User, Headset, Settings, Bell } from 'lucide-react';
 import { ROUTES } from '@/lib/constant/Routes';
-
 
 
 export const overviewData = [
@@ -493,6 +492,12 @@ export const sideBarData = [
         icon: <Headset size={18} />,
         text: 'Support',
         url: ROUTES.support
+    },
+    {
+        id: 18,
+        icon: <Bell size={18} />,
+        text: 'Notifications',
+        url: ROUTES.notifications
     },
     {
         id: 9,

@@ -2,7 +2,7 @@
 import React from 'react'
 import Img from '@/components/ui/Image'
 import ForgotPassword from './_components/ForgotPassword'
-import useStep from '@/hooks/useStep'
+import useStep from '@/lib/hooks/useStep'
 import { STEP } from '@/lib/interface/step'
 import VerifyCode from './_components/VerifyCode'
 import NewPassword from './_components/NewPassword'

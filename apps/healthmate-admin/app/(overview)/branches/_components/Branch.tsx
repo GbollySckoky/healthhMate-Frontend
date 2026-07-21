@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import { Search } from "lucide-react";
 import BranchTable from "./BranchTable";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/lib/hooks/useToggle";
 import AddNewBranch from "./AddNewBranch";
 import AssignBranch from "./AssignBranch";
 import { useModal } from "@/components/Modal/Modal";

@@ -1,116 +1,82 @@
-import { useModal } from "@/components/Modal/Modal";
+"use client"
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
-import SupportModal from "./SupportModal";
-import image from '@/assets/Image.png'
-import Image from "next/image";
-import { MinTexts } from "@/components/ui/Reusable";
-import { Status } from "@/types/status";
-import Paginate from "@/components/ui/paginate";
-  const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Open",
-      image: image,
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "Closed",
-      image: image,
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "In Progress",
-      image: image,
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "In Progress",
-      image: image,
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "Open",
-      image: image,
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Closed",
-      image: image,
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Closed",
-      image: image,
-    },
-  ]
-  
-  export function SupportTable() {
-    const { openModal } = useModal();
-    return (
-      <div>
-        <Table>
-            <TableHeader className="border-t border-borderColor text-[#535862]">
-                <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium ">
-                    <TableHead >Submitted By</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Subject</TableHead>
-                    <TableHead>Status</TableHead>
-                </TableRow>
-            </TableHeader>
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/lib/components/ui/table"
+// import Paginate from "@/lib/components/ui/Paginate";
+import { useRouter } from "next/navigation";
+import useGetSupport from "@/lib/hooks/useGetSupport";
+import { SupportTicket } from "@/lib/interface/supportTicket";
+import SupportTableSkeleton from "@/lib/components/ui/SupportTableSkeleton";
+
+export function SupportTable() {
+  const router = useRouter()
+  const { supportData, isLoading, isError, error } = useGetSupport()
+
+  return (
+    <div>
+      <div className="overflow-x-auto">
+        <Table className="table-fixed w-full">
+          <TableHeader className="border-t border-borderColor text-[#535862]">
+            <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
+              <TableHead className="w-28">Id</TableHead>
+              <TableHead className="w-32">Appointment Id</TableHead>
+              <TableHead className="w-40">Subject</TableHead>
+              <TableHead className="w-24">Category</TableHead>
+              <TableHead className="w-20">Priority</TableHead>
+              <TableHead className="w-64">Description</TableHead>
+              <TableHead className="w-28">Creator Type</TableHead>
+              <TableHead className="w-32">Patient Id</TableHead>
+              <TableHead className="w-32">Hospital Id</TableHead>
+            </TableRow>
+          </TableHeader>
+
+          {isLoading ? (
+            <SupportTableSkeleton />
+          ) : (
             <TableBody>
-              {invoices.map((invoice) => (
-                  <TableRow  key={invoice.invoice}>
-                  <TableCell className="font-inter font-normal text-[14px] text-grey-30 flex items-center">
-                      <Image src={invoice.image} alt='Image' width={40} />
-                      <div className="ml-2">
-                          {invoice.invoice}
-                          <MinTexts>Doctor</MinTexts>
-                      </div>
+              {isError ? (
+                <TableRow>
+                  <TableCell colSpan={9} className="text-center py-8 text-gray-500">
+                    {error?.message}
                   </TableCell>
-                  <TableCell className="font-inter font-normal text-[14px] text-[#262e3e]">{invoice.paymentStatus}</TableCell>
-                  <TableCell className="font-inter font-medium text-[14px] text-grey-30">{invoice.paymentMethod}</TableCell>
-                  <TableCell >
-                      <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === Status.CLOSED && 'text-[#027A48] bg-green-100' || invoice.paymentMethod === Status.OPEN && 'text-[#414651] bg-[#F5F5F5]'|| invoice.paymentMethod === Status.InProgress && 'text-[#3538CD] bg-blue-50'  }`}>
-                          {invoice.paymentMethod}
-                      </p>
+                </TableRow>
+              ) : supportData.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={9} className="text-center py-8 text-gray-500">
+                    No recent support ticket found
                   </TableCell>
-                  <TableCell className="font-inter font-medium text-[14px] text-red-800 cursor-pointer"
-                      onClick={() =>
-                          openModal(<SupportModal />, {
-                            title:
-                              'Can’t Join Video Call',
-                            className: 'max-w-lg',
-                            onClose: () => {},
-                          })
-                        }>
-                      View Details</TableCell>
+                </TableRow>
+              ) : (
+                supportData.map((support: SupportTicket) => (
+                  <TableRow
+                    key={support.ticketNumber}
+                    className="cursor-pointer hover:bg-gray-50"
+                    onClick={() => router.push(`/support/${support.id}`)}
+                  >
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.ticketNumber}</TableCell>
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.appointmentId}</TableCell>
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.subject}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.category.charAt(0).toUpperCase() + support?.category.slice(1).toLocaleLowerCase()}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.priority.charAt(0).toUpperCase() + support?.priority.slice(1).toLocaleLowerCase()}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate" title={support?.description}>
+                      {support?.description}
+                    </TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.creatorType.charAt(0).toUpperCase() + support?.creatorType.slice(1).toLocaleLowerCase()}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.patientId}</TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.hospitalId}</TableCell>
                   </TableRow>
-              ))}
+                ))
+              )}
             </TableBody>
+          )}
         </Table>
-        <Paginate />
+      </div>
+      {/* <Paginate /> */}
     </div>
-    )
-  }
-  
+  )
+}
