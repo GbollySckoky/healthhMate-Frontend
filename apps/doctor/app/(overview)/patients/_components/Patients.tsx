@@ -1,5 +1,5 @@
 "use client"
-import { FlexWrapper, PageWrapper } from '@/components/ui/Reusable'
+import { FlexWrapper, PageWrapper } from '@/lib/components/ui/Reusable'
 import {
     Table,
     TableBody,
@@ -7,22 +7,22 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-  } from "@/components/ui/table"
+  } from "@/lib/components/ui/table"
 import {Search } from 'lucide-react'
-import { TableTitle } from "@/components/ui/Reusable";
-import Input from "@/components/ui/Input";
-import MinSelectField from "@/components/ui/MinSelectField";
+import { TableTitle } from "@/lib/components/ui/Reusable";
+import Input from "@/lib/components/ui/Input";
+import MinSelectField from "@/lib/components/ui/MinSelectField";
 import { useEffect, useState } from "react";
-import useToggle from "@/hooks/useToggle";
-import Paginate from '@/components/ui/Paginate'
+import useToggle from "@/lib/hooks/useToggle";
+import Paginate from '@/lib/components/ui/Paginate'
 import { useRouter } from 'next/navigation'
 import { STATUS } from '@/types/status'
 import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
 // import LoadingSpinner from '@/components/ui/LoadingSpinner';
-import { Pagination } from '@/interface/pagination.interfac';
-import { Appointment } from '@/interface/doctor-apppointment.interface';
-import PatientTableSkeleton from "@/components/ui/PatientTableSkeleton";
+import { Pagination } from '@/lib/interface/pagination.interfac';
+import { Appointment } from '@/lib/interface/doctor-apppointment.interface';
+import PatientTableSkeleton from "@/lib/components/ui/PatientTableSkeleton";
 
 const Patients = () => {
     const [inputValue, setInputValue] = useState<string>('')

@@ -1,13 +1,13 @@
 import { ChangeEvent, useState } from 'react';
-import Footer from '@/components/ui/Footer';
+import Footer from '@/lib/components/ui/Footer';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useModal } from '@/components/modal/Modal';
+import { useModal } from '@/lib/components/modal/Modal';
 import { APPOINTMENT_DETAILS } from '@/lib/interface/appointment-details';
 import { SUPPORT_TICKET } from '@/lib/interface/support';
 import { Doctor } from '@/lib/constant/service';
-import InputField from '@/components/ui/InputField';
-import SelectField from '@/components/ui/SelectField';
+import InputField from '@/lib/components/ui/InputField';
+import SelectField from '@/lib/components/ui/SelectField';
 
 type InputValue = {
   subject: string;

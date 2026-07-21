@@ -1,7 +1,7 @@
-import { Infos } from '@/components/ui/Reusable'
+import { Infos } from '@/lib/components/ui/Reusable'
 import React from 'react'
-import { Appointment } from '@/interface/doctor-apppointment.interface'
-import DetailSkeleton from '@/components/ui/DetailsSkeleton'
+import { Appointment } from '@/lib/interface/doctor-apppointment.interface'
+import DetailSkeleton from '@/lib/components/ui/DetailsSkeleton'
 
 
 const Overview = ({appointmentDetails, isLoading}:{appointmentDetails: Appointment, isLoading: boolean}) => {

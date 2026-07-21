@@ -1,17 +1,17 @@
 'use client'
-import { FlexWrapper, PageWrapper,} from '@/components/ui/Reusable'
+import { FlexWrapper, PageWrapper,} from '@/lib/components/ui/Reusable'
 import React from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs"
 import Image from 'next/image'
 import image from '@/assets/Image.png'
 import Overview from './_components/Overview'
 import Documents from './_components/Documents'
 import { PencilLine } from 'lucide-react'
-import { useFormModal } from '@/components/modal/FormModal'
+import { useFormModal } from '@/lib/components/modal/FormModal'
 import EditProfile from './_components/EditProfile'
 import { useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
-import { DOCTOR_PROFILE } from '@/interface/get-doctor-profile.interface'
+// import { DOCTOR_PROFILE } from '@/lib/interface/get-doctor-profile.interface'
 
 const Page = () => {
     const {openModal} = useFormModal()
@@ -19,7 +19,7 @@ const Page = () => {
       queryKey: ['getDoctor'],
       queryFn: () => Doctor.getDoctor()
     })
-    const profileData: DOCTOR_PROFILE = data?.data
+    const profileData = data?.data
     console.log(profileData)
 
     const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -40,7 +40,9 @@ const Page = () => {
                     <div className="flex items-center">
                       <Image src={resolveUrl(profileData?.profile?.profilePicture)} alt={profileData?.firstName} className="w-[50px] h-[50px] rounded-full" width={300} height={300} />
                       <div className='ml-2'>
-                          <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr {profileData?.firstName || "N/A"} {profileData?.lastName || "N/A"} </p>
+                          <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr {`${profileData?.firstName.charAt(0).toUpperCase() + profileData?.firstName.slice(1) || ""} ${
+                              profileData?.lastName.charAt(0).toUpperCase() + profileData?.lastName.slice(1) || ""
+                            }`.trim() || "N/A"} </p>
                           <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
                       </div>
                     </div>

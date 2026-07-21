@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
-import { FlexWrapper, PageWrapper } from '@/components/ui/Reusable'
-import useGetNotification from '@/hooks/useGetNotification'
+import { FlexWrapper, PageWrapper } from '@/lib/components/ui/Reusable'
+import useGetNotification from '@/lib/hooks/useGetNotification'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { Doctor } from '@/lib/constant/service'
@@ -12,7 +12,7 @@ import {
   CheckCircle2,
   AlertCircle,
 } from 'lucide-react'
-import useGetUnReadNotification from '@/hooks/useGetUnReadNotification'
+import useGetUnReadNotification from '@/lib/hooks/useGetUnReadNotification'
 
 type Notification = {
   id: string
@@ -153,7 +153,7 @@ const Page = () => {
                         {getRelativeTime(notification.createdAt)}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-500 mt-0.5 line-clamp-2">
+                    <p className="text-sm text-grey-20 mt-0.5 line-clamp-2">
                       {notification.body}
                     </p>
                   </div>

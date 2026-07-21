@@ -47,11 +47,31 @@ export interface Message {
     message: string
 }
 
-// enum CATEGTORY {
-//     ACCOUNT = 'ACCOUNT',
-//     APPOINTMENT = 'APPOINTMENT',
-//     BILLING = 'BILLING',
-//     TECHNICAL = 'TECHNICAL',
-//     MEDICAL = 'MEDICAL',
-//     OTHER = 'OTHER'
-// }
+export type SupportMessage = {
+  id: string
+  senderType: 'PATIENT' | 'DOCTOR' | 'HOSPITAL'
+  message: string
+  attachmentUrl: string | null
+  attachmentName: string | null
+  createdAt: string
+}
+
+export type SupportInternalNote = {
+  id: string
+  message: string
+  createdAt: string
+}
+
+export type SupportTicketDetail = {
+  id: string
+  ticketNumber: string
+  subject: string
+  category: string
+  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
+  status: 'OPEN' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED'
+  description: string
+  creatorType: string
+  createdAt: string
+  messages: SupportMessage[]
+  internalNotes: SupportInternalNote[]
+}

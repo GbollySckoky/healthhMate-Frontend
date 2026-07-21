@@ -1,10 +1,10 @@
-import { Card, CardText } from '@/components/ui/Reusable'
+import { Card, CardText } from '@/lib/components/ui/Reusable'
 import React, { useState } from 'react'
 import { CheckCheck } from 'lucide-react';
-import Input from '@/components/ui/Input';
+import Input from '@/lib/components/ui/Input';
 import { Send } from 'lucide-react';
-import Footer from '@/components/ui/Footer';
-import { useFormModal } from '@/components/modal/FormModal';
+import Footer from '@/lib/components/ui/Footer';
+import { useFormModal } from '@/lib/components/modal/FormModal';
 
 const Coversation = () => {
     const [inputValue, setInputValue] = useState("")

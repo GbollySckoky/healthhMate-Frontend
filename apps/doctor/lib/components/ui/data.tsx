@@ -1,4 +1,4 @@
-import { House, Wallet, CalendarDays, MessageSquareMore, User, Headset, Settings,CircleUserRound, Clock9 } from 'lucide-react';
+import { House, Wallet, CalendarDays, MessageSquareMore, User, Headset, Settings,CircleUserRound, Clock9, Bell } from 'lucide-react';
 import { ROUTES } from '@/lib/routes';
 import image from '@/assets/Image.png'
 import image1 from '@/assets/Image (1).png'
@@ -42,7 +42,7 @@ export const sideBarData = [
     },
     {
         id: 17,
-        icon: <CircleUserRound size={18} />,
+        icon: <Bell size={18} />,
         text: 'Notifications',
         url: ROUTES.notifications
     },

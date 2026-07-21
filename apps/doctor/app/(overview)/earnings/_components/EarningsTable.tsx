@@ -6,18 +6,18 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-  } from "@/components/ui/table"
+  } from "@/lib/components/ui/table"
 import {Search } from 'lucide-react'
 import image from '@/assets/Image.png'
-import { TableTitle } from "@/components/ui/Reusable";
+import { TableTitle } from "@/lib/components/ui/Reusable";
 import { paidStatus } from "@/types/status";
-import Input from "@/components/ui/Input";
+import Input from "@/lib/components/ui/Input";
 // import { useQuery } from '@tanstack/react-query';
 // import { Doctor } from '@/lib/constant/service';
 import { useState } from "react";
 // import useToggle from "@/hooks/useToggle";
 import { useRouter } from 'next/navigation'
-import Paginate from '@/components/ui/Paginate'
+import Paginate from '@/lib/components/ui/Paginate'
 
   const invoices = [
     {

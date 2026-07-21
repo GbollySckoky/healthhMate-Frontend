@@ -1,16 +1,16 @@
 "use client"
 import React from 'react'
-import { Card, MediumText, MediumTitle, SmallText, SmallTitle, Text, Title, Value } from '@/components/ui/Reusable'
+import { Card, MediumText, MediumTitle, SmallText, SmallTitle, Text, Title, Value } from '@/lib/components/ui/Reusable'
 import {  CalendarDays } from 'lucide-react';
 import { ArrowDown, ArrowUp } from "lucide-react"
 import RecentActivities from './RecentActivities';
 import UpcomingAppointment from './UpcomingAppointments';
 import { RecentConsultation } from './RecentConsultation';
 import Earnings from './Earnings';
-import useGreeting from '@/hooks/useGreeting';
+import useGreeting from '@/lib/hooks/useGreeting';
 import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
-import { OverviewStatsSkeleton } from '@/components/ui/DashboardSkeleton';
+import { OverviewStatsSkeleton } from '@/lib/components/ui/DashboardSkeleton';
 
 
 const Overview = () => {

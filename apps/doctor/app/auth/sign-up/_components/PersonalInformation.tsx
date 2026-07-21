@@ -1,9 +1,9 @@
 "use client"
-import AuthInput from '@/components/ui/AuthInput'
+import AuthInput from '@/lib/components/ui/AuthInput'
 import { STEP } from '@/lib/step'
-import TextArea from '@/components/ui/TextArea'
+import TextArea from '@/lib/components/ui/TextArea'
 import { ArrowLeft } from 'lucide-react'
-import AuthNumber from '@/components/ui/AuthNumber'
+import AuthNumber from '@/lib/components/ui/AuthNumber'
 import { useDoctorForm } from '@/lib/context/DoctorFormContext'
 
 
