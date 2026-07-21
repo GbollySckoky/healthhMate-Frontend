@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
-import { recentActivities } from '@/components/ui/data'
-import TextArea from '@/components/ui/TextArea'
+import { recentActivities } from '@/lib/components/ui/data'
+import TextArea from '@/lib/components/ui/TextArea'
 
 
 const Prescription = () => {

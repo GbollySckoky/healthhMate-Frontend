@@ -1,5 +1,5 @@
 "use client"
-import VerifyInput from '@/components/ui/VerifyInput'
+import VerifyInput from '@/lib/components/ui/VerifyInput'
 import React, { useState } from 'react'
 import Link from 'next/link'
 

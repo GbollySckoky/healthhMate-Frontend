@@ -1,7 +1,7 @@
 "use client"
-import { PageWrapper,} from '@/components/ui/Reusable'
+import { PageWrapper,} from '@/lib/components/ui/Reusable'
 import React from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs"
 import Earnings from './_components/Earnings';
 import { TransactionsPage } from './_components/Transactions';
 

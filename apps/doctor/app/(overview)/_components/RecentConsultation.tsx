@@ -1,5 +1,5 @@
 "use client"
-import { Card, DisplayFlex } from "@/components/ui/Reusable"
+import { Card, DisplayFlex } from "@/lib/components/ui/Reusable"
 import {
     Table,
     TableBody,
@@ -7,16 +7,16 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-  } from "@/components/ui/table"
+  } from "@/lib/components/ui/table"
 import { ChevronRight } from "lucide-react"
 import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
 import Link from "next/link"
-import { Appointment } from "@/interface/doctor-apppointment.interface";
+import { Appointment } from "@/lib/interface/doctor-apppointment.interface";
 import { STATUS } from "@/types/status";
-import { RecentConsultationTableSkeleton } from "@/components/ui/DashboardSkeleton";
+import { RecentConsultationTableSkeleton } from "@/lib/components/ui/DashboardSkeleton";
 
   
   export function RecentConsultation() {

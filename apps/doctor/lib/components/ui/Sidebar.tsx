@@ -1,12 +1,12 @@
 'use client'
 import React, { useState } from 'react'
-import { sideBarData } from '@/components/ui/data'
+import { sideBarData } from '@/lib/components/ui/data'
 import Link from 'next/link'
 import image from '@/assets/Group 19156.png'
 import Image from 'next/image'
 import { LogOut } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import useGetMe from '@/hooks/useGetMe'
+import useGetMe from '@/lib/hooks/useGetMe'
 import MeSkeleton from './MeSkeleton'
 
 const SideBar = () => {

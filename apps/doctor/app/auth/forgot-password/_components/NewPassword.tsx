@@ -1,5 +1,5 @@
 "use client"
-import AuthPassword from '@/components/ui/AuthPassword'
+import AuthPassword from '@/lib/components/ui/AuthPassword'
 import React, { useState } from 'react'
 
 const NewPassword = ({handleNextStep}: {handleNextStep: () => void}) => {

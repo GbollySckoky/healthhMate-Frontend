@@ -1,4 +1,4 @@
-import {  FlexWrapper, PageWrapper, TableTitle } from '@/components/ui/Reusable'
+import {  FlexWrapper, PageWrapper, TableTitle } from '@/lib/components/ui/Reusable'
 import React from 'react'
 import ChangePassword from './_components/ChangePassword'
 

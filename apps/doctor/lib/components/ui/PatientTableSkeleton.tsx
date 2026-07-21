@@ -1,7 +1,7 @@
 // components/ui/PatientTableSkeleton.tsx
 
 import React from "react";
-import { TableCell, TableRow } from "@/components/ui/table";
+import { TableCell, TableRow } from "@/lib/components/ui/table";
 
 const PatientTableSkeleton = () => {
   return (

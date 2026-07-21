@@ -5,8 +5,8 @@ import {
     Eye,  EyeClosed  } from 'lucide-react';
 import { DisplayFlex, 
     // MediumText, MediumTitle, SmallestTexts 
-} from '@/components/ui/Reusable';
-import useToggle from '@/hooks/useToggle';
+} from '@/lib/components/ui/Reusable';
+import useToggle from '@/lib/hooks/useToggle';
 // import { useQuery } from '@tanstack/react-query';
 // import { Doctor } from '@/lib/constant/service';
 // import { EarningSummary } from '@/lib/interface/get-earnings-summary';

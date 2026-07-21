@@ -1,12 +1,12 @@
 "use client"
 import React from 'react'
-import Img from '@/components/ui/Image'
+import Img from '@/lib/components/ui/Image'
 import ForgotPassword from './_components/ForgotPassword'
-import useStep from '@/hooks/useStep'
+import useStep from '@/lib/hooks/useStep'
 import { STEP } from '@/lib/step'
 import VerifyCode from './_components/VerifyCode'
 import NewPassword from './_components/NewPassword'
-import Success from '@/components/ui/Success'
+import Success from '@/lib/components/ui/Success'
 import { ROUTES } from '@/lib/routes'
 import { useRouter } from 'next/navigation'
 

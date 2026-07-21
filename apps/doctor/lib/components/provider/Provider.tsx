@@ -1,7 +1,7 @@
 "use client"
 import React, { ReactNode } from 'react'
-import { ModalProvider } from "@/components/modal/Modal";
-import { ModalProviders } from "@/components/modal/FormModal";
+import { ModalProvider } from "@/lib/components/modal/Modal";
+import { ModalProviders } from "@/lib/components/modal/FormModal";
 import { QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
 const Provider = ({children}: {children: ReactNode}) => {

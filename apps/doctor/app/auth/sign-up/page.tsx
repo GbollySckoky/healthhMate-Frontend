@@ -1,10 +1,10 @@
 "use client"
 import CreateAccount from './_components/CreateAccount'
 import { STEP } from '@/lib/step'
-import useStep from '@/hooks/useStep'
+import useStep from '@/lib/hooks/useStep'
 import GetStarted from './_components/GetStarted'
 import Success from './_components/Success'
-import Img from '@/components/ui/Image'
+import Img from '@/lib/components/ui/Image'
 import PersonalInformation from './_components/PersonalInformation'
 import Consultation from './_components/Consultation'
 import Verification from './_components/Verification'
