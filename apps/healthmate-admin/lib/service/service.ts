@@ -4,7 +4,7 @@ import { DOCTOR_SIGNUP, Signup } from "../interface/signup-interface";
 import { ADMIN_ENDPOINTS } from "../constant/endpoints";
 import { BRANCH_INTERFACE, ASSIGN_BRANCH } from "../interface/branch.interface";
 import api from "./client-https";
-import { SUPPORT_TICKET } from "../interface/supportTicket";
+import { SUPPORT_TICKET, Message, ReplyToTicket  } from "../interface/supportTicket";
 
 
 export const Hospital_Admin = {
@@ -69,5 +69,34 @@ export const Hospital_Admin = {
     getMe: async() => {
         const response = await api.get(ADMIN_ENDPOINTS.GET_ME);
         return response.data
+    },
+    getNotification: async () => {
+        const response = await api.get(ADMIN_ENDPOINTS.GET_NOTIFICATIONS);
+        return response.data
+    },
+    markNotificationAsRead: async (id: string) => {
+        const response = await api.patch(`notifications/${id}/read`);
+        return response.data
+    },
+    unReadNotifications: async () => {
+        const response = await api.get(ADMIN_ENDPOINTS.UN_READ_NOTIFICATIONS);
+        return response.data
+    },
+    markAllNotificationAsRead: async () => {
+        return await api.patch(ADMIN_ENDPOINTS.READ_ALL_NOTIFICATIONS);
+    },
+    getSupportTicket: async() => {
+        const response = await api.get(ADMIN_ENDPOINTS.GET_SUPPORT);
+        return response.data
+    },
+    getSupportDetails: async(id: string) => {
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_SUPPORT_DETAILS}${id}`);
+        return response.data
+    },
+    replyToTicket: async (id: string, payload: ReplyToTicket) => {
+        return await api.post(`support/staff/${id}/replies`, payload)
+    },
+    addInternalNote: async (id: string, message: Message) => {
+        return await api.post(`support/staff/${id}/internal-notes`, message)
     },
 }

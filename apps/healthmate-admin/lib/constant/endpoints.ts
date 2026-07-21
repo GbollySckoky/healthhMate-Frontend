@@ -16,5 +16,10 @@ GET_DOCTOR_DETAILS: 'hospital/doctor/',
 GET_APPOINTMENT_DETAILS: 'appointment/hospital/',
 CREATE_SUPPORT_TICKET: 'support/hospital',
 GET_ME: 'hospital/me',
-GET_ALL_SUPPORT_PATIEINT: 'support/patient/mine'
+GET_ALL_SUPPORT_PATIEINT: 'support/patient/mine',
+GET_NOTIFICATIONS: 'notifications',
+UN_READ_NOTIFICATIONS: 'notifications/unread-count',
+READ_ALL_NOTIFICATIONS: 'notifications/read-all',
+GET_SUPPORT: 'support/hospital/mine',
+GET_SUPPORT_DETAILS: 'support/hospital/'
 }

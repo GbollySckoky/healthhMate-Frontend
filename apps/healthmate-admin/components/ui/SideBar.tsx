@@ -12,11 +12,8 @@ import MeSkeleton from './MeSkeleton'
 const SideBar = () => {
   const pathname = usePathname()
   const [activeUrl, setActiveUrl] = useState<string>(pathname || '')
-
   const handleActiveUrl = (url: string) => setActiveUrl(url)
-
   const {myData:data, isLoading} = useGetMe()
-  console.log('data!!!', data)
 
   return (
     <div className="bg-red-900 md:w-[260px] w-[64px] h-screen overflow-y-auto text-white z-30 fixed ">
@@ -28,7 +25,7 @@ const SideBar = () => {
         <div className="flex flex-col justify-between h-[75vh] mt-3">
           {/* First 7 links */}
           <div>
-            {sideBarData.slice(0, 7).map(({ id, icon, text, url }) => (
+            {sideBarData.slice(0, 9).map(({ id, icon, text, url }) => (
               <div key={id}>
                 <Link
                   href={url}
@@ -48,7 +45,7 @@ const SideBar = () => {
 
           {/* Last 2 links */}
           <div>
-            {sideBarData.slice(7, 9).map(({ id, icon, text, url }) => (
+            {sideBarData.slice(9, 10).map(({ id, icon, text, url }) => (
               <div key={id}>
                 <Link
                   href={url}

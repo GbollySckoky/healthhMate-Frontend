@@ -71,7 +71,7 @@ const SideBar = () => {
         ) : (
           <div className="flex items-center justify-center md:justify-between mt-4 p-2">
             <div>
-              <p className="font-sans font-semibold text-[14px] hidden md:block">{data?.profile.specialization ?? 'N/A'}</p>
+              <p className="font-sans font-semibold text-[14px] hidden md:block">{data?.profile?.specialization ?? 'N/A'}</p>
               <p className="font-inter text-[14px] font-normal hidden md:block">{data?.email ?? 'N/A'}</p>
             </div>
             <span className="cursor-pointer">
