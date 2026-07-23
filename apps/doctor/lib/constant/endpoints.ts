@@ -18,7 +18,7 @@ export const DOCTOR_ENDPOINTS = {
     GET_SUPPORT: 'support/doctor/mine',
     GET_SUPPORT_DETAILS: 'support/staff/',
     REPLY_TICKET: 'support/staff/',
-    GET_NOTIFICATIONS: 'notifications',
-    UN_READ_NOTIFICATIONS: 'notifications/unread-count',
-    READ_ALL_NOTIFICATIONS: 'notifications/read-all',
+    GET_NOTIFICATIONS: 'notifications/doctor',
+    UN_READ_NOTIFICATIONS: 'notifications/doctor/unread-count',
+    READ_ALL_NOTIFICATIONS: 'notifications/doctor/read-all',
 }

@@ -75,7 +75,7 @@ export const Hospital_Admin = {
         return response.data
     },
     markNotificationAsRead: async (id: string) => {
-        const response = await api.patch(`notifications/${id}/read`);
+        const response = await api.patch(`notifications/hospital/${id}/read`);
         return response.data
     },
     unReadNotifications: async () => {

@@ -36,7 +36,7 @@ const Appointment = ({
     <div>
       <Table>
         <TableHeader className="border-t border-borderColor text-grey-20">
-          <TableRow className="bg-[#FAFBFF] font-inter text-[14px] font-medium">
+          <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
             <TableHead>Patient</TableHead>
             <TableHead>Health Concern</TableHead>
             <TableHead>Consultation Type</TableHead>
