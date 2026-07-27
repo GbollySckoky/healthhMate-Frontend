@@ -75,7 +75,7 @@ export const Hospital_Admin = {
         return response.data
     },
     markNotificationAsRead: async (id: string) => {
-        const response = await api.patch(`notifications/${id}/read`);
+        const response = await api.patch(`notifications/hospital/${id}/read`);
         return response.data
     },
     unReadNotifications: async () => {
@@ -99,4 +99,8 @@ export const Hospital_Admin = {
     addInternalNote: async (id: string, message: Message) => {
         return await api.post(`support/staff/${id}/internal-notes`, message)
     },
+    getDoctorAvailability: async (id: string) => {
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_DOCTOR_AVAILABILITY}${id}`);
+        return response.data
+    }
 }

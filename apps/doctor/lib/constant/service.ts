@@ -89,7 +89,7 @@ export const Doctor = {
         return response.data
     },
     markNotificationAsRead: async (id: string) => {
-        const response = await api.patch(`notifications/${id}/read`);
+        const response = await api.patch(`notifications/doctor/${id}/read`);
         return response.data
     },
     unReadNotifications: async () => {
