@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Hospital_Admin } from '@/lib/service/service'
 import { useParams } from "next/navigation";
 import { DoctorHeaderSkeleton } from '@/components/ui/DoctorDetailsSkeleton'
+import Availability from './Availability'
 
 
 const Page = () => {
@@ -20,13 +21,15 @@ const Page = () => {
     const hospitalId = params?.slug; // Access the hospitalId from the URL parameters
     const { data, isLoading } = useQuery({
         queryKey: ['getAllDoctor', hospitalId],
-        queryFn: () => Hospital_Admin.getDoctorDetails(Number(hospitalId)),
+        queryFn: () => Hospital_Admin.getDoctorDetails(String(hospitalId)),
         enabled: !!hospitalId
     });
     console.log('DATA!!', data?.data)
     const doctorDetails = data?.data || {}
     console.log('DOCTOR DETAILS!!', doctorDetails)
     console.log("Appoint:", doctorDetails.appointments)
+    const capitalize = (value?: string) =>
+        value ? value.charAt(0).toUpperCase() + value.slice(1) : "";
   return (
     <PageWrapper >
         <FlexWrapper>
@@ -40,9 +43,7 @@ const Page = () => {
 
                     <div className="ml-2">
                         <p className="font-medium font-libre text-[14px] text-grey-800 mb-1">
-                        {`${doctorDetails?.firstName || ""} ${
-                            doctorDetails?.lastName || ""
-                        }`.trim() || "-"}
+                         {`${capitalize(doctorDetails?.firstName)} ${capitalize(doctorDetails?.lastName) || ""}`.trim() || "-"}
                         </p>
 
                         <p className="text-[12px] font-inter text-grey-20">
@@ -71,7 +72,12 @@ const Page = () => {
                             isLoading={isLoading}
                         />
                     </TabsContent>
-                    <TabsContent value="availabilty">  </TabsContent>
+                    <TabsContent value="availabilty"> 
+                        <Availability
+                            availability={doctorDetails?.availability || []}
+                            isLoading={isLoading} 
+                        /> 
+                    </TabsContent>
                     <TabsContent value="documents"> <Documents /> </TabsContent>
                 </Tabs>
             </div>

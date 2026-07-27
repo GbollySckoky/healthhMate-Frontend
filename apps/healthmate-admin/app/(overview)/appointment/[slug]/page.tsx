@@ -80,7 +80,7 @@ const Page = () => {
       <FlexWrapper>
         <div className="flex items-center justify-end mb-6">
           <button 
-            className="w-fit bg-red-900 rounded-lg text-white text-sm px-5 py-3"
+            className="w-fit bg-red-800 rounded-lg text-white text-sm px-5 py-3"
             onClick={() => {
               openModal(
                 <CreateSupport appointment={appointment} />, {

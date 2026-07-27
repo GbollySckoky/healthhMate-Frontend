@@ -14,6 +14,8 @@ const Overview = ({
     return <DoctorOverviewSkeleton />;
   }
 
+  const capitalize = (value?: string) =>  value ? value.charAt(0).toUpperCase() + value.slice(1) : "";
+
   return (
     <div>
       <div className="mt-5 border-b border-borderColor pb-4">
@@ -23,9 +25,7 @@ const Overview = ({
 
         <Infos
           label="Name:"
-          value={`${doctorDetails?.firstName || ""} ${
-            doctorDetails?.lastName || ""
-          }`.trim() || "-"}
+          value= {`${capitalize(doctorDetails?.firstName)} ${capitalize(doctorDetails?.lastName) || ""}`.trim() || "-"}
         />
         <Infos label="Email:" value={doctorDetails?.email || "-"} />
         <Infos label="Phone Number:" value={doctorDetails?.phoneNumber || "-"} />
@@ -36,7 +36,7 @@ const Overview = ({
           Personal Information
         </p>
 
-        <Infos label="Gender:" value={doctorDetails?.gender || "-"} />
+        <Infos label="Gender:" value={capitalize(doctorDetails?.gender) || "-"} />
         {/* <Infos label="Date of Birth:" value={doctorDetails?.dateOfBirth || "-"} /> */}
         {/* <Infos label="Branch:" value={doctorDetails?.branch?.branchName || "-"} /> */}
         <Infos
