@@ -1,0 +1,58 @@
+"use client"
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import Reminder from '@/features/home/_components/Reminder';
+import Streak from '@/features/home/_components/Streak';
+import Activities from '@/features/home/_components/Activities';
+import useGetMe from '@/hooks/useGetMe';
+import { Bell } from 'lucide-react';
+import { PageWrapper, Title } from '@/components/Reusable';
+import AppointmentCard from './_components/AppointmentCard';
+
+
+const HomePage = () => {
+  const router = useRouter();
+
+  // Dynamic greeting based on time of day
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good Morning';
+    if (hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+  };
+
+  const { patient } = useGetMe();
+
+  return (
+    <PageWrapper>
+      <section className="flex flex-row justify-between items-start border-b border-[#F2F2F2] pb-5 p-4">
+        <div>
+          <Title>{getGreeting()}, {patient?.firstName || ''} 👋</Title>
+          <p className="font-libre-regular font-normal text-xs text-[#717680] mt-0.5">
+            Let&apos;s take a step toward a healthier you today.
+          </p>
+        </div>
+        <div className="flex flex-row items-center gap-0.5">
+          <button
+            type="button"
+            className="p-2 rounded-lg hover:bg-gray-100"
+            onClick={() => router.push('/notifications')}
+            aria-label="View notifications"
+          >
+            <Bell size={26} color="#717680" />
+          </button>
+        </div>
+      </section>
+
+      <div>
+        <Activities />
+        <AppointmentCard />
+        <Streak />
+       
+        <Reminder />
+      </div>
+    </PageWrapper>
+  );
+};
+
+export default HomePage;
