@@ -19,8 +19,9 @@ import SearchInput from '@/components/SearchInput';
 import Link from 'next/link';
 // import { useRouter } from 'next/navigation';
 import useToggle from '@/hooks/useToggle';
+import defaultHospitalImage from '@/assets/Group 19153.png'
 
-const defaultHospitalImage = consultationData[0]?.image;
+// const defaultHospitalImage = consultationData[0]?.image;
 
 const getHospitalImageSource = (profile?: string | null) => {
   return profile || defaultHospitalImage;

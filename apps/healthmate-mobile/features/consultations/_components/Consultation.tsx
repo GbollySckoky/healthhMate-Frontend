@@ -10,6 +10,7 @@ import useToggle from '@/hooks/useToggle';
 import Link from 'next/link';
 import { ROUTES } from '@/constants/route';
 import HospitalCardSkeleton from '@/components/HospitalCardSkeleton';
+import defaultHospitalImage from '@/assets/Group 19153.png'
 
 type ConsultationProps = {
   data: GetHospitalsResponse | undefined;
@@ -19,7 +20,7 @@ type ConsultationProps = {
   searchQuery?: string;
 };
 
-const defaultHospitalImage = consultationData[0]?.image;
+// const defaultHospitalImage = consultationData[0]?.image;
 
 const getHospitalImageSource = (profile?: string | null) => {
   return profile || defaultHospitalImage;
