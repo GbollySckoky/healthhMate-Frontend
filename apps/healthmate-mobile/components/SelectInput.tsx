@@ -12,7 +12,7 @@ tokens if these guesses are off):
 
 interface SearchInputProps {
   value: string;
-  onChange: (value: string) => void;
+  onChangeText: (value: string) => void;
   placeholder: string;
   onSearchPress?: () => void;
   editable?: boolean;
@@ -22,7 +22,7 @@ interface SearchInputProps {
 
 const SearchInput = ({
   value,
-  onChange,
+  onChangeText,
   placeholder,
   onSearchPress,
   editable = true,
@@ -45,7 +45,7 @@ const SearchInput = ({
     if (clearButtonMode === "never" || !value) return false;
     if (clearButtonMode === "while-editing") return isFocused;
     if (clearButtonMode === "unless-editing") return !isFocused;
-    return true;
+    return true; // 'always'
   })();
 
   return (
@@ -54,7 +54,7 @@ const SearchInput = ({
         <input
           type="text"
           className="w-full h-11 py-2.5 pl-[35px] pr-9 border border-[#D6D7DA] rounded-lg font-inter text-sm font-normal bg-white text-black placeholder:text-black focus:outline-none focus:border-[#DD2590] disabled:opacity-60 disabled:cursor-not-allowed"
-          onChange={(event) => onChange(event.target.value)}
+          onChange={(e) => onChangeText(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onKeyDown={handleKeyDown}
@@ -80,7 +80,7 @@ const SearchInput = ({
         {showClearButton && (
           <button
             type="button"
-            // onClick={() => onChange("")}
+            onClick={() => onChangeText("")}
             aria-label="Clear search"
             className="absolute right-2 top-1/2 -translate-y-1/2 p-1 z-[1]"
           >
