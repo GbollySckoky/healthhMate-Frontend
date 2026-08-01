@@ -1,5 +1,6 @@
 "use client"
 import React, { ReactNode } from "react";
+import { Plus } from 'lucide-react';
 
 /**
  * PatientUIComponents
@@ -133,6 +134,29 @@ export const LatoText = ({ children }: { children: ReactNode }) => (
   </span>
 );
 
+
+export const Button = ({
+  children,
+  _fn,
+}: {
+  children: ReactNode;
+  _fn: () => void;
+}) => (
+  <div className="fixed inset-0 pointer-events-none">
+    <button
+      onClick={_fn}
+      className="
+        absolute bottom-6 right-5 w-[200px]
+        bg-[#DD2590] py-[15px] rounded-[10px]
+        flex items-center justify-center
+        pointer-events-auto
+      "
+    >
+      <Plus size={20} color="white" className="mr-[5px]" />
+      <span className="text-white font-semibold text-sm">{children}</span>
+    </button>
+  </div>
+);
 /* ---------------------------------- Buttons ---------------------------------- */
 
 interface ButtonRowGroupProps {

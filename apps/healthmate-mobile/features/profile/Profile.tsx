@@ -1,0 +1,210 @@
+// app/(routes)/profile.tsx
+import { Card, LatoText, SubTitle, Wrapper } from '@/components/typography/Typography';
+import { colors } from '@/lib/colors';
+import { Image } from 'expo-image';
+import React from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { router } from 'expo-router';
+import useDisplay from '@/lib/hooks/useDisplay';
+import LogoutModal from '@/components/modal/LogoutModal';
+import { ROUTES } from '@/lib/routes';
+import { otherMenuItems } from '@/lib/data';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import AccountInfo from '@/components/AccountInfo';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+import Fontisto from '@expo/vector-icons/Fontisto';
+import Feather from '@expo/vector-icons/Feather';
+import Entypo from '@expo/vector-icons/Entypo';
+import ProfileSkeleton from '@/lib/components/ProfileSkeleton';
+import useGetMe from '@/lib/hooks/useGetMe';
+
+function getAge(dateOfBirth?: string) {
+  if (!dateOfBirth) return null;
+  const dob = new Date(dateOfBirth);
+  if (isNaN(dob.getTime())) return null;
+  const diff = Date.now() - dob.getTime();
+  return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+}
+
+const Profile = () => {
+  const profileImage = require('@/assets/images/Ellipse 165.png');
+
+  const navigate = () => router.push(ROUTES.editProfileName);
+  const handleMenuNavigation = (route: string) => router.push(route as any);
+
+  const { openModal, handleDisplay } = useDisplay();
+
+  const {patient, isLoading, isError, error} = useGetMe()
+  console.log('Pia', patient)
+  if (isLoading) {
+    return (
+      <View style={{ padding: 20 }}>
+        <ProfileSkeleton />
+      </View>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Text className="h-full flex items-center justify-center text-sm text-red-500">
+        {(error as Error).message}
+      </Text>
+    );
+  }
+
+  const age = getAge(patient.dateOfBirth);
+
+  return (
+    <Wrapper>
+      <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ position: 'relative' }}>
+          <Image
+            source={patient.profilePicture ? { uri: patient.profilePicture } : profileImage}
+            alt="profileimage"
+            style={{ width: 100, height: 100, borderRadius: 100, marginBottom: 5 }}
+          />
+          <Pressable
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 70,
+              backgroundColor: 'white',
+              borderRadius: 20,
+              padding: 5,
+            }}
+            onPress={navigate}
+          >
+            <MaterialIcons name="mode-edit" size={20} color="black" />
+          </Pressable>
+        </View>
+        <SubTitle>
+          {patient.firstName || '-'} {patient.lastName}
+        </SubTitle>
+        {age !== null && (
+          <Text
+            style={{
+              color: colors.purple,
+              fontWeight: '400',
+              fontSize: 12,
+              marginTop: 5,
+              fontFamily: 'LibreFranklin_400Regular',
+            }}
+          >
+            {age} years
+          </Text>
+        )}
+      </View>
+
+      {/* Account Info */}
+      <View>
+        <LatoText>Account Information</LatoText>
+        <Card>
+          <AccountInfo
+            icon={<EvilIcons name="user" size={24} color={colors.lightRed} />}
+            title="Name"
+            value={patient.firstName}
+            subValue={patient.lastName}
+            next={<Entypo name="chevron-small-right" size={24} color={colors.lightBlack} />}
+          />
+          <AccountInfo
+            icon={<Fontisto name="email" size={20} color={colors.lightRed} />}
+            title="Email"
+            value={patient.email}
+          />
+          <AccountInfo
+            icon={<Feather name="phone" size={20} color={colors.lightRed} />}
+            title="Phone Number"
+            value={patient?.profile.phoneNumber}
+          />
+          <AccountInfo
+            icon={<Feather name="calendar" size={20} color={colors.lightRed} />}
+            title="Date of birth"
+            value={patient?.profile.dateOfBirth}
+          />
+          <AccountInfo
+            icon={<Feather name="calendar" size={20} color={colors.lightRed} />}
+            title="Gender"
+            value={patient?.profile.gender.charAt(0).toUpperCase() + patient?.profile.gender.slice(1).toLowerCase()}
+          />
+          <AccountInfo
+            icon={<Feather name="calendar" size={20} color={colors.lightRed} />}
+            title="Allergies"
+            value={patient?.profile.allergies}
+          />
+        </Card>
+      </View>
+
+      {/* Other */}
+      <View>
+        <LatoText>Other</LatoText>
+        <Card>
+          {otherMenuItems.map((item, index) => {
+            const { title, id, icon, route } = item;
+            const isLastItem = index === otherMenuItems.length - 1;
+            return (
+              <View key={id} style={[styles.container, isLastItem && styles.lastItem]}>
+                <Pressable onPress={() => handleMenuNavigation(route)}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text>{icon}</Text>
+                    <View style={{ marginLeft: 10 }}>
+                      <Text
+                        style={{
+                          fontFamily: 'Lato_700Bold',
+                          fontWeight: '600',
+                          color: colors.lightBlack,
+                        }}
+                      >
+                        {title}
+                      </Text>
+                    </View>
+                  </View>
+                </Pressable>
+              </View>
+            );
+          })}
+        </Card>
+      </View>
+
+      {/* Log out */}
+      <Pressable style={styles.settingsContainer} onPressIn={handleDisplay}>
+        <MaterialIcons name="logout" size={17} color={colors.lightRed} />
+        <Text style={styles.settingsText}>Log out</Text>
+      </Pressable>
+      <LogoutModal
+        icon={<Ionicons name="alert-circle-outline" size={24} color="#D92D20" />}
+        title="Are you sure you want to log out?"
+        text="You'll need to sign in again to access your health dashboard."
+        closeModal={handleDisplay}
+        isOpen={openModal}
+      />
+    </Wrapper>
+  );
+};
+
+export default Profile;
+
+const styles = StyleSheet.create({
+  lastItem: { borderBottomWidth: 0 },
+  container: {
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.lightGray,
+    paddingBottom: 20,
+  },
+  settingsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    borderWidth: 1,
+    borderColor: colors.lightGray,
+    borderRadius: 10,
+    marginVertical: 20,
+  },
+  settingsText: {
+    marginLeft: 10,
+    fontFamily: 'Lato_700Bold',
+    fontWeight: '600',
+    color: colors.lightRed,
+  },
+});

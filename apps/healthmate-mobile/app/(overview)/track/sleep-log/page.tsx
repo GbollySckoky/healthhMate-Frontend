@@ -1,0 +1,1 @@
+export { default } from '@/features/track/sleep-log/page';

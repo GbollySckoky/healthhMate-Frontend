@@ -69,7 +69,7 @@ const AllApointments = () => {
       <SearchInput
         placeholder="Search for a doctor"
         value={searchInput}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+        onChange={setSearchInput}
       />
       <div className="mb-[30px]">
         {isLoading && (

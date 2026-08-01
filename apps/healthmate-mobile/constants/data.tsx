@@ -1,9 +1,11 @@
 import { colors } from './colors';
 import image  from'@/assets/Mobile.png';
-import { Moon, Eye, EyeOff, CalendarDays, Settings, Phone, Bell, Mail,
-     UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain } 
+import { Moon, Eye, EyeOff, CalendarDays, Settings, Phone, Bell, Mail, Scale,
+     UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain, Heart, Smile,  } 
 from 'lucide-react';
 import { ROUTES } from './route';
+// import { Moon, , Pill } from "lucide-react";
+
 
 export const allAppointmentData = [
   {
@@ -632,5 +634,49 @@ export const otherMenuItems = [
       />
     ),
     route: ROUTES.settings, // Changed to a more appropriate route
+  },
+];
+
+
+export const healthOverviews = [
+  {
+    title: 'Blood Pressure',
+    value: '120/80 mmHg',
+    text: 'Blood Pressure',
+    id: 1,
+    icon: <Heart size={18} color="#DF0000" />,
+    url: ROUTES.bloodPressure,
+  },
+  {
+    title: 'Mood',
+    value: 'Happy',
+    text: 'Feeling Great',
+    id: 2,
+    icon: <Smile size={18} color="#FFC847" />,
+    url: ROUTES.mood,
+  },
+  {
+    title: 'Sleep',
+    value: '7h 30 mins',
+    text: 'Quality: Good',
+    id: 3,
+    icon: <Moon size={18} color="black" />,
+    url: ROUTES.sleep,
+  },
+  {
+    title: 'Weight',
+    value: '765kg',
+    text: 'Healthy range',
+    id: 4,
+    icon: <Scale size={18} color="blue" />,
+    url: ROUTES.weight,
+  },
+  {
+    title: 'Medications',
+    value: '2/3 doses',
+    text: 'Taken today',
+    id: 5,
+    icon: <Pill size={18} color="#C11574" />,
+    url: ROUTES.medication
   },
 ];
