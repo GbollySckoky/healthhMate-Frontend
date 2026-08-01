@@ -6,9 +6,7 @@ import { topRatedData } from '@/constants/data';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
-
-const profileFallback = '/assets/images/ellipse-165.png';
+import profileFallback from '@/assets/Group 19153.png'
 
 const TopRated = () => {
   const router = useRouter();
@@ -59,7 +57,7 @@ const TopRated = () => {
                 </span>
                 <button
                   onClick={() =>
-                    router.push(`/consult-screen/consultation-details/${id}`)
+                    router.push(`/consultation/consultation-details/${id}`)
                   }
                   className="py-2 px-4 bg-[color:var(--light-red,#ff4d4f)] rounded-lg"
                 >
