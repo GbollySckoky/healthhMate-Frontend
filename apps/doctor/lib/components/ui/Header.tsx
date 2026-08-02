@@ -38,7 +38,7 @@ const Header = () => {
     const Title = getTitle(pathname)
 
   return (
-    <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-8 ml-[50px] md:ml-[250px]'>
+        <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-8 ml-[50px] md:ml-[250px]'>
         <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-3">
                 {isDetailPage && (
