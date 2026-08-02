@@ -8,9 +8,11 @@ export default {
   //   // Add any other paths where you use Tailwind classes
   //   // './src/**/*.{ts,tsx}',
   // ],
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+   darkMode: ['class'],
+   content: [
+    '../doctor/app/**/*.{ts,tsx}',
+    '../doctor/components/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
@@ -45,6 +47,21 @@ export default {
           20:  'var(--grey-20)',
           10:  'var(--grey-10)',
         },
+        gray:{
+          900: 'var(--gray-900)',
+          800: 'var(--gray-800)',
+          700: 'var(--gray-700)',
+          600: 'var(--gray-600)',
+          500: 'var(--gray-500)',
+          400: 'var(--gray-400)',
+          300: 'var(--gray-300)',
+          200: 'var(--gray-200)',
+          100: 'var(--gray-100)',
+          50:  'var(--gray-50)',
+          30:  'var(--gray-30)',
+          20:  'var(--gray-20)',
+          10:  'var(--gray-10)',
+        },
         blue:{
           900: 'var(--blue-900)',
           200: 'var(--blue-200)',
@@ -61,6 +78,7 @@ export default {
         },
         pink:{
         600: 'var(--pink-600)',
+        500: 'var(--pink-500)'
         },
         lightGray: '#d1d5db', // Define your custom color
         black: 'var(--black)',
