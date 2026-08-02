@@ -17,8 +17,8 @@ const SideBar = () => {
   const {myData:data, isLoading} = useGetMe()
 
   return (
-    <div className="bg-red-900 md:w-[260px] w-20 h-screen overflow-y-auto text-white z-30 fixed ">
-      <div className="mx-2">
+      //  <div className="bg-red-900 w-20 md:w-[560px] h-screen overflow-y-auto text-white">
+      <div className="mx-2 bg-red-900 sm:w-20 md:w-[260px]">
         <div className="flex items-center mt-3 pl-3">
           <Image src={image} alt="Logo" width={120}  priority />
         </div>
@@ -45,7 +45,7 @@ const SideBar = () => {
           </div>
 
           {/* Last 2 links */}
-          <div>
+          <div className='mt-10'>
             {sideBarData.slice(8, 10).map(({ id, icon, text, url }) => (
               <div key={id}>
                 <Link
@@ -69,7 +69,7 @@ const SideBar = () => {
         {isLoading ? (
           <MeSkeleton />
         ) : (
-          <div className="flex items-center justify-center md:justify-between mt-4 p-2">
+          <div className="flex items-center justify-center md:justify-between mt-4 p-2 text-white">
             <div>
               <p className="font-sans font-semibold text-[14px] hidden md:block">{data?.profile?.specialization ?? 'N/A'}</p>
               <p className="font-inter text-[14px] font-normal hidden md:block">{data?.email ?? 'N/A'}</p>
@@ -80,7 +80,7 @@ const SideBar = () => {
           </div>
         )}
       </div>
-    </div>
+    // </div>
   )
 }
 

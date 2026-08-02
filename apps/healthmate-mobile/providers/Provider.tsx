@@ -3,6 +3,7 @@
 import { ModalProvider } from "@/store/Modal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+import { ToastContainer } from 'react-toastify'
 
 export default function Providers({
   children,
@@ -15,6 +16,7 @@ export default function Providers({
     <QueryClientProvider client={queryClient}>
       <ModalProvider>
          {children}
+        <ToastContainer />
       </ModalProvider>
     </QueryClientProvider>
   );
