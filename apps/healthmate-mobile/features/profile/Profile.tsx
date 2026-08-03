@@ -1,23 +1,23 @@
-// app/(routes)/profile.tsx
-import { Card, LatoText, SubTitle, Wrapper } from '@/components/typography/Typography';
-import { colors } from '@/lib/colors';
-import { Image } from 'expo-image';
-import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { router } from 'expo-router';
-import useDisplay from '@/lib/hooks/useDisplay';
-import LogoutModal from '@/components/modal/LogoutModal';
-import { ROUTES } from '@/lib/routes';
-import { otherMenuItems } from '@/lib/data';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import AccountInfo from '@/components/AccountInfo';
-import EvilIcons from '@expo/vector-icons/EvilIcons';
-import Fontisto from '@expo/vector-icons/Fontisto';
-import Feather from '@expo/vector-icons/Feather';
-import Entypo from '@expo/vector-icons/Entypo';
-import ProfileSkeleton from '@/lib/components/ProfileSkeleton';
-import useGetMe from '@/lib/hooks/useGetMe';
+"use client";
+
+import React, { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Pencil, User, Mail, Phone, Calendar, ChevronRight, LogOut, AlertCircle, Transgender, BeanOff } from "lucide-react";
+import { ROUTES } from "@/constants/route";
+import { otherMenuItems } from "@/constants/data";
+import useGetMe from "@/hooks/useGetMe";
+import { useAuth } from "@/hooks/useAuthWeb";
+import { colors } from "@/constants/colors";
+// import { useAuth } from "@/hooks/useAuth";
+
+// Swap these for your real design-token values if they differ from colors.ts
+const COLORS = {
+  purple: "#C11574",
+  lightRed: "#DF0000",
+  lightBlack: "#414651",
+  lightGray: "#E5E7EB",
+};
 
 function getAge(dateOfBirth?: string) {
   if (!dateOfBirth) return null;
@@ -27,184 +27,275 @@ function getAge(dateOfBirth?: string) {
   return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
 }
 
+const capitalize = (value?: string) =>
+  value ? value.charAt(0).toUpperCase() + value.slice(1).toLowerCase() : "-";
+
+/* ---------- Skeleton ---------- */
+
+const SkeletonBlock = ({
+  width,
+  height,
+  rounded = "rounded-md",
+  className = "",
+}: {
+  width: number | `${number}%`;
+  height: number;
+  rounded?: string;
+  className?: string;
+}) => (
+  <div
+    className={`bg-gray-200 animate-pulse ${rounded} ${className}`}
+    style={{ width: typeof width === "number" ? `${width}px` : width, height: `${height}px` }}
+  />
+);
+
+const ProfileSkeleton = () => (
+  <div className="p-5">
+    <div className="flex flex-col items-center">
+      <SkeletonBlock width={100} height={100} rounded="rounded-full" className="mb-3" />
+      <SkeletonBlock width={140} height={18} className="mb-2" />
+      <SkeletonBlock width={60} height={12} />
+    </div>
+    <div className="mt-8 space-y-3">
+      {[1, 2, 3, 4, 5, 6].map((key) => (
+        <SkeletonBlock key={key} width="100%" height={40} />
+      ))}
+    </div>
+  </div>
+);
+
+/* ---------- Account info row ---------- */
+
+const AccountInfoRow = ({
+  icon,
+  title,
+  value,
+  subValue,
+  next,
+  isLast,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  value?: string | null;
+  subValue?: string | null;
+  next?: React.ReactNode;
+  isLast?: boolean;
+}) => (
+  <div
+    className={`flex flex-row items-center justify-between py-3.5 ${
+      isLast ? "" : "border-b border-[#F1F1F1]"
+    }`}
+  >
+    <div className="flex flex-row items-center gap-3">
+      <span className="shrink-0">{icon}</span>
+      <div className="flex flex-col">
+        <span className="text-sm font-normal" style={{ color: colors.lightBlack }}>
+          {title}
+        </span>
+        <span className="text-xs mt-1 font-normal text-[#717680]">
+          {value || "-"} {subValue ? subValue : ""}
+        </span>
+      </div>
+    </div>
+    {next}
+  </div>
+);
+
+const LogoutModal = ({
+  icon,
+  title,
+  text,
+  isOpen,
+  closeModal,
+  onConfirm,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+  isOpen: boolean;
+  closeModal: () => void;
+  onConfirm: () => void;
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+      <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center">
+        <div className="flex justify-center mb-3 ">{icon}</div>
+        <p className="text-base font-semibold text-[#181D27] mb-1.5">{title}</p>
+        <p className="text-sm text-[#717680] mb-6">{text}</p>
+        <div className="flex flex-row gap-3">
+          <button
+            type="button"
+            onClick={closeModal}
+            className="flex-1 py-2.5 rounded-lg border border-[#D6D7DA] text-sm font-semibold text-[#252B37]"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={onConfirm}
+            className="flex-1 py-2.5 rounded-lg bg-[#D92D20] text-sm font-semibold text-white"
+          >
+            Log out
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Profile = () => {
-  const profileImage = require('@/assets/images/Ellipse 165.png');
+  const router = useRouter();
+  const { patient, isLoading, isError, error } = useGetMe();
+  const { logout } = useAuth();
+  const [openModal, setOpenModal] = useState(false);
 
+  const handleDisplay = () => setOpenModal((v) => !v);
   const navigate = () => router.push(ROUTES.editProfileName);
-  const handleMenuNavigation = (route: string) => router.push(route as any);
+  const handleMenuNavigation = (route: string) => router.push(route);
+  const handleConfirmLogout = () => {
+    setOpenModal(false);
+    logout();
+  };
 
-  const { openModal, handleDisplay } = useDisplay();
-
-  const {patient, isLoading, isError, error} = useGetMe()
-  console.log('Pia', patient)
   if (isLoading) {
-    return (
-      <View style={{ padding: 20 }}>
-        <ProfileSkeleton />
-      </View>
-    );
+    return <ProfileSkeleton />;
   }
 
   if (isError) {
+    const errorMessage = error instanceof Error ? error.message : "Something went wrong";
     return (
-      <Text className="h-full flex items-center justify-center text-sm text-red-500">
-        {(error as Error).message}
-      </Text>
+      <div className="h-full flex items-center justify-center">
+        <span className="text-sm text-gray-500">{errorMessage}</span>
+      </div>
+    );
+  }
+
+  if (!patient) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <span className="text-sm text-[#717680]">No profile data found.</span>
+      </div>
     );
   }
 
   const age = getAge(patient.dateOfBirth);
 
   return (
-    <Wrapper>
-      <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{ position: 'relative' }}>
+    <div className="max-w-md mx-auto px-4 py-5">
+      <div className="flex flex-col items-center justify-center">
+        <div className="relative">
           <Image
-            source={patient.profilePicture ? { uri: patient.profilePicture } : profileImage}
-            alt="profileimage"
-            style={{ width: 100, height: 100, borderRadius: 100, marginBottom: 5 }}
+            src={patient.profilePicture || "/images/profile-placeholder.png"}
+            alt="Profile"
+            width={100}
+            height={100}
+            className="w-[100px] h-[100px] rounded-full object-cover mb-1.5 border border-[#D6D7DA]"
           />
-          <Pressable
-            style={{
-              position: 'absolute',
-              right: 0,
-              top: 70,
-              backgroundColor: 'white',
-              borderRadius: 20,
-              padding: 5,
-            }}
-            onPress={navigate}
+          <button
+            type="button"
+            onClick={navigate}
+            aria-label="Edit profile picture"
+            className="absolute right-0 bottom-0 bg-white rounded-full p-1.5 shadow"
           >
-            <MaterialIcons name="mode-edit" size={20} color="black" />
-          </Pressable>
-        </View>
-        <SubTitle>
-          {patient.firstName || '-'} {patient.lastName}
-        </SubTitle>
+            <Pencil size={18} color="black" />
+          </button>
+        </div>
+        <span className="text-sm font-libre font-semibold text-[#414651] mt-2">
+          {patient.firstName || "-"} {patient.lastName || "-"}
+        </span>
         {age !== null && (
-          <Text
-            style={{
-              color: colors.purple,
-              fontWeight: '400',
-              fontSize: 12,
-              marginTop: 5,
-              fontFamily: 'LibreFranklin_400Regular',
-            }}
-          >
+          <span className="text-xs font-normal mt-1" style={{ color: colors.purple }}>
             {age} years
-          </Text>
+          </span>
         )}
-      </View>
+      </div>
 
       {/* Account Info */}
-      <View>
-        <LatoText>Account Information</LatoText>
-        <Card>
-          <AccountInfo
-            icon={<EvilIcons name="user" size={24} color={colors.lightRed} />}
+      <div className="mt-8">
+        <span className="text-sm font-lato text-[#717680]">Account Information</span>
+        <div className="mt-2 rounded-2xl border border-[#F1F1F1] bg-white px-4">
+          <AccountInfoRow
+            icon={<User size={18} color={colors.lightRed} />}
             title="Name"
             value={patient.firstName}
             subValue={patient.lastName}
-            next={<Entypo name="chevron-small-right" size={24} color={colors.lightBlack} />}
+            next={<ChevronRight size={22} color="#A4A7AE" />}
           />
-          <AccountInfo
-            icon={<Fontisto name="email" size={20} color={colors.lightRed} />}
-            title="Email"
-            value={patient.email}
-          />
-          <AccountInfo
-            icon={<Feather name="phone" size={20} color={colors.lightRed} />}
+          <AccountInfoRow icon={<Mail size={18} color={colors.lightRed} />} title="Email" value={patient.email} />
+          <AccountInfoRow
+            icon={<Phone size={18} color={colors.lightRed} />}
             title="Phone Number"
-            value={patient?.profile.phoneNumber}
+            value={patient?.profile?.phoneNumber}
           />
-          <AccountInfo
-            icon={<Feather name="calendar" size={20} color={colors.lightRed} />}
+          <AccountInfoRow
+            icon={<Calendar size={18} color={colors.lightRed} />}
             title="Date of birth"
-            value={patient?.profile.dateOfBirth}
+            value={patient?.profile?.dateOfBirth}
           />
-          <AccountInfo
-            icon={<Feather name="calendar" size={20} color={colors.lightRed} />}
+          <AccountInfoRow
+            icon={<Transgender size={18} color={colors.lightRed}/>}
             title="Gender"
-            value={patient?.profile.gender.charAt(0).toUpperCase() + patient?.profile.gender.slice(1).toLowerCase()}
+            value={capitalize(patient?.profile?.gender)}
           />
-          <AccountInfo
-            icon={<Feather name="calendar" size={20} color={colors.lightRed} />}
+          <AccountInfoRow
+            icon={<BeanOff size={18} color={colors.lightRed} />}
             title="Allergies"
-            value={patient?.profile.allergies}
+            value={patient?.profile?.allergies}
+            isLast
           />
-        </Card>
-      </View>
+        </div>
+      </div>
 
       {/* Other */}
-      <View>
-        <LatoText>Other</LatoText>
-        <Card>
+      <div className="mt-8">
+        <span className="text-sm font-lato text-[#717680]">Other</span>
+        <div className="mt-2 rounded-2xl border border-[#F1F1F1] bg-white px-4">
           {otherMenuItems.map((item, index) => {
             const { title, id, icon, route } = item;
             const isLastItem = index === otherMenuItems.length - 1;
             return (
-              <View key={id} style={[styles.container, isLastItem && styles.lastItem]}>
-                <Pressable onPress={() => handleMenuNavigation(route)}>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text>{icon}</Text>
-                    <View style={{ marginLeft: 10 }}>
-                      <Text
-                        style={{
-                          fontFamily: 'Lato_700Bold',
-                          fontWeight: '600',
-                          color: colors.lightBlack,
-                        }}
-                      >
-                        {title}
-                      </Text>
-                    </View>
-                  </View>
-                </Pressable>
-              </View>
+              <button
+                type="button"
+                key={id}
+                onClick={() => handleMenuNavigation(route)}
+                className={`w-full text-left flex flex-row items-center py-3.5 ${
+                  isLastItem ? "" : "border-b border-[#F1F1F1]"
+                }`}
+              >
+                <span className="shrink-0">{icon}</span>
+                <span className="ml-2.5 text-sm font-lato text-[#252B37]">
+                  {title}
+                </span>
+              </button>
             );
           })}
-        </Card>
-      </View>
+        </div>
+      </div>
 
       {/* Log out */}
-      <Pressable style={styles.settingsContainer} onPressIn={handleDisplay}>
-        <MaterialIcons name="logout" size={17} color={colors.lightRed} />
-        <Text style={styles.settingsText}>Log out</Text>
-      </Pressable>
+      <button
+        type="button"
+        onClick={handleDisplay}
+        className="w-full flex flex-row items-center p-[15px] border border-[#E5E7EB] rounded-lg my-5"
+      >
+        <LogOut size={17} color={COLORS.lightRed} />
+        <span className="ml-2.5 text-sm font-bold" style={{ color: COLORS.lightRed }}>
+          Log out
+        </span>
+      </button>
+
       <LogoutModal
-        icon={<Ionicons name="alert-circle-outline" size={24} color="#D92D20" />}
+        icon={<AlertCircle size={24} color="#D92D20" />}
         title="Are you sure you want to log out?"
         text="You'll need to sign in again to access your health dashboard."
         closeModal={handleDisplay}
         isOpen={openModal}
+        onConfirm={handleConfirmLogout}
       />
-    </Wrapper>
+    </div>
   );
 };
 
 export default Profile;
-
-const styles = StyleSheet.create({
-  lastItem: { borderBottomWidth: 0 },
-  container: {
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.lightGray,
-    paddingBottom: 20,
-  },
-  settingsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    borderWidth: 1,
-    borderColor: colors.lightGray,
-    borderRadius: 10,
-    marginVertical: 20,
-  },
-  settingsText: {
-    marginLeft: 10,
-    fontFamily: 'Lato_700Bold',
-    fontWeight: '600',
-    color: colors.lightRed,
-  },
-});

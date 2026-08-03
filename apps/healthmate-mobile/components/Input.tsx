@@ -14,16 +14,16 @@ const Input = ({
   placeholder,
 }: NumberInputType) => {
   return (
-    <div className="py-[7px]">
-      <p className="font-medium text-sm pb-1.5 text-[#414651]">{label}</p>
+    <div className="py-[2px]">
+      <p className="font-normal text-sm pb-1.5 text-[#414651]">{label}</p>
       <input
-        type="number"
-        inputMode="numeric"
+        type="text"
+        // inputMode="numeric"
         className="
-          w-full p-[10px] border border-[#D6D7DA] rounded-[5px]
+          w-full p-[10px] border border-[#D6D7DA] rounded-md
           text-sm font-normal
           placeholder:text-black
-          focus:outline-none focus:ring-1 focus:ring-[#D6D7DA]
+          focus:outline-none
         "
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onChangeText(e.target.value)

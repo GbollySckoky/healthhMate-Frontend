@@ -11,7 +11,7 @@ import useDate from "@/hooks/useDate";
 
 type Doctor = { firstName?: string; lastName?: string };
 
-const getDoctorName = (doctor?: Doctor) => {
+const getDoctorName = (doctor?: Doctor | null) => {
   if (!doctor) return "Doctor unavailable";
   const fullName = [CapitalizeName(doctor.firstName ?? ""), CapitalizeName(doctor.lastName ?? "")]
     .filter(Boolean)
@@ -19,7 +19,7 @@ const getDoctorName = (doctor?: Doctor) => {
   return fullName ? `Dr. ${fullName}` : "Doctor unavailable";
 };
 
-const getDoctorInitials = (doctor?: Doctor) => {
+const getDoctorInitials = (doctor?: Doctor | null) => {
   if (!doctor) return "?";
   const initials = [doctor.firstName?.[0], doctor.lastName?.[0]].filter(Boolean).join("");
   return initials ? initials.toUpperCase() : "?";

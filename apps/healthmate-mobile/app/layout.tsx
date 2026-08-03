@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "../providers/Provider";
 import Footer from "@/constants/Footer";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Healthmate Mobile App",
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en" >
       <body className="" suppressHydrationWarning>
       <Providers>
+        <Header />
         {children}
         <Footer />
       </Providers>

@@ -11,15 +11,15 @@ import image from '@/assets/Image.png'
 import Image from "next/image";
 import { MinTexts } from "@/components/ui/Reusable";
 import {  activeStatus } from "@/types/status";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+// import {
+//   Pagination,
+//   PaginationContent,
+//   PaginationEllipsis,
+//   PaginationItem,
+//   PaginationLink,
+//   PaginationNext,
+//   PaginationPrevious,
+// } from "@/components/ui/pagination";
 import { Trash2, Pencil } from 'lucide-react';
 import DeleteModal from "@/app/(overview)/settings/_components/DeleteModal";
 import Paginate from "@/components/ui/paginate";
@@ -118,7 +118,7 @@ const DoctorTable = () => {
                                 'Delete Doctor James?',
                               className: 'max-w-lg',
                               onClose: () => {},
-                              confirmDelete() {},
+                              // confirmDelete() {},
                             })
                           }> <Trash2 color="#F04438" size={15}/></span>
                          <span className="ml-3"> <Pencil size={15} /></span>

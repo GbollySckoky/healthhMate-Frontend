@@ -116,18 +116,18 @@ const Consultation = ({
                       <p className="text-xs text-[#717680] pt-[3px]">
                         {email || 'Email unavailable'}
                       </p>
-                      <p className="text-xs text-[color:var(--light-red,#ff4d4f)] leading-5 mb-3 pt-[3px]">
+                      <p className="text-xs text-pink-600 leading-5 mb-3 pt-[3px]">
                         {phoneNumber || 'Phone unavailable'}
                       </p>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
                     <Link
-                      href={`/consult-screen/${id}`}
+                      href={`/consultations/${id}`}
                       // state={{ hospitalName: hospitalName || 'Hospital' }}
                       className="border border-[#f2f2f2] py-3 rounded-[10px] w-full text-center block"
                     >
-                      <span className="text-black text-xs font-semibold">
+                      <span className="text-black text-xs font-medium">
                         View Doctors
                       </span>
                     </Link>

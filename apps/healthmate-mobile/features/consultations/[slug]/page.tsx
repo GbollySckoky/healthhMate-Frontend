@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Filter } from 'lucide-react';
 
@@ -11,12 +11,19 @@ import Image from 'next/image';
 import SearchInput from '@/components/SearchInput';
 import DoctorCardSkeleton from '@/components/DoctorCardSkeleton';
 
-const profileFallback = '/assets/images/ellipse-165.png';
+import profileFallback from '@/assets/Ellipse 165.png';
+import { CapitalizeName } from '@/constants/capitalizeName';
+import { doctorProfileRoute } from '@/constants/route';
 
 const getDoctorName = (doctor: GetDoctor) => {
   if (doctor.fullName) return doctor.fullName;
 
-  const name = [doctor.firstName, doctor.lastName].filter(Boolean).join(' ');
+  const name = [
+    CapitalizeName(doctor.firstName ?? undefined),
+    CapitalizeName(doctor.lastName ?? undefined),
+  ]
+    .filter(Boolean)
+    .join(' ');
   return name || 'Doctor unavailable';
 };
 
@@ -32,28 +39,10 @@ const getConsultationFee = (doctor: GetDoctor) => {
   return fee ? `₦ ${fee}` : '₦ 0';
 };
 
-const doctorMatchesSearch = (doctor: GetDoctor, query: string) => {
-  if (!query) return true;
-
-  const normalizedQuery = query.toLowerCase();
-  const searchableText = [
-    getDoctorName(doctor),
-    doctor.email,
-    doctor.profile?.specialization,
-  ]
-    .filter(Boolean)
-    .join(' ')
-    .toLowerCase();
-
-  return searchableText.includes(normalizedQuery);
-};
-
 const ConsultationId = () => {
   const router = useRouter();
-  const { id } = useParams<{ id: string }>();
-  const location = ''
-  const routeHospitalName = (location?.state as { hospitalName?: string })
-    ?.hospitalName;
+  const params  = useParams();
+  const id = params?.slug;
 
   const [searchInput, setSearchInput] = useState('');
   const hospitalId = String(id);
@@ -65,15 +54,7 @@ const ConsultationId = () => {
   });
 
   const doctors = data?.data ?? [];
-  const apiHospitalName = doctors.find(
-    (doctor) => doctor.hospital?.hospitalName
-  )?.hospital?.hospitalName;
-  const title = routeHospitalName || apiHospitalName || 'Hospital Doctors';
   const searchQuery = searchInput.trim();
-  const filteredDoctors = useMemo(
-    () => doctors.filter((doctor) => doctorMatchesSearch(doctor, searchQuery)),
-    [doctors, searchQuery]
-  );
 
   if (isLoading) {
     return (
@@ -129,7 +110,7 @@ const ConsultationId = () => {
       </div>
 
       <div className="mb-[50px]">
-        {filteredDoctors.length === 0 && (
+        {doctors.length === 0 && (
           <div className="flex items-center justify-center min-h-[160px]">
             <p className="text-[#414651] font-medium text-sm text-center">
               {searchQuery ? 'No doctors found' : 'No doctors available'}
@@ -137,7 +118,7 @@ const ConsultationId = () => {
           </div>
         )}
 
-        {filteredDoctors.map((doctor) => {
+        {doctors.map((doctor) => {
           const specialization =
             doctor.profile?.specialization || 'General Practitioner';
 
@@ -157,11 +138,11 @@ const ConsultationId = () => {
                 <div className="flex flex-1 justify-between">
                   <div className="ml-2.5 flex-1">
                     <SubTitle>{getDoctorName(doctor)}</SubTitle>
-                    <p className="text-xs text-[#717680] pt-1">
-                      {doctor.email || 'Email unavailable'}
-                    </p>
                     <p className="text-xs text-[color:var(--purple,#7C3AED)] pt-1">
                       {specialization}
+                    </p>
+                    <p className="text-xs text-[#717680] pt-1">
+                      {doctor.hospital?.hospitalName || 'Hospital unavailable'}
                     </p>
                   </div>
                   <span className="text-xs text-[#717680] whitespace-nowrap">
@@ -177,12 +158,12 @@ const ConsultationId = () => {
                 <button
                   onClick={() =>
                     router.push(
-                      `/consult-screen/consultation-details/${doctor.id}`
+                      doctorProfileRoute(doctor.id)
                     )
                   }
-                  className="py-2 px-4 bg-[color:var(--light-red,#ff4d4f)] rounded-lg"
+                  className="py-1 px-4 bg-pink-600 rounded-md"
                 >
-                  <span className="text-[#F2F2F2] text-sm font-semibold">
+                  <span className="text-[#F2F2F2] text-sm font-medium">
                     View Profile
                   </span>
                 </button>

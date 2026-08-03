@@ -148,7 +148,7 @@ const AllHospitalsPage = () => {
                   </div>
                   <div className="flex justify-between items-center">
                     <Link
-                      href={`/consult-screen/${id}`}
+                      href={`/consultations/${id}`}
                       // state={{ hospitalName: hospitalName || 'Hospital' }}
                       className="border border-[#f2f2f2] py-3 rounded-[10px] w-full text-center block"
                     >

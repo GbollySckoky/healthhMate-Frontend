@@ -89,7 +89,7 @@ const ProfileForm = ({
           />
         </label>
 
-        <p className="mt-2 text-sm font-semibold">Change photo</p>
+        <p className="mt-2 text-sm font-medium">Change photo</p>
       </div>
 
       <Input
@@ -115,7 +115,7 @@ const ProfileForm = ({
 
       {/* Date of Birth */}
       <div>
-        <label className="mb-2 block text-sm font-medium">
+        <label className="mb-2 block text-sm font-normal text-[#414651]">
           Date of Birth
         </label>
 
@@ -125,13 +125,13 @@ const ProfileForm = ({
           onChange={(e) =>
             updateField("dateOfBirth", e.target.value)
           }
-          className="w-full rounded-md border border-gray-300 px-3 py-2"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
         />
       </div>
 
       {/* Gender */}
       <div>
-        <label className="mb-2 block text-sm font-medium">
+        <label className="mb-2 block text-sm font-normal">
           Gender
         </label>
 
@@ -141,7 +141,7 @@ const ProfileForm = ({
               key={gender.value}
               type="button"
               onClick={() => updateField("gender", gender.value)}
-              className={`rounded-full border px-5 py-2 transition ${
+              className={`rounded-full border px-5 py-2 transition text-sm ${
                 form.gender === gender.value
                   ? "border-pink-600 bg-pink-600 text-white"
                   : "border-gray-300"
