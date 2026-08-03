@@ -15,7 +15,7 @@ export default function Reminder() {
   const router = useRouter();
 
   return (
-    <div className="mb-[35px]">
+    <div className="mb-[35px] mt-5">
       <div className="flex flex-row justify-between items-center mt-[10px] mb-[10px]">
         <SubTitle>Today&apos;s Reminders</SubTitle>
         <button type="button" className="flex flex-row items-center" onClick={() => router.push(ROUTES.allReminders)}>

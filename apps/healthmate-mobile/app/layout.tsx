@@ -1,11 +1,8 @@
 // 'use client'
 import type { Metadata } from "next";
 import "./globals.css";
-// import './'
-// import '@/styles/globals.css'
-import { ToastContainer} from 'react-toastify';
 import Providers from "../providers/Provider";
-// import { Providers } from "@/lib/context/Providers";
+import Footer from "@/constants/Footer";
 
 export const metadata: Metadata = {
   title: "Healthmate Mobile App",
@@ -20,10 +17,10 @@ export default function RootLayout({
 
   return (
     <html lang="en" >
-      <body className="font-sans" suppressHydrationWarning>
+      <body className="" suppressHydrationWarning>
       <Providers>
         {children}
-        <ToastContainer />
+        <Footer />
       </Providers>
       </body>
     </html>
