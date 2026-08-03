@@ -8,7 +8,7 @@ import { GetAppointment } from "@/lib/interface/get-appointments-interface";
 import CreateSupportTicket from "./CreateSupport";
 import AppointmentDetailsSkeleton from "@/components/AppointmentDetailSkeleton";
 import { BtnFlex, Card, JoinBtn, MinTitle, PageWrapper, RescheduleBtn } from "@/components/Reusable";
-import { ROUTES } from "@/constants/route";
+import { doctorProfileRoute, ROUTES } from "@/constants/route";
 import { useModal } from "@/store/Modal";
 import profile from "@/assets/images/Mobile.png";
 import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
@@ -116,7 +116,7 @@ const AppointmentDetails = () => {
 
   const handleViewProfile = () => {
     if (!appointmentDetails?.doctor?.id) return;
-    router.push(`/consult-screen/consultation-deatils/${appointmentDetails.doctor.id}`);
+    router.push(doctorProfileRoute(appointmentDetails.doctor.id));
   };
 
   const canCancelAppointment =

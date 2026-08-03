@@ -5,7 +5,7 @@ export interface SUPPORT_TICKET {
   message: string;
   patientId: string;
   appointmentId: string;
-  hospitalId: string;
+  doctorId: string;
   attachmentUrl?: string;
   attachmentName?: string;
 }

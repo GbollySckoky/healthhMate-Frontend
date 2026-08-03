@@ -7,16 +7,16 @@ import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 
 import { patientService } from '@/service/patientService';
-import About from '../About';
+import About from './About';
 import ConsultationDetailsSkeleton from '@/components/ConsultationDetailsSkeleton';
+
+import backgroundImage from '@/assets/adhy-savala-zbpgmGe27p8-unsplash (1).jpg';
+import profileImage from '@/assets/Ellipse 165.png';
 
 const ConsultationDetails = () => {
   const router = useRouter();
-  const { id } = useParams();
+  const { slug: id } = useParams<{ slug: string }>();
   const [liked, setLiked] = useState(false);
-
-  const backgroundImage = '/images/doctor-banner.jpg';
-  const profileImage = '/images/doctor-avatar.png';
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['getDoctorById', id],
@@ -64,15 +64,15 @@ const ConsultationDetails = () => {
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="mb-[50px] bg-white">
       {/* Header */}
-      <header className="flex items-center gap-3 border-b px-6 py-4">
+      {/* <header className="flex items-center gap-3 border-b px-6 py-4">
         <button onClick={() => router.back()}>
           <ChevronLeft className="h-6 w-6" />
         </button>
 
         <h1 className="text-lg font-semibold">Doctor&apos;s Profile</h1>
-      </header>
+      </header> */}
 
       <div className="mx-auto max-w-3xl px-6 py-8">
         {/* Banner */}
@@ -107,9 +107,9 @@ const ConsultationDetails = () => {
         </div>
 
         {/* Doctor Details */}
-        <div className="mt-12 flex justify-between gap-4">
+        <div className="mt-10 flex justify-between gap-4">
           <div className="flex-1">
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-base font-medium">
               Dr{' '}
               {consultation?.firstName
                 ? consultation.firstName.charAt(0).toUpperCase() +

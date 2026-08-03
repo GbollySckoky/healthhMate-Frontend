@@ -15,9 +15,9 @@ export const ROUTES = {
     reminder: '/profile/reminder',
     addReminder: '/profile/reminder/add-reminder',
     allReminders: '/home/all-reminders',
-    allAppointments: "/consult-screen/all-hospitals",
-    doctorsHospitals: '/consult-screen/doctors-hospitals',
-    consultationPayment: '/consult-screen/consultation-deatils/payment',
+    allAppointments: "/consultations/all-hospitals",
+    doctorsHospitals: '/consultations/doctors-hospitals',
+    consultationPayment: '/consultations/consultation-details/payment',
     bloodPressure: '/track/blood-pressure',
     mood: '/track/mood',
     sleep: '/track/sleep-log',
@@ -25,12 +25,16 @@ export const ROUTES = {
     medication: '/track/medication',
     onnBoarding: '/onboarding',
     allApointments: '/home/all-appointments',
-    topRatedDoctors: "/consult-screen/top-rated-doctors",
-    bookDoctors: '/consult-screen/consultation-deatils/book-doctor',
-    editProfileName: '/profile/edit-name',
+    topRatedDoctors: "/consultations/top-rated-doctors",
+    bookDoctors: '/consultations/consultation-details/book-doctor',
+    editProfileName: '/profile/edit-profile',
     support: '/support',
     appointments: '/appointments',
+    notifications: '/notifications',
 } as const;
+
+export const doctorProfileRoute = (doctorId: string | number) =>
+    `/consultations/consultation-details/${doctorId}`;
 
 export type RouteValues = typeof ROUTES[keyof typeof ROUTES];
 // This creates: '/auth/forgot-password' | '/auth/login' | '/auth/signup'

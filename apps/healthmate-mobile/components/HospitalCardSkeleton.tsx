@@ -18,23 +18,25 @@ const SkeletonBlock = ({
 );
 
 const HospitalCardSkeleton = () => (
-  <div className="p-[15px] border border-[#F2F2F2] rounded-[10px] bg-white mb-5">
-    <div className="flex items-start mt-[5px] mb-0.5">
-      <div className="w-[50px] shrink-0">
-        <SkeletonBlock width={50} height={50} borderRadius={100} />
-      </div>
-      <div className="flex flex-1 justify-between">
-        <div className="ml-2.5 flex-1">
-          <SkeletonBlock width="60%" height={16} />
-          <SkeletonBlock width="70%" height={12} className="mt-2" />
-          <SkeletonBlock width="45%" height={12} className="mt-1.5" />
-        </div>
-        <SkeletonBlock width={50} height={12} />
+  <div className="w-[300px] shrink-0 bg-[#FAFAFA] rounded-xl p-2.5 border border-[#F2F2F2]">
+    {/* Image area with heart button */}
+    <div className="relative w-full h-[180px]">
+      <SkeletonBlock width="100%" height={180} borderRadius={10} />
+      <div className="absolute right-2.5 top-2.5">
+        <SkeletonBlock width={34} height={34} borderRadius={100} className="bg-gray-300" />
       </div>
     </div>
-    <div className="flex items-center justify-between border-t-2 border-[#F8F8F8] mt-[15px] pt-[15px]">
-      <SkeletonBlock width={60} height={16} />
-      <SkeletonBlock width={110} height={34} borderRadius={8} />
+
+    {/* Details */}
+    <div className="p-1.5 mt-2.5">
+      <div className="mb-2">
+        <SkeletonBlock width="60%" height={14} />
+        <SkeletonBlock width="70%" height={12} className="mt-2" />
+        <SkeletonBlock width="45%" height={12} className="mt-1.5" />
+      </div>
+
+      {/* View Doctors button */}
+      <SkeletonBlock width="100%" height={44} borderRadius={10} />
     </div>
   </div>
 );
