@@ -13,7 +13,7 @@ import {
 // import SearchInput from "@/components/Input/SearchInput";
 import { topRatedData } from "@/constants/data";
 import SearchInput from "@/components/SearchInput";
-import { ROUTES } from "@/constants/route";
+import { doctorProfileRoute } from "@/constants/route";
 // import { ROUTES } from "@/constants/routes";
 
 const HospitalDoctorsPage = () => {
@@ -103,7 +103,7 @@ const HospitalDoctorsPage = () => {
                 <button
                   onClick={() =>
                     router.push(
-                      `${ROUTES.consultation}/${doctor.id}`
+                      doctorProfileRoute(doctor.id)
                     )
                   }
                   className="rounded-lg bg-pink-600 px-5 py-2 text-sm font-semibold text-white hover:bg-pink-700"

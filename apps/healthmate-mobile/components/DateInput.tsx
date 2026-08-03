@@ -10,7 +10,7 @@ interface DateInputType {
 const DateInput = ({ label, value, _fn, placeholder }: DateInputType) => {
   return (
     <div className="py-[7px]">
-      <p className="font-medium text-sm pb-1.5 text-[#414651]">{label}</p>
+      <p className="font-normal text-sm pb-1.5 text-[#414651]">{label}</p>
       <input
         type="text"
         className="

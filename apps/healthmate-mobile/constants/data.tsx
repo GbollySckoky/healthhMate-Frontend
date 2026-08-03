@@ -634,7 +634,7 @@ export const otherMenuItems = [
         color={colors.lightRed}
       />
     ),
-    route: ROUTES.settings, // Changed to a more appropriate route
+    route: 'profile/settings', // Changed to a more appropriate route
   },
 ];
 
@@ -696,7 +696,7 @@ type FooterNavItem = {
 export const FOOTER_NAV_ITEMS: FooterNavItem[] = [
   { id: "home", label: "Home", href: ROUTES.home, icon: Home },
   { id: "track", label: "Track", href: "/track", icon: Activity },
-  { id: "consultation", label: "Consult", href: "/consultation", icon: CalendarCheck },
+  { id: "consultation", label: "Consult", href: "/consultations", icon: CalendarCheck },
   { id: "appointments", label: "Appoint", href: ROUTES.allApointments, icon: CalendarDays },
   { id: "support", label: "Support", href: "/support", icon: MessageCircle },
   { id: "profile", label: "Profile", href: "/profile", icon: User },

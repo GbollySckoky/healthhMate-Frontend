@@ -34,7 +34,7 @@ const SettingsPage = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     {icon}
-                    <p className="ml-[7px] font-lato font-semibold text-sm text-lightBlack">
+                    <p className="ml-[7px] font-lato font-medium text-sm ">
                       {title}
                     </p>
                   </div>
@@ -71,7 +71,7 @@ const SettingsPage = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     {icon}
-                    <p className="ml-[7px] font-lato font-semibold text-sm text-lightBlack">
+                    <p className="ml-[7px] font-lato font-medium text-sm ">
                       {title}
                     </p>
                   </div>
@@ -106,7 +106,7 @@ const SettingsPage = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     {icon}
-                    <p className="ml-[7px] font-lato font-semibold text-sm text-lightBlack">
+                    <p className="ml-[7px] font-lato font-medium text-sm">
                       {title}
                     </p>
                   </div>

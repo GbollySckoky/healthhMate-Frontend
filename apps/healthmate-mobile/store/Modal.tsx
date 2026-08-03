@@ -1,32 +1,21 @@
 "use client";
-import React, {
-  ReactNode,
+
+import {
   createContext,
-  useState,
-  useContext,
+  ReactNode,
   useCallback,
+  useContext,
   useEffect,
-  useRef,
+  useState,
 } from "react";
 import { createPortal } from "react-dom";
-
-/**
- * PREREQUISITES (web):
- * - No extra libraries required — this uses React state + CSS transitions.
- * - If you want real drag-to-dismiss gestures on the bottom sheet (the one
- *   thing this version can't replicate from @gorhom/bottom-sheet), swap the
- *   sheet markup for `vaul` (https://vaul.emilkowal.ski) — it's the closest
- *   web equivalent and plugs into this same context/API.
- */
-
-type Presentation = "sheet" | "center";
+import { X } from "lucide-react";
 
 interface ModalOptions {
   title?: string;
   description?: string;
+  className?: string;
   onClose?: () => void;
-  presentation?: Presentation; // 'sheet' (default) = bottom drawer, 'center' = floating dialog
-  dismissible?: boolean; // click backdrop / press Escape to close
 }
 
 interface ModalContextType {
@@ -34,138 +23,132 @@ interface ModalContextType {
   closeModal: () => void;
 }
 
-const ModalContext = createContext<ModalContextType>({
-  openModal: () => {},
-  closeModal: () => {},
-});
-
-export const useModal = () => {
-  const context = useContext(ModalContext);
-  if (!context) {
-    throw new Error("useModal must be used within a ModalProvider");
-  }
-  return context;
-};
-
-const TRANSITION_MS = 250;
+const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
-  const [mounted, setMounted] = useState(false); // in DOM (during enter/exit transition)
-  const [visible, setVisible] = useState(false); // drives the transition classes
-  const [content, setContent] = useState<ReactNode>(null);
-  const [config, setConfig] = useState<ModalOptions>({});
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<ReactNode>(null);
+  const [modalConfig, setModalConfig] = useState<ModalOptions>({});
 
-  const openModal = useCallback((newContent: ReactNode, options: ModalOptions = {}) => {
-    const merged: ModalOptions = { dismissible: true, presentation: "sheet", ...options };
-    setContent(newContent);
-    setConfig(merged);
+  useEffect(() => {
     setMounted(true);
-    // next frame so the enter transition animates from its initial (closed) state
-    requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
   }, []);
 
+  const openModal = useCallback(
+    (content: ReactNode, options: ModalOptions = {}) => {
+      setModalContent(content);
+      setModalConfig(options);
+      setIsOpen(true);
+    },
+    [],
+  );
+
   const closeModal = useCallback(() => {
-    setVisible(false);
-    window.setTimeout(() => {
-      setMounted(false);
-      setConfig((prev) => {
-        prev.onClose?.();
-        return {};
-      });
-      setContent(null);
-    }, TRANSITION_MS);
+    setIsOpen(false);
+    setModalContent(null);
+
+    setModalConfig((currentConfig) => {
+      currentConfig.onClose?.();
+      return {};
+    });
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && config.dismissible !== false) closeModal();
-    };
-    document.addEventListener("keydown", handleKey);
-    closeButtonRef.current?.focus();
+
     return () => {
+      document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
-      document.removeEventListener("keydown", handleKey);
     };
-  }, [mounted, config.dismissible, closeModal]);
+  }, [isOpen, closeModal]);
 
-  const isSheet = config.presentation !== "center";
+  const modal =
+    mounted && isOpen
+      ? createPortal(
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/25 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={
+              modalConfig.title ? "global-modal-title" : undefined
+            }
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) {
+                closeModal();
+              }
+            }}
+          >
+            <div
+              className={`relative flex max-h-[90vh] w-full flex-col overflow-hidden rounded-lg bg-white shadow-xl ${
+                modalConfig.className ?? "max-w-3xl"
+              }`}
+              onMouseDown={(event) => event.stopPropagation()}
+            >
+              {(modalConfig.title || modalConfig.description) && (
+                <div className="border-b p-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      {modalConfig.title && (
+                        <h2
+                          id="global-modal-title"
+                          className="font-lato text-xl font-medium text-[#1E1E1E]"
+                        >
+                          {modalConfig.title}
+                        </h2>
+                      )}
 
-  const header = (config.title || config.description) && (
-    <div className="px-5 pt-4 pb-4 border-b border-[#eeeeee] shrink-0">
-      <div className="flex justify-between items-start">
-        {config.title ? (
-          <h2 className="text-[17px] font-semibold text-[#1a1a1a] flex-1 mr-4 line-clamp-2">
-            {config.title}
-          </h2>
-        ) : (
-          <div className="flex-1" />
-        )}
-        <button
-          ref={closeButtonRef}
-          type="button"
-          onClick={closeModal}
-          aria-label="Close modal"
-          className="w-[30px] h-[30px] rounded-full bg-[#f5f5f5] hover:bg-[#e8e8e8] flex items-center justify-center shrink-0"
-        >
-          <span className="text-[15px] text-[#666666] font-medium">✕</span>
-        </button>
-      </div>
-      {config.description && (
-        <p className="text-sm text-[#666666] mt-1.5 leading-5">{config.description}</p>
-      )}
-    </div>
-  );
+                      {modalConfig.description && (
+                        <p className="mt-2 text-sm text-gray-500">
+                          {modalConfig.description}
+                        </p>
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={closeModal}
+                      className="rounded-md p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                      aria-label="Close modal"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex-1 overflow-y-auto p-6 text-sm">
+                {modalContent}
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )
+      : null;
 
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
-
-      {mounted &&
-        typeof window !== "undefined" &&
-        createPortal(
-          <div className="fixed inset-0 z-50 flex" role="dialog" aria-modal="true">
-            {/* Backdrop */}
-            <div
-              className={`absolute inset-0 bg-black/50 transition-opacity duration-[250ms] ${
-                visible ? "opacity-100" : "opacity-0"
-              }`}
-              onClick={() => config.dismissible !== false && closeModal()}
-            />
-
-            {isSheet ? (
-              // ---------- Bottom sheet ----------
-              <div
-                className={`relative mt-auto w-full bg-white rounded-t-[20px] shadow-[0_-4px_24px_rgba(0,0,0,0.15)] max-h-[85vh] flex flex-col transition-transform duration-[250ms] ease-out ${
-                  visible ? "translate-y-0" : "translate-y-full"
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="flex justify-center pt-2 pb-1 shrink-0">
-                  <div className="w-10 h-1 rounded-full bg-[#d9d9d9]" />
-                </div>
-                {header}
-                <div className="px-5 py-4 overflow-y-auto">{content}</div>
-              </div>
-            ) : (
-              // ---------- Centered dialog ----------
-              <div className="m-auto p-5 w-full flex items-center justify-center">
-                <div
-                  className={`bg-white rounded-2xl w-full max-w-[440px] max-h-[80vh] flex flex-col shadow-[0_2px_12px_rgba(0,0,0,0.15)] transition-all duration-[250ms] ${
-                    visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                  }`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {header}
-                  <div className="px-5 py-4 overflow-y-auto">{content}</div>
-                </div>
-              </div>
-            )}
-          </div>,
-          document.body
-        )}
+      {modal}
     </ModalContext.Provider>
   );
+};
+
+export const useModal = () => {
+  const context = useContext(ModalContext);
+
+  if (!context) {
+    throw new Error("useModal must be used inside ModalProvider");
+  }
+
+  return context;
 };
