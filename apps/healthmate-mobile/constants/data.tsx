@@ -1,10 +1,11 @@
 import { colors } from './colors';
 import image  from'@/assets/Mobile.png';
-import { Moon, Eye, EyeOff, CalendarDays, Settings, Phone, Bell, Mail, Scale,
-     UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain, Heart, Smile,  } 
-from 'lucide-react';
+import { 
+  Moon, Eye, EyeOff, CalendarDays, Settings, Phone, Bell, Mail, Scale, Home, Activity, CalendarCheck, 
+  UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain, Heart, Smile,
+  MessageCircle, User 
+} from 'lucide-react';
 import { ROUTES } from './route';
-// import { Moon, , Pill } from "lucide-react";
 
 
 export const allAppointmentData = [
@@ -680,3 +681,26 @@ export const healthOverviews = [
     url: ROUTES.medication
   },
 ];
+
+type IconComponent = React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+
+
+type FooterNavItem = {
+  id: string;
+  label: string;
+  href: string;
+  icon: IconComponent;
+};
+
+
+export const FOOTER_NAV_ITEMS: FooterNavItem[] = [
+  { id: "home", label: "Home", href: ROUTES.home, icon: Home },
+  { id: "track", label: "Track", href: "/track", icon: Activity },
+  { id: "consultation", label: "Consult", href: "/consultation", icon: CalendarCheck },
+  { id: "appointments", label: "Appoint", href: ROUTES.allApointments, icon: CalendarDays },
+  { id: "support", label: "Support", href: "/support", icon: MessageCircle },
+  { id: "profile", label: "Profile", href: "/profile", icon: User },
+];
+
+export const ACTIVE_COLOR = "#C11574";
+export const INACTIVE_COLOR = "#6B7280";

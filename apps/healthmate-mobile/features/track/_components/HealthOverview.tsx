@@ -72,7 +72,7 @@ const HealthOverview = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-wrap justify-between mb-[30px] px-[5px]">
+      <div className="grid grid-cols-2 gap-5 justify-between mb-[30px] px-[5px]">
         {[1, 2, 3, 4, 5].map((key) => (
           <OverviewCardSkeleton key={key} />
         ))}

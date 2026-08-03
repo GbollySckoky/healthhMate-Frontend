@@ -156,7 +156,7 @@ const Activities = () => {
   );
 
   const renderOverviewCards = () => (
-    <div className="flex flex-row gap-3 overflow-x-auto pb-1">
+    <div className="flex flex-row gap-3 overflow-x-auto pb-1 mt-2">
       {healthOverview.map((health) => {
         const { title, id, text, value, icon, url } = health;
         return (
@@ -168,10 +168,10 @@ const Activities = () => {
             title={`Navigate to ${title} tracker`}
             className="text-left shrink-0 active:opacity-75 transition-opacity"
           >
-            <MinCard className="p-[15px] border border-[#F1F1F1] rounded-[10px] bg-white mb-[10px] w-[200px]">
+            <MinCard className="p-[15px] border border-borderColor10 rounded-md bg-white mb-[10px] w-[200px]">
               <div className="pb-[15px]">{icon}</div>
               <CardTitle>{title}</CardTitle>
-              <div className="pt-1">
+              <div className="pt-1 flex flex-col gap-1">
                 <Title>{value}</Title>
                 <CardText>{text}</CardText>
               </div>
@@ -183,7 +183,7 @@ const Activities = () => {
   );
 
   return (
-    <div>
+    <div className="mt-5">
       <SubTitle>Your Health Overview</SubTitle>
       {isLoading && renderLoadingState()}
       {isError && renderErrorState()}

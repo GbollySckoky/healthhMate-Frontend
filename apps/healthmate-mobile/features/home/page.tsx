@@ -25,10 +25,10 @@ const HomePage = () => {
 
   return (
     <PageWrapper>
-      <section className="flex flex-row justify-between items-start border-b border-[#F2F2F2] pb-5 p-4">
+      <section className="flex flex-row justify-between items-start">
         <div>
           <Title>{getGreeting()}, {patient?.firstName || ''} 👋</Title>
-          <p className="font-libre-regular font-normal text-xs text-[#717680] mt-0.5">
+          <p className="font-libre font-normal text-xs text-[#717680] mt-0.5">
             Let&apos;s take a step toward a healthier you today.
           </p>
         </div>
@@ -39,7 +39,7 @@ const HomePage = () => {
             onClick={() => router.push('/notifications')}
             aria-label="View notifications"
           >
-            <Bell size={26} color="#717680" />
+            <Bell size={20} color="#717680" />
           </button>
         </div>
       </section>

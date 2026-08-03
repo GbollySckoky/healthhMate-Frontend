@@ -65,10 +65,11 @@ export const MinCard = ({ children, className = "" }: MinCardProps) => (
 /* ----------------------------------- Text ----------------------------------- */
 
 export const Title = ({ children }: { children: ReactNode }) => (
-  <span className="block text-lg font-semibold mb-[3px] text-black font-libre">
+  <span className="block text-lg font-semibold mb-[3px] text-[#414651] font-libre">
     {children}
   </span>
 );
+
 
 export const MinTitle = ({ children }: { children: ReactNode }) => (
   <span className="block text-lg font-semibold font-libre">
@@ -93,7 +94,7 @@ export const HeaderText = ({ children }: { children: ReactNode }) => (
 );
 
 export const SubTitle = ({ children }: { children: ReactNode }) => (
-  <span className="block font-libre text-sm text-black font-semibold">
+  <span className="block font-libre text-sm text-[#414651] font-semibold">
     {children}
   </span>
 );
@@ -105,7 +106,7 @@ export const SubTitles = ({ children }: { children: ReactNode }) => (
 );
 
 export const CardTitle = ({ children }: { children: ReactNode }) => (
-  <span className="font-inter text-xs text-[#414651] font-normal not-italic">
+  <span className="font-inter text-xs text-[#414651] font-normal">
     {children}
   </span>
 );
