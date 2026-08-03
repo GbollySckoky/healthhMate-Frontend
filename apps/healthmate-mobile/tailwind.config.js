@@ -1,18 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 
 export default {
-  // content: [
-  //   '../healthmate-mobile/app/**/*.{ts,tsx}',
-  //   // './healthmate-admin/lib/**/*.{ts,tsx}',
-  //   '../healthmate-mobile/components/**/*.{ts,tsx}',
-  //   // Add any other paths where you use Tailwind classes
-  //   // './src/**/*.{ts,tsx}',
-  // ],
-   darkMode: ['class'],
-   content: [
-    '../doctor/app/**/*.{ts,tsx}',
-    '../doctor/components/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+  darkMode: ['class'],
+  // Tailwind only generates utilities it finds in these local source files.
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './features/**/*.{js,ts,jsx,tsx,mdx}',
+    './providers/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -47,20 +42,10 @@ export default {
           20:  'var(--grey-20)',
           10:  'var(--grey-10)',
         },
-        gray:{
+        // Keep Tailwind's default gray palette for shades not customized here.
+        gray: {
           900: 'var(--gray-900)',
-          800: 'var(--gray-800)',
-          700: 'var(--gray-700)',
-          600: 'var(--gray-600)',
           500: 'var(--gray-500)',
-          400: 'var(--gray-400)',
-          300: 'var(--gray-300)',
-          200: 'var(--gray-200)',
-          100: 'var(--gray-100)',
-          50:  'var(--gray-50)',
-          30:  'var(--gray-30)',
-          20:  'var(--gray-20)',
-          10:  'var(--gray-10)',
         },
         blue:{
           900: 'var(--blue-900)',
@@ -84,6 +69,7 @@ export default {
         black: 'var(--black)',
         healthBlack:'var(--health-black)',
         borderColor: 'var(--borderColor)',
+        borderColor10: 'var(--borderColor--100)',
         borderColor100: 'var(--borderColor--100)'
       },
       fontFamily: {
@@ -97,4 +83,3 @@ export default {
   },
   plugins: [],
 }
-

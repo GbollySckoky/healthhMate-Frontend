@@ -36,8 +36,8 @@ const LoginPage = () => {
       console.log('ERROR!!!!', error?.response?.data?.message);
     //   setToast({ type: 'error', message: error.response.data.message });
     },
-    retry: 3,
-    retryDelay: 1000,
+    // retry: 3,
+    // retryDelay: 1000,
   });
 
   const handleLogin = (e: FormEvent) => {
@@ -74,7 +74,7 @@ const LoginPage = () => {
               placeholder="Enter email"
               value={inputValue.email || ''}
               onChange={(e) => handleChange('email', e.target.value)}
-              className="w-full rounded-xl border border-[#D5D7DA] p-2 pr-11 text-[16px] text-gray-500 font-inter focus:outline-none text-sm font-normal mt-1"
+              className="w-full border border-borderColor10 bg-[#D5D7DA] p-2 pr-11 text-[16px] text-gray-500 font-inter focus:outline-none text-sm font-normal rounded-md"
             />
           </div>
 
@@ -89,12 +89,12 @@ const LoginPage = () => {
                 placeholder="Enter password"
                 value={inputValue.password || ''}
                 onChange={(e) => handleChange('password', e.target.value)}
-                className="w-full rounded-xl border border-[#D5D7DA] p-2 pr-11 text-[16px] text-gray-500 font-inter focus:outline-none text-sm font-normal"
+                className="w-full border border-borderColor10 bg-[#D5D7DA] p-2 pr-11 text-[16px] text-gray-500 font-inter focus:outline-none text-sm font-normal rounded-md"
               />
               <button
                 type="button"
                 onClick={() => setPasswordVisible((v) => !v)}
-                className="absolute right-0 top-12 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="absolute right-[-5px] top-12 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 aria-label={passwordVisible ? 'Hide password' : 'Show password'}
               >
                 {passwordVisible ? <Eye size={18} /> : <EyeOff size={18} />}
@@ -111,12 +111,12 @@ const LoginPage = () => {
             >
               <span
                 className={`flex items-center justify-center border ${
-                  rememberMe ? 'bg-pink-600 border-pink-500' : 'bg-white'
+                  rememberMe ? 'bg-pink-600 border-pink-500' : 'bg-white border border-borderColor10'
                 }`}
               >
                 {rememberMe && <Check size={12} className="text-white" strokeWidth={3} />}
               </span>
-              <span className="text-sm text-[#C11574] font-libre">Remember me</span>
+              <span className="text-xs text-[#C11574] font-libre">Remember me</span>
             </button>
             <p className="text-sm text-[#c11574] font-libre">
               Forgot Password?
@@ -127,14 +127,14 @@ const LoginPage = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full rounded-lg bg-pink-600 py-4 text-sm font-semibold text-white hover:bg-pink-500 disabled:bg-pink-500"
+            className="w-full rounded-lg bg-pink-600 py-4 text-sm font-semibold text-white hover:bg-pink-500 disabled:bg-[#F670C7]"
           >
             {isPending ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
         {/* Sign up */}
-        <div className="flex justify-center items-center mb-6 text-sm font-libre">
+        <div className="flex justify-center items-center mb-6 mt-4 text-sm font-libre">
           <span className="text-[#717680]">Don&apos;t have an account? </span>
           <button type="button" className="text-[#c11574] font-medium ml-1 hover:underline">
             Sign Up
@@ -151,7 +151,7 @@ const LoginPage = () => {
         {/* Google sign-in */}
         <button
           type="button"
-          className="w-full flex items-center justify-center gap-2 rounded-lg border border-[#D5D7DA] py-2 text-sm font-medium text-gray-900"
+          className="w-full flex items-center justify-center gap-2 rounded-md border border-borderColor10 py-2 text-sm font-medium text-[#414651]"
         >
           <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">
             <path

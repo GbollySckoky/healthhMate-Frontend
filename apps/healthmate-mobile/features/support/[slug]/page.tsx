@@ -106,7 +106,8 @@ const SupportTicketDetailScreen = () => {
   // const router = useRouter();
   const params = useParams();
 
-  const id = params?.id as string;
+  const id = params?.slug as string;
+  console.log('ID:', id);
   const queryClient = useQueryClient();
 
   const [inputValue, setInputValue] =
@@ -222,7 +223,7 @@ const SupportTicketDetailScreen = () => {
   if (!ticket) return null;
 
   return (
-    <PageWrapper>
+    <PageWrapper className="mb-14"> 
       {/* Header */}
       <div className='mt-[10px] flex justify-between'>
         <div className='flex-1'>
@@ -432,7 +433,7 @@ const SupportTicketDetailScreen = () => {
             isDisabled || replyMutation.isPending
           }
           onClick={handleReplySubmit}
-          className="mt-5 w-full rounded-[10px] bg-purple py-3 font-lato text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-5 w-full rounded-[10px] bg-pink-600 py-3 font-lato text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {replyMutation.isPending
             ? "Sending..."

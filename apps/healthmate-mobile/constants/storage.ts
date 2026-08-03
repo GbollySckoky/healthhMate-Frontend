@@ -1,69 +1,77 @@
-// lib/storage.ts
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import * as SecureStore from 'expo-secure-store';
-
+// constants/storage.ts
 export const STORAGE_KEYS = {
-  HAS_LAUNCHED: 'app.hasLaunched',    
-  AUTH_TOKEN: 'app.authToken',      
-  USER_DATA: 'app.userData',          
+  HAS_LAUNCHED: 'app.hasLaunched',
+  AUTH_TOKEN: 'app.authToken',
+  USER_DATA: 'app.userData',
   REFRESH_TOKEN: 'app.refreshToken',
 } as const;
 
+const isBrowser = typeof window !== 'undefined';
+
 export const storageService = {
-  // First launch (use AsyncStorage - not sensitive)
-  hasLaunched: async (): Promise<boolean> => {
-    const value = await localStorage.getItem(STORAGE_KEYS.HAS_LAUNCHED);
-    return value !== null;
+  hasLaunched: (): boolean => {
+    if (!isBrowser) return false;
+    return localStorage.getItem(STORAGE_KEYS.HAS_LAUNCHED) !== null;
   },
 
-  setHasLaunched: async (): Promise<void> => {
-    await localStorage.setItem(STORAGE_KEYS.HAS_LAUNCHED, 'true');
+  setHasLaunched: (): void => {
+    if (!isBrowser) return;
+    localStorage.setItem(STORAGE_KEYS.HAS_LAUNCHED, 'true');
   },
 
-  // Auth Token (use SecureStore - sensitive data)
-  getAuthToken: async (): Promise<string | null> => {
-    return await localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+  // Auth token
+  getAuthToken: (): string | null => {
+    if (!isBrowser) return null;
+    return localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
   },
 
-  setAuthToken: async (token: string): Promise<void> => {
-    await localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, token);
+  setAuthToken: (token: string): void => {
+    if (!isBrowser) return;
+    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, token);
   },
 
-  removeAuthToken: async (): Promise<void> => {
-    await localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+  removeAuthToken: (): void => {
+    if (!isBrowser) return;
+    localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
   },
 
-  // Check if user is authenticated
-  isAuthenticated: async (): Promise<boolean> => {
-    const token = await localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-    return token !== null;
+  // Refresh token
+  getRefreshToken: (): string | null => {
+    if (!isBrowser) return null;
+    return localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
   },
 
-//   // User Data (use AsyncStorage - not as sensitive)
-//   getUserData: async (): Promise<any | null> => {
-//     const data = await AsyncStorage.getItem(STORAGE_KEYS.USER_DATA);
-//     return data ? JSON.parse(data) : null;
-//   },
+  setRefreshToken: (token: string): void => {
+    if (!isBrowser) return;
+    localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, token);
+  },
 
-//   setUserData: async (userData: any): Promise<void> => {
-//     await AsyncStorage.setItem(STORAGE_KEYS.USER_DATA, JSON.stringify(userData));
-//   },
+  removeRefreshToken: (): void => {
+    if (!isBrowser) return;
+    localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+  },
+
+  isAuthenticated: (): boolean => {
+    return storageService.getAuthToken() !== null;
+  },
+
+  // User data
+  getUserData: <T = unknown>(): T | null => {
+    if (!isBrowser) return null;
+    const data = localStorage.getItem(STORAGE_KEYS.USER_DATA);
+    return data ? (JSON.parse(data) as T) : null;
+  },
+
+  setUserData: (userData: unknown): void => {
+    if (!isBrowser) return;
+    localStorage.setItem(STORAGE_KEYS.USER_DATA, JSON.stringify(userData));
+  },
 
   // Clear all auth data on logout
-  clearAuthData: async (): Promise<void> => {
-    await Promise.all([
-      localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN),
-      localStorage.removeItem(STORAGE_KEYS.USER_DATA),
-    ]);
+  clearAuthData: (): void => {
+    if (!isBrowser) return;
+    localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+    localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+    localStorage.removeItem(STORAGE_KEYS.USER_DATA);
   },
-
-  // Dev/Testing utilities
-//   clearAll: async (): Promise<void> => {
-//     if (__DEV__) {
-//       await Promise.all([
-//         AsyncStorage.clear(),
-//         SecureStore.deleteItemAsync(STORAGE_KEYS.AUTH_TOKEN).catch(() => {}),
-//       ]);
-//     }
-//   },
 };

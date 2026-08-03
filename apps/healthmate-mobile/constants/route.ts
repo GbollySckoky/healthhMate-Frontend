@@ -4,8 +4,8 @@ export const ROUTES = {
     signup: '/auth/signup',
     reportIssue: '/home/report-issues',
     home: '/home',
-    track: '/(tabs)/track',
-    consultation: '/(tabs)/consultation',
+    track: '/track',
+    consultation: '/consultations',
     messages: '/(tabs)/messages',
     signUpSuccess: '/auth/success',
     about: '/auth/about',
@@ -28,7 +28,8 @@ export const ROUTES = {
     topRatedDoctors: "/consult-screen/top-rated-doctors",
     bookDoctors: '/consult-screen/consultation-deatils/book-doctor',
     editProfileName: '/profile/edit-name',
-    support: '/support'
+    support: '/support',
+    appointments: '/appointments',
 } as const;
 
 export type RouteValues = typeof ROUTES[keyof typeof ROUTES];
