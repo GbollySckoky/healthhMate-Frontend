@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Card, SubTitle } from '@/components/Reusable';
+import { SubTitle } from '@/components/Reusable';
 import { doctorProfileRoute, ROUTES } from '@/constants/route';
 import { topRatedData } from '@/constants/data';
 import Image from 'next/image';
@@ -29,7 +29,7 @@ const TopRated = () => {
       <SubTitle>Top Rated Doctors</SubTitle>
       <Link
         href={ROUTES.topRatedDoctors}
-        className="flex items-center gap-1 text-[color:var(--light-red,#ff4d4f)] text-xs font-normal hover:underline"
+        className="flex items-center gap-1 text-pink-600 text-xs font-normal hover:underline"
       >
         See All
         <ArrowRight size={15} />
@@ -65,11 +65,11 @@ const TopRated = () => {
     <div className="flex-1">
       {header}
 
-      <div className="flex gap-4 overflow-x-auto pb-2">
+      <div className="flex gap-4 overflow-x-auto pb-2 ">
         {topRatedData.map((rated) => {
           const { id, doctorName, type, address } = rated;
           return (
-            <div key={id} className="w-[280px] shrink-0 p-[15px] border border-[#F2F2F2] rounded-[10px] bg-white">
+            <div key={id} className="w-[350px] shrink-0 p-[15px] border border-[#F2F2F2] rounded-[10px] bg-white">
               <div className="flex items-start mt-[5px] mb-0.5">
                 <div className="w-[50px] shrink-0">
                   <Image
@@ -103,7 +103,7 @@ const TopRated = () => {
                   onClick={() =>
                     router.push(doctorProfileRoute(id))
                   }
-                  className="py-2 px-4 bg-[color:var(--light-red,#ff4d4f)] rounded-lg transition-opacity hover:opacity-90"
+                  className="py-2 px-4 bg-pink-600 rounded-lg transition-opacity hover:opacity-90"
                 >
                   <span className="text-[#F2F2F2] text-sm font-semibold">
                     View Profile

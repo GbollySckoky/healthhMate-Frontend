@@ -47,8 +47,8 @@ export const DetailsContainer = ({ children }: { children: ReactNode }) => (
   </div>
 );
 
-export const Card = ({ children }: { children: ReactNode }) => (
-  <div className="p-[15px] border border-[#F2F2F2] rounded-[10px] bg-white">
+export const Card = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
+  <div className={`p-[15px] border border-[#F2F2F2] rounded-[10px] bg-white ${className}`}>
     {children}
   </div>
 );

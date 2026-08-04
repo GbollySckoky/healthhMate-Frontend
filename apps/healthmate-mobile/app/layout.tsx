@@ -1,4 +1,3 @@
-// 'use client'
 import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "../providers/Provider";
@@ -15,15 +14,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
-    <html lang="en" >
-      <body className="" suppressHydrationWarning>
-      <Providers>
-        <Header />
-        {children}
-        <Footer />
-      </Providers>
+    <html lang="en">
+      <body className="h-dvh overflow-hidden" suppressHydrationWarning>
+        <Providers>
+          <div className="flex h-dvh flex-col">
+            <Header />
+            <main className="flex-1 overflow-y-auto">{children}</main>
+            <Footer />
+          </div>
+        </Providers>
       </body>
     </html>
   );

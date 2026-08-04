@@ -107,7 +107,7 @@ const WeightModal = () => {
 
       <SubmitButton
         _fn={handleCreateWeight}
-        disabled={mutation.isPending}
+        disabled={mutation.isPending || !inputValue.weight || !inputValue.date}
       >
         {mutation.isPending
           ? "Saving..."

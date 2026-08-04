@@ -16,12 +16,12 @@ interface SleepQuality {
 
 interface SleepInputType {
   date?: string;
-  sleep?: string;
+  sleep?: SleepQuality;
   hours?: string;
 }
 
 const SleepModal = () => {
-  const [inputValue, setInputValue] = useState({
+  const [inputValue, setInputValue] = useState<SleepInputType>({
     date: new Date().toISOString(),
     sleep: {
       selectedMood: "",
@@ -35,7 +35,10 @@ const SleepModal = () => {
 
   const { date } = sleepData;
 
-  const handleChange = (key: keyof SleepInputType, value: string | SleepQuality) => {
+  const handleChange = (
+    key: keyof SleepInputType,
+    value: string | SleepQuality,
+  ) => {
     setInputValue((prev) => ({
       ...prev,
       [key]: value,
@@ -54,39 +57,32 @@ const SleepModal = () => {
 
   const handleSelectEmojiValue = (value: string) => {
     setSelectEmojiValue(value);
-    // setInputValue((prev) => ({
-    //   ...prev,
-    //   sleep: value,
-    // }));
   };
 
   const mutation = useMutation({
     mutationFn: (payload: Sleep) => patientService.createSleep(payload),
     onSuccess: async () => {
-    //   toast.success("Mood created successfully");
       await queryClient.invalidateQueries({ queryKey: ["getSleep"] });
       closeModal();
     },
     onError: (error: any) => {
-    //   toast.error(error?.response?.data?.message || "Unable to save sleep log. Please try again.");
+      // toast.error(error?.response?.data?.message || "Unable to save sleep log. Please try again.");
     },
   });
 
   const handleCreateSleep = async () => {
-    const data = {
-      sleep: inputValue.sleep || {},
-      recordedAt: inputValue.date,
+    const data: Sleep = {
+      sleep: {
+        selectedMood: inputValue.sleep?.selectedMood || selectEmojiValue,
+        selectedEmoji: inputValue.sleep?.selectedEmoji || Boolean(selectEmojiValue),
+      },
+      recordedAt: inputValue.date as string,
     };
     await mutation.mutateAsync(data);
   };
 
   return (
     <div>
-      {/* <NumberInput
-        {...sleep}
-        value={inputValue.hours}
-        onChangeText={(value) => handleChange('hours', value)}
-      /> */}
       <DateInput
         {...date}
         value={inputValue.date ? new Date(inputValue.date).toLocaleDateString() : ""}
