@@ -24,7 +24,7 @@ const TextAreaInput = ({
   return (
     <div className="w-full">
       {label && (
-        <label className="mb-2 block text-sm font-medium text-[#414651]">
+        <label className="mb-2 font-normal text-sm pb-1.5 text-[#414651]">
           {label}
         </label>
       )}
@@ -35,7 +35,7 @@ const TextAreaInput = ({
         placeholder={placeholder}
         rows={rows}
         disabled={disabled}
-        className={`w-full min-h-[120px] resize-none rounded-md border border-[#D6D7DA] bg-white p-3 text-sm text-[#101828] placeholder:text-[#667085] outline-none transition-all focus:border-[#C11574] focus:ring-2 focus:ring-[#FDF2FA] disabled:cursor-not-allowed disabled:bg-gray-100 ${className}`}
+        className={`w-full min-h-[120px] resize-none rounded-md border border-[#D6D7DA] bg-white p-3 text-sm text-[#101828] placeholder:text-[#667085] outline-none transition-all focus:border-[#C11574] focus:ring-2 focus:ring-[#FDF2FA] disabled:cursor-not-allowed disabled:bg-gray-100 ${className} mt-2`}
       />
     </div>
   );

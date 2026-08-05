@@ -95,6 +95,7 @@ const MoodModal = ({ onClose }: { onClose?: () => void }) => {
     await mutation.mutateAsync(payload);
   };
 
+  // const isDisap
   return (
     <div className="w-full">
       <h2 className="mb-4 text-sm font-semibold text-[#414651]">
@@ -153,7 +154,7 @@ const MoodModal = ({ onClose }: { onClose?: () => void }) => {
       <div className="mt-6">
         <SubmitButton
           _fn={handleCreateMood}
-          disabled={mutation.isPending}
+          disabled={mutation.isPending || !inputValue.mood.selectedEmoji || !inputValue.date}
         >
           {mutation.isPending ? "Saving..." : "Save Mood"}
         </SubmitButton>

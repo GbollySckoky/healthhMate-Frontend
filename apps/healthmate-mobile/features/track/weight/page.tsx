@@ -1,17 +1,6 @@
 "use client";
-
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Scale, Target } from "lucide-react";
-
-import {
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  CartesianGrid,
-  Tooltip,
-} from "recharts";
 
 import { patientService } from "@/service/patientService";
 
@@ -59,17 +48,6 @@ const Weight = () => {
   const weightReadings: WeightReading[] = data?.data ?? [];
   const latestWeight = weightReadings[0];
 
-  const [readings] = useState([
-    { date: "Jun 20", systolic: 82, diastolic: 62 },
-    { date: "Jun 21", systolic: 95, diastolic: 75 },
-    { date: "Jun 22", systolic: 118, diastolic: 105 },
-    { date: "Jun 23", systolic: 118, diastolic: 95 },
-    { date: "Jun 24", systolic: 140, diastolic: 82 },
-    { date: "Jun 25", systolic: 140, diastolic: 82 },
-    { date: "Jun 26", systolic: 140, diastolic: 82 },
-    { date: "Jun 27", systolic: 140, diastolic: 82 },
-  ]);
-
   if (isError) {
     return (
       <div className="flex h-screen items-center justify-center text-red-500">
@@ -115,7 +93,6 @@ const Weight = () => {
             {/* Goal Card */}
 
             <Card>
-
               <div className="mb-4 flex items-center">
 
                 <Target className="mr-2 h-5 w-5 text-green-600" />
@@ -140,54 +117,7 @@ const Weight = () => {
 
             </Card>
 
-            {/* Chart */}
-
-            <div className="mt-6 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-
-              <SubTitle>Weight Trends</SubTitle>
-
-              <div className="mt-5 h-72 w-full">
-
-                <ResponsiveContainer
-                  width="100%"
-                  height="100%"
-                >
-                  <LineChart data={readings}>
-
-                    <CartesianGrid
-                      strokeDasharray="5 5"
-                    />
-
-                    <XAxis
-                      dataKey="date"
-                    />
-
-                    <Tooltip />
-
-                    <Line
-                      type="monotone"
-                      dataKey="systolic"
-                      stroke="#ef4444"
-                      strokeWidth={3}
-                    />
-
-                    <Line
-                      type="monotone"
-                      dataKey="diastolic"
-                      stroke="#3b82f6"
-                      strokeWidth={3}
-                    />
-
-                  </LineChart>
-                </ResponsiveContainer>
-
-              </div>
-
-            </div>
-
-            {/* Weight History */}
-
-            <Card>
+            <Card className="mt-6">
 
               <SubTitle>Weight History</SubTitle>
 

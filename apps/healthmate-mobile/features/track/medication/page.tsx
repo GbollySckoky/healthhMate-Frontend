@@ -75,25 +75,25 @@ const Medication = () => {
                   <Pill size={24} color="#C11574" />
                 </div>
                 <CardText>Today Dose</CardText>
-                <CardAmount>{latestMedication?.dosage ?? '--'}</CardAmount>
+                <CardAmount>{latestMedication?.name ?? '--'}</CardAmount>
                 <CardText>
                   Recorded on:{' '}
                   {formatReadingDate(
                     latestMedication?.recordedAt ?? latestMedication?.createdAt
                   )}
                 </CardText>
-                <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-medium mt-[7px] inline-block w-fit">
+                {/* <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-medium mt-[7px] inline-block w-fit">
                   {latestMedicationStatus}
-                </span>
+                </span> */}
               </DetailsContainer>
 
               <div className="mb-10">
                 <Card>
                   <SubTitle>Medication History</SubTitle>
                   {medicationReadings.map((recent, index) => {
-                    const status = recent.status ?? 'Logged';
+                    // const status = recent.status ?? 'Logged';
                     const isLastItem = index === medicationReadings.length - 1;
-                    const colors = statusStyles[status] ?? statusStyles.Logged;
+                    // const colors = statusStyles[status] ?? statusStyles.Logged;
 
                     return (
                       <div
@@ -117,14 +117,14 @@ const Medication = () => {
                             </div>
                           </div>
 
-                          <span
+                          {/* <span
                             className="px-[15px] py-[7px] rounded-full font-medium"
                             style={{ backgroundColor: colors.bg, color: colors.text }}
                           >
                             {status}
-                          </span>
+                          </span> */}
 
-                          <span className="bg-[#FDF2FA] text-[#C11574] px-[15px] py-[7px] rounded-full font-medium">
+                          <span className="text-sm font-normal text-[#414651] items-start">
                             {recent.dosage ?? '--'}
                           </span>
                         </div>

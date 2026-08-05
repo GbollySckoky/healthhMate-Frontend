@@ -68,7 +68,7 @@ const BranchTable = ({ searchQuery = "", status }: BranchTableProps) => {
         title: `Delete ${branchName || "Branch"}?`,
         className: "max-w-lg",
         onClose: () => {},
-        confirmDelete() {},
+        // confirmDelete() {},
       }
     );
   };
@@ -124,23 +124,23 @@ const BranchTable = ({ searchQuery = "", status }: BranchTableProps) => {
                   onClick={() => router.push(`/branches/${branch.id}`)}
                   className="cursor-pointer hover:bg-[#FAFBFF]"
                 >
-                  <TableCell className="font-inter text-[14px] font-medium text-grey-20">
+                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                     {branch.id}
                   </TableCell>
 
-                  <TableCell className="font-inter text-[14px] font-medium text-grey-20">
+                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                     {branch.branchName || "-"}
                   </TableCell>
 
-                  <TableCell className="font-inter text-[14px] font-normal text-grey-20">
+                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                     {branch.branchAddress || "-"}
                   </TableCell>
 
-                  <TableCell className="font-inter text-[14px] font-normal text-grey-20">
+                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                     {branch.phoneNumber || "-"}
                   </TableCell>
 
-                  <TableCell className="font-inter text-[14px] font-normal text-grey-20">
+                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                     {branch.state || "-"}
                   </TableCell>
 

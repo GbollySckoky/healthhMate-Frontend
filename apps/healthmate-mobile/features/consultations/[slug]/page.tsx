@@ -24,7 +24,7 @@ const getDoctorName = (doctor: GetDoctor) => {
   ]
     .filter(Boolean)
     .join(' ');
-  return name || 'Doctor unavailable';
+  return `Dr. ${name}` || 'Doctor unavailable';
 };
 
 const getDoctorImageSource = (doctor: GetDoctor) => {
@@ -112,7 +112,7 @@ const ConsultationId = () => {
       <div className="mb-[50px]">
         {doctors.length === 0 && (
           <div className="flex items-center justify-center min-h-[160px]">
-            <p className="text-[#414651] font-medium text-sm text-center">
+            <p className="text-[#414651] font-normal text-sm text-center">
               {searchQuery ? 'No doctors found' : 'No doctors available'}
             </p>
           </div>
@@ -138,7 +138,7 @@ const ConsultationId = () => {
                 <div className="flex flex-1 justify-between">
                   <div className="ml-2.5 flex-1">
                     <SubTitle>{getDoctorName(doctor)}</SubTitle>
-                    <p className="text-xs text-[color:var(--purple,#7C3AED)] pt-1">
+                    <p className="text-xs text-[#717680] pt-1">
                       {specialization}
                     </p>
                     <p className="text-xs text-[#717680] pt-1">

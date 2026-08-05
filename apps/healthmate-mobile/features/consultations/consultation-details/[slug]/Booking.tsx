@@ -3,18 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import toast from "react-hot-toast";
-
-// import DateInput from "@/components/Input/DateInput";
-// import TextAreaInput from "@/components/Input/TextAreaInput";
-// import { patientService } from "@/services/patientService";
 import { Appointment } from "@/lib/interface/createAppointment";
 import DateInput from "@/components/DateInput";
 import CustomCalendar from "@/components/CustomCalendar";
 import TextAreaInput from "@/components/TextAreaInput";
 import { ROUTES } from "@/constants/route";
 import { patientService } from "@/service/patientService";
-// import { ROUTES } from "@/constants/routes";
 
 interface BookingProps {
   consultation: any;
@@ -125,9 +119,9 @@ const Booking = ({ consultation }: BookingProps) => {
       />
 
       <div>
-        <h3 className="mb-3 font-semibold">
+        <p className="mb-1 font-normal text-sm pb-1.5 text-[#414651]">
           Select Time
-        </h3>
+        </p>
 
         <div className="grid grid-cols-4 gap-3">
           {TIME_SLOTS.map((slot) => (
@@ -137,7 +131,7 @@ const Booking = ({ consultation }: BookingProps) => {
               onClick={() =>
                 updateField("time", slot)
               }
-              className={`rounded-md border py-2 text-sm transition ${
+              className={`rounded-md border py-2 text-xs font-normal transition ${
                 form.time === slot
                   ? "border-pink-600 bg-pink-50 text-pink-600"
                   : "border-gray-300"
@@ -150,7 +144,7 @@ const Booking = ({ consultation }: BookingProps) => {
       </div>
 
       <div>
-        <h3 className="mb-3 font-semibold">
+        <h3 className="mb-1 font-normal text-sm pb-1.5 text-[#414651]">
           Consultation Type
         </h3>
 
@@ -165,7 +159,7 @@ const Booking = ({ consultation }: BookingProps) => {
                   item.value
                 )
               }
-              className={`w-full rounded-md border p-3 text-left transition ${
+              className={`w-full rounded-md border p-3 text-left transition text-xs font-normal ${
                 form.consultationType === item.value
                   ? "border-pink-600 bg-pink-50"
                   : "border-gray-300"

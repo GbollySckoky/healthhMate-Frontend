@@ -8,8 +8,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import image from '@/assets/Image.png'
-// import Image from "next/image"
 import { TableTitle } from "@/components/ui/Reusable"
 import Input from "@/components/Inputs/Input"
 import MinSelectField from "@/components/Inputs/MinSelectField"
@@ -22,6 +20,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Hospital_Admin } from '@/lib/service/service';
 import { GET_ALL_APPOINTMENTS } from '@/lib/interface/get_all_appointyment'
 import { STATUS } from '@/types/status'
+import { CapitalizeName } from '@/lib/components/ui/CapitalizeName'
 
 
 const AllAppointmentTable = () => {
@@ -38,18 +37,6 @@ const AllAppointmentTable = () => {
     })
     console.log('DATA!!', data?.data)
     const appointments = data?.data || []
-    // Filter data based on search and filters
-    // const filteredAppointments = appointments.filter((appointment) => {
-    //     const matchesSearch = 
-    //         appointment.doctorName.toLowerCase().includes(searchInput.toLowerCase()) ||
-    //         appointment.specialty.toLowerCase().includes(searchInput.toLowerCase()) ||
-    //         appointment.patientName.toLowerCase().includes(searchInput.toLowerCase())
-        
-    //     const matchesStatus = !statusFilter || appointment.status === statusFilter
-    //     const matchesSpecialty = !specialtyFilter || appointment.specialty === specialtyFilter
-
-    //     return matchesSearch && matchesStatus && matchesSpecialty
-    // })
 
     const handleStatusSelect = (option: string) => {
         setStatusFilter(prev => prev === option ? '' : option)
@@ -60,11 +47,6 @@ const AllAppointmentTable = () => {
         setSpecialtyFilter(prev => prev === option ? '' : option)
         toggleSpecialtyDropdown()
     }
-
-    // const handleExport = () => {
-    //     // Export functionality
-    //     console.log('Exporting data...', filteredAppointments)
-    // }
 
     const handleAppointmentClick = (appointmentId: number) => {
         router.push(`/appointment/${appointmentId}`)
@@ -159,7 +141,6 @@ const AllAppointmentTable = () => {
                             >
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-30">
                                     <div className="flex items-center">
-                                        {/* <Image src={appointment.image} alt='Doctor' width={40} height={40} className="rounded-full" /> */}
                                         <div className="ml-2">
                                             <p className="font-medium">{appointment.doctor.firstName} {appointment.doctor.lastName}</p>  
                                             <p className='text-red-800 font-inter font-normal text-[12px]'>{appointment.doctor.email || '-'}</p>
@@ -182,7 +163,7 @@ const AllAppointmentTable = () => {
                                     </div>
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-20">
-                                    {appointment.consultationType || "-"}
+                                    {CapitalizeName(appointment.consultationType).replaceAll('_', " ") || "-"}
                                 </TableCell>
                                 <TableCell className="font-inter font-normal text-[14px] text-grey-20">
                                     {appointment.amount.toLocaleString() || "-"}

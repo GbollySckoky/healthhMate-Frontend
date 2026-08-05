@@ -6,7 +6,7 @@ import { Video, Headphones, PersonStanding } from "lucide-react";
 import { colors } from "@/constants/colors";
 import { Consultation } from "@/lib/interface/consultation";
 import BookDoctor from "./BookDoctor";
-import { useModal } from "@/store/Modal";
+// import { useModal } from "@/store/Modal";
 // import { useModal } from "@/context/ModalContext";
 
 const getConsultationIcon = (type: string) => {
@@ -34,10 +34,14 @@ interface Props {
 }
 
 const About = ({ consultation }: Props) => {
-  const { openModal } = useModal();
+  // const { openModal } =/ useModal();
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleCloseModal = () => {
+    setOpenModal(true);
+  }
 
   return (
-    <div className="mt-3 mb-5 border-t pt-4">
+    <div className="mt-3 border-t pt-4">
       <MinCard
         title="About"
         value={consultation?.profile?.bio || "No bio available"}
@@ -104,22 +108,25 @@ const About = ({ consultation }: Props) => {
 
       <button
         className="mt-8 mb-[50px] w-full rounded-xl bg-pink-600 py-3 font-semibold text-white transition hover:bg-pink-700"
-        onClick={() =>
-          openModal(<BookDoctor consultation={consultation} />, {
-          title: "Book Appointment",
-          footer: (
-            <button className="w-full rounded-xl bg-pink-600 py-3 font-semibold text-white">
-              Confirm Booking
-            </button>
-          ),
-        })
-        }
+        onClick={() => handleCloseModal()}
+        //   openModal(<BookDoctor consultation={consultation} />, {
+        //   title: "Book Appointment",
+        //   footer: (
+        //     <button className="w-full rounded-xl bg-pink-600 py-3 font-semibold text-white">
+        //       Confirm Booking
+        //     </button>
+        //   ),
+        // })
+        // }
       >
         Book Consultation
       </button>
+      {openModal && (
+        <BookDoctor consultation={consultation} onClose={handleCloseModal} />
+      )}
     </div>
   );
-};
+}
 
 export default About;
 
