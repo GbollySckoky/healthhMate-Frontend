@@ -15,12 +15,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Provider>
+     
       <body className={`font-inter`}>
+        <Provider>
         {children}
         <ToastContainer />
+        </Provider>
       </body>
-      </Provider>
+      
     </html>
   );
 }
