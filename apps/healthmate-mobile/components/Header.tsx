@@ -31,7 +31,7 @@ const HeaderSkeleton = () => (
   <header className="sticky top-0 z-40 flex flex-row items-center justify-between bg-white border-b border-[#F1F1F1] px-5 py-3 shrink-0">
     <div className="flex flex-col gap-1.5">
       <SkeletonBlock width={80} height={10} />
-      <SkeletonBlock width={110} height={16} />
+      {/* <SkeletonBlock width={110} height={16} />/ */}
     </div>
     <div className="flex flex-row items-center gap-4">
       <SkeletonBlock width={22} height={22} rounded="rounded-full" />
@@ -55,6 +55,9 @@ export default function Header() {
       if (pathname === ROUTES.home) return 'Home'
       if (pathname === ROUTES.track) return 'Track'
       if (pathname === ROUTES.appointments) return 'Appointments'
+      if (pathname === ROUTES.consultation) return 'Consultations'
+      if (pathname === ROUTES.consultation || pathname.startsWith(ROUTES.consultation + '/')) return 'Consultation Details'
+      if (pathname === ROUTES.appointments) return 'Appointments'
       if (pathname === ROUTES.appointments || pathname.startsWith(ROUTES.appointments + '/')) return 'Appointment Details'
       // if (pathname === ROUTES.earnings || pathname.startsWith(ROUTES.earnings + '/')) return 'Earnings & Transactions'
       if (pathname === ROUTES.profile) return 'Profile'
@@ -77,7 +80,7 @@ export default function Header() {
       <div className="flex flex-row items-center gap-4">
         <div className='relative cursor-pointer' onClick={() => router.push(ROUTES.notifications)}>
           <Bell size={22} className="text-gray-600 hover:text-gray-800" />
-          <span className='bg-red-800  text-white text-xs rounded-full absolute -top-1 -right-2 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center'>{unReadNotifications}</span>
+          <span className='bg-red-800  text-white text-xs rounded-full absolute -top-1 -right-2 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center'>{unReadNotifications ?? 0}</span>
         </div>
 
         <Link href={"/profile"} aria-label="Profile">

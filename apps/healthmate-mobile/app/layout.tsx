@@ -3,6 +3,7 @@ import "./globals.css";
 import Providers from "../providers/Provider";
 import Footer from "@/constants/Footer";
 import Header from "@/components/Header";
+import { AuthExpiredListener } from "@/constants/AuthExpiredListener";
 
 export const metadata: Metadata = {
   title: "Healthmate Mobile App",
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="h-dvh overflow-hidden" suppressHydrationWarning>
+        <AuthExpiredListener />
         <Providers>
           <div className="flex h-dvh flex-col">
             <Header />

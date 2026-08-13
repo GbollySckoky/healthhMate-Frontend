@@ -25,4 +25,5 @@ export const PATIENTS_ENDPOINTS = {
     GET_SUPPORT_DETAILS: 'support/patient/',
     GET_ME: 'me',
     CREATE_SUPPORT: 'support/patient',
+    PAYMENT:'payment/initialize'
 }

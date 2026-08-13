@@ -147,9 +147,9 @@ const Activities = () => {
 
   const renderEmptyState = () => (
     <div className="flex flex-col items-center justify-center min-h-[120px] p-4 border border-[#F1F1F1] rounded-[10px] bg-white mt-[10px] mb-[10px]">
-      <p className="font-lato text-[#414651] text-sm mt-2 text-center">
+      <span className="font-lato text-[#414651] text-sm mt-2 text-center">
         No health overview yet
-      </p>
+      </span>
       <p className="font-lato text-[#717680] text-xs mt-1 text-center">
         Track your health activities to see them here.
       </p>
