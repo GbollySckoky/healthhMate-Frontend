@@ -119,14 +119,14 @@ export default function AppointmentCard() {
       {isLoading ? (
         <AppointmentCardSkeleton />
       ) : isError ? (
-        <div className="flex flex-col items-center p-4">
-          <span className="text-sm">Error loading appointment</span>
+        <div className="flex flex-col items-center p-4 border border-[#F1F1F1] rounded-md">
+          <p className="font-lato text-[#414651] text-sm mt-2 text-center">Error loading appointment</p>
           <SmallText>{errorMessage}</SmallText>
         </div>
       ) : !appointment ? (
-        <div className="flex flex-col items-center p-4">
+        <div className="flex flex-col items-center p-6 border border-[#F1F1F1] rounded-md">
           {/* <Inbox size={40} color="#717680" /> */}
-          <span className="mt-2 text-sm text-[#717680]">No appointment yet</span>
+          <span className="font-lato text-[#414651] text-sm mt-2 text-center">No appointment yet</span>
           <SmallText>Create an appointment</SmallText>
         </div>
       ) : (

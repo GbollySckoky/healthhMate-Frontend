@@ -19,6 +19,7 @@ import { PATIENTS_ENDPOINTS } from '@/constants/endpoints';
 import { login } from '@/lib/interface/login';
 import { forgotPassword } from '@/lib/interface/forgotPassword';
 import { verifyEmail } from '@/lib/interface/verifyEmail';
+import { CreatePayment } from '@/lib/interface/createPayment';
 
 export const patientService = {
   login: async (payload: login) => {
@@ -173,5 +174,12 @@ export const patientService = {
   },
   createSupportTicket: async (payload: SUPPORT_TICKET) => {
       return await api.post(PATIENTS_ENDPOINTS.CREATE_SUPPORT, payload)
+  },
+  createPayment: async (payload: CreatePayment) => {
+    return await api.post(PATIENTS_ENDPOINTS.PAYMENT, payload)
+  },
+  verifyPayment: async (reference: string) => {
+    const response = await api.get(`payment/verify/${reference}`)
+    return response.data
   },
 };

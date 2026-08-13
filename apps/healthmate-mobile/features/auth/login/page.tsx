@@ -74,7 +74,7 @@ const LoginPage = () => {
               placeholder="Enter email"
               value={inputValue.email || ''}
               onChange={(e) => handleChange('email', e.target.value)}
-              className="w-full border border-borderColor10 bg-[#D5D7DA] p-2 pr-11 text-[16px] text-gray-500 font-inter focus:outline-none text-sm font-normal rounded-md"
+              className="w-full border border-borderColor10 p-2 pr-11 text-[16px] font-inter focus:outline-none text-sm font-normal rounded-md"
             />
           </div>
 
@@ -89,7 +89,7 @@ const LoginPage = () => {
                 placeholder="Enter password"
                 value={inputValue.password || ''}
                 onChange={(e) => handleChange('password', e.target.value)}
-                className="w-full border border-borderColor10 bg-[#D5D7DA] p-2 pr-11 text-[16px] text-gray-500 font-inter focus:outline-none text-sm font-normal rounded-md"
+                className="w-full border border-borderColor10 p-2 pr-11 text-[16px] font-inter focus:outline-none text-sm font-normal rounded-md"
               />
               <button
                 type="button"

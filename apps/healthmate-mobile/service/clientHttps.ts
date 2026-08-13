@@ -3,7 +3,7 @@ import { storageService } from '@/constants/storage';
 
 const api = axios.create({
   baseURL: 'https://healthcare-backend-5y5b.onrender.com/api/v1/',
-  timeout: 15000,
+  // timeout: 15000,
 });
 
 api.interceptors.request.use((config) => {
@@ -26,7 +26,12 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !isLoginRequest && !alreadyOnLoginPage) {
       storageService.clearAuthData();
-      window.location.href = '/auth/login';
+
+      // Don't hard-navigate here — window.location.href would tear down
+      // the page and cancel every other in-flight request (bookings,
+      // payments, etc). Dispatch an event instead and let a component
+      // higher up do a soft redirect via next/navigation's router.
+      window.dispatchEvent(new CustomEvent('auth:expired'));
     }
 
     return Promise.reject(error);
