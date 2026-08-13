@@ -64,7 +64,7 @@ const ConsultationDetails = () => {
   }
 
   return (
-    <main className="mb-[50px] bg-white">
+    <main className="">
       {/* Header */}
       {/* <header className="flex items-center gap-3 border-b px-6 py-4">
         <button onClick={() => router.back()}>
@@ -74,7 +74,7 @@ const ConsultationDetails = () => {
         <h1 className="text-lg font-semibold">Doctor&apos;s Profile</h1>
       </header> */}
 
-      <div className="mx-auto max-w-3xl px-6 py-8">
+      <div className="mx-auto max-w-3xl px-6 py-8 h-[50vh]">
         {/* Banner */}
         <div className="relative h-52 w-full">
           <Image

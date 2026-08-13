@@ -1,5 +1,5 @@
 "use client";
-import { CardText, CardTitle, MinCard, SubTitle, Title } from "@/components/Reusable";
+import { CardTitle, MinCard, SubTitle } from "@/components/Reusable";
 import React, { ReactNode, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Heart, Smile, Moon, Scale, Pill } from "lucide-react";
@@ -55,6 +55,7 @@ const OverviewCardSkeleton = () => (
 const Activities = () => {
   const router = useRouter();
   const { overview, isError, isLoading, error, refetch } = useGetOverview();
+  console.log(overview, "overview");
   const { getReadableDate } = useDate();;
   const hasOverviewData = Boolean(
     overview?.bloodPressure ||
@@ -146,9 +147,9 @@ const Activities = () => {
 
   const renderEmptyState = () => (
     <div className="flex flex-col items-center justify-center min-h-[120px] p-4 border border-[#F1F1F1] rounded-[10px] bg-white mt-[10px] mb-[10px]">
-      <p className="font-lato text-[#414651] text-sm mt-2 text-center">
+      <span className="font-lato text-[#414651] text-sm mt-2 text-center">
         No health overview yet
-      </p>
+      </span>
       <p className="font-lato text-[#717680] text-xs mt-1 text-center">
         Track your health activities to see them here.
       </p>
@@ -168,12 +169,12 @@ const Activities = () => {
             title={`Navigate to ${title} tracker`}
             className="text-left shrink-0 active:opacity-75 transition-opacity"
           >
-            <MinCard className="p-[15px] border border-borderColor10 rounded-md bg-white mb-[10px] w-[200px]">
-              <div className="pb-[15px]">{icon}</div>
+            <MinCard className="p-[15px] border border-borderColor10 rounded-md bg-white w-[200px]">
+              <div className="pb-[10px]">{icon}</div>
               <CardTitle>{title}</CardTitle>
-              <div className="pt-1 flex flex-col gap-1">
-                <Title>{value}</Title>
-                <CardText>{text}</CardText>
+              <div>
+                <p className="block text-base font-semibold text-[#414651] font-libre">{value}</p>
+                <p className="font-inter text-[10px] text-[#717680] font-normal pt-1">{text}</p>
               </div>
             </MinCard>
           </button>

@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import React from "react";
 import CreateSupport from "./CreateSupport";
+import { CapitalizeName } from "@/lib/components/ui/CapitalizeName";
 
 const AppointmentDetailsSkeleton = () => {
   return (
@@ -54,7 +55,7 @@ const Page = () => {
   const params = useParams();
   const {openModal} = useModal()
   const id = String(params?.slug);
-
+  console.log("Appointment ID:", id);
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["getAppointmentDetails", id],
     queryFn: () => Hospital_Admin.getAppointmentDetails(id),
@@ -112,7 +113,7 @@ const Page = () => {
               <Infos label="Duration" value={appointment?.duration || "-"} />
               <Infos
                 label="Consultation Type"
-                value={appointment?.consultationType || "-"}
+                value={CapitalizeName(appointment?.consultationType).replaceAll('_', " ") || "-"}
               />
                <Infos
                 label="Consultation Fee"
@@ -127,16 +128,16 @@ const Page = () => {
 
               <Infos
                 label="Name"
-                value={`${appointment?.doctor?.firstName || ""} ${
-                  appointment?.doctor?.lastName || ""
+                value={`${CapitalizeName(appointment?.doctor?.firstName) } ${
+                  CapitalizeName(appointment?.doctor?.lastName) || ""
                 }`.trim() || "-"}
               />
               <Infos
                 label="Specialty"
-                value={appointment?.doctor?.profile?.specialization || "-"}
+                value={CapitalizeName(appointment?.doctor?.profile?.specialization) || "-"}
               />
               <Infos label="Email" value={appointment?.doctor?.email || "-"} />
-              <Infos label="Gender" value={appointment?.doctor?.gender || "-"} />
+              <Infos label="Gender" value={CapitalizeName(appointment?.doctor?.gender) || "-"} />
             </Card>
 
             <Card className="mt-5">
@@ -146,8 +147,8 @@ const Page = () => {
 
               <Infos
                 label="Name"
-                value={`${appointment?.user?.firstName || ""} ${
-                  appointment?.user?.lastName || ""
+                value={`${CapitalizeName(appointment?.user?.firstName) || ""} ${
+                  CapitalizeName(appointment?.user?.lastName) || ""
                 }`.trim() || "-"}
               />
               <Infos label="Email" value={appointment?.user?.email || "-"} />
@@ -186,7 +187,7 @@ const Page = () => {
               >
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
               </svg>
-              <p className="mt-2 font-lato text-[18px] font-medium text-grey-20">
+              <p className="mt-2 font-lato text-[14px] font-medium text-grey-20">
                 {appointment?.feedback ||
                   "No feedback has been submitted for this appointment yet."}
               </p>

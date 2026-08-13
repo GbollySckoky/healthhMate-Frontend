@@ -52,7 +52,7 @@ const HospitalDoctorsPage = () => {
           </div>
 
           <button className="rounded-md border p-3">
-            <Filter className="h-5 w-5" />
+            <Filter className="h-5 w-5 " color="text-[#414651]" />
           </button>
         </div>
 

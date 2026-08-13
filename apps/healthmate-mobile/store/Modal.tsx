@@ -15,12 +15,14 @@ interface ModalOptions {
   title?: string;
   description?: string;
   className?: string;
+  footer?: ReactNode;
   onClose?: () => void;
 }
 
 interface ModalContextType {
   openModal: (content: ReactNode, options?: ModalOptions) => void;
   closeModal: () => void;
+  isOpen: boolean;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -76,7 +78,13 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     mounted && isOpen
       ? createPortal(
           <div
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/25 p-4"
+            className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/60 p-4"
+            style={{
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100dvh",
+            }}
             role="dialog"
             aria-modal="true"
             aria-labelledby={
@@ -89,7 +97,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
             }}
           >
             <div
-              className={`relative flex max-h-[90vh] w-full flex-col overflow-hidden rounded-lg bg-white shadow-xl ${
+              className={`relative flex max-h-[85vh] w-full flex-col overflow-hidden rounded-lg bg-white shadow-xl ${
                 modalConfig.className ?? "max-w-3xl"
               }`}
               onMouseDown={(event) => event.stopPropagation()}
@@ -129,6 +137,10 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
               <div className="flex-1 overflow-y-auto p-6 text-sm">
                 {modalContent}
               </div>
+
+              {modalConfig.footer && (
+                <div className="border-t p-5">{modalConfig.footer}</div>
+              )}
             </div>
           </div>,
           document.body,
@@ -136,7 +148,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
       : null;
 
   return (
-    <ModalContext.Provider value={{ openModal, closeModal }}>
+    <ModalContext.Provider value={{ openModal, closeModal, isOpen }}>
       {children}
       {modal}
     </ModalContext.Provider>

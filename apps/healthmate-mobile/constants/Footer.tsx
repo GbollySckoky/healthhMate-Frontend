@@ -9,8 +9,8 @@ export default function Footer() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 flex flex-row items-stretch bg-white border-t border-[#E5E7EB] pt-2 w-full"
-    //   style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      className="flex flex-row items-stretch bg-white border-t border-[#E5E7EB] p-3 w-full shrink-0"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       {FOOTER_NAV_ITEMS.map(({ id, label, href, icon: Icon }) => {
         const isActive = pathname === href || pathname?.startsWith(`${href}/`);

@@ -5,12 +5,14 @@ import {
   GetHospital,
   GetHospitalsResponse,
 } from '@/lib/interface/get-hospitals-interface';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import useToggle from '@/hooks/useToggle';
 import Link from 'next/link';
 import { ROUTES } from '@/constants/route';
 import HospitalCardSkeleton from '@/components/HospitalCardSkeleton';
 import defaultHospitalImage from '@/assets/Group 19153.png'
+import profileFallback from '@/assets/adhy-savala-zbpgmGe27p8-unsplash (1).jpg';
+
 
 type ConsultationProps = {
   data: GetHospitalsResponse | undefined;
@@ -22,7 +24,7 @@ type ConsultationProps = {
 
 // const defaultHospitalImage = consultationData[0]?.image;
 
-const getHospitalImageSource = (profile?: string | null) => {
+const getHospitalImageSource = (profile?: string | StaticImageData | null) => {
   return profile || defaultHospitalImage;
 };
 
@@ -65,7 +67,7 @@ const Consultation = ({
         <SubTitle>Featured Hospitals</SubTitle>
         <Link
           href={ROUTES.allAppointments}
-          className="flex items-center gap-1 text-[color:var(--light-red,#ff4d4f)] text-xs font-normal"
+          className="flex items-center gap-1 text-pink-600 text-xs font-normal"
         >
           View All
           <ArrowRight size={15} />
@@ -91,7 +93,7 @@ const Consultation = ({
               >
                 <div className="relative w-full h-[180px]">
                   <Image
-                    src={getHospitalImageSource(profile)}
+                    src={getHospitalImageSource(profile || profileFallback)}
                     alt="Hospital"
                     className="w-full h-full object-cover rounded-[10px]"
                   />
@@ -116,7 +118,7 @@ const Consultation = ({
                       <p className="text-xs text-[#717680] pt-[3px]">
                         {email || 'Email unavailable'}
                       </p>
-                      <p className="text-xs text-pink-600 leading-5 mb-3 pt-[3px]">
+                      <p className="text-xs text-[#414651] leading-5 mb-3 pt-[3px]">
                         {phoneNumber || 'Phone unavailable'}
                       </p>
                     </div>
@@ -127,7 +129,7 @@ const Consultation = ({
                       // state={{ hospitalName: hospitalName || 'Hospital' }}
                       className="border border-[#f2f2f2] py-3 rounded-[10px] w-full text-center block"
                     >
-                      <span className="text-black text-xs font-medium">
+                      <span className="text-[#414651] hover:underline hover:text-pink-600 text-xs font-medium">
                         View Doctors
                       </span>
                     </Link>

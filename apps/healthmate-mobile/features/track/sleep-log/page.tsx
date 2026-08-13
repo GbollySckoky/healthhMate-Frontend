@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Moon } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts";
+// import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import {
   Card,
   CardAmount,
@@ -70,16 +70,6 @@ const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
 };
 const getStatusColors = (status: string) => STATUS_COLORS[status] ?? STATUS_COLORS.Logged;
 
-const chartData = [
-  { month: "Jan", value: 20 },
-  { month: "Feb", value: 45 },
-  { month: "Mar", value: 28 },
-  { month: "Apr", value: 80 },
-  { month: "May", value: 99 },
-  { month: "Jun", value: 43 },
-];
-
-/* ---------- Skeleton primitives ---------- */
 
 const SkeletonBox = ({
   width,
@@ -154,7 +144,7 @@ export default function SleepTrackerPage() {
   const sleepReadings: SleepReading[] = data?.data ?? [];
   const latestSleep = sleepReadings[0];
   const latestSleepQuality = latestSleep?.sleep?.selectedMood;
-  const latestSleepStatus = latestSleep?.status ?? getSleepStatus(latestSleepQuality);
+  // const latestSleepStatus = latestSleep?.status ?? getSleepStatus(latestSleepQuality);
 
   if (isError) {
     return (
@@ -201,12 +191,12 @@ export default function SleepTrackerPage() {
                 Recorded on:{" "}
                 {formatReadingDate(latestSleep?.recordedAt ?? latestSleep?.createdAt)}
               </CardText>
-              <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-inter-medium mt-1.5 inline-block">
+              {/* <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-inter-medium mt-1.5 inline-block">
                 {latestSleepStatus}
-              </span>
+              </span> */}
             </DetailsContainer>
 
-            <div className="flex flex-col justify-center items-center mb-5 py-[5px] flex-1">
+            {/* <div className="flex flex-col justify-center items-center mb-5 py-[5px] flex-1">
               <div className="bg-white rounded-xl p-[15px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full">
                 <SubTitle>Sleep Trends</SubTitle>
                 <div className="mt-2" style={{ width: "100%", height: 300 }}>
@@ -229,7 +219,7 @@ export default function SleepTrackerPage() {
                   </ResponsiveContainer>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="mb-10">
               <Card>
@@ -264,7 +254,7 @@ export default function SleepTrackerPage() {
                           </div>
                         </div>
                         <span
-                          className="font-inter-medium px-[15px] py-[7px] rounded-full"
+                          className="font-inter text-sm font-normal px-[15px] py-[7px] rounded-full"
                           style={{ backgroundColor: bg, color: text }}
                         >
                           {status}

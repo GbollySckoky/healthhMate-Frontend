@@ -1,9 +1,9 @@
-// 'use client'
 import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "../providers/Provider";
 import Footer from "@/constants/Footer";
 import Header from "@/components/Header";
+import { AuthExpiredListener } from "@/constants/AuthExpiredListener";
 
 export const metadata: Metadata = {
   title: "Healthmate Mobile App",
@@ -15,15 +15,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
-    <html lang="en" >
-      <body className="" suppressHydrationWarning>
-      <Providers>
-        <Header />
-        {children}
-        <Footer />
-      </Providers>
+    <html lang="en">
+      <body className="h-dvh overflow-hidden" suppressHydrationWarning>
+        <AuthExpiredListener />
+        <Providers>
+          <div className="flex h-dvh flex-col">
+            <Header />
+            <main className="flex-1 overflow-y-auto">{children}</main>
+            <Footer />
+          </div>
+        </Providers>
       </body>
     </html>
   );

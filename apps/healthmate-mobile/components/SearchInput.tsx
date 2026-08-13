@@ -53,7 +53,7 @@ const SearchInput = ({
       <div className="relative w-full">
         <input
           type="text"
-          className="w-full h-11 py-2.5 pl-[35px] pr-9 border border-[#D6D7DA] rounded-lg font-inter text-sm font-normal bg-white text-black placeholder:text-black focus:outline-none focus:border-[#DD2590] disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full h-11 py-2.5 pl-[35px] pr-9 border border-[#D6D7DA] rounded-lg font-inter text-sm font-normal bg-white text-[#414651] placeholder:text-[#414651]  focus:outline-none focus:border-[#DD2590] disabled:opacity-60 disabled:cursor-not-allowed"
           onChange={(event) => onChange(event.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
@@ -74,7 +74,7 @@ const SearchInput = ({
           title="Tap to search"
           className="absolute left-2 top-1/2 -translate-y-1/2 p-1 z-[1] disabled:cursor-not-allowed"
         >
-          <Search size={22} color={editable ? colors.black : colors.gray} />
+          <Search size={17} color={editable ? colors.black : colors.gray} />
         </button>
 
         {showClearButton && (

@@ -1,13 +1,15 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Clock, Inbox, Video } from "lucide-react";
+import { Clock, Video } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SubTitle, SmallText } from "@/components/Reusable";
-import { ROUTES } from "@/constants/route";
+// import { ROUTES } from "@/constants/route";
 import { patientService } from "@/service/patientService";
 import { CapitalizeName } from "@/constants/capitalizeName";
 import useDate from "@/hooks/useDate";
+import Image from 'next/image';
+import profileFallback from '@/assets/Ellipse 165.png';
 
 type Doctor = { firstName?: string; lastName?: string };
 
@@ -81,7 +83,7 @@ export default function AppointmentCard() {
   const router = useRouter();
   const { getReadableDate } = useDate();
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["getAppointments", 1, 1],
+    queryKey: ["getAppointments", 10, 1],
     queryFn: () => patientService.getAppointments(1, 1),
   });
   const appointment = data?.data?.[0];
@@ -104,27 +106,27 @@ export default function AppointmentCard() {
     <div>
       <div className="flex flex-row justify-between items-center mt-[10px] mb-[10px]">
         <SubTitle>Recent Appointments</SubTitle>
-        <button
+        {/* <button
           type="button"
           className="flex flex-row items-center"
           onClick={() => router.push(ROUTES.allApointments)}
         >
           <span className="text-[#DD2590] font-normal text-xs">See All</span>
           <ArrowRight size={15} color="#DD2590" />
-        </button>
+        </button> */}
       </div>
 
       {isLoading ? (
         <AppointmentCardSkeleton />
       ) : isError ? (
-        <div className="flex flex-col items-center p-4">
-          <span className="text-sm">Error loading appointment</span>
+        <div className="flex flex-col items-center p-4 border border-[#F1F1F1] rounded-md">
+          <p className="font-lato text-[#414651] text-sm mt-2 text-center">Error loading appointment</p>
           <SmallText>{errorMessage}</SmallText>
         </div>
       ) : !appointment ? (
-        <div className="flex flex-col items-center p-4">
-          <Inbox size={40} color="#717680" />
-          <span className="mt-2 text-sm">No appointment yet</span>
+        <div className="flex flex-col items-center p-6 border border-[#F1F1F1] rounded-md">
+          {/* <Inbox size={40} color="#717680" /> */}
+          <span className="font-lato text-[#414651] text-sm mt-2 text-center">No appointment yet</span>
           <SmallText>Create an appointment</SmallText>
         </div>
       ) : (
@@ -133,13 +135,20 @@ export default function AppointmentCard() {
             type="button"
             onClick={handleViewDetails}
             aria-label={`View appointment with ${getDoctorName(appointment?.doctor)}`}
-            className="w-full text-left flex flex-row items-center mt-[5px] mb-[2px]"
+            className="w-full text-left flex flex-row mt-[5px] mb-[2px]"
           >
-            <span className="w-[50px] h-[50px] rounded-full bg-[#FDF2FA] text-[#DD2590] flex items-center justify-center font-semibold shrink-0">
+            {/* <span className="w-[50px] h-[50px] rounded-full bg-[#FDF2FA] text-[#DD2590] flex items-center justify-center font-semibold shrink-0">
               {getDoctorInitials(appointment?.doctor)}
-            </span>
-            <div className="flex flex-row flex-1 justify-between items-center ml-[5px]">
-              <div>
+            </span> */}
+            <div className="w-[70px] shrink-0">
+              <Image
+                src={profileFallback}
+                alt={getDoctorInitials(appointment?.doctor)}
+                className="w-[70px] h-[70px] rounded-full object-cover"
+              />
+            </div>
+            <div className="flex flex-row flex-1 justify-between">
+              <div className="ml-2.5 flex-1">
                 <SubTitle>{getDoctorName(appointment?.doctor)}</SubTitle>
                 <div className="flex items-center mt-[5px]">
                   <Clock size={13} color="#717680" />
