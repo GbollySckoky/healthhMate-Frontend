@@ -17,7 +17,7 @@ export default function OverviewLayout({
             {children}
           </div>
         </div>
-      </div>
+       </div>
     </AppointmentProvider>
   );
 }
