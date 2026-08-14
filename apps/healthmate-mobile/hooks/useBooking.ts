@@ -30,16 +30,20 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
       });
 
       const authorizationUrl =
-        response?.data?.data?.authorization_url ??
-        response?.data?.authorization_url;
+        response?.data?.data?.authorization_url ?? response?.data?.authorization_url;
 
-      if (authorizationUrl) {
+      const reference =
+        response?.data?.data?.reference ?? response?.data?.reference;
+
+      if (authorizationUrl && reference) {
+        // Page is about to unload — persist reference so the
+        // callback page can read it after Paystack redirects back.
+        sessionStorage.setItem("paystack_reference", reference);
         window.location.href = authorizationUrl;
         return;
       }
 
       router.push(ROUTES.consultationPayment);
-
       onSuccess?.();
     },
 

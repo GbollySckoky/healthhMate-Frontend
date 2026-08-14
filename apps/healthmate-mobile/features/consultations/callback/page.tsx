@@ -10,12 +10,7 @@ const PaymentCallback = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const reference =
-    searchParams.get("reference") ??
-    searchParams.get("trxref") ??
-    (typeof window !== "undefined"
-      ? sessionStorage.getItem("paystack_reference")
-      : null);
+  const reference = searchParams.get("reference");
 
   const {
     verifyData,
