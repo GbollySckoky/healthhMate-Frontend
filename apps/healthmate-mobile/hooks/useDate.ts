@@ -31,8 +31,21 @@ const useDate = () => {
     : "-";
 
   const getToday = new Date().toLocaleDateString() 
+
+  const formatReadingDate = (date?: string) => {
+    if (!date) return "No date recorded";
+
+    const readingDate = new Date(date);
+
+    if (Number.isNaN(readingDate.getTime())) {
+      return "No date recorded";
+    }
+
+    return `${readingDate.toLocaleDateString()} at ${readingDate.toLocaleTimeString()}`;
+  };
   return {
     getReadableDate,
+    formatReadingDate,
     formatTime,
     getToday
   };

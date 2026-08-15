@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, MapPin, Star } from "lucide-react";
+import { MapPin, Star } from "lucide-react";
 
 import { topRatedData } from "@/constants/data";
 import { doctorProfileRoute } from "@/constants/route";
@@ -14,13 +14,13 @@ const TopRatedDoctorsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="flex items-center gap-3 border-b bg-white px-6 py-4">
+      {/* <div className="flex items-center gap-3 border-b bg-white px-6 py-4">
         <button onClick={() => router.back()}>
           <ChevronLeft className="h-6 w-6" />
         </button>
 
         <h1 className="text-lg font-semibold">Top Rated Doctors</h1>
-      </div>
+      </div> */}
 
       <div className="mx-auto max-w-5xl space-y-5 p-6">
         {topRatedData.map((doctor) => (

@@ -28,9 +28,9 @@ export default function ConsultationPaymentPage() {
     }
   }, [data]);
 
-  if (!reference) return <div>No payment reference found.</div>;
-  if (isLoading) return <div>Verifying payment...</div>;
-  if (isError) return <div>Payment verification failed.</div>;
+  if (!reference) return <div className="text-sm font-mdium text-center min-h-screen text-grey-20 flex justify-center items-center flex-col">No payment reference found.</div>;
+  if (isLoading) return <div className="text-sm font-mdium text-center min-h-screen text-grey-20 flex justify-center items-center flex-col">Verifying payment...</div>;
+  if (isError) return <div className="text-sm font-mdium text-center min-h-screen text-grey-20 flex justify-center items-center flex-col">Payment verification failed.</div>;
 
   return <div>Payment verified! Status: {data?.status}</div>;
 }

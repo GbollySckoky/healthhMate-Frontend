@@ -6,35 +6,25 @@ import { patientService } from "@/service/patientService";
 
 import {
   Card,
-  CardAmount,
+  // CardAmount,
   CardText,
   DetailsContainer,
   SubTitle,
   Button,
-  PageWrapper
+  PageWrapper,
+  Reading
 } from "@/components/Reusable";
 
 import WeightSkeleton from "@/components/WeightSkeleton";
 import { useModal } from "@/store/Modal";
 import WeightModal from "./WeightModal";
+import useDate from "@/hooks/useDate";
 
 type WeightReading = {
   id: number | string;
   weight: number | string;
   createdAt?: string;
   recordedAt?: string;
-};
-
-const formatReadingDate = (date?: string) => {
-  if (!date) return "No date recorded";
-
-  const readingDate = new Date(date);
-
-  if (Number.isNaN(readingDate.getTime())) {
-    return "No date recorded";
-  }
-
-  return `${readingDate.toLocaleDateString()} at ${readingDate.toLocaleTimeString()}`;
 };
 
 const Weight = () => {
@@ -44,6 +34,8 @@ const Weight = () => {
     queryKey: ["weight"],
     queryFn: () => patientService.getWeight(),
   });
+
+  const {formatReadingDate} = useDate()
 
   const weightReadings: WeightReading[] = data?.data ?? [];
   const latestWeight = weightReadings[0];
@@ -74,11 +66,11 @@ const Weight = () => {
 
               <CardText>Current Weight</CardText>
 
-              <CardAmount>
+              <Reading>
                 {latestWeight
                   ? `${latestWeight.weight} kg`
                   : "-- kg"}
-              </CardAmount>
+              </Reading>
 
               <CardText>
                 Recorded on{" "}
