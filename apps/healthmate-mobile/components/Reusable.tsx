@@ -123,6 +123,12 @@ export const CardAmount = ({ children }: { children: ReactNode }) => (
   </span>
 );
 
+export const Reading = ({ children }: { children: ReactNode }) => (
+  <span className="block text-base font-semibold font-libre py-1 text-[#414651]">
+    {children}
+  </span>
+);
+
 export const Status = ({ children }: { children: ReactNode }) => (
   <span className="inline-flex items-center justify-center text-[#5924DC] bg-[#F4F3FF] rounded-[10px] p-[10px] font-medium text-xs text-center h-[35px] font-inter-medium">
     {children}

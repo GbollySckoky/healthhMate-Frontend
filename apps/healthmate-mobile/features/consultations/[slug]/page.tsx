@@ -24,7 +24,7 @@ const getDoctorName = (doctor: GetDoctor) => {
   ]
     .filter(Boolean)
     .join(' ');
-  return `Dr. ${name}` || 'Doctor unavailable';
+  return `Dr. ${name}`;
 };
 
 const getDoctorImageSource = (doctor: GetDoctor) => {

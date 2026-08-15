@@ -3,46 +3,29 @@ import React from 'react';
 import {  Pill } from 'lucide-react';
 import {
   Card,
-  CardAmount,
+  // CardAmount,
   CardText,
   DetailsContainer,
   SubTitle,
   Wrapper,
   Button,
-  PageWrapper
+  PageWrapper,
+  Reading
 } from '@/components/Reusable';
 import MedicationModal from './MedicationModal';
 import { useQuery } from '@tanstack/react-query';
 import { patientService } from '@/service/patientService';
 import { useModal } from '@/store/Modal';
 import MedicationSkeleton from '@/components/MedicationSkeleton';
-
-type MedicationReading = {
-  id: number | string;
-  name?: string;
-  dosage?: string;
-  recordedAt?: string;
-  createdAt?: string;
-  status?: string;
-};
-
-const formatReadingDate = (date?: string) => {
-  if (!date) return 'No date recorded';
-
-  const readingDate = new Date(date);
-  if (Number.isNaN(readingDate.getTime())) return 'No date recorded';
-
-  return `${readingDate.toLocaleDateString()} at ${readingDate.toLocaleTimeString()}`;
-};
+import useDate from '@/hooks/useDate';
+import { MedicationReading } from '@/lib/interface/create-medication-interface';
 
 
-const statusStyles: Record<string, { bg: string; text: string }> = {
-  Taken: { bg: '#ECFDF3', text: '#027A48' },
-  Missed: { bg: '#FEF3F2', text: '#B42318' },
-  Logged: { bg: '#F4F3FF', text: '#5924DC' },
-};
-
-// ---------- Main screen ----------
+// const statusStyles: Record<string, { bg: string; text: string }> = {
+//   Taken: { bg: '#ECFDF3', text: '#027A48' },
+//   Missed: { bg: '#FEF3F2', text: '#B42318' },
+//   Logged: { bg: '#F4F3FF', text: '#5924DC' },
+// };
 
 const Medication = () => {
   const { openModal } = useModal();
@@ -50,10 +33,11 @@ const Medication = () => {
     queryKey: ['getmedication'],
     queryFn: () => patientService.getMedication(),
   });
+  const {formatReadingDate} = useDate()
 
   const medicationReadings: MedicationReading[] = data?.data ?? [];
   const latestMedication = medicationReadings[0];
-  const latestMedicationStatus = latestMedication?.status ?? 'Logged';
+  // const latestMedicationStatus = latestMedication?.status ?? 'Logged';
 
   if (isError) {
     return (
@@ -75,7 +59,7 @@ const Medication = () => {
                   <Pill size={24} color="#C11574" />
                 </div>
                 <CardText>Today Dose</CardText>
-                <CardAmount>{latestMedication?.name ?? '--'}</CardAmount>
+                <Reading>{latestMedication?.name ?? '--'}</Reading>
                 <CardText>
                   Recorded on:{' '}
                   {formatReadingDate(

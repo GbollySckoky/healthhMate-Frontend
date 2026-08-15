@@ -12,41 +12,22 @@ import {
 } from 'recharts';
 import {
   Card,
-  CardAmount,
+  // CardAmount,
   CardText,
   DetailsContainer,
   SubTitle,
   Button,
-  PageWrapper
+  PageWrapper,
+  Reading
 } from '@/components/Reusable';
 import { patientService } from '@/service/patientService';
 import { useQuery } from '@tanstack/react-query';
 import { useModal } from '@/store/Modal';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import MoodModal from './MoodModal';
+import useDate from '@/hooks/useDate';
+import { MoodReading } from '@/lib/interface/create-mood-interface';
 
-type MoodValue = {
-  selectedMood?: string;
-  selectedEmoji?: boolean;
-};
-
-type MoodReading = {
-  id: number | string;
-  mood?: MoodValue;
-  notes?: string;
-  recordedAt?: string;
-  createdAt?: string;
-  status?: string;
-};
-
-const formatReadingDate = (date?: string) => {
-  if (!date) return 'No date recorded';
-
-  const readingDate = new Date(date);
-  if (Number.isNaN(readingDate.getTime())) return 'No date recorded';
-
-  return `${readingDate.toLocaleDateString()} at ${readingDate.toLocaleTimeString()}`;
-};
 
 const getMoodEmoji = (mood?: string) => {
   switch (mood) {
@@ -71,8 +52,6 @@ const getMoodStatus = (mood?: string) => {
   return 'Logged';
 };
 
-// ---------- Status badge color mapping ----------
-
 const statusStyles: Record<string, { bg: string; text: string }> = {
   Positive: { bg: '#ECFDF3', text: '#027A48' },
   Low: { bg: '#FEF3F2', text: '#B42318' },
@@ -81,12 +60,13 @@ const statusStyles: Record<string, { bg: string; text: string }> = {
 };
 
 const Mood = () => {
-  const router = useRouter();
   const { openModal } = useModal();
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['getmood'],
     queryFn: () => patientService.getMood(),
   });
+  const {formatReadingDate} = useDate()
+
 
   const moodReadings: MoodReading[] = data?.data ?? [];
   const latestMood = moodReadings[0];
@@ -133,13 +113,13 @@ const Mood = () => {
               <p className="text-[35px] mb-[3px] leading-none">
                 {getMoodEmoji(latestMoodName)}
               </p>
-              <CardText>Today's mood</CardText>
-              <CardAmount>{latestMoodName ?? 'No mood logged'}</CardAmount>
+              <CardText>Today&apos;s mood</CardText>
+              <Reading>{latestMoodName ?? 'No mood logged'}</Reading>
               <CardText>
                 Recorded on:{' '}
                 {formatReadingDate(latestMood?.recordedAt ?? latestMood?.createdAt)}
               </CardText>
-              <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-medium mt-[7px] inline-block w-fit">
+              <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 mt-[7px] inline-block w-fit text-xs font-normal">
                 {latestMoodStatus}
               </span>
             </DetailsContainer>

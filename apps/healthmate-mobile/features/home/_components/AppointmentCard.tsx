@@ -91,7 +91,7 @@ export default function AppointmentCard() {
   const errorMessage = error instanceof Error ? error.message : "Something went wrong";
 
   const handleViewDetails = () => {
-    if (appointment) router.push(`/home-screen/appointment/${appointment.id}`);
+    if (appointment) router.push(`/appointments/${appointment.id}`);
   };
 
   const handleReschedule = () => {

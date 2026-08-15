@@ -17,7 +17,7 @@ export const ROUTES = {
     allReminders: '/home/all-reminders',
     allAppointments: "/consultations/all-hospitals",
     doctorsHospitals: '/consultations/doctors-hospitals',
-    consultationPayment: '/consultations/consultation-details/payment',
+    consultationPayment: '/consultations/payment',
     bloodPressure: '/track/blood-pressure',
     mood: '/track/mood',
     sleep: '/track/sleep-log',
