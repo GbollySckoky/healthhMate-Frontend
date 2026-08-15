@@ -5,9 +5,10 @@ import Link from "next/link";
 import { Bell } from "lucide-react";
 import useGetMe from "@/hooks/useGetMe";
 import { ROUTES } from "@/constants/route";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import profileFallback from "@/assets/Ellipse 165.png";
 import useGetUnReadNotification from "@/hooks/useGetUnReadNotification";
+import { usePageTitle } from "./Title";
 /* ---------- Skeleton ---------- */
 
 const SkeletonBlock = ({
@@ -43,39 +44,89 @@ const HeaderSkeleton = () => (
 
 export default function Header() {
   const { patient, isLoading } = useGetMe();
-  const pathname = usePathname()
+  // const pathname = usePathname()
   const {unReadNotifications} = useGetUnReadNotification()
   const router = useRouter();
+
+  const pageTitle = usePageTitle()
 
   if (isLoading) {
     return <HeaderSkeleton />;
   }
 
-   const getTitle = (pathname: string) => {
-      if (pathname === ROUTES.home) return 'Home'
-      if (pathname === ROUTES.track) return 'Track'
-      if (pathname === ROUTES.appointments) return 'Appointments'
-      if (pathname === ROUTES.consultation) return 'Consultations'
-      if (pathname === ROUTES.consultation || pathname.startsWith(ROUTES.consultation + '/')) return 'Consultation Details'
-      if (pathname === ROUTES.appointments) return 'Appointments'
-      if (pathname === ROUTES.appointments || pathname.startsWith(ROUTES.appointments + '/')) return 'Appointment Details'
-      // if (pathname === ROUTES.earnings || pathname.startsWith(ROUTES.earnings + '/')) return 'Earnings & Transactions'
-      if (pathname === ROUTES.profile) return 'Profile'
-      if (pathname === ROUTES.support) return 'Support'
-      if (pathname === ROUTES.support || pathname.startsWith(ROUTES.support + '/')) return 'Support Details'
-      if (pathname === ROUTES.settings) return 'Settings'
-      // if (pathname === ROUTES.message || pathname.startsWith(ROUTES.message + '/')) return 'Messages'
-      // if (pathname === ROUTES.availability) return 'Availability'
-      if (pathname === ROUTES.notifications) return 'Notification'
-      return ''
-   }
-
-  const Title = getTitle(pathname)
+  //  const getTitle = (pathname: string) => {
+  //     if (pathname === ROUTES.home) return 'Home'
+  //     if (pathname === ROUTES.track) return 'Track'
+  //     if (pathname === ROUTES.appointments) return 'Appointments'
+  //     if (pathname === ROUTES.sleep){
+  //       return (
+  //         <>
+  //           <h1>Sleep Log</h1>
+  //           <p className="text-xs text-[#717680] font-normal font-libre">Monitor your rest and improve your sleep routine</p>
+  //         </>
+  //       )
+  //     }
+  //     if (pathname === ROUTES.bloodPressure){
+  //       return (
+  //         <>
+  //           <h1>Blood Pressure Tracker</h1>
+  //           <p className="text-xs text-[#717680] font-normal font-libre">Track your readings to monitor your heart health</p>
+  //         </>
+  //       )
+  //     }
+  //     if (pathname === ROUTES.mood){
+  //       return (
+  //         <>
+  //           <h1>How Are You Feeling Today?</h1>
+  //           <p className="text-xs text-[#717680] font-normal font-libre">Tracking your mood helps you understand your emotional health</p>
+  //         </>
+  //       )
+  //     }
+  //     if (pathname === ROUTES.weight){
+  //       return (
+  //         <>
+  //           <h1>Track Your Weight</h1>
+  //           <p className="text-xs text-[#717680] font-normal font-libre">Tracking your mood helps you understand your emotional health</p>
+  //         </>
+  //       )
+  //     }
+  //     if (pathname === ROUTES.medication){
+  //       return (
+  //         <>
+  //           <h1>Medication Log</h1>
+  //           <p className="text-xs text-[#717680] font-normal font-libre">Tracking your meds ensures better treatment outcomes</p>
+  //         </>
+  //       )
+  //     }
+  //     if (pathname === ROUTES.consultation) return 'Consultations'
+  //     if (pathname === ROUTES.consultation || pathname.startsWith(ROUTES.consultation + '/')) return 'Consultation Details'
+  //     if (pathname === ROUTES.appointments) return 'Appointments'
+  //     if (pathname === ROUTES.appointments || pathname.startsWith(ROUTES.appointments + '/')) return 'Appointment Details'
+  //     // if (pathname === ROUTES.earnings || pathname.startsWith(ROUTES.earnings + '/')) return 'Earnings & Transactions'
+  //     if (pathname === ROUTES.profile) return 'Profile'
+  //     if (pathname === ROUTES.support) return 'Support'
+  //     if (pathname === ROUTES.support || pathname.startsWith(ROUTES.support + '/')) return 'Support Details'
+  //     if (pathname === ROUTES.settings) return 'Settings'
+  //     // if (pathname === ROUTES.message || pathname.startsWith(ROUTES.message + '/')) return 'Messages'
+  //     // if (pathname === ROUTES.availability) return 'Availability'
+  //     if (pathname === ROUTES.notifications) return 'Notification'
+  //     return ''
+  //  }
+  
+  // const Title = getTitle(pathname)
+  // <button
+  //           type="button"
+  //           onClick={() => router.back()}
+  //           aria-label="Go back"
+  //           className="p-1 -ml-1 rounded-md hover:bg-gray-100"
+  //         >
+  //           <ChevronLeft size={24} color="black" />
+  //         </button>
   return (
     <header className="sticky top-0 z-40 flex flex-row items-center justify-between bg-white border-b border-[#F1F1F1] px-5 py-3 shrink-0">
       <div className="flex flex-col">
         {/* <span className="text-xs font-lato text-[#717680]">Welcome back,</span> */}
-        <p className="text-xl font-semibold font-lato text-[#414651{]">{Title}</p>
+        <h1 className="font-semibold text-base text-[#414651] font-libre">{pageTitle}</h1>
       </div>
       <div className="flex flex-row items-center gap-4">
         <div className='relative cursor-pointer' onClick={() => router.push(ROUTES.notifications)}>

@@ -1,40 +1,32 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 // import { useRouter } from 'next/navigation';
 import {  Heart, Stethoscope } from 'lucide-react';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   ResponsiveContainer,
+// } from 'recharts';
 import {
     Button,
   Card,
-  CardAmount,
+  // CardAmount,
   CardText,
   DetailsContainer,
   PageWrapper,
+  Reading,
   SubTitle,
 } from '@/components/Reusable';
-// import { Button } from '@/components/button/Button';
-// import BloodPressureModal from './BloodPressureModal';
-// import { useModal } from '@/context/ModalContext';
 import { useQuery } from '@tanstack/react-query';
 import { patientService } from '@/service/patientService';
 import { useModal } from '@/store/Modal';
 import BloodPressureModal from './BloodPressureModal';
-
-type BloodPressureReading = {
-  id: number | string;
-  systolic: string | number;
-  diastolic: string | number;
-  createdAt?: string;
-  recordedAt?: string;
-};
+import { BloodPressureReading } from '@/lib/interface/create-blood-pressure';
+import { BloodPressureSkeleton } from '@/components/BloodPressureSkeleton';
 
 const formatReadingDate = (date?: string) => {
   if (!date) return 'No date recorded';
@@ -45,133 +37,39 @@ const formatReadingDate = (date?: string) => {
   return `${readingDate.toLocaleDateString()} at ${readingDate.toLocaleTimeString()}`;
 };
 
-// ---------- Window width hook (web replacement for useWindowDimensions) ----------
 
-const useWindowWidth = () => {
-  const [width, setWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 375
-  );
+// const useWindowWidth = () => {
+//   const [width, setWidth] = useState(
+//     typeof window !== 'undefined' ? window.innerWidth : 375
+//   );
 
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+//   useEffect(() => {
+//     const handleResize = () => setWidth(window.innerWidth);
+//     window.addEventListener('resize', handleResize);
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, []);
 
-  return width;
-};
-
-// ---------- Skeleton primitives ----------
-
-type SkeletonBoxProps = {
-  width: number | string;
-  height: number;
-  borderRadius?: number;
-  className?: string;
-};
-
-const SkeletonBox = ({
-  width,
-  height,
-  borderRadius = 6,
-  className = '',
-}: SkeletonBoxProps) => (
-  <div
-    className={`bg-gray-200 animate-pulse ${className}`}
-    style={{
-      width,
-      height,
-      borderRadius,
-    }}
-  />
-);
-
-const ReadingSkeletonItem = ({ isLastItem }: { isLastItem: boolean }) => (
-  <div
-    className={`pt-[5px] border-[#F2F2F2] ${
-      isLastItem ? 'border-b-0' : 'border-b'
-    }`}
-  >
-    <div className="flex items-center justify-between py-[18px]">
-      <div className="flex items-center">
-        <SkeletonBox width={38} height={38} borderRadius={8} />
-        <div className="pl-4">
-          <SkeletonBox width={100} height={14} className="mb-1.5" />
-          <SkeletonBox width={130} height={12} />
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const BloodPressureSkeleton = ({
-  chartWidth,
-  chartHeight,
-}: {
-  chartWidth: number;
-  chartHeight: number;
-}) => (
-  <div className="self-center w-[92%] mx-auto pt-[10px] pb-[110px]">
-    <DetailsContainer>
-      <SkeletonBox width={48} height={48} borderRadius={100} className="mb-2.5" />
-      <SkeletonBox width={110} height={12} className="mb-2" />
-      <SkeletonBox width={130} height={22} className="mb-2.5" />
-      <SkeletonBox width={180} height={12} className="mb-2.5" />
-      <SkeletonBox width={70} height={20} borderRadius={50} />
-    </DetailsContainer>
-
-    {/* Chart placeholder */}
-    <div className="bg-white mb-[26px] rounded-xl p-3 shadow-sm border border-[#f2f2f2]">
-      <SubTitle>BP Trends</SubTitle>
-      <SkeletonBox
-        width={chartWidth}
-        height={chartHeight}
-        borderRadius={8}
-        className="my-2 mx-auto"
-      />
-      <div className="flex justify-center mt-[15px] gap-[30px]">
-        <div className="flex items-center">
-          <SkeletonBox width={12} height={12} borderRadius={6} className="mr-2" />
-          <SkeletonBox width={50} height={12} />
-        </div>
-        <div className="flex items-center">
-          <SkeletonBox width={12} height={12} borderRadius={6} className="mr-2" />
-          <SkeletonBox width={60} height={12} />
-        </div>
-      </div>
-    </div>
-
-    {/* Recent readings placeholder */}
-    <div className="mb-10">
-      <Card>
-        <SubTitle>Recent Readings</SubTitle>
-        {Array.from({ length: 4 }).map((_, index) => (
-          <ReadingSkeletonItem key={index} isLastItem={index === 3} />
-        ))}
-      </Card>
-    </div>
-  </div>
-);
+//   return width;
+// };
 
 
 const BloodPressure = () => {
-//   const router = useRouter();
   const { openModal } = useModal();
-  const screenWidth = useWindowWidth();
-  const contentWidth = screenWidth * 0.92;
-  const chartWidth = Math.max(contentWidth - 24, 1);
-  const chartHeight = Math.max(190, Math.min(screenWidth * 0.55, 240));
+  // const screenWidth = useWindowWidth();
+  // const contentWidth = screenWidth * 0.92;
+  // const chartWidth = Math.max(contentWidth - 24, 1);
+  // const chartHeight = Math.max(190, Math.min(screenWidth * 0.55, 240));
 
-  const [readings] = useState([
-    { date: 'Jun 20', systolic: 82, diastolic: 62 },
-    { date: 'Jun 21', systolic: 95, diastolic: 75 },
-    { date: 'Jun 22', systolic: 118, diastolic: 105 },
-    { date: 'Jun 23', systolic: 118, diastolic: 95 },
-    { date: 'Jun 24', systolic: 140, diastolic: 82 },
-    { date: 'Jun 25', systolic: 140, diastolic: 82 },
-    { date: 'Jun 26', systolic: 140, diastolic: 82 },
-    { date: 'Jun 27', systolic: 140, diastolic: 82 },
-  ]);
+  // const [readings] = useState([
+  //   { date: 'Jun 20', systolic: 82, diastolic: 62 },
+  //   { date: 'Jun 21', systolic: 95, diastolic: 75 },
+  //   { date: 'Jun 22', systolic: 118, diastolic: 105 },
+  //   { date: 'Jun 23', systolic: 118, diastolic: 95 },
+  //   { date: 'Jun 24', systolic: 140, diastolic: 82 },
+  //   { date: 'Jun 25', systolic: 140, diastolic: 82 },
+  //   { date: 'Jun 26', systolic: 140, diastolic: 82 },
+  //   { date: 'Jun 27', systolic: 140, diastolic: 82 },
+  // ]);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['bloodPressure'],
@@ -181,11 +79,11 @@ const BloodPressure = () => {
   const bloodPressures: BloodPressureReading[] = data?.data ?? [];
   const latestBloodPressure = bloodPressures[0];
 
-  const chartData = readings.map((r) => ({
-    date: r.date.split(' ')[1],
-    systolic: r.systolic,
-    diastolic: r.diastolic,
-  }));
+  // const chartData = readings.map((r) => ({
+  //   date: r.date.split(' ')[1],
+  //   systolic: r.systolic,
+  //   diastolic: r.diastolic,
+  // }));
 
   if (isError) {
     return (
@@ -203,7 +101,7 @@ const BloodPressure = () => {
     <PageWrapper>
         <div>
           {isLoading ? (
-            <BloodPressureSkeleton chartWidth={chartWidth} chartHeight={chartHeight} />
+            <BloodPressureSkeleton  />
           ) : (
             <div className="self-center w-[92%] mx-auto pt-[10px] pb-[110px]">
               <DetailsContainer>
@@ -211,23 +109,23 @@ const BloodPressure = () => {
                   <Heart size={24} color="#DF0000" fill="#DF0000" />
                 </div>
                 <CardText>Today&apos;s Readings</CardText>
-                <CardAmount>
+                <Reading>
                   {latestBloodPressure
                     ? `${latestBloodPressure.systolic}/${latestBloodPressure.diastolic} mmHg`
                     : '--/-- mmHg'}
-                </CardAmount>
+                </Reading>
                 <CardText>
                   Recorded on:{' '}
                   {formatReadingDate(
                     latestBloodPressure?.recordedAt ?? latestBloodPressure?.createdAt
                   )}
                 </CardText>
-                <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-medium mt-[7px] inline-block w-fit">
+                <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-normal mt-[7px] inline-block w-fit text-xs">
                   Normal
                 </span>
               </DetailsContainer>
 
-              <div className="bg-white mb-[26px] rounded-xl p-3 shadow-sm border border-[#f2f2f2]">
+              {/* <div className="bg-white mb-[26px] rounded-xl p-3 shadow-sm border border-[#f2f2f2]">
                 <SubTitle>BP Trends</SubTitle>
                 <div style={{ width: chartWidth, height: chartHeight }} className="my-2 mx-auto">
                   <ResponsiveContainer width="100%" height="100%">
@@ -278,7 +176,7 @@ const BloodPressure = () => {
                     <span className="text-sm text-[#666] font-medium">Diastolic</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="mb-10">
                 <Card>

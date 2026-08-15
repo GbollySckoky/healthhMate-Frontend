@@ -10,7 +10,12 @@ const PaymentCallback = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const reference = searchParams.get("reference");
+  const reference =
+    searchParams.get("reference") ??
+    searchParams.get("trxref") ??
+    (typeof window !== "undefined"
+      ? sessionStorage.getItem("paystack_reference")
+      : null);
 
   const {
     verifyData,
@@ -45,7 +50,7 @@ const PaymentCallback = () => {
       </div>
     );
   }
-
+  console.log(reference)
   if (isLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
