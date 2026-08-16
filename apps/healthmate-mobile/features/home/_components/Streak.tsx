@@ -8,7 +8,7 @@ export default function Streak() {
       <SubTitle>3 days Streak!</SubTitle>
       <SubTitle>Consistency is key – you&apos;re doing great!</SubTitle>
       <p className="font-inter text-xs text-[#414651] font-normal mt-[3px] mb-0">Every log brings you closer to better health.</p>
-      <Image src={streakImage} alt="" className="absolute right-0 top-0 w-[100px] h-[100px] object-contain" priority={false} />
+      <Image src={streakImage} alt="" className="absolute right-0 top-0 w-[100px] h-[100px] object-contain" loading="lazy" />
     </div>
   );
 }

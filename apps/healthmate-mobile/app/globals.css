@@ -1,7 +1,4 @@
-/* CDN Font imports */
-@import url('https://fonts.cdnfonts.com/css/lato');
-@import url('https://fonts.cdnfonts.com/css/libre-franklin');
-@import url('https://fonts.cdnfonts.com/css/inter');
+/* Fonts are preconnected/loaded from layout for better LCP control */
 
 /* Tailwind directives */
 /* @import "tailwindcss"; */

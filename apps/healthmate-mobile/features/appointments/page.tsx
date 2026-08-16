@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Clock, Video } from "lucide-react";
 import { patientService } from "@/service/patientService";
@@ -9,6 +10,7 @@ import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
 import { PageWrapper, SmallText, SubTitle } from "@/components/Reusable";
 import AppointmentCardSkeleton from "@/components/AllAppointmntSkeleton";
 import SearchInput from "@/components/SearchInput";
+import profileFallback from "@/assets/Ellipse 165.png";
 
 const formatAppointmentDate = (date: string, time: string) => {
   const appointmentDate = new Date(date);
@@ -32,7 +34,7 @@ const getDoctorName = (doctor: GetAppointment["doctor"]) => {
 };
 
 const getDoctorImage = (doctor: GetAppointment["doctor"]) => {
-  return doctor?.profileImage || doctor?.image || "https://picsum.photos/seed/696/3000/2000";
+  return doctor?.profileImage || doctor?.image || profileFallback;
 };
 
 const AllApointments = () => {
@@ -98,7 +100,7 @@ const AllApointments = () => {
 
         {!isLoading &&
           !isError &&
-          appointments.map((appointment) => {
+          appointments.map((appointment, index) => {
             const { id, doctor, date, time, status, consultationType } = appointment;
             return (
               <button
@@ -109,12 +111,15 @@ const AllApointments = () => {
               >
                 <div className="flex flex-row mt-[5px] mb-[2px]">
                   <div className="w-[50px] shrink-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={getDoctorImage(doctor)}
                       alt={getDoctorName(doctor)}
+                      width={50}
+                      height={50}
+                      sizes="50px"
+                      priority={index === 0}
+                      loading={index === 0 ? "eager" : "lazy"}
                       className="w-[50px] h-[50px] rounded-full object-cover bg-[#0553]"
-                      loading="lazy"
                     />
                   </div>
                   <div className="flex flex-row flex-1 justify-between">

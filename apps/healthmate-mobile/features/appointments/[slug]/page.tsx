@@ -2,6 +2,7 @@
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import { Video, ChevronRight, XCircle, MapPin } from "lucide-react";
 import { patientService } from "@/service/patientService";
 import { GetAppointment } from "@/lib/interface/get-appointments-interface";
@@ -10,7 +11,7 @@ import AppointmentDetailsSkeleton from "@/components/AppointmentDetailSkeleton";
 import { BtnFlex, Card, JoinBtn, MinTitle, PageWrapper, RescheduleBtn } from "@/components/Reusable";
 import { doctorProfileRoute, ROUTES } from "@/constants/route";
 import { useModal } from "@/store/Modal";
-import profile from "@/assets/Mobile.png";
+import profileFallback from "@/assets/Ellipse 165.png";
 import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
 
 const getDoctorName = (doctor: GetAppointment["doctor"]) => {
@@ -33,11 +34,9 @@ const getDoctorImage = (doctor: GetAppointment["doctor"]) => {
   return doctor?.profileImage || doctor?.image || null;
 };
 
-// `profile` may be a plain string path or a Next.js static-import object
-// depending on your image setup — this handles either.
 const resolveImageSrc = (src: string | null) => {
   if (src) return src;
-  return typeof profile === "string" ? profile : (profile as { src: string }).src;
+  return profileFallback;
 };
 
 const formatAppointmentDate = (date?: string, time?: string) => {
@@ -151,7 +150,7 @@ const AppointmentDetails = () => {
           </button>
         </div>
       </div>,
-      { title: "Cancel booking?", presentation: "center" }
+      { title: "Cancel booking?" }
     );
   };
 
@@ -186,10 +185,12 @@ const AppointmentDetails = () => {
       {!isLoading && !isError && appointmentDetails && (
         <>
           <div className="mb-5 flex flex-row bg-white p-4 rounded-[10px] border border-[#F2F2F2]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={resolveImageSrc(doctorImage)}
               alt={getDoctorName(appointmentDetails.doctor)}
+              width={80}
+              height={80}
+              priority
               className="w-20 h-20 rounded-full border-2 border-[#E8E8E8] object-cover"
             />
             <div className="ml-4 flex-1 flex flex-col justify-center">

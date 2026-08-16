@@ -25,6 +25,7 @@ const BookDoctor = ({ consultation, onClose }: BookDoctorProps) => {
               width={70}
               height={70}
               className="rounded-full object-cover"
+              loading="lazy"
             />
 
             <div>

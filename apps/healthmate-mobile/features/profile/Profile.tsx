@@ -192,6 +192,7 @@ const Profile = () => {
             width={100}
             height={100}
             className="w-[100px] h-[100px] rounded-full object-cover mb-1.5 border border-[#D6D7DA]"
+            priority
           />
           <button
             type="button"

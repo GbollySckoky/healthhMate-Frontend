@@ -151,7 +151,7 @@ const AppointmentDetails = () => {
           </button>
         </div>
       </div>,
-      { title: "Cancel booking?", presentation: "center" }
+      { title: "Cancel booking?" }
     );
   };
 
