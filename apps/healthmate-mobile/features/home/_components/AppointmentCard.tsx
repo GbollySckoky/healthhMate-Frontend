@@ -1,10 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Clock, Video } from "lucide-react";
+import { ArrowRight, Clock, Video } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SubTitle, SmallText } from "@/components/Reusable";
-// import { ROUTES } from "@/constants/route";
+import { ROUTES } from "@/constants/route";
 import { patientService } from "@/service/patientService";
 import { CapitalizeName } from "@/constants/capitalizeName";
 import useDate from "@/hooks/useDate";
@@ -106,14 +106,14 @@ export default function AppointmentCard() {
     <div>
       <div className="flex flex-row justify-between items-center mt-[10px] mb-[10px]">
         <SubTitle>Recent Appointments</SubTitle>
-        {/* <button
+        <button
           type="button"
           className="flex flex-row items-center"
           onClick={() => router.push(ROUTES.allApointments)}
         >
           <span className="text-[#DD2590] font-normal text-xs">See All</span>
           <ArrowRight size={15} color="#DD2590" />
-        </button> */}
+        </button>
       </div>
 
       {isLoading ? (

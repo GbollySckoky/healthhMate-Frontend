@@ -118,7 +118,7 @@ const ConsultationId = () => {
           </div>
         )}
 
-        {doctors.map((doctor) => {
+        {doctors.map((doctor, index) => {
           const specialization =
             doctor.profile?.specialization || 'General Practitioner';
 
@@ -132,6 +132,10 @@ const ConsultationId = () => {
                   <Image
                     src={getDoctorImageSource(doctor)}
                     alt={getDoctorName(doctor)}
+                    width={50}
+                    height={50}
+                    sizes="50px"
+                    priority={index === 0}
                     className="w-[50px] h-[50px] rounded-full object-cover"
                   />
                 </div>

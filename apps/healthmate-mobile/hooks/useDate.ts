@@ -22,7 +22,7 @@ const useDate = () => {
     }
   }, []);
 
-  const formatTime = (value: any) =>
+  const formatTime = (value: string) =>
   value
     ? new Date(value).toLocaleTimeString([], {
         hour: "2-digit",

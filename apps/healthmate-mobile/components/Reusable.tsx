@@ -154,7 +154,7 @@ export const Button = ({
       onClick={_fn}
       className="
         absolute bottom-6 right-5 w-[200px]
-        bg-[#DD2590] py-[15px] rounded-[10px]
+        bg-c py-[15px] rounded-[10px]
         flex items-center justify-center
         pointer-events-auto
       "
