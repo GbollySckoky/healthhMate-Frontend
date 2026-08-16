@@ -90,7 +90,6 @@ const CreateSupportTicket = ({ appointmentId }: { appointmentId: string }) => {
         title: "Ticket Created!",
         description:
           "Our support team has received your request. You'll receive an update soon via in-app message or email.",
-        presentation: "center",
       }
     );
   };

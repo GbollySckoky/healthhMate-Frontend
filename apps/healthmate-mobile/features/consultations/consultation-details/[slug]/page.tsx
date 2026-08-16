@@ -81,6 +81,8 @@ const ConsultationDetails = () => {
             src={backgroundImage}
             alt="Doctor Banner"
             fill
+            priority
+            sizes="(max-width: 768px) 100vw, 768px"
             className="rounded-xl object-cover"
           />
 
@@ -89,6 +91,7 @@ const ConsultationDetails = () => {
             alt="Doctor"
             width={80}
             height={80}
+            priority
             className="absolute bottom-[-30px] left-6 rounded-full border-4 border-white"
           />
 

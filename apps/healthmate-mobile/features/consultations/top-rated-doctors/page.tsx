@@ -36,6 +36,7 @@ const TopRatedDoctorsPage = () => {
                   width={56}
                   height={56}
                   className="rounded-full object-cover"
+                  loading="lazy"
                 />
 
                 <div>

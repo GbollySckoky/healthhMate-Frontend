@@ -82,7 +82,7 @@ const Consultation = ({
         </div>
       ) : (
         <div className="flex gap-4 overflow-x-auto pb-2">
-          {hospitals.map((hospital: GetHospital) => {
+          {hospitals.map((hospital: GetHospital, index: number) => {
             const { id, hospitalName, email, phoneNumber, profile } = hospital;
             const toggleId = String(id);
 
@@ -93,8 +93,12 @@ const Consultation = ({
               >
                 <div className="relative w-full h-[180px]">
                   <Image
-                    src={getHospitalImageSource(profile || profileFallback)}
-                    alt="Hospital"
+                    src={getHospitalImageSource(profile) || profileFallback}
+                    alt={`${hospitalName || 'Hospital'} cover`}
+                    width={300}
+                    height={180}
+                    sizes="(max-width: 768px) 100vw, 300px"
+                    priority={index === 0}
                     className="w-full h-full object-cover rounded-[10px]"
                   />
                   <button

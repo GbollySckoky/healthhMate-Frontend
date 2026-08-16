@@ -13,7 +13,7 @@ const TrackPage = () => {
       </PageWrapper>
 
       <button
-        className="absolute bottom-5 right-5 flex items-center justify-center rounded-[40px] bg-red-900 p-[15px]"
+        className="absolute bottom-5 right-5 flex items-center justify-center rounded-[40px] bg-[#DD2590] p-[15px]"
       >
         <Plus size={24} color="white" />
       </button>
