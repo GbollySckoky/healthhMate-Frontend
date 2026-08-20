@@ -125,59 +125,6 @@ const BloodPressure = () => {
                 </span>
               </DetailsContainer>
 
-              {/* <div className="bg-white mb-[26px] rounded-xl p-3 shadow-sm border border-[#f2f2f2]">
-                <SubTitle>BP Trends</SubTitle>
-                <div style={{ width: chartWidth, height: chartHeight }} className="my-2 mx-auto">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={chartData}>
-                      <CartesianGrid
-                        strokeDasharray="5 5"
-                        stroke="rgba(229, 231, 235, 1)"
-                        vertical={false}
-                      />
-                      <XAxis
-                        dataKey="date"
-                        stroke="rgba(107, 114, 128, 1)"
-                        tick={{ fontSize: 12 }}
-                        axisLine={false}
-                        tickLine={false}
-                      />
-                      <YAxis
-                        stroke="rgba(107, 114, 128, 1)"
-                        tick={{ fontSize: 12 }}
-                        axisLine={false}
-                        tickLine={false}
-                      />
-                      <Tooltip />
-                      <Line
-                        type="monotone"
-                        dataKey="systolic"
-                        stroke="rgba(239, 68, 68, 1)"
-                        strokeWidth={3}
-                        dot={{ r: 4, strokeWidth: 0 }}
-                      />
-                      <Line
-                        type="monotone"
-                        dataKey="diastolic"
-                        stroke="rgba(59, 130, 246, 1)"
-                        strokeWidth={3}
-                        dot={{ r: 4, strokeWidth: 0 }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="flex justify-center mt-[15px] gap-[30px]">
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 rounded-full mr-2 bg-[#EF4444]" />
-                    <span className="text-sm text-[#666] font-medium">Systolic</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 rounded-full mr-2 bg-[#3B82F6]" />
-                    <span className="text-sm text-[#666] font-medium">Diastolic</span>
-                  </div>
-                </div>
-              </div> */}
-
               <div className="mb-10">
                 <Card>
                   <SubTitle>Recent Readings</SubTitle>

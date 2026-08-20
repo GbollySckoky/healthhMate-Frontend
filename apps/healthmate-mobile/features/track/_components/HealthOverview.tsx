@@ -2,7 +2,7 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Heart, Smile, Moon, Scale, Pill } from 'lucide-react';
-import { CardText, CardTitle } from '@/components/Reusable';
+import { CardText, CardTitle, Reading } from '@/components/Reusable';
 // import OverviewCardSkeleton from '@/components/TrackSkeleton';
 import useGetOverview from '@/hooks/useGetOverview';
 import useDate from '@/hooks/useDate';
@@ -131,10 +131,10 @@ const HealthOverview = () => {
           >
             <div className="pb-[15px]">{icon}</div>
             <CardTitle>{title}</CardTitle>
-            <div className="pt-1 flex flex-col justify-end flex-1">
-              <p className="text-lg font-semibold mb-[3px] text-black truncate">
+            <div className="flex flex-col justify-end flex-1">
+              <Reading>
                 {value}
-              </p>
+              </Reading>
               <CardText>{text}</CardText>
             </div>
           </button>

@@ -623,7 +623,7 @@ export const otherMenuItems = [
         color={colors.lightRed}
       />
     ),
-    route: ROUTES.reminder, // Changed to a more appropriate route
+    route: ROUTES.reminder, 
   },
   {
     title: 'Settings',
@@ -634,7 +634,7 @@ export const otherMenuItems = [
         color={colors.lightRed}
       />
     ),
-    route: 'profile/settings', // Changed to a more appropriate route
+    route: ROUTES.settings, 
   },
 ];
 
@@ -704,3 +704,40 @@ export const FOOTER_NAV_ITEMS: FooterNavItem[] = [
 
 export const ACTIVE_COLOR = "#C11574";
 export const INACTIVE_COLOR = "#6B7280";
+
+
+export const PATIENT_NAV_ITEMS = [
+  {
+    id: "home",
+    label: "Home",
+    href: ROUTES.home,
+    icon: Home,
+  },
+  { id: "track", label: "Track", href: "/track", icon: Activity },
+  { id: "consultation", label: "Consultation", href: "/consultations", icon: CalendarCheck },
+  {
+    id: "appointments",
+    label: "Appointments",
+    href: ROUTES.appointments,
+    icon: CalendarDays,
+  },
+  { id: "support", label: "Support", href: "/support", icon: MessageCircle },
+  // {
+  //   id: "records",
+  //   label: "Records",
+  //   href: ROUTES.medicalRecords,
+  //   icon: FileText,
+  // },
+  {
+    id: "messages",
+    label: "Messages",
+    href: ROUTES.messages,
+    icon: MessageCircle,
+  },
+  {
+    id: "profile",
+    label: "Profile",
+    href: ROUTES.profile,
+    icon: User,
+  },
+];

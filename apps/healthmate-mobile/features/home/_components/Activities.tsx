@@ -55,8 +55,8 @@ const OverviewCardSkeleton = () => (
 const Activities = () => {
   const router = useRouter();
   const { overview, isError, isLoading, error, refetch } = useGetOverview();
-  console.log(overview, "overview");
-  const { getReadableDate } = useDate();;
+  const { getReadableDate } = useDate();
+
   const hasOverviewData = Boolean(
     overview?.bloodPressure ||
       overview?.mood ||

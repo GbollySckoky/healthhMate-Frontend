@@ -8,11 +8,18 @@ interface DateInputType {
 }
 
 const DateInput = ({ label, value, _fn, placeholder }: DateInputType) => {
+  const today = new Date();
+
+  const formattedToday = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
   return (
     <div className="py-[7px]">
       <p className="font-normal text-sm pb-1.5 text-[#414651]">{label}</p>
       <input
-        type="text"
+        type="date"
         className="
           w-full p-[10px] border border-[#D6D7DA] rounded-[5px]
           text-sm font-normal cursor-pointer
@@ -23,6 +30,7 @@ const DateInput = ({ label, value, _fn, placeholder }: DateInputType) => {
         value={value}
         placeholder={placeholder}
         readOnly
+        min={formattedToday}
       />
     </div>
   );
