@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { ROUTES } from "@/constants/route";
 import { useRouter } from "next/navigation";
 import profileFallback from "@/assets/Ellipse 165.png";
-import { usePageTitle } from "./Title";
+import { usePageTitle } from "./NavTitle";
 import { patientService } from "@/service/patientService";
 
 interface HeaderClientProps {

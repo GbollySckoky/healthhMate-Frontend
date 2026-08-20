@@ -1,7 +1,7 @@
 import { colors } from './colors';
 import image  from'@/assets/Mobile.png';
 import { 
-  Moon, Eye, EyeOff, CalendarDays, Settings, Phone, Bell, Mail, Scale, Home, Activity, CalendarCheck, 
+  Moon, Eye, EyeOff, CalendarDays, Phone, Bell, Mail, Scale, Home, Activity, CalendarCheck, 
   UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain, Heart, Smile,
   MessageCircle, User 
 } from 'lucide-react';
@@ -625,17 +625,17 @@ export const otherMenuItems = [
     ),
     route: ROUTES.reminder, 
   },
-  {
-    title: 'Settings',
-    id: 8,
-    icon: (
-      <Settings
-        size={20}
-        color={colors.lightRed}
-      />
-    ),
-    route: ROUTES.settings, 
-  },
+  // {
+  //   title: 'Settings',
+  //   id: 8,
+  //   icon: (
+  //     <Settings
+  //       size={20}
+  //       color={colors.lightRed}
+  //     />
+  //   ),
+  //   route: ROUTES.settings, 
+  // },
 ];
 
 

@@ -137,7 +137,7 @@ const Weight = () => {
 
                         <div className="ml-4">
 
-                          <p className="text-sm font-semibold text-gray-800">
+                          <p className="text-sm font-semibold text-[#717680]">
                             {weightReading.weight} kg
                           </p>
 
