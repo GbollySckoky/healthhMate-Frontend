@@ -2,41 +2,26 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Heart, MapPin, ChevronLeft } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
+import { Heart, MapPin } from 'lucide-react';
+import { useParams } from 'next/navigation';
 
-import { patientService } from '@/service/patientService';
 import About from './About';
 import ConsultationDetailsSkeleton from '@/components/ConsultationDetailsSkeleton';
 
 import backgroundImage from '@/assets/adhy-savala-zbpgmGe27p8-unsplash (1).jpg';
 import profileImage from '@/assets/Ellipse 165.png';
+import useGetDoctors from '@/hooks/useGetDoctors';
 
 const ConsultationDetails = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const { slug: id } = useParams<{ slug: string }>();
   const [liked, setLiked] = useState(false);
 
-  const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ['getDoctorById', id],
-    queryFn: () => patientService.getDoctorById(String(id)),
-    enabled: !!id,
-  });
-
-  const consultation = data?.data;
+  const { consultation, isLoading, isError, refetch } = useGetDoctors(id);
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white">
-        <header className="flex items-center gap-3 border-b px-6 py-4">
-          <button onClick={() => router.back()}>
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-
-          <h1 className="text-lg font-semibold">Doctor&apos;s Profile</h1>
-        </header>
-
         <div className="mx-auto max-w-3xl px-6 py-8">
           <ConsultationDetailsSkeleton />
         </div>
@@ -65,15 +50,6 @@ const ConsultationDetails = () => {
 
   return (
     <main className="">
-      {/* Header */}
-      {/* <header className="flex items-center gap-3 border-b px-6 py-4">
-        <button onClick={() => router.back()}>
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-
-        <h1 className="text-lg font-semibold">Doctor&apos;s Profile</h1>
-      </header> */}
-
       <div className="mx-auto max-w-3xl px-6 py-8 h-[50vh]">
         {/* Banner */}
         <div className="relative h-52 w-full">

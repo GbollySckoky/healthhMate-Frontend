@@ -23,7 +23,7 @@ interface PageWrapperProps {
 
 export function PageWrapper({
   children,
-  maxWidth = "max-w-5xl",
+  maxWidth = "max-w-8xl",
   className = "",
 }: PageWrapperProps) {
   return (

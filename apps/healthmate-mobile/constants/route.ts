@@ -31,6 +31,7 @@ export const ROUTES = {
     support: '/support',
     appointments: '/appointments',
     notifications: '/notifications',
+    // settings: '/settings'
 } as const;
 
 export const doctorProfileRoute = (doctorId: string | number) =>

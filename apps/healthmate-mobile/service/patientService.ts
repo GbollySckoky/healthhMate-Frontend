@@ -20,6 +20,7 @@ import { login } from '@/lib/interface/login';
 import { forgotPassword } from '@/lib/interface/forgotPassword';
 import { verifyEmail } from '@/lib/interface/verifyEmail';
 import { CreatePayment } from '@/lib/interface/createPayment';
+import { InitializePayment } from '@/lib/interface/payment';
 
 export const patientService = {
   login: async (payload: login) => {
@@ -175,7 +176,7 @@ export const patientService = {
   createSupportTicket: async (payload: SUPPORT_TICKET) => {
       return await api.post(PATIENTS_ENDPOINTS.CREATE_SUPPORT, payload)
   },
-  createPayment: async (payload: CreatePayment) => {
+  createPayment: async (payload: InitializePayment) => {
     return await api.post(PATIENTS_ENDPOINTS.PAYMENT, payload)
   },
   verifyPayment: async (reference: string) => {

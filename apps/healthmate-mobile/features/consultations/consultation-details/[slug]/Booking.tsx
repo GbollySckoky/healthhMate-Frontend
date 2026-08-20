@@ -35,9 +35,17 @@ const Booking = ({ consultation }: BookingProps) => {
     healthConcern: "",
   });
 
+  const today = new Date();
+
+  const minDate = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
+
   const {
     createBooking,
-    isBooking,
+    // isBooking,
     isPaymentProcessing,
     isProcessing,
   } = useBooking();
@@ -85,9 +93,9 @@ const Booking = ({ consultation }: BookingProps) => {
   const isDisabled = isFormInvalid || isProcessing;
 
   const getButtonLabel = () => {
-    if (isBooking) {
-      return "Booking appointment...";
-    }
+    // if (isBooking) {
+    //   return "Booking appointment...";
+    // }
 
     if (isPaymentProcessing) {
       return "Redirecting to payment...";
@@ -95,6 +103,7 @@ const Booking = ({ consultation }: BookingProps) => {
 
     return "Proceed to Payment";
   };
+  
 
   return (
     <div className="space-y-6">
@@ -111,6 +120,7 @@ const Booking = ({ consultation }: BookingProps) => {
           isOpen={showDatePicker}
           onChangeText={handleDateSelect}
           onClose={() => setShowDatePicker(false)}
+          minDate={minDate}
         />
       </div>
 

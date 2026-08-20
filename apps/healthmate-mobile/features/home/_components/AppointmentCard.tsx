@@ -1,15 +1,14 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Clock, Video } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SubTitle, SmallText } from "@/components/Reusable";
 import { ROUTES } from "@/constants/route";
-import { patientService } from "@/service/patientService";
 import { CapitalizeName } from "@/constants/capitalizeName";
 import useDate from "@/hooks/useDate";
 import Image from 'next/image';
 import profileFallback from '@/assets/Ellipse 165.png';
+import useGetAppointment from "@/hooks/useGetAppointment";
 
 type Doctor = { firstName?: string; lastName?: string };
 
@@ -82,11 +81,7 @@ const AppointmentCardSkeleton = () => (
 export default function AppointmentCard() {
   const router = useRouter();
   const { getReadableDate } = useDate();
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["getAppointments", 10, 1],
-    queryFn: () => patientService.getAppointments(1, 1),
-  });
-  const appointment = data?.data?.[0];
+  const { appointment, isLoading, isError, error } = useGetAppointment();
 
   const errorMessage = error instanceof Error ? error.message : "Something went wrong";
 

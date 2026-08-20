@@ -4,9 +4,12 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Appointment } from "@/lib/interface/createAppointment";
-import { CreatePayment } from "@/lib/interface/createPayment";
+// import { CreatePayment } from "@/lib/interface/createPayment";
 import { patientService } from "@/service/patientService";
 import { ROUTES } from "@/constants/route";
+import { InitializePayment } from "@/lib/interface/payment";
+import { AxiosError } from "axios";
+// import { Appointment } from "@/lib/interface/createAppointment";
 
 interface UseBookingProps {
   onSuccess?: () => void;
@@ -19,10 +22,10 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
   const paymentMutation = useMutation({
     mutationKey: ["createPayment"],
 
-    mutationFn: (payload: CreatePayment) =>
+    mutationFn: (payload: InitializePayment) =>
       patientService.createPayment(payload),
 
-    onSuccess: (response: any) => {
+    onSuccess: (response) => {
       console.log("Payment created:", response);
 
       queryClient.invalidateQueries({
@@ -47,7 +50,7 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
       onSuccess?.();
     },
 
-    onError: (error: any) => {
+    onError: (error: AxiosError) => {
       console.error(
         "Payment creation failed:",
         error?.response?.data ?? error
@@ -61,7 +64,7 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
     mutationFn: (payload: Appointment) =>
       patientService.createConsultation(payload),
 
-    onSuccess: (response: any) => {
+    onSuccess: (response) => {
       console.log("Appointment created:", response);
 
       queryClient.invalidateQueries({
@@ -78,12 +81,21 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
       paymentMutation.mutate({
         appointmentId,
         currency: "NGN",
+        metadata:{
+          date: response.data.date,
+          time: response.data.time,
+          consultationType: response.data.consultationType,
+          healthConcern: response.data.healthConcern,
+          doctorId: response.data.doctorId,
+          hospitalId: response.data.hospitalId,
+          amount: response.data
+        }
         // paymentMethod: "BANK_TRANSFER",
         // amount: response?.data?.amount,
       });
     },
 
-    onError: (error: any) => {
+    onError: (error: AxiosError) => {
       console.error(
         "Appointment creation failed:",
         error?.response?.data ?? error
@@ -101,8 +113,7 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
     isBooking: appointmentMutation.isPending,
     isPaymentProcessing: paymentMutation.isPending,
 
-    isProcessing:
-      appointmentMutation.isPending || paymentMutation.isPending,
+    isProcessing: paymentMutation.isPending,
 
     appointmentError: appointmentMutation.error,
     paymentError: paymentMutation.error,
