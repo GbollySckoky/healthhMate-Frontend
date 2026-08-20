@@ -9,15 +9,7 @@ import { otherMenuItems } from "@/constants/data";
 import useGetMe from "@/hooks/useGetMe";
 import { useAuth } from "@/hooks/useAuthWeb";
 import { colors } from "@/constants/colors";
-// import { useAuth } from "@/hooks/useAuth";
 
-// Swap these for your real design-token values if they differ from colors.ts
-const COLORS = {
-  purple: "#C11574",
-  lightRed: "#DF0000",
-  lightBlack: "#414651",
-  lightGray: "#E5E7EB",
-};
 
 function getAge(dateOfBirth?: string) {
   if (!dateOfBirth) return null;
@@ -281,8 +273,8 @@ const Profile = () => {
         onClick={handleDisplay}
         className="w-full flex flex-row items-center p-[15px] border border-[#E5E7EB] rounded-lg my-5"
       >
-        <LogOut size={17} color={COLORS.lightRed} />
-        <span className="ml-2.5 text-sm font-bold" style={{ color: COLORS.lightRed }}>
+        <LogOut size={17} color={colors.lightRed} />
+        <span className="ml-2.5 text-sm font-bold" style={{ color: colors.lightRed }}>
           Log out
         </span>
       </button>

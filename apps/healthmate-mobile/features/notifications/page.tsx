@@ -111,7 +111,7 @@ const NotificationScreen = () => {
 
         <div className="flex-1 min-w-0">
           <div className="flex flex-row items-center justify-between gap-2">
-            <span className="flex-1 min-w-0 truncate text-sm font-semibold text-[#111827]">
+            <span className="flex-1 min-w-0 truncate text-sm font-semibold text-[#414651]">
               {item.title}
             </span>
             <span className="text-[11px] text-[#9ca3af] whitespace-nowrap">

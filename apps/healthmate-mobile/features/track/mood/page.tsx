@@ -196,7 +196,7 @@ const Mood = () => {
                             <p className="font-medium text-sm">
                               {moodName ?? 'No mood'}
                             </p>
-                            <p className="font-medium text-sm">
+                            <p className="font-medium text-xs text-[#414651] ">
                               {recent.notes ?? 'No notes'}
                             </p>
                             <p className="font-normal text-xs text-[#717680] pt-0.5">
@@ -206,7 +206,7 @@ const Mood = () => {
                         </div>
 
                         <span
-                          className="px-[15px] py-[7px] rounded-full font-medium"
+                          className="px-[15px] py-[7px] rounded-full font-medium text-xs"
                           style={{ backgroundColor: colors.bg, color: colors.text }}
                         >
                           {status}

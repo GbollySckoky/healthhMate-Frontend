@@ -1,58 +1,27 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-// import { useNavigate, Link } from 'react-router-dom';
+import React from 'react';
 import { Filter, Heart, Loader2 } from 'lucide-react';
-// import { NavHeader } from '@/components/Header/Header';
-// import { ScreenLayout } from '@/components/ScreenLayout/ScreenLayout';
-// import { ScreenOverFlowLayout } from '@/components/scrollView/ScreenOverFlowLayout';
-// import { Wrapper } from '@/components/typography/Typography';
-// import SearchInput from '@/components/Input/SearchInput';
-// import { consultationData } from '@/lib/data';
-// import useToggle from '@/lib/hooks/useToggle';
-// import SafeArea from '@/components/safeAreaView/SafeAreaView';
-import { useQuery } from '@tanstack/react-query';
-import { patientService } from '@/service/patientService';
+
 import { GetHospital } from '@/lib/interface/get-hospitals-interface';
 import Image from 'next/image';
 import { Wrapper } from '@/components/Reusable';
 import SearchInput from '@/components/SearchInput';
 import Link from 'next/link';
-// import { useRouter } from 'next/navigation';
 import useToggle from '@/hooks/useToggle';
 import defaultHospitalImage from '@/assets/Group 19153.png'
-
-// const defaultHospitalImage = consultationData[0]?.image;
+import useGetAllHospitals from '@/hooks/useGetAllHospitals';
 
 const getHospitalImageSource = (profile?: string | null) => {
   return profile || defaultHospitalImage;
 };
 
 const AllHospitalsPage = () => {
-  // const router = useRouter();
-  const [searchInput, setSearchInput] = useState('');
-  const [searchDebounceQuery, setSearchDebounceQuery] = useState('');
+ const { 
+  meta, searchInput,setSearchInput,isLoading,isError, 
+  error, hospitals, canGoPrevious, canGoNext,
+  setPage } = useGetAllHospitals()
+
   const { isToggle, handleToggle } = useToggle();
-  const [page, setPage] = useState(1);
-  const limit = 10;
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSearchDebounceQuery(searchInput);
-      setPage(1);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [searchInput]);
-
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['getAllHospitals', page, limit, searchDebounceQuery],
-    queryFn: () =>
-      patientService.getHospitals(page, limit, searchDebounceQuery),
-  });
-
-  const hospitals = data?.data ?? [];
-  const meta = data?.meta;
-  const canGoPrevious = meta ? meta.page > 1 : page > 1;
-  const canGoNext = meta ? meta.page < meta.totalPages : false;
 
   return (
     <Wrapper>
@@ -152,7 +121,7 @@ const AllHospitalsPage = () => {
                       // state={{ hospitalName: hospitalName || 'Hospital' }}
                       className="border border-[#f2f2f2] py-3 rounded-[10px] w-full text-center block"
                     >
-                      <span className="text-black text-xs font-semibold">
+                      <span className="text-[#414651] text-xs font-semibold">
                         View Doctors
                       </span>
                     </Link>

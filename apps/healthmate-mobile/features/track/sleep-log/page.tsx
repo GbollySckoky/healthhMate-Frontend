@@ -124,7 +124,7 @@ export default function SleepTrackerPage() {
                           </div>
                         </div>
                         <span
-                          className="font-inter text-sm font-normal px-[15px] py-[7px] rounded-full"
+                          className="font-inter text-xs font-normal px-[15px] py-[7px] rounded-full"
                           style={{ backgroundColor: bg, color: text }}
                         >
                           {status}

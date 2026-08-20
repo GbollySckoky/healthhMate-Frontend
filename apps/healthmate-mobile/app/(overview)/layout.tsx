@@ -1,6 +1,4 @@
-// import SideBar from "@/components/ui/SideBar";
-// import Header from "@/components/ui/Header";
-// import { ModalProvider } from "@/components/Modal/Modal";
+import DashboardShell from "@/components/DashboardShell";
 
 export default function OverviewLayout({
   children,
@@ -8,15 +6,9 @@ export default function OverviewLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <div>
-        {/* <ModalProvider> */}
-          {/* <SideBar /> */}
-          {/* <div className="flex-1 md:ml-[250px] ml-[60px]"> */}
-            {/* <Header /> */}
-            {children}
-          {/* </div> */}
-        {/* </ModalProvider> */}
-      </div>
+      <DashboardShell>
+        {children}
+      </DashboardShell>
   );
 }
 
