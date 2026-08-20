@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { MapPin, Star, X } from "lucide-react";
+import { MapPin, X } from "lucide-react";
 import profile from "@/assets/Ellipse 165.png";
 import Booking from "./Booking";
 import { CapitalizeName } from "@/constants/capitalizeName";

@@ -9,6 +9,7 @@ import { patientService } from "@/service/patientService";
 import { ROUTES } from "@/constants/route";
 import { InitializePayment } from "@/lib/interface/payment";
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 // import { Appointment } from "@/lib/interface/createAppointment";
 
 interface UseBookingProps {
@@ -50,11 +51,8 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
       onSuccess?.();
     },
 
-    onError: (error: AxiosError) => {
-      console.error(
-        "Payment creation failed:",
-        error?.response?.data ?? error
-      );
+    onError: (error: AxiosError<{message: string}>) => {
+      toast.error(error?.response?.data?.message ?? "Something went wrong");
     },
   });
 
@@ -95,10 +93,11 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
       });
     },
 
-    onError: (error: AxiosError) => {
-      console.error(
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(error.response?.data?.message ?? "Something went wrong");
+      console.log(
         "Appointment creation failed:",
-        error?.response?.data ?? error
+        error.response?.data?.message ?? error
       );
     },
   });
