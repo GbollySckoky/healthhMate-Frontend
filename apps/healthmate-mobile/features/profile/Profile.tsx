@@ -9,7 +9,7 @@ import { otherMenuItems } from "@/constants/data";
 import useGetMe from "@/hooks/useGetMe";
 import { useAuth } from "@/hooks/useAuthWeb";
 import { colors } from "@/constants/colors";
-
+import defaultImage from '@/assets/default.jpg'
 
 function getAge(dateOfBirth?: string) {
   if (!dateOfBirth) return null;
@@ -142,7 +142,7 @@ const Profile = () => {
   const { patient, isLoading, isError, error } = useGetMe();
   const { logout } = useAuth();
   const [openModal, setOpenModal] = useState(false);
-
+  console.log(patient)
   const handleDisplay = () => setOpenModal((v) => !v);
   const navigate = () => router.push(ROUTES.editProfileName);
   const handleMenuNavigation = (route: string) => router.push(route);
@@ -175,11 +175,11 @@ const Profile = () => {
   const age = getAge(patient.dateOfBirth);
 
   return (
-    <div className="max-w-md mx-auto px-4 py-5">
+    <div className="max-w-2xl mx-auto px-4 py-5">
       <div className="flex flex-col items-center justify-center">
         <div className="relative">
           <Image
-            src={patient.profilePicture || "/images/profile-placeholder.png"}
+            src={patient.profile.profilePicture || defaultImage}
             alt="Profile"
             width={100}
             height={100}

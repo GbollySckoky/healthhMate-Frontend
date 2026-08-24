@@ -69,25 +69,26 @@ const ProfileForm = ({
       {/* Profile Image */}
       <div className="flex flex-col items-center">
         <label className="cursor-pointer">
-          {form.profilePicture ? (
-            <Image
-              src={form.profilePicture}
-              alt="Profile"
-              className="h-24 w-24 rounded-full object-cover"
-            />
-          ) : (
-            <div className="flex h-24 w-24 items-center justify-center rounded-full border border-gray-300 bg-gray-100">
-              <Camera className="text-gray-500" size={24} />
-            </div>
-          )}
-
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={pickImage}
+        {form.profilePicture ? (
+          <Image
+            src={form.profilePicture}
+            alt="Profile"
+            width={96}
+            height={96}
+            className="h-24 w-24 rounded-full object-cover border border-border"
           />
-        </label>
+        ) : (
+          <div className="flex h-24 w-24 items-center justify-center rounded-full border border-gray-300 bg-gray-100">
+            <Camera className="text-gray-500" size={24} />
+          </div>
+        )}
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={pickImage}
+        />
+      </label>
 
         <p className="mt-2 text-sm font-medium">Change photo</p>
       </div>
