@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import profileFallback from "@/assets/Ellipse 165.png";
 import { usePageTitle } from "./NavTitle";
 import { patientService } from "@/service/patientService";
+import useGetMe from "@/hooks/useGetMe";
+import defaultImage from '@/assets/default.jpg'
 
 interface HeaderClientProps {
   onMenuClick?: () => void;
@@ -25,6 +27,7 @@ export default function HeaderClient({
   const [loading, setLoading] = useState(true);
   const [unReadNotifications, setUnReadNotifications] =
     useState<number | null>(0);
+  const { patient: me } = useGetMe();
 
   const router = useRouter();
   const pageTitle = usePageTitle();
@@ -126,7 +129,7 @@ export default function HeaderClient({
 
         <Link href={ROUTES.profile} aria-label="Profile">
           <Image
-            src={patient?.profilePicture || profileFallback}
+            src={me?.profile.profilePicture || defaultImage}
             alt="Profile"
             width={36}
             height={36}
