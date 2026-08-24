@@ -1,4 +1,3 @@
-import DashboardShell from "@/components/DashboardShell";
 
 export default function OverviewLayout({
   children,
@@ -6,9 +5,9 @@ export default function OverviewLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <DashboardShell>
+      <div>
         {children}
-      </DashboardShell>
+      </div>
   );
 }
 
