@@ -5,7 +5,7 @@ import { CloudUpload } from 'lucide-react';
 
 export const PageWrapper = ({children,className}:{children: ReactNode, className?:string}) => {
     return( 
-        <div className={`flex min-h-screen bg-[#FAFAFA] mt-[65px] ${className}`}>
+        <div className={`flex min-h-full bg-[#FAFAFA] ${className}`}>
             {children}
         </div>
     )
