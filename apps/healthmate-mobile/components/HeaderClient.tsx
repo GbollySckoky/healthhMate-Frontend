@@ -6,7 +6,7 @@ import { Bell, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ROUTES } from "@/constants/route";
 import { useRouter } from "next/navigation";
-import profileFallback from "@/assets/Ellipse 165.png";
+// import profileFallback from "@/assets/Ellipse 165.png";
 import { usePageTitle } from "./NavTitle";
 import { patientService } from "@/service/patientService";
 import useGetMe from "@/hooks/useGetMe";
@@ -23,7 +23,7 @@ interface HeaderClientProps {
 export default function HeaderClient({
   onMenuClick,
 }: HeaderClientProps) {
-  const [patient, setPatient] = useState<any | null>(null);
+  const [_, setPatient] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [unReadNotifications, setUnReadNotifications] =
     useState<number | null>(0);

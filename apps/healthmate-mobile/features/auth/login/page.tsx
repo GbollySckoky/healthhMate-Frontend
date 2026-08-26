@@ -8,6 +8,7 @@ import { storageService } from '@/constants/storage';
 import { ROUTES } from '@/constants/route';
 import { useRouter } from 'next/navigation';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 // import { storageService } from '@/lib/storage';
 // import { ROUTES } from '@/lib/routes';
 
@@ -32,8 +33,9 @@ const LoginPage = () => {
     //   setToast({ type: 'success', message: 'Logged in successfully' });
       router.push(ROUTES.home);
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<{message: string}>) => {
       console.log('ERROR!!!!', error?.response?.data?.message);
+      toast.error(error?.response?.data?.message)
     //   setToast({ type: 'error', message: error.response.data.message });
     },
     // retry: 3,

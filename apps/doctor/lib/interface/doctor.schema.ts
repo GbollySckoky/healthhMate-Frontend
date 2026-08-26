@@ -1,10 +1,10 @@
 import * as z from "zod";
 
 export const DoctorProfileSchema = z.object({
-  yearsOfExperience: z.number().min(1, "Input your years of experience"),
+  yearsOfExperience: z.string().min(1, "Input your years of experience"),
   specialization: z.string().min(1, "Specialization is required"),
   liscenceNumber: z.string().min(1, "Liscence number is required"),
-  consultationFee: z.number().min(1, "Consultation Fee is required"),
+  consultationFee: z.string().min(1, "Consultation Fee is required"),
   // address: z.string().min(1, "Input your address"),
   bio: z.string().min(1, "Bio is required"),
   logo: z.instanceof(File, { message: "A valid image is required" }),

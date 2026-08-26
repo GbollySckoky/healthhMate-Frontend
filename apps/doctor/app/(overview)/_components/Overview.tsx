@@ -61,7 +61,7 @@ const Overview = () => {
     ]
    
   return (
-    <div className="p-8 min-h-screen bg-[#FAFAFA] mt-[65px]">
+    <div className="min-h-full bg-[#FAFAFA] p-8">
         <div className="flex items-center justify-between mb-5">
             <div>
                 <Title>{greeting}, Dr. Uche </Title>

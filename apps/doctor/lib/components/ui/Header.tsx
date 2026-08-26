@@ -38,7 +38,7 @@ const Header = () => {
     const Title = getTitle(pathname)
 
   return (
-        <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-8 ml-[50px] md:ml-[250px]'>
+    <header className='z-20 flex h-16 shrink-0 items-center justify-between border-b border-slate-100 bg-white px-4 shadow-sm sm:px-8'>
         <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-3">
                 {isDetailPage && (
@@ -59,7 +59,7 @@ const Header = () => {
                         <div className='bg-red-100 rounded-full p-2 cursor-pointer hover:bg-red-200 transition-colors'>
                             <Image src={profile} alt="Logo" priority width={35} className='rounded-full' /> 
                         </div>
-                        <div>
+                        <div className="hidden sm:block">
                             <p className='font-lato font-bold text-[14px]'>Dr. 
                                 {`${data?.firstName.charAt(0)?.toUpperCase() + data?.firstName?.slice(1)?.toLowerCase()} 
                                 ${data?.lastName.charAt(0)?.toUpperCase() + data?.lastName?.slice(1)?.toLowerCase()}`}</p>
@@ -69,7 +69,7 @@ const Header = () => {
                 )}
             </div>
         </div>
-    </div>
+    </header>
   )
 }
 
