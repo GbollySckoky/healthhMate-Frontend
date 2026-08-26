@@ -12,16 +12,17 @@ import { useMutation } from "@tanstack/react-query";
 import { Doctor } from "@/lib/constant/service";
 import UploadImage from "./UploadImage";
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const { closeModal } = useFormModal();
 
   const [inputValue, setInputValue] = useState<Profile>({
-    yearsOfExperience: 0,
+    yearsOfExperience: "",
     specialization: "",
     logo: new File([], ""),
     liscenceNumber: "",
-    consultationFee: 0,
+    consultationFee: "",
     bio: "",
   });
 
@@ -45,8 +46,9 @@ const EditProfile = () => {
       console.log(response.data);
       closeModal();
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<{message: string}>) => {
       console.log(error?.response?.data);
+      toast.error(error?.response?.data.message)
     },
   });
 
@@ -56,10 +58,10 @@ const EditProfile = () => {
     const formData = new FormData();
 
     formData.append("bio", inputValue.bio);
-    formData.append("consultationFee", String(inputValue.consultationFee));
+    formData.append("consultationFee", inputValue.consultationFee);
     formData.append("licenseNumber", inputValue.liscenceNumber);
     formData.append("specialization", inputValue.specialization);
-    formData.append("yearsOfExperience", String(inputValue.yearsOfExperience));
+    formData.append("yearsOfExperience", inputValue.yearsOfExperience);
 
     if (inputValue.logo) {
       formData.append("profilePicture", inputValue.logo);
@@ -81,7 +83,7 @@ const EditProfile = () => {
       <DisplayFlex>
         <InputField
           name="yearsOfExperience"
-          value={String(inputValue.yearsOfExperience)}
+          value={inputValue.yearsOfExperience}
           onChange={handleChange}
           placeholder="3"
           label="Years Of Experience"
@@ -126,6 +128,7 @@ const EditProfile = () => {
         closeModal={closeModal}
         text={mutation.isPending ? "Saving..." : "Save Changes"}
         cancelText="Cancel"
+        isLoading={mutation.isPending}
       />
     </form>
   );
