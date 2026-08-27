@@ -1,25 +1,11 @@
 "use client"
-import { PageWrapper,} from '@/lib/components/ui/Reusable'
 import React from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs"
-import Earnings from './_components/Earnings';
 import { TransactionsPage } from './_components/Transactions';
 
 
 
 const EarningsPage = () => {
-  return (
-    <PageWrapper>
-         <Tabs defaultValue="earnings">
-            <TabsList  className="mb-5">
-                <TabsTrigger value="earnings">Earnings</TabsTrigger>
-                <TabsTrigger value="transactions">Transactions</TabsTrigger>
-            </TabsList>
-            <TabsContent value="earnings"> <Earnings /> </TabsContent>
-            <TabsContent value="transactions"> <TransactionsPage />  </TabsContent>
-        </Tabs>
-    </PageWrapper>
-  )
+  return <TransactionsPage />
 }
 
 export default EarningsPage

@@ -8,6 +8,7 @@ import { SUPPORT_TICKET } from '@/lib/interface/support';
 import { Doctor } from '@/lib/constant/service';
 import InputField from '@/lib/components/ui/InputField';
 import SelectField from '@/lib/components/ui/SelectField';
+import { toast } from 'react-toastify';
 
 type InputValue = {
   subject: string;
@@ -61,11 +62,11 @@ const CreateSupport = ({ appointmentDetails }: { appointmentDetails: APPOINTMENT
     mutationFn: (payload: SUPPORT_TICKET) =>
       Doctor.createSupportTicket(payload),
     onSuccess: (response) => {
-      console.log('Support ticket created successfully:', response);
+      console.log('Support ticket created successfully:', response.data);
       closeModal();
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.error('Error creating support ticket:', error.response?.data?.message);
+      toast.error(error.response?.data?.message);
     },
   });
 

@@ -10,8 +10,8 @@ export const DOCTOR_ENDPOINTS = {
     GET_APPOINTMENT_DETAILS: 'appointment/doctor/',
     GET_DOCTOR_AVAILABILITY: 'doctor/availability/me',
     CREATE_DOCTOR_AVAILABILITY: 'doctor/availability',
-    APPROVE_APPOINTMENT: 'doctor/',
-    REJECT_APPOINTMENT: 'doctor/',
+    APPROVE_APPOINTMENT: 'appointment/',
+    REJECT_APPOINTMENT: 'appointment/',
     DOCTOR_PROFILE: '',
     GET_APPOINTMENT_STATS: 'appointment/doctor/stats',
     CREATE_SUPPORT: 'support/doctor',
@@ -21,4 +21,5 @@ export const DOCTOR_ENDPOINTS = {
     GET_NOTIFICATIONS: 'notifications/doctor',
     UN_READ_NOTIFICATIONS: 'notifications/doctor/unread-count',
     READ_ALL_NOTIFICATIONS: 'notifications/doctor/read-all',
+    GET_FINANCE: 'payment/doctor'
 }

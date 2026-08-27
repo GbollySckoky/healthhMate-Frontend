@@ -1,12 +1,6 @@
-// import { earningData } from '@/components/ui/data';
 import { Card, MediumText, Value } from '@/lib/components/ui/Reusable';
 import React from 'react'
-import { ArrowDown, ArrowUp } from "lucide-react"
-import { EarningsTable } from './EarningsTable';
-// import { Doctor } from '@/lib/constant/service';
-// import { useQuery } from '@tanstack/react-query';
-// import { EarningSummary } from '@/lib/interface/get-earnings-summary';
-// import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 
 const EarningsPage = () => {
@@ -69,8 +63,6 @@ const EarningsPage = () => {
                 )
             })}
         </Card>
-        {/* )} */}
-        <EarningsTable />
     </div>
   )
 }

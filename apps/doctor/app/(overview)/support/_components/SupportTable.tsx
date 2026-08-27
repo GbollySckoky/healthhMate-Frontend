@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 
 export function SupportTable() {
   const router = useRouter()
-  const { supportData, isLoading, isError, error } = useGetSupport()
+  const { supportData, isLoading, isError, error, pagination, setPagination } = useGetSupport()
 
   return (
     <div>
@@ -23,8 +23,8 @@ export function SupportTable() {
         <Table className="table-fixed w-full">
           <TableHeader className="border-t border-borderColor text-[#535862]">
             <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
-              <TableHead className="w-28">Id</TableHead>
               <TableHead className="w-32">Appointment Id</TableHead>
+              <TableHead className="w-28">Ticket Id</TableHead>
               <TableHead className="w-40">Subject</TableHead>
               <TableHead className="w-24">Category</TableHead>
               <TableHead className="w-20">Priority</TableHead>
@@ -58,8 +58,8 @@ export function SupportTable() {
                     className="cursor-pointer hover:bg-gray-50"
                     onClick={() => router.push(`/support/${support.id}`)}
                   >
-                    <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.ticketNumber}</TableCell>
                     <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.appointmentId}</TableCell>
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.ticketNumber}</TableCell>
                     <TableCell className="font-inter font-normal text-[12px] text-grey-20 truncate">{support.subject}</TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.category.charAt(0).toUpperCase() + support?.category.slice(1).toLocaleLowerCase()}</TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20 truncate">{support?.priority.charAt(0).toUpperCase() + support?.priority.slice(1).toLocaleLowerCase()}</TableCell>
@@ -75,8 +75,9 @@ export function SupportTable() {
             </TableBody>
           )}
         </Table>
+        <Paginate pagination={pagination} setPagination={setPagination}/>
       </div>
-      <Paginate />
+      
     </div>
   )
 }

@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
 import { Appointment } from '@/lib/interface/doctor-apppointment.interface'
 import PatientCardSkeleton from '@/lib/components/ui/PatientCardSkeleton'
+import { CapitalizeName } from '@/lib/constant/capitalizeName'
 // import DetailSkeleton from '@/components/ui/DetailsSkeleton'
 
 
@@ -45,8 +46,15 @@ const Page = () => {
                     </div>
                 ) : (   
                     <Card className="flex">
-                    <Image src={profileImage} alt="Profile Image" className="h-fit w-[50px]" />
-
+                    <div className="w-50 h-50">
+                        <Image 
+                            src={appointmentDetails?.user?.profile?.profilePicture} 
+                            alt={appointmentDetails?.user?.firstName} 
+                            className="h-fit w-[50px] border border-border rounded-full" 
+                            width={100}
+                            height={100}
+                        />
+                    </div>
                     <div className="ml-2">
                     <p className="font-medium text-[18px] text-grey-800">
                         {`${appointmentDetails?.user?.firstName || ""} ${
@@ -55,7 +63,7 @@ const Page = () => {
                     </p>
 
                     <p className="font-normal text-[14px] text-grey-20 pt-[2px]">
-                        34 y/o — Female
+                      {CapitalizeName(appointmentDetails?.user?.profile?.gender) || "-"}
                     </p>
 
                     <p className="font-normal text-[14px] text-grey-20 pt-[2px]">
