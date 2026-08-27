@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
 import { AxiosError } from "axios";
 import { Profile } from "@/lib/interface/register.interface";
+import { toast } from "react-toastify";
 
 
 type HospitalProfileForm = {
@@ -58,11 +59,11 @@ const HospitalProfile = () => {
   const mutation = useMutation({
     mutationFn: (payload: Profile) => Hospital_Admin.createProfile(payload),
     onSuccess: (response) => {
-      console.log(response.data);
+      toast.success(response.data.message);
     //   closeModal();
     },
-    onError: (error: AxiosError) => {
-      console.log(error?.response?.data);
+    onError: (error: AxiosError<{message: string}>) => {
+      toast.error(error?.response?.data.message);
     },
   });
 

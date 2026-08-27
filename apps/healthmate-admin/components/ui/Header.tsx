@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { Bell} from 'lucide-react';
-import logo from '../../assets/3d.png'
+import logo from '../../assets/default.jpg'
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/constant/Routes';
@@ -31,8 +31,8 @@ const Header = () => {
                     <MeSkeleton />
                 ) : (
                     <div className="flex items-center gap-4 pl-3">
-                        <div className='bg-red-100 rounded-full p-2 cursor-pointer hover:bg-red-200 transition-colors'>
-                            <Image src={logo} alt="Logo" priority /> 
+                        <div className='border border-border cursor-pointer rounded-full w-30 h-30'>
+                            <Image src={data?.profile.proffilePicture || logo} alt="Logo" priority  width={35} className='rounded-full' /> 
                         </div>
                         <div>
                             <p className='font-lato font-bold text-[14px]'>{data?.hospitalName ?? '-'}</p>

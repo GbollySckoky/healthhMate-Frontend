@@ -12,14 +12,11 @@ import Calendar from "@/lib/components/ui/DateCalendar"
 import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable"
 import { paidStatus } from "@/types/status"
 import Input from "@/lib/components/ui/Input"
-// import MinSelectField from "@/components/Inputs/MinSelectField"
 import { useState } from "react"
 import Paginate from "@/lib/components/ui/Paginate"
 import useGetFinance from '@/lib/hooks/useGetFinance';
 import { CapitalizeName } from "@/lib/constant/capitalizeName"
-// import Earnings from "../../_components/Earnings"
 import EarningsPage from "./Earnings"
-// import { useRouter } from "next/navigation"
 
 // Helper to style status
 const getStatusClasses = (status: string) => {
@@ -161,7 +158,7 @@ export function TransactionsPage() {
                       {data.metadata.user?.firstName ?? 'N/A'}
                     </TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20">
-                      ₦{data.amount.toLocaleString()}
+                      ₦{data.amount?.toLocaleString()}
                     </TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20">
                       {CapitalizeName(data.paymentMethod?.toLowerCase()) ?? 'N/A'}

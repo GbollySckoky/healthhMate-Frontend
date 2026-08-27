@@ -69,7 +69,7 @@ export const MediumText = ({children}:{children: ReactNode}) => {
 
 export const Value = ({children}:{children: ReactNode}) => {
     return( 
-        <h5 className="font-libre text-grey-200 font-bold text-[20px]">
+        <h5 className="font-libre text-grey-200 font-semibold text-[20px]">
             {children}
         </h5>
     )

@@ -2,7 +2,7 @@ import { earningData } from '@/components/data';
 import { Card, MediumText, Value } from '@/components/ui/Reusable';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
-import { EarningsTable } from './EarningsTable';
+// import { EarningsTable } from './EarningsTable';
 
 
 const EarningsPage = () => {
@@ -28,7 +28,7 @@ const EarningsPage = () => {
                 )
             })}
         </Card>
-        <EarningsTable />
+        {/* <EarningsTable /> */}
     </div>
   )
 }
