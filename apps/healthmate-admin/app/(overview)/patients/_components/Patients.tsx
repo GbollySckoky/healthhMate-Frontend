@@ -1,12 +1,8 @@
 "use client";
 
 import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable";
-import React, { useEffect, useState } from "react";
 import { CloudUpload, Search } from "lucide-react";
-import Image from "next/image";
-import image from "@/assets/Image.png";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 
 import Input from "@/lib/components/Inputs/Input";
 import MinSelectField from "@/lib/components/Inputs/MinSelectField";
@@ -22,10 +18,10 @@ import {
   TableRow,
 } from "@/lib/components/ui/table";
 
-import { Hospital_Admin } from "@/lib/service/service";
-import { GET_ALL_APPOINTMENTS } from "@/lib/interface/get_all_appointyment";
 import { STATUS } from "@/types/status";
 import useToggle from "@/lib/hooks/useToggle";
+import { CapitalizeName } from "../../../../../healthmate-mobile/constants/capitalizeName";
+import useGetAllPatients from "@/lib/hooks/useGetAllPatients";
 
 const getStatusStyle = (status: string) => {
   switch (status) {
@@ -44,64 +40,19 @@ const getStatusStyle = (status: string) => {
 const Patients = () => {
   const router = useRouter();
   const { isToggle, handleToggle } = useToggle();
-
-  const [searchInput, setSearchInput] = useState("");
-  const [debounceSearchQuery, setDebounceSearchQuery] = useState("");
-  const [activeStatus, setActiveStatus] = useState<string | undefined>();
-
-  const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 10,
-    totalPages: 0,
-    total: 0,
-  });
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebounceSearchQuery(searchInput);
-
-      setPagination((prev) => ({
-        ...prev,
-        page: 1,
-      }));
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [searchInput]);
-
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [
-      "appointment",
-      pagination.page,
-      pagination.limit,
-      debounceSearchQuery,
-      activeStatus,
-    ],
-    queryFn: () =>
-      Hospital_Admin.getAllAppointments(
-        pagination.page,
-        pagination.limit,
-        debounceSearchQuery,
-        activeStatus
-      ),
-  });
-
-  useEffect(() => {
-    if (data?.meta) {
-      setPagination((prev) => ({
-        ...prev,
-        total: data.meta.total,
-        totalPages: data.meta.totalPages,
-      }));
-    }
-  }, [data]);
-
-  const appointmentData: GET_ALL_APPOINTMENTS[] = data?.data ?? [];
-
-  const patients = appointmentData.filter(
-    (patient) => patient.status !== STATUS.PENDING
-  );
-
+  const { 
+    patients,
+    isLoading,
+    isError,
+    error, 
+    setSearchInput, 
+    setPagination, 
+    pagination, 
+    setActiveStatus, 
+    searchInput, 
+    activeStatus
+  } = useGetAllPatients()
+  
   const handleSelect = (option: string | undefined) => {
     setActiveStatus(option);
 
@@ -177,7 +128,7 @@ const Patients = () => {
                       colSpan={8}
                       className="py-8 text-center text-sm text-red-600"
                     >
-                      {error.message}
+                      {error?.message}
                     </TableCell>
                   </TableRow>
                 ) : patients.length === 0 ? (
@@ -197,32 +148,22 @@ const Patients = () => {
                       onClick={() => handleNext(patient.id)}
                     >
                       <TableCell>
-                        <div className="flex items-center">
-                          <Image
-                            src={image}
-                            alt="Patient"
-                            width={40}
-                            height={40}
-                            className="rounded-full"
-                          />
-
-                          <div className="ml-2">
-                            <p className="font-inter text-[12px] text-grey-20">
-                              {`${patient.user?.firstName || ""} ${
-                                patient.user?.lastName || ""
-                              }`.trim() || "N/A"}
-                            </p>
-                            <p className="font-inter text-[12px] text-grey-20">
-                              {patient.user?.email || "-"}
-                            </p>
-                          </div>
+                        <div>
+                          <p className="font-inter text-[12px] text-grey-20">
+                            {`${patient.user?.firstName || ""} ${
+                              patient.user?.lastName || ""
+                            }`.trim() || "N/A"}
+                          </p>
+                          <p className="font-inter text-[12px] text-grey-20">
+                            {patient.user?.email || "-"}
+                          </p>
                         </div>
                       </TableCell>
 
                       <TableCell>
                         <p className="font-inter text-[12px] text-grey-20">
-                          {`${patient.doctor?.firstName || ""} ${
-                            patient.doctor?.lastName || ""
+                          {`${CapitalizeName(patient.doctor?.firstName) || ""} ${
+                            CapitalizeName(patient.doctor?.lastName) || ""
                           }`.trim() || "N/A"}
                         </p>
                         <p className="font-inter text-[12px] text-grey-20">
@@ -231,7 +172,7 @@ const Patients = () => {
                       </TableCell>
 
                       <TableCell className="font-inter text-[12px] text-grey-20">
-                        {patient.healthConcern || "-"}
+                        {CapitalizeName(patient.healthConcern) || "-"}
                       </TableCell>
 
                       <TableCell>
@@ -244,7 +185,7 @@ const Patients = () => {
                       </TableCell>
 
                       <TableCell className="font-inter text-[12px] text-grey-20">
-                        {patient.consultationType || "-"}
+                        {CapitalizeName(patient.consultationType.replaceAll('_', ' ')) || "-"}
                       </TableCell>
 
                       <TableCell className="font-inter text-[12px] text-grey-20">
@@ -279,10 +220,7 @@ const Patients = () => {
               </TableBody>
             )}
           </Table>
-
-          <div className="border-t border-borderColor px-4 py-4">
-            <Paginate />
-          </div>
+          <Paginate pagination={pagination} setPagination={setPagination}/>
         </div>
       </FlexWrapper>
     </PageWrapper>

@@ -175,9 +175,9 @@ export function TransactionTable() {
                   {invoice.paymentStatus}
                 </p>
               </TableCell>
-              <TableCell className="font-inter text-[14px] text-red-800 cursor-pointer" onClick={handleNext}>
+              {/* <TableCell className="font-inter text-[14px] text-red-800 cursor-pointer" onClick={handleNext}>
                 View
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           ))}
         </TableBody>

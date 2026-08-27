@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/lib/components/ui/table"
-// import Paginate from "@/lib/components/ui/Paginate";
+import Paginate from "@/lib/components/ui/paginate";
 import { useRouter } from "next/navigation";
 import useGetSupport from "@/lib/hooks/useGetSupport";
 import { SupportTicket } from "@/lib/interface/supportTicket";
@@ -15,7 +15,7 @@ import SupportTableSkeleton from "@/lib/components/ui/SupportTableSkeleton";
 
 export function SupportTable() {
   const router = useRouter()
-  const { supportData, isLoading, isError, error } = useGetSupport()
+  const { supportData, isLoading, isError, error,pagination, setPagination } = useGetSupport()
 
   return (
     <div>
@@ -76,7 +76,7 @@ export function SupportTable() {
           )}
         </Table>
       </div>
-      {/* <Paginate /> */}
+      <Paginate pagination={pagination} setPagination={setPagination} />
     </div>
   )
 }

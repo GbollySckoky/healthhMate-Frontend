@@ -9,14 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/lib/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/lib/components/ui/pagination";
 import { Trash2, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -25,19 +17,28 @@ import DeleteModal from "../../settings/_components/DeleteModal";
 import { Hospital_Admin } from "@/lib/service/service";
 import BranchTableSkeleton from "@/components/ui/BranchPageSkeleton";
 import { Branch } from "@/lib/interface/branch";
+import Paginate from "@/lib/components/ui/paginate";
+import { useEffect, useState } from "react";
+import { CapitalizeName } from "@/lib/constant/capitalizeName";
 
 type BranchTableProps = {
   searchQuery?: string;
-  status?: string;
+  // status?: string;
 };
 
-const BranchTable = ({ searchQuery = "", status }: BranchTableProps) => {
+const BranchTable = ({ searchQuery = "" }: BranchTableProps) => {
   const { openModal } = useModal();
   const router = useRouter();
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    totalPages: 0,
+    total: 0,
+  });
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["branch", searchQuery, status],
-    queryFn: () => Hospital_Admin.getBranch(),
+    queryKey: ["branch", searchQuery, pagination.page, pagination.limit],
+    queryFn: () => Hospital_Admin.getBranch(searchQuery, pagination.page, pagination.limit),
   });
 
   const branches = data?.data ?? [];
@@ -55,6 +56,10 @@ const BranchTable = ({ searchQuery = "", status }: BranchTableProps) => {
 
     return matchesSearch && matchesStatus;
   });
+
+  useEffect(() => {
+
+  })
 
   const handleDeleteClick = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -124,24 +129,24 @@ const BranchTable = ({ searchQuery = "", status }: BranchTableProps) => {
                   onClick={() => router.push(`/branches/${branch.id}`)}
                   className="cursor-pointer hover:bg-[#FAFBFF]"
                 >
-                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
+                  <TableCell className="font-inter font-normal text-[12px] text-grey-20">
                     {branch.id}
                   </TableCell>
 
-                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
+                  <TableCell className="font-inter font-normal text-[12px] text-grey-20">
                     {branch.branchName || "-"}
                   </TableCell>
 
-                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
+                  <TableCell className="font-inter font-normal text-[12px] text-grey-20">
                     {branch.branchAddress || "-"}
                   </TableCell>
 
-                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
+                  <TableCell className="font-inter font-normal text-[12px] text-grey-20">
                     {branch.phoneNumber || "-"}
                   </TableCell>
 
-                  <TableCell className="font-inter font-normal text-[14px] text-grey-30">
-                    {branch.state || "-"}
+                  <TableCell className="font-inter font-normal text-[12px] text-grey-20">
+                    {CapitalizeName(branch.state) || "-"}
                   </TableCell>
 
                   <TableCell>
@@ -170,25 +175,7 @@ const BranchTable = ({ searchQuery = "", status }: BranchTableProps) => {
         )}
       </Table>
 
-      <div className="mt-5">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                1
-              </PaginationLink>
-            </PaginationItem>
-
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
+      <Paginate pagination={pagination} setPagination={setPagination}/>
     </div>
   );
 };
