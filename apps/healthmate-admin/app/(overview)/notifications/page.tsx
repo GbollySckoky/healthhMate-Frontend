@@ -31,7 +31,7 @@ type Notification = {
 }
 
 const typeConfig: Record<string, { icon: React.ElementType; color: string; bg: string }> = {
-  SUPPORT_TICKET_CREATED: { icon: MessageSquare, color: 'text-blue-600', bg: 'bg-blue-50' },
+  SUPPORT_TICKET_CREATED: { icon: MessageSquare, color: 'text-blue-600', bg: 'bg-red-900' },
   SUPPORT_TICKET_RESOLVED: { icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-50' },
   APPOINTMENT: { icon: Calendar, color: 'text-purple-600', bg: 'bg-purple-50' },
   DEFAULT: { icon: Bell, color: 'text-gray-500', bg: 'bg-gray-100' },
@@ -136,7 +136,7 @@ const Page = () => {
                   className={`w-full text-left flex gap-3 p-4 rounded-lg border transition ${
                     notification.isRead
                       ? 'border-gray-100 bg-white hover:bg-gray-50'
-                      : 'border-blue-100 bg-blue-50/40 hover:bg-blue-50'
+                      : 'border-red-800 bg-blue-50/40 hover:bg-red-50'
                   }`}
                 >
                   <div
@@ -160,7 +160,7 @@ const Page = () => {
                   </div>
 
                   {!notification.isRead && (
-                    <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-1.5" />
+                    <div className="w-2 h-2 rounded-full bg-red-900 shrink-0 mt-1.5" />
                   )}
                 </button>
               )
