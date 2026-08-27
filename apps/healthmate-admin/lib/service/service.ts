@@ -35,8 +35,13 @@ export const Hospital_Admin = {
     createBranch: async (payload: BRANCH_INTERFACE) => {
         return await api.post(ADMIN_ENDPOINTS.CREATE_BRANCH, payload); 
     },
-    getBranch: async() => {
-        const response = await api.get(ADMIN_ENDPOINTS.GET_ALL_BRANCH);
+    getBranch: async( q: string, page = 1, limit = 10) => {
+        const searchParams = new URLSearchParams({
+            q: q,
+            page: page.toString(),
+            limit: limit.toString()
+        })
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_ALL_BRANCH}?${searchParams}`);
         return response.data
     },
      assignBranch: async (payload: ASSIGN_BRANCH) => {
@@ -85,8 +90,12 @@ export const Hospital_Admin = {
     markAllNotificationAsRead: async () => {
         return await api.patch(ADMIN_ENDPOINTS.READ_ALL_NOTIFICATIONS);
     },
-    getSupportTicket: async() => {
-        const response = await api.get(ADMIN_ENDPOINTS.GET_SUPPORT);
+    getSupportTicket: async(page = 1, limit = 10) => {
+        const searchParams = new URLSearchParams({
+            page: page.toString(),
+            limit: limit.toString()
+        })
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_SUPPORT}?${searchParams}`);
         return response.data
     },
     getSupportDetails: async(id: string) => {

@@ -3,7 +3,7 @@ import { FlexWrapper, PageWrapper,} from '@/lib/components/ui/Reusable'
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs"
 import Image from 'next/image'
-import image from '@/assets/Image.png'
+import image from '@/assets/default.jpg'
 import Overview from './_components/Overview'
 import Documents from './_components/Documents'
 import { PencilLine } from 'lucide-react'
@@ -20,17 +20,14 @@ const Page = () => {
       queryFn: () => Doctor.getDoctor()
     })
     const profileData = data?.data
-    console.log(profileData)
 
-    const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-
-    const resolveUrl = (path: string) => {
-      if(!path) return image
-      if(path?.startsWith('http://') || path?.startsWith('https://')){
-        return path
-      }
-      return `${BASE_URL}${path}`;
-    }
+    // const resolveUrl = (path: string) => {
+    //   if(!path) return image
+    //   if(path?.startsWith('http://') || path?.startsWith('https://')){
+    //     return path
+    //   }
+    //   return `${BASE_URL}${path}`;
+    // }
   return (
     <PageWrapper>
       <FlexWrapper>
@@ -38,7 +35,13 @@ const Page = () => {
             <div className="mb-3  border-b pb-6 border-borderColor">
                 <div className="flex h-fit items-center justify-between">
                     <div className="flex items-center">
-                      <Image src={resolveUrl(profileData?.profile?.profilePicture)} alt={profileData?.firstName} className="w-[50px] h-[50px] rounded-full" width={300} height={300} />
+                      <Image 
+                        src={profileData?.profile?.profilePicture || image} 
+                        alt={profileData?.firstName} 
+                        className="w-[50px] h-[50px] rounded-full border border-border" 
+                        width={300} 
+                        height={300} 
+                      />
                       <div className='ml-2'>
                           <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr {`${profileData?.firstName.charAt(0).toUpperCase() + profileData?.firstName.slice(1) || ""} ${
                               profileData?.lastName.charAt(0).toUpperCase() + profileData?.lastName.slice(1) || ""

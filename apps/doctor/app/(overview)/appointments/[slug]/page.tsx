@@ -3,7 +3,7 @@
 import { FlexWrapper, Infos, PageWrapper } from "@/lib/components/ui/Reusable";
 import React, { FormEvent, useState } from "react";
 import Image from "next/image";
-import profileImage from "@/assets/Image (1).png";
+import profileImage from "@/assets/default.jpg";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Doctor } from "@/lib/constant/service";
 import { useParams } from "next/navigation";
@@ -15,6 +15,8 @@ import DetailSkeleton from "@/lib/components/ui/DetailsSkeleton";
 // import { Appointment } from "@/interface/doctor-apppointment.interface";
 import PatientCardSkeleton from "@/lib/components/ui/PatientCardSkeleton";
 import CreateSupport from "./CreateSupport";
+import { CapitalizeName } from "@/lib/constant/capitalizeName";
+import { toast } from "react-toastify";
 
 const Page = () => {
   const { openModal } = useModal();
@@ -46,11 +48,15 @@ console.log(id)
               <PatientCardSkeleton />
             ) : (
               <div className="flex">
-                <Image
-                  src={profileImage}
-                  alt="Profile Image"
-                  className="h-fit w-[50px]"
-                />
+                <div className="w-50 h-50">
+                    <Image 
+                      src={appointmentDetails?.user?.profile?.profilePicture || profileImage} 
+                      alt={appointmentDetails?.user?.firstName} 
+                      className="h-fit w-[50px] border border-border rounded-full" 
+                      width={100}
+                      height={100}
+                    />
+                  </div>
 
                 <div className="ml-2">
                   <p className="font-medium text-[18px] text-grey-800">
@@ -60,7 +66,7 @@ console.log(id)
                   </p>
 
                   <p className="font-normal text-[14px] text-grey-20 pt-[2px]">
-                    34 y/o — Female
+                    {CapitalizeName(appointmentDetails?.user?.profile?.gender) || "-"}
                   </p>
 
                   <p className="font-normal text-[14px] text-grey-20 pt-[2px]">
@@ -200,22 +206,24 @@ const ApproveAppointment = () => {
   const mutation = useMutation({
     mutationFn: ({ appointment_id, payload }: ApprovePayload) =>
       Doctor.approveAppointment(appointment_id, payload),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      toast.success(response.data.message)
       closeModal();
     },
-    onError: (error: AxiosError) => {
-      console.error("Approval failed:", error?.response?.data || error);
+    onError: (error: AxiosError<{message: string}>) => {
+      toast.error(error?.response?.data.message);
     },
   });
 
   const rejectMutation = useMutation({
     mutationFn: ({ appointment_id, payload }: ApprovePayload) =>
       Doctor.rejectAppointment(appointment_id, payload),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      toast.success(response.data.message)
       closeModal();
     },
-    onError: (error: AxiosError) => {
-      console.error("Rejection failed:", error?.response?.data || error);
+    onError: (error: AxiosError<{message: string}>) => {
+      toast.error(error?.response?.data.message);
     },
   });
 

@@ -10,7 +10,7 @@ import MeSkeleton from './MeSkeleton';
 const Header = () => {
     const pathname = usePathname()
     const Title = pathname === ROUTES.dashboard && 'Dashboard' || pathname === ROUTES.patients && 'Patients' || 
-    pathname === ROUTES.appointment && 'Appointments' || pathname === ROUTES.earnings && 'Earnings & Transactions' || 
+    pathname === ROUTES.appointment && 'Appointments' || pathname === ROUTES.earnings && 'Paymemts' || 
     pathname === ROUTES.report && 'Reports & Analytics' || pathname === ROUTES.support && 'Support' || 
     pathname === ROUTES.settings && 'Settings' || pathname === ROUTES.doctors && 'Doctors' || 
     pathname === ROUTES.branches && 'Branches' || pathname === ROUTES.notifications && 'Notifications'

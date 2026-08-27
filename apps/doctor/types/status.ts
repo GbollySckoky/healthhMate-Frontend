@@ -10,9 +10,9 @@ export const activeStatus = {
 } 
 
 export const paidStatus = {
-    PAID: 'Paid',
-    FAILED: 'Failed',
-    PENDING: 'Pending'
+    PAID: 'SUCESS',
+    FAILED: 'FAILED',
+    PENDING: 'PENDING'
 } 
 
 export const STATUS = {

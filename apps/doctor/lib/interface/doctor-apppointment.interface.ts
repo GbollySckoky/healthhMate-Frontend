@@ -18,8 +18,13 @@ export interface User {
   lastName: string
   email: string
   isActive: boolean
+  profile: UserProfile
 }
-
+export interface UserProfile{
+  healthCondition: string
+  gender: string
+  profilePicture: string
+}
 export interface Doctor {
   id: string
   firstName: string

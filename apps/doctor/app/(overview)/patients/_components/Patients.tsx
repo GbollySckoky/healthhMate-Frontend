@@ -184,7 +184,7 @@ const Patients = () => {
                     ))}
                     </TableBody>
                 </Table>
-                <Paginate />
+                <Paginate pagination={pagination} setPagination={setPagination}/>
             </div>
         </FlexWrapper>
     </PageWrapper>

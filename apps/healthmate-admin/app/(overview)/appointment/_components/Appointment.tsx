@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 
-import { Card, FlexWrapper, MediumText, PageWrapper, Value } from "@/lib/components/ui/Reusable";
+import { Card, FlexWrapper, MediumText, PageWrapper, TableTitle, Value } from "@/lib/components/ui/Reusable";
 import Input from "@/lib/components/Inputs/Input";
 import AppointmentTableSkeleton from "@/lib/components/ui/AppointmentTableSkeleton";
 
@@ -15,11 +13,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/lib/components/ui/tabs";
-
-import { Hospital_Admin } from "@/lib/service/service";
+;
 import { STATUS } from "@/types/status";
-import { GET_ALL_APPOINTMENTS } from "@/lib/interface/get_all_appointyment";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/lib/components/ui/table";
+import useGetAllAppointments from "@/lib/hooks/useGetAllAppointments";
+import Paginate from "@/lib/components/ui/paginate";
+import { CapitalizeName } from "@/lib/constant/capitalizeName";
 
 const tabs = [
   { key: "all", title: "All Appointment" },
@@ -44,75 +43,21 @@ const getStatusStyle = (status: string) => {
 
 const Appointment = () => {
   const router = useRouter();
-
-  const [searchInput, setSearchInput] = useState("");
-  const [debounceSearchQuery, setDebounceSearchQuery] = useState("");
-  const [activeStatus, setActiveStatus] = useState<string | undefined>();
-
-  const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 10,
-    totalPages: 0,
-    total: 0,
-  });
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebounceSearchQuery(searchInput);
-
-      setPagination((prev) => ({
-        ...prev,
-        page: 1,
-      }));
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [searchInput]);
-
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [
-      "appointment",
-      pagination.page,
-      pagination.limit,
-      debounceSearchQuery,
-      activeStatus,
-    ],
-    queryFn: () =>
-      Hospital_Admin.getAllAppointments(
-        pagination.page,
-        pagination.limit,
-        debounceSearchQuery,
-        activeStatus
-      ),
-  });
-
-  const appointmentData: GET_ALL_APPOINTMENTS[] = data?.data ?? [];
-
-  useEffect(() => {
-    if (data?.meta) {
-      setPagination((prev) => ({
-        ...prev,
-        total: data.meta.total,
-        totalPages: data.meta.totalPages,
-      }));
-    }
-  }, [data]);
-
-  const totalAppointments = pagination.total || appointmentData.length;
-
-  const completedAppointments = appointmentData.filter(
-    (appointment) => appointment.status === STATUS.COMPLETED
-  ).length;
-
-  const pendingAppointments = appointmentData.filter(
-    (appointment) => appointment.status === STATUS.PENDING
-  ).length;
-
-  const totalAmount = appointmentData.reduce(
-    (total, appointment) => total + (appointment.amount ?? 0),
-    0
-  );
-
+  const {
+    totalAppointments,
+    completedAppointments,
+    pendingAppointments,
+    totalAmount,
+    isLoading, 
+    isError, 
+    error,
+    appointmentData,
+    setActiveStatus,
+    pagination, 
+    setPagination,
+    searchInput, 
+    setSearchInput 
+  } = useGetAllAppointments()
   const summaryCards = [
     {
       id: 1,
@@ -134,7 +79,7 @@ const Appointment = () => {
     },
     {
       id: 4,
-      title: "Total Amount",
+      title: "Upcoming",
       value: `₦${totalAmount.toLocaleString()}`,
       percent: 15,
     },
@@ -160,20 +105,6 @@ const Appointment = () => {
     router.push(`/appointment/${appointmentId}`);
   };
 
-  const handleNextPage = () => {
-    setPagination((prev) => ({
-      ...prev,
-      page: Math.min(prev.page + 1, prev.totalPages),
-    }));
-  };
-
-  const handlePreviousPage = () => {
-    setPagination((prev) => ({
-      ...prev,
-      page: Math.max(prev.page - 1, 1),
-    }));
-  };
-
   const renderTable = () => {
     return (
       <>
@@ -197,7 +128,7 @@ const Appointment = () => {
               {isError ? (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-8 text-red-600">
-                    {error.message}
+                    {error?.message}
                   </TableCell>
                 </TableRow>
               ) : appointmentData.length === 0 ? (
@@ -215,8 +146,8 @@ const Appointment = () => {
                   >
                     <TableCell className="text-[12px] text-grey-20">
                       <p className="font-inter text-[12px] text-grey-20">
-                        {`${appointment.doctor?.firstName || ""} ${
-                          appointment.doctor?.lastName || ""
+                        {`${CapitalizeName(appointment.doctor?.firstName) || ""} ${
+                          CapitalizeName(appointment.doctor?.lastName) || ""
                         }`.trim() || "N/A"}
                       </p>
                       <p className="font-inter text-[12px] text-grey-20">
@@ -236,7 +167,7 @@ const Appointment = () => {
                     </TableCell>
 
                     <TableCell className="text-[12px] text-grey-20">
-                      {appointment.healthConcern || "N/A"}
+                      {CapitalizeName(appointment.healthConcern) || "N/A"}
                     </TableCell>
 
                     <TableCell>
@@ -249,7 +180,7 @@ const Appointment = () => {
                     </TableCell>
 
                     <TableCell className="text-[12px] text-grey-20">
-                      {appointment.consultationType || "N/A"}
+                      {CapitalizeName(appointment.consultationType.replaceAll("_", " ")) || "N/A"}
                     </TableCell>
 
                     <TableCell className="text-[12px] text-grey-20">
@@ -271,34 +202,7 @@ const Appointment = () => {
             </TableBody>
           )}
         </Table>
-
-        <div className="flex items-center justify-between px-4 py-4 border-t border-borderColor">
-          <p className="text-sm text-gray-500">
-            Page {pagination.page} of {pagination.totalPages || 1} — Total{" "}
-            {pagination.total}
-          </p>
-
-          <div className="flex gap-2">
-            <button
-              onClick={handlePreviousPage}
-              disabled={pagination.page === 1}
-              className="px-3 py-1 text-sm border rounded disabled:opacity-50"
-            >
-              Previous
-            </button>
-
-            <button
-              onClick={handleNextPage}
-              disabled={
-                pagination.page === pagination.totalPages ||
-                pagination.totalPages === 0
-              }
-              className="px-3 py-1 text-sm border rounded disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
-        </div>
+        <Paginate pagination={pagination} setPagination={setPagination}/>
       </>
     );
   };
@@ -331,30 +235,36 @@ const Appointment = () => {
         ))}
       </Card>
 
-      <div className="flex space-x-3 my-4 px-4">
-        <Input
-          value={searchInput}
-          placeholder="Search by patient, doctor or health concern"
-          onChange={(e) => setSearchInput(e.target.value)}
-          icon={<Search size={17} color="#C11574" />}
-        />
-      </div>
+      <div className=" w-full rounded-lg border border-borderColor bg-white">
+        <div className="flex items-center justify-between border-b border-borderColor100 p-4">
+          <TableTitle>All Appointments</TableTitle>
+        </div>
 
-      <Tabs defaultValue="all" onValueChange={handleTabChange}>
-        <TabsList>
+        <div className="flex space-x-3 my-4 px-4">
+          <Input
+            value={searchInput}
+            placeholder="Search by patient, doctor or health concern"
+            onChange={(e) => setSearchInput(e.target.value)}
+            icon={<Search size={17} color="#C11574" />}
+          />
+        </div>
+
+        <Tabs defaultValue="all" onValueChange={handleTabChange}>
+          <TabsList>
+            {tabs.map((tab) => (
+              <TabsTrigger key={tab.key} value={tab.key}>
+                {tab.title}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
           {tabs.map((tab) => (
-            <TabsTrigger key={tab.key} value={tab.key}>
-              {tab.title}
-            </TabsTrigger>
+            <TabsContent key={tab.key} value={tab.key}>
+              {renderTable()}
+            </TabsContent>
           ))}
-        </TabsList>
-
-        {tabs.map((tab) => (
-          <TabsContent key={tab.key} value={tab.key}>
-            {renderTable()}
-          </TabsContent>
-        ))}
-      </Tabs>
+        </Tabs>
+      </div>
      </FlexWrapper>
     </PageWrapper>
   );
