@@ -19,7 +19,7 @@ import { PATIENTS_ENDPOINTS } from '@/constants/endpoints';
 import { login } from '@/lib/interface/login';
 import { forgotPassword } from '@/lib/interface/forgotPassword';
 import { verifyEmail } from '@/lib/interface/verifyEmail';
-import { CreatePayment } from '@/lib/interface/createPayment';
+// import { CreatePayment } from '@/lib/interface/createPayment';
 import { InitializePayment } from '@/lib/interface/payment';
 
 export const patientService = {

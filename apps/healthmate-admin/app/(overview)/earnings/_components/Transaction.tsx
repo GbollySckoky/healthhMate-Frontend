@@ -2,10 +2,10 @@ import { transactionData } from '@/components/data';
 import { Card, MediumText, Value } from '@/components/ui/Reusable';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
-import { TransactionTable } from './TransactionTable';
+import { TransactionsPage } from './TransactionTable';
 
 
-const TransactionsPage = () => {
+const Transactions = () => {
   return (
     <div>
         <Card className='flex items-center gap-4'>
@@ -28,9 +28,9 @@ const TransactionsPage = () => {
                 )
             })}
         </Card>
-        <TransactionTable />
+        <TransactionsPage />
     </div>
   )
 }
 
-export default TransactionsPage
+export default Transactions

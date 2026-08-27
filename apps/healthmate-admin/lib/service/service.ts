@@ -111,5 +111,13 @@ export const Hospital_Admin = {
     getDoctorAvailability: async (id: string) => {
         const response = await api.get(`${ADMIN_ENDPOINTS.GET_DOCTOR_AVAILABILITY}${id}`);
         return response.data
-    }
+    },
+    getFinance: async (page = 1, limit = 10) => {
+    const searchParams = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+    })
+    const response = await api.get(`${ADMIN_ENDPOINTS.GET_FINANCE}?${searchParams}`)
+    return response.data
+  },
 }
