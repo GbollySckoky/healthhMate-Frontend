@@ -102,5 +102,13 @@ export const Doctor = {
     getDoctorAvailability: async () => {
         const response = await api.get(DOCTOR_ENDPOINTS.GET_DOCTOR_AVAILABILITY)
         return response.data
-    }
+    },
+    getFinance: async (page = 1, limit = 10) => {
+    const searchParams = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+    })
+    const response = await api.get(`${DOCTOR_ENDPOINTS.GET_FINANCE}?${searchParams}`)
+    return response.data
+  },
 }

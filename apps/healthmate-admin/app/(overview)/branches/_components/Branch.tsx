@@ -1,6 +1,6 @@
 "use client";
 
-import MinSelectField from "@/lib/components/Inputs/MinSelectField";
+// import MinSelectField from "@/lib/components/Inputs/MinSelectField";
 import Input from "@/lib/components/Inputs/Input";
 import {
   Button,
@@ -11,27 +11,27 @@ import {
 import React, { useState } from "react";
 import { Search } from "lucide-react";
 import BranchTable from "./BranchTable";
-import useToggle from "@/lib/hooks/useToggle";
+// import useToggle from "@/lib/hooks/useToggle";
 import AddNewBranch from "./AddNewBranch";
 import AssignBranch from "./AssignBranch";
 import { useModal } from "@/components/Modal/Modal";
 
 const Branch = () => {
   const [inputValue, setInputValue] = useState("");
-  const [selectValue, setSelectValue] = useState<string | undefined>();
+  // const [selectValue, setSelectValue] = useState<string | undefined>();
 
-  const { isToggle, handleToggle } = useToggle();
+  // const { isToggle, handleToggle } = useToggle();
   const { openModal } = useModal();
 
-  const handleSelect = (option: string | undefined) => {
-    setSelectValue(option);
-    handleToggle();
-  };
+  // const handleSelect = (option: string | undefined) => {
+  //   setSelectValue(option);
+  //   handleToggle();
+  // };
 
-  const allStatus = {
-    label: "Status",
-    options: ["Active", "Inactive", "Open"],
-  };
+  // const allStatus = {
+  //   label: "Status",
+  //   options: ["Active", "Inactive", "Open"],
+  // };
 
   return (
     <PageWrapper>
@@ -75,18 +75,18 @@ const Branch = () => {
               icon={<Search size={17} color="#C11574" />}
             />
 
-            <MinSelectField
+            {/* <MinSelectField
               {...allStatus}
               value={selectValue}
               show={isToggle}
               onSelect={handleSelect}
               onClick={handleToggle}
               className="w-fit"
-            />
+            /> */}
           </div>
 
           <div className="p-4">
-            <BranchTable searchQuery={inputValue} status={selectValue} />
+            <BranchTable searchQuery={inputValue}  />
           </div>
         </div>
       </FlexWrapper>
