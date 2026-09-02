@@ -20,7 +20,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({
-  open,
+  open, 
   onClose,
 }: SidebarProps) {
   const pathname = usePathname();
@@ -47,8 +47,7 @@ export default function Sidebar({
         className={`
           fixed inset-y-0 left-0 z-50
           flex w-[280px] flex-col
-          bg-red-900 text-white
-          border-r border-[#E5E7EB]
+          bg-red-900 text-black
           shadow-xl
 
           transform
@@ -69,7 +68,7 @@ export default function Sidebar({
         `}
       >
         {/* Logo / Close */}
-        <div className="flex h-[62px] shrink-0 items-center justify-between border-b border-[#F1F1F1] px-5">
+        <div className="flex h-[62px] shrink-0 items-center justify-between px-5">
           <Link
             href={ROUTES.home}
             onClick={onClose}
@@ -96,7 +95,7 @@ export default function Sidebar({
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto px-4 py-6">
+        <nav className="flex-1 overflow-y-auto px-4 py-4">
           <div className="space-y-1">
             {PATIENT_NAV_ITEMS.map(
               ({ id, label, href, icon: Icon }) => {

@@ -19,8 +19,9 @@ import { PATIENTS_ENDPOINTS } from '@/constants/endpoints';
 import { login } from '@/lib/interface/login';
 import { forgotPassword } from '@/lib/interface/forgotPassword';
 import { verifyEmail } from '@/lib/interface/verifyEmail';
-// import { CreatePayment } from '@/lib/interface/createPayment';
+// import { io } from 'socket.io-client';
 import { InitializePayment } from '@/lib/interface/payment';
+import { CreateMessage } from '@/lib/interface/message';
 
 export const patientService = {
   login: async (payload: login) => {
@@ -182,5 +183,22 @@ export const patientService = {
   verifyPayment: async (reference: string) => {
     const response = await api.get(`payment/verify/${reference}`)
     return response.data
+  },
+  getCommunicationId: async (appointmentId: string) => {
+    const response = await api.get(`communications/appointment/${appointmentId}`)
+    return response.data
+  },
+  createMessage: async (communicationId: string, paylaod: CreateMessage) => {
+    return await api.post(`communications/${communicationId}/messages`, paylaod)
+  },
+  getMessages: async (communicationId: string) => {
+    const response = await api.get(`communications/${communicationId}/messages`)
+    return response.data
+  },
+  createCall: async (communicationId: string) => {
+    return await api.post(`communications/${communicationId}/calls`)
+  },
+  startCall: async (callSessionId: string) => {
+    return await api.post(`communications/calls/${callSessionId}/start`)
   },
 };

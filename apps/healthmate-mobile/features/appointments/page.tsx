@@ -11,6 +11,8 @@ import { PageWrapper, SmallText, SubTitle } from "@/components/Reusable";
 import AppointmentCardSkeleton from "@/components/AllAppointmntSkeleton";
 import SearchInput from "@/components/SearchInput";
 import profileFallback from "@/assets/Ellipse 165.png";
+import { MessageCircleMore } from 'lucide-react';
+
 
 const formatAppointmentDate = (date: string, time: string) => {
   const appointmentDate = new Date(date);
@@ -64,6 +66,10 @@ const AllApointments = () => {
 
   const handleAppointmentPress = (id: number) => {
     router.push(`/appointments/${id}`);
+  };
+
+  const handleMessagePress = (communicationId: number) => {
+    router.push(`/appointments/message/${communicationId}`);
   };
 
   return (
@@ -145,8 +151,11 @@ const AllApointments = () => {
                   </div>
                 </div>
                 <div className="flex flex-row justify-between gap-[10px] border-t-2 border-t-[#F8F8F8] mt-[15px]">
-                  <span className="py-2 px-4 bg-[#FAFAFA] rounded-lg border border-[#D6D7DA] mt-[14px] text-sm font-semibold text-[#252B37] text-center flex-1">
-                    Reschedule
+                  <span 
+                    className="py-2 px-4 bg-[#FAFAFA] rounded-lg border border-[#D6D7DA] mt-[14px] text-sm font-semibold text-[#252B37] text-center flex items-center gap-1"
+                    onClick={() => handleMessagePress(id)}>
+                    <MessageCircleMore size={17}/>
+                    Messages
                   </span>
                   <span className="py-2 px-4 bg-[#DD2591] rounded-lg mt-[14px] text-sm font-semibold text-[#F2F2F2] text-center flex-1">
                     Join Call
