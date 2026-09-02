@@ -12,6 +12,8 @@ import { useModal } from "@/store/Modal";
 import DateInput from "@/components/DateInput";
 import CustomCalendar from "@/components/CustomCalendar";
 import Input from "@/components/Input";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify/unstyled";
 
 type WeightInputType = {
   weight: string;
@@ -63,11 +65,8 @@ const WeightModal = () => {
       closeModal();
     },
 
-    onError: (error: any) => {
-    //   toast.error(
-    //     error?.response?.data?.message ??
-    //       "Unable to save weight"
-    //   );
+    onError: (error: AxiosError<{message: string}>) => {
+      toast.error(error.response?.data?.message ?? "Something went wrong");
     },
   });
 
