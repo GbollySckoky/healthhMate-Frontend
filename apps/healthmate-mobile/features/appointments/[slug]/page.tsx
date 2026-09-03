@@ -234,7 +234,7 @@ const AppointmentDetails = () => {
             })}
           </Card>
 
-          <Card>
+          <Card className="mt-6">
             <button
               type="button"
               onClick={() => router.push(ROUTES.messages)}

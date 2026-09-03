@@ -64,7 +64,8 @@ const AllApointments = () => {
   const canGoPrevious = meta ? meta.page > 1 : page > 1;
   const canGoNext = meta ? meta.page < meta.totalPages : false;
 
-  const handleAppointmentPress = (id: number) => {
+  const handleAppointmentPress = (id: number, e: any) => {
+    e.stopPropagation();
     router.push(`/appointments/${id}`);
   };
 
@@ -112,7 +113,7 @@ const AllApointments = () => {
               <button
                 type="button"
                 key={id}
-                onClick={() => handleAppointmentPress(id)}
+                onClick={(e) => handleAppointmentPress(id, e)}
                 className="w-full text-left p-[15px] border border-[#F2F2F2] rounded-[10px] bg-white mb-5 mt-2.5 block active:opacity-75 transition-opacity"
               >
                 <div className="flex flex-row mt-[5px] mb-[2px]">
@@ -153,7 +154,10 @@ const AllApointments = () => {
                 <div className="flex flex-row justify-between gap-[10px] border-t-2 border-t-[#F8F8F8] mt-[15px]">
                   <span 
                     className="py-2 px-4 bg-[#FAFAFA] rounded-lg border border-[#D6D7DA] mt-[14px] text-sm font-semibold text-[#252B37] text-center flex items-center gap-1"
-                    onClick={() => handleMessagePress(id)}>
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMessagePress(id);
+                    }}>
                     <MessageCircleMore size={17}/>
                     Messages
                   </span>
