@@ -5,7 +5,7 @@ import { toast } from 'react-toastify/unstyled'
 
 const useCreateCall = (communicationId?: string) => {
   const startCall = useMutation({
-    mutationKey: ['startCall'],
+    mutationKey: ['startCall',],
 
     mutationFn: (callSessionId: string) =>
       patientService.startCall(callSessionId),

@@ -13,7 +13,6 @@ import {
 
 import Image from "next/image";
 import { useParams } from "next/navigation";
-
 import React, {
   FormEvent,
   useEffect,
@@ -22,7 +21,6 @@ import React, {
 } from "react";
 
 import defaultImage from "@/assets/default.jpg";
-
 import useCreateCall from "@/hooks/useCreateCall";
 
 import {
@@ -34,32 +32,26 @@ import {
 } from "@/lib/socket/communicationSocket";
 
 import { storageService } from "@/constants/storage";
+import useDate from "@/hooks/useDate";
+import { CapitalizeName } from "@/constants/capitalizeName";
+
+
+// 1. User clicks Send
+// 2. handleSubmit fires
+// 3. setMessages(...) — optimistic message appears in UI IMMEDIATELY
+// 4. sendMessage(socket, ...) — emits "sendMessage" event over the socket
+// 5. [network hop to server]
+// 6. NestJS gateway receives "sendMessage"
+// 7. Server writes the message to the DB
+// 8. Server broadcasts "newMessage" to all clients in that communication room
+// 9. [network hop back to client]
+// 10. handleNewMessage fires — reconciles the temp message with the real DB record
 
 const Page = () => {
+  const videoCall = 'video_call'
   const params = useParams();
-
+  const {formatTime} = useDate()
   const rawId = String(params?.slug);
-
-  /**
-   * ============================================================
-   * STATE
-   * ============================================================
-   */
-
-  const [messages, setMessages] = useState<Message[]>([]);
-
-  const [inputValue, setInputValue] = useState("");
-
-  /**
-   * Used to make sure we only seed the initial HTTP messages once.
-   */
-  const hasSeededMessages = useRef(false);
-
-  /**
-   * ============================================================
-   * COMMUNICATION
-   * ============================================================
-   */
 
   const {
     message,
@@ -67,6 +59,9 @@ const Page = () => {
     isError,
     error,
   } = useGetCommunicationId(rawId);
+  console.log('error', error)
+  console.log('Message:', message);
+  console.log('Communication ID:', message);  
 
   const {
     messages: initialMessages,
@@ -75,94 +70,90 @@ const Page = () => {
     msgError,
   } = useGetMessags(message?.id);
 
-  /**
-   * ============================================================
-   * CALL
-   * ============================================================
-   */
 
   const { createCall } = useCreateCall(message?.id);
 
-  /**
-   * ============================================================
-   * COMMUNICATION ID
-   * ============================================================
-   */
-
+  console.log(createCall)
   const communicationId = message?.id ?? "";
 
+  const authToken = storageService.getAuthToken();
+
   /**
    * ============================================================
-   * AUTH TOKEN
+   * LOCAL CHAT STATE
    * ============================================================
    */
 
-  const authToken = storageService.getAuthToken();
-  console.log("AUTH TOKEN:", authToken);
-console.log(
-  "AUTH TOKEN TYPE:",
-  typeof authToken
-);
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  const seededCommunicationRef = useRef<string | null>(null);
+
+  const [inputValue, setInputValue] = useState("");
+
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  /**
+   * ============================================================
+   * MAKE CONTENT SCROLLABLE- WHWN A NEW TEXT IS DISPLAYED
+   * ============================================================
+   */
+  useEffect(() => {
+    if (messages.length === 0) return;
+
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   /**
    * ============================================================
    * SOCKET REF
    * ============================================================
    */
 
-  const socketRef =
-    useRef<
-      ReturnType<typeof connectCommunicationSocket> | null
-    >(null);
+  const socketRef = useRef<ReturnType<typeof connectCommunicationSocket> | null>(null);
 
   /**
    * ============================================================
    * SEED INITIAL MESSAGES
    * ============================================================
    *
-   * IMPORTANT:
-   *
-   * We don't want:
-   *
-   * setMessages(initialMessages)
-   *
-   * firing every time React Query returns a new array reference.
-   *
-   * So we only seed the local state once.
+   * Wait until the messages query has actually settled
+   * (msgIsLoading === false AND initialMessages is defined)
+   * before seeding local state. This avoids seeding with an
+   * empty array before the real history has arrived.
    */
 
   useEffect(() => {
-    if (
-      !initialMessages ||
-      hasSeededMessages.current
-    ) {
+    if (!communicationId) {
+      return;
+    }
+
+    if (msgIsLoading) {
+      return;
+    }
+
+    if (!initialMessages) {
+      return;
+    }
+
+    if (seededCommunicationRef.current === communicationId) {
       return;
     }
 
     setMessages(initialMessages);
 
-    hasSeededMessages.current = true;
-  }, [initialMessages]);
+    seededCommunicationRef.current = communicationId;
+  }, [communicationId, initialMessages, msgIsLoading]);
 
   /**
-   * ============================================================
-   * RESET SEEDING WHEN COMMUNICATION CHANGES
-   * ============================================================
-   *
-   * If the user navigates from:
-   *
-   * /message/communication-A
-   *
-   * to:
-   *
-   * /message/communication-B
-   *
-   * we need to allow the new conversation's history
-   * to seed the local state.
+   * Reset seeding + local messages when switching conversations,
+   * so stale messages from the previous chat don't flash before
+   * the new history loads.
    */
-
   useEffect(() => {
-    hasSeededMessages.current = false;
-    setMessages([]);
+    if (seededCommunicationRef.current && seededCommunicationRef.current !== communicationId) {
+      setMessages([]);
+      seededCommunicationRef.current = null;
+    }
   }, [communicationId]);
 
   /**
@@ -173,186 +164,130 @@ console.log(
 
   useEffect(() => {
     if (!communicationId || !authToken) {
-      console.log(
-        "SKIPPED SOCKET CONNECTION",
-        {
-          communicationId,
-          hasToken: Boolean(authToken),
-        }
-      );
-
       return;
     }
 
-    console.log(
-      "INITIALIZING COMMUNICATION SOCKET..."
-    );
+    console.log("🔌 INITIALIZING COMMUNICATION SOCKET", communicationId);
 
-    const socket =
-      connectCommunicationSocket(authToken);
+    const socket = connectCommunicationSocket(authToken);
 
     socketRef.current = socket;
 
-    /**
-     * ==========================================================
-     * SOCKET CONNECT
-     * ==========================================================
-     */
-
     const handleConnect = () => {
-      console.log(
-        "✅ SOCKET CONNECTED:",
-        socket.id
-      );
+      console.log("✅ SOCKET CONNECTED:", socket.id);
+      console.log("🚪 JOINING COMMUNICATION:", communicationId);
 
-      console.log(
-        "JOINING COMMUNICATION:",
-        communicationId
-      );
-
-      joinCommunication(
-        socket,
-        communicationId
-      );
+      joinCommunication(socket, communicationId);
     };
 
-    /**
-     * ==========================================================
-     * NEW MESSAGE
-     * ==========================================================
-     */
-
-    const handleNewMessage = (
-      newMessage: Message
-    ) => {
-      console.log(
-        "📩 RECEIVED NEW MESSAGE:",
-        newMessage
-      );
+    const handleNewMessage = (newMessage: Message & { clientTempId?: string }) => {
+      console.log("📩 REALTIME MESSAGE:", newMessage);
 
       setMessages((previousMessages) => {
-        /**
-         * Prevent duplicates.
-         */
+        // Already have the real message (e.g. duplicate event) — skip.
+        const alreadyExists = previousMessages.some(
+          (m) => m.id === newMessage.id
+        );
 
-        const exists =
-          previousMessages.some(
-            (item) =>
-              item.id === newMessage.id
-          );
-
-        if (exists) {
+        if (alreadyExists) {
           return previousMessages;
         }
 
-        return [
-          ...previousMessages,
-          newMessage,
-        ];
+        // Try to reconcile with an optimistic temp message.
+        // Prefer exact match via clientTempId (if your backend echoes it back).
+        const tempIndex = previousMessages.findIndex((m) => {
+          if (!m.id.startsWith("temp-")) return false;
+
+          if (newMessage.clientTempId) {
+            return m.id === newMessage.clientTempId;
+          }
+
+          // Fallback: match on sender + content (less precise,
+          // can misfire on rapid duplicate messages).
+          return (
+            m.senderType === newMessage.senderType &&
+            m.content === newMessage.content
+          );
+        });
+
+        if (tempIndex !== -1) {
+          const next = [...previousMessages];
+          next[tempIndex] = newMessage;
+          return next;
+        }
+
+        return [...previousMessages, newMessage];
       });
     };
 
-    /**
-     * Listen for socket connection.
-     */
+    socket.on("connect", handleConnect);
 
-    socket.on(
-      "connect",
-      handleConnect
-    );
-
-    /**
-     * Listen for messages.
-     */
-
-    onNewMessage(
-      handleNewMessage
-    );
-
-    /**
-     * If already connected.
-     */
+    onNewMessage(handleNewMessage);
 
     if (socket.connected) {
       handleConnect();
     }
 
-    /**
-     * ==========================================================
-     * CLEANUP
-     * ==========================================================
-     */
-
     return () => {
-      console.log(
-        "CLEANING SOCKET LISTENERS..."
-      );
+      console.log("🧹 CLEANING COMMUNICATION SOCKET LISTENERS");
 
-      socket.off(
-        "connect",
-        handleConnect
-      );
-
-      offNewMessage(
-        handleNewMessage
-      );
+      socket.off("connect", handleConnect);
+      offNewMessage(handleNewMessage);
 
       socketRef.current = null;
     };
-  }, [
-    communicationId,
-    authToken,
-  ]);
+  }, [communicationId, authToken]);
 
   /**
    * ============================================================
    * SEND MESSAGE
    * ============================================================
+   *
+   * Optimistically append the message locally so it appears
+   * instantly, then emit it over the socket. The temp message
+   * gets reconciled with the real one in handleNewMessage above.
    */
 
-  const handleSubmit = (
-    e: FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const trimmedMessage =
-      inputValue.trim();
+    const trimmedMessage = inputValue.trim();
 
-    if (
-      !trimmedMessage ||
-      !communicationId ||
-      !authToken
-    ) {
+    if (!trimmedMessage || !communicationId || !authToken) {
       return;
     }
 
-    /**
-     * Get existing socket or create one.
-     */
-
-    const socket =
-      socketRef.current ??
-      connectCommunicationSocket(
-        authToken
-      );
+    const socket = socketRef.current ?? connectCommunicationSocket(authToken);
 
     socketRef.current = socket;
 
-    console.log(
-      "📤 SENDING MESSAGE:",
-      {
-        communicationId,
-        content: trimmedMessage,
-        socketId: socket.id,
-        connected: socket.connected,
-      }
-    );
+    if (!socket.connected) {
+      console.warn("⚠️ Socket is not connected yet");
+      return;
+    }
 
-    sendMessage(
-      socket,
+    const tempId = `temp-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+    const optimisticMessage = {
+      id: tempId,
+      content: trimmedMessage,
+      senderType: "PATIENT",
+      createdAt: new Date().toISOString(),
+    } as Message;
+
+    setMessages((previousMessages) => [
+      ...previousMessages,
+      optimisticMessage,
+    ]);
+
+    console.log("📤 SENDING MESSAGE:", {
       communicationId,
-      trimmedMessage
-    );
+      content: trimmedMessage,
+      socketId: socket.id,
+      tempId,
+    });
+
+    sendMessage(socket, communicationId, trimmedMessage, tempId);
 
     setInputValue("");
   };
@@ -363,40 +298,26 @@ console.log(
    * ============================================================
    */
 
-  const handleCreateCall = (
-    e: FormEvent<HTMLFormElement>
-  ) => {
+  const handleCreateCall = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     createCall.mutate();
   };
 
-  /**
-   * ============================================================
-   * LOADING
-   * ============================================================
-   */
-
   if (isLoading) {
     return (
-      <div className="flex h-[100dvh] items-center justify-center">
+      <div className="flex h-[90vh] items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-red-900 border-t-transparent" />
       </div>
     );
   }
 
-  /**
-   * ============================================================
-   * ERROR
-   * ============================================================
-   */
-
   if (isError) {
     return (
-      <div className="flex h-[100dvh] items-center justify-center p-4 text-center">
+      <div className="flex h-[90vh] items-center justify-center p-4 text-center">
         <p className="text-sm text-red-600">
           {error instanceof Error
-            ? error.message
+            ? error?.response.data.message
             : "Failed to load conversation."}
         </p>
       </div>
@@ -419,12 +340,6 @@ console.log(
     );
   }
 
-  /**
-   * ============================================================
-   * UI
-   * ============================================================
-   */
-  console.log('Messages', messages)
   return (
     <div className="flex h-[100dvh] flex-col bg-gray-50">
 
@@ -445,7 +360,7 @@ console.log(
 
             <div>
               <h2 className="text-sm font-semibold text-white">
-                Doctor Name
+                Dr. {CapitalizeName(message?.appointment.doctor.firstName)} {CapitalizeName(message?.appointment.doctor.lastName)}
               </h2>
 
               <p className="text-xs text-red-200">
@@ -455,29 +370,27 @@ console.log(
 
           </div>
 
-          {/* CALL ACTIONS */}
-
           <form
             onSubmit={handleCreateCall}
             className="flex items-center gap-2"
           >
-
+          {message?.appointment.consultationType === videoCall ? (
             <button
               type="submit"
-              aria-label="Start phone call"
-              className="flex h-10 w-10 items-center justify-center rounded-full text-white transition hover:bg-white/10"
-            >
-              <Phone size={20} />
-            </button>
-
-            <button
-              type="button"
               aria-label="Start video call"
-              className="flex h-10 w-10 items-center justify-center rounded-full text-white transition hover:bg-white/10"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-white transition hover:bg-white/10 cursor-pointer"
             >
               <Video size={20} />
             </button>
-
+            ): (
+            <button
+              type="submit"
+              aria-label="Start phone call"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-white transition hover:bg-white/10 cursor-pointer"
+            >
+              <Phone size={20} />
+            </button>
+          )}
           </form>
 
         </div>
@@ -485,7 +398,7 @@ console.log(
 
       {/* MESSAGES */}
 
-      <main className="mt-16 flex-1 overflow-y-auto px-4 py-6">
+      <main className="mt-16 flex-1 overflow-y-auto px-4 py-6 pb-24">
 
         {msgIsLoading ? (
 
@@ -564,6 +477,9 @@ console.log(
                             : "text-gray-400"
                         }`}
                       >
+                        <span>
+                          {formatTime(item.createdAt)}
+                        </span>
                         <CheckCheck size={16} />
                       </div>
 
@@ -573,14 +489,13 @@ console.log(
                 );
               }
             )}
-
+            <div ref={messagesEndRef} />
           </div>
-
         )}
 
       </main>
 
-      {/* MESSAGE INPUT */}
+      {/* INPUT */}
 
       <div className="fixed bottom-0 w-full border-t border-gray-200 bg-white p-4">
 
@@ -608,7 +523,7 @@ console.log(
           </button>
 
         </form>
-
+      
       </div>
 
     </div>
