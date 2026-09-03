@@ -5,9 +5,7 @@ let socket: Socket | null = null;
 let socketToken: string | null = null;
 
 /**
- * ============================================================
  * CONNECT SOCKET
- * ============================================================
  */
 
 export function connectCommunicationSocket(token: string): Socket {
@@ -15,18 +13,10 @@ export function connectCommunicationSocket(token: string): Socket {
     throw new Error("Socket authentication token is required");
   }
 
-  /**
-   * If we already have a socket using the same token,
-   * reuse it instead of creating another connection.
-   */
   if (socket && socketToken === token) {
     return socket;
   }
 
-  /**
-   * If there is an old socket with a different token,
-   * disconnect it before creating a new one.
-   */
   if (socket) {
     socket.disconnect();
     socket = null;
@@ -34,100 +24,46 @@ export function connectCommunicationSocket(token: string): Socket {
 
   socketToken = token;
 
-  /**
-   * IMPORTANT:
-   *
-   * Your NestJS gateway namespace is:
-   *
-   * @WebSocketGateway({
-   *   namespace: '/communications'
-   * })
-   *
-   * Therefore the Socket.IO namespace should be
-   * /communications.
-   */
   socket = io(
     "https://healthcare-backend-5y5b.onrender.com/communications",
     {
       auth: {
         token,
       },
-
-      /**
-       * Use websocket directly.
-       *
-       * You can remove this if you want Socket.IO's
-       * polling -> websocket fallback.
-       */
       transports: ["websocket"],
-
-      /**
-       * Automatically reconnect if connection drops.
-       */
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
     }
   );
 
-  /**
-   * ============================================================
-   * SOCKET EVENTS
-   * ============================================================
-   */
-
   socket.on("connect", () => {
-    console.log(
-      "✅ Communication socket connected:",
-      socket?.id
-    );
+    console.log("✅ Communication socket connected:", socket?.id);
   });
 
   socket.on("disconnect", (reason) => {
-    console.log(
-      "❌ Communication socket disconnected:",
-      reason
-    );
+    console.log("❌ Communication socket disconnected:", reason);
   });
 
   socket.on("connect_error", (error) => {
-    console.error(
-      "❌ SOCKET CONNECT ERROR:",
-      error
-    );
-
-    console.error(
-      "Message:",
-      error.message
-    );
+    console.error("❌ SOCKET CONNECT ERROR:", error);
+    console.error("Message:", error.message);
   });
 
   socket.on("authError", (error) => {
-    console.error(
-      "❌ Communication socket authentication error:",
-      error
-    );
-
-    console.error(
-      "Auth error message:",
-      error?.message
-    );
+    console.error("❌ Communication socket authentication error:", error);
+    console.error("Auth error message:", error?.message);
   });
 
   socket.on("error", (error) => {
-    console.error(
-      "❌ Communication socket server error:",
-      error
-    );
+    console.error("❌ Communication socket server error:", error);
   });
 
   return socket;
 }
 
 /**
- * ============================================================
  * GET SOCKET
- * ============================================================
  */
 
 export function getCommunicationSocket(): Socket {
@@ -141,9 +77,7 @@ export function getCommunicationSocket(): Socket {
 }
 
 /**
- * ============================================================
  * JOIN COMMUNICATION
- * ============================================================
  */
 
 export function joinCommunication(
@@ -151,17 +85,10 @@ export function joinCommunication(
   communicationId: string
 ) {
   if (!communicationId) {
-    console.error(
-      "Cannot join communication: communicationId is missing"
-    );
-
+    console.error("Cannot join communication: communicationId is missing");
     return;
   }
 
-  /**
-   * If socket is not connected yet,
-   * wait for the connection before joining.
-   */
   if (!communicationSocket.connected) {
     communicationSocket.once("connect", () => {
       console.log(
@@ -177,10 +104,7 @@ export function joinCommunication(
     return;
   }
 
-  console.log(
-    "Joining communication:",
-    communicationId
-  );
+  console.log("Joining communication:", communicationId);
 
   communicationSocket.emit("joinCommunication", {
     communicationId,
@@ -188,75 +112,54 @@ export function joinCommunication(
 }
 
 /**
- * ============================================================
  * SEND MESSAGE
- * ============================================================
+ *
+ * clientTempId (optional): a client-generated id for the
+ * optimistic message. If your NestJS gateway echoes this
+ * back on the "newMessage" payload, the UI can reconcile
+ * the optimistic bubble with the real one precisely.
  */
 
 export function sendMessage(
   communicationSocket: Socket,
   communicationId: string,
-  content: string
+  content: string,
+  clientTempId?: string
 ) {
   if (!communicationId) {
-    console.error(
-      "Cannot send message: communicationId is missing"
-    );
-
+    console.error("Cannot send message: communicationId is missing");
     return;
   }
 
   if (!content.trim()) {
-    console.error(
-      "Cannot send message: message is empty"
-    );
-
+    console.error("Cannot send message: message is empty");
     return;
   }
 
-  /**
-   * Socket hasn't connected yet.
-   *
-   * Wait for connection and send once connected.
-   */
+  const payload = {
+    communicationId,
+    content: content.trim(),
+    ...(clientTempId ? { clientTempId } : {}),
+  };
+
   if (!communicationSocket.connected) {
-    console.log(
-      "Socket not connected yet. Waiting to send message..."
-    );
+    console.log("Socket not connected yet. Waiting to send message...");
 
     communicationSocket.once("connect", () => {
-      console.log(
-        "Socket connected. Sending message:",
-        communicationId
-      );
-
-      communicationSocket.emit("sendMessage", {
-        communicationId,
-        content: content.trim(),
-      });
+      console.log("Socket connected. Sending message:", communicationId);
+      communicationSocket.emit("sendMessage", payload);
     });
 
     return;
   }
 
-  /**
-   * Socket is already connected.
-   */
-  console.log(
-    "Socket sending message:",
-    communicationId
-  );
+  console.log("Socket sending message:", communicationId);
 
-  communicationSocket.emit("sendMessage", {
-    communicationId,
-    content: content.trim(),
-  });
+  communicationSocket.emit("sendMessage", payload);
 }
 
 /**
- * ============================================================
  * MARK MESSAGE READ
- * ============================================================
  */
 
 export function markMessageRead(
@@ -264,124 +167,71 @@ export function markMessageRead(
   messageId: string
 ) {
   if (!messageId) {
-    console.error(
-      "Cannot mark message as read: messageId is missing"
-    );
-
+    console.error("Cannot mark message as read: messageId is missing");
     return;
   }
 
   if (!communicationSocket.connected) {
     communicationSocket.once("connect", () => {
-      communicationSocket.emit("markMessageRead", {
-        messageId,
-      });
+      communicationSocket.emit("markMessageRead", { messageId });
     });
 
     return;
   }
 
-  communicationSocket.emit("markMessageRead", {
-    messageId,
-  });
+  communicationSocket.emit("markMessageRead", { messageId });
 }
 
 /**
- * ============================================================
  * LISTENERS
- * ============================================================
  */
 
-export function onNewMessage(
-  callback: (message: Message) => void
-) {
-  getCommunicationSocket().on(
-    "newMessage",
-    callback
-  );
+export function onNewMessage(callback: (message: Message) => void) {
+  getCommunicationSocket().on("newMessage", callback);
 }
 
-export function offNewMessage(
-  callback: (message: Message) => void
-) {
+export function offNewMessage(callback: (message: Message) => void) {
   if (!socket) return;
-
-  socket.off(
-    "newMessage",
-    callback
-  );
+  socket.off("newMessage", callback);
 }
 
 /**
- * ============================================================
  * MESSAGE READ LISTENER
- * ============================================================
  */
 
 export function onMessageRead(
-  callback: (data: {
-    messageId: string;
-    readAt: string;
-  }) => void
+  callback: (data: { messageId: string; readAt: string }) => void
 ) {
-  getCommunicationSocket().on(
-    "messageRead",
-    callback
-  );
+  getCommunicationSocket().on("messageRead", callback);
 }
 
 export function offMessageRead(
-  callback: (data: {
-    messageId: string;
-    readAt: string;
-  }) => void
+  callback: (data: { messageId: string; readAt: string }) => void
 ) {
   if (!socket) return;
-
-  socket.off(
-    "messageRead",
-    callback
-  );
+  socket.off("messageRead", callback);
 }
 
 /**
- * ============================================================
  * INCOMING CALL
- * ============================================================
  */
 
-export function onIncomingCall(
-  callback: (data: unknown) => void
-) {
-  getCommunicationSocket().on(
-    "incomingCall",
-    callback
-  );
+export function onIncomingCall(callback: (data: unknown) => void) {
+  getCommunicationSocket().on("incomingCall", callback);
 }
 
-export function offIncomingCall(
-  callback: (data: unknown) => void
-) {
+export function offIncomingCall(callback: (data: unknown) => void) {
   if (!socket) return;
-
-  socket.off(
-    "incomingCall",
-    callback
-  );
+  socket.off("incomingCall", callback);
 }
 
 /**
- * ============================================================
  * DISCONNECT SOCKET
- * ============================================================
  */
 
 export function disconnectCommunicationSocket() {
   if (socket) {
-    console.log(
-      "Disconnecting communication socket..."
-    );
-
+    console.log("Disconnecting communication socket...");
     socket.disconnect();
   }
 

@@ -3,12 +3,12 @@ import { useQuery } from '@tanstack/react-query'
 
 const useGetMessags = (communicationId: string) => {
     const {data, isLoading: msgIsLoading, isError: msgIsError, error: msgError} = useQuery({
-        queryKey: ['getMessages'],
-        queryFn: () => patientService.getMessages(communicationId)
+        queryKey: ['getMessages',communicationId],
+        queryFn: () => patientService.getMessages(communicationId),
+        enabled: Boolean(communicationId),
     })
 
-    const messages = data ?? []
-  return {messages, msgIsLoading, msgIsError, msgError}
+  return {messages: data, msgIsLoading, msgIsError, msgError}
 }
 
 export default useGetMessags;
