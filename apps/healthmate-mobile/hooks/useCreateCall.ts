@@ -1,27 +1,29 @@
 import { patientService } from '@/service/patientService'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { toast } from 'react-toastify/unstyled'
+import { useState } from 'react'
+import { toast } from "react-toastify";
 
 const useCreateCall = (communicationId?: string) => {
-  const startCall = useMutation({
-    mutationKey: ['startCall',],
+  const [callSessionId, setCallSessionId] = useState<string | null>(null)
+  // const startCall = useMutation({
+  //   mutationKey: ['startCall', communicationId],
 
-    mutationFn: (callSessionId: string) =>
-      patientService.startCall(callSessionId),
+  //   mutationFn: (callSessionId: string) =>
+  //     patientService.startCall(callSessionId),
 
-    onSuccess: (response) => {
-      console.log('Call started:', response)
-    },
+  //   onSuccess: (response) => {
+  //     console.log('Call started:', response)
+  //   },
 
-    onError: (error: AxiosError<{message: string}>) => {
-      console.error('Failed to start call:', error)
-      toast.error(error?.response?.data?.message ?? "Failed to start call")
-    },
-  })
+  //   onError: (error: AxiosError<{message: string}>) => {
+  //     console.error('Failed to start call:', error)
+  //     toast.error(error?.response?.data?.message ?? "Failed to start call")
+  //   },
+  // })
 
   const createCall = useMutation({
-    mutationKey: ['createCall'],
+    mutationKey: ['createCall', communicationId],
 
     mutationFn: () => {
       if (!communicationId) {
@@ -35,24 +37,26 @@ const useCreateCall = (communicationId?: string) => {
       const callSessionId = response.data?.id
 
       console.log('Created call ID:', callSessionId)
-
+      toast.success(response.data?.message ?? "Call created successfully")
+      setCallSessionId(callSessionId)
       if (!callSessionId) {
         console.error('Call session ID was not returned')
         return
       }
 
-      startCall.mutate(callSessionId)
+      // startCall.mutate(callSessionId)
     },
 
     onError: (error: AxiosError<{message: string}>) => {
-      console.error('Failed to create call:', error)
+      console.log('Failed to create call:', error.response?.data?.message ?? error)
       toast.error(error?.response?.data?.message ?? "Failed to create call")
     },
   })
-
+  
   return {
     createCall,
-    startCall,
+    // startCall,
+    callSessionId,
   }
 }
 

@@ -234,7 +234,14 @@ export function disconnectCommunicationSocket() {
     console.log("Disconnecting communication socket...");
     socket.disconnect();
   }
-
   socket = null;
   socketToken = null;
+}
+
+export function onCallEnded(callback: (data: unknown) => void) {
+  getCommunicationSocket().on('callEnded', callback);
+}
+
+export function offCallEnded(callback: (data: unknown) => void) {
+  getCommunicationSocket().off('callEnded', callback);
 }

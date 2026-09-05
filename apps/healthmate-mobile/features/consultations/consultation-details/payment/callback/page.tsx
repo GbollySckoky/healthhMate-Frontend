@@ -321,8 +321,6 @@ const PaymentCallback = () => {
       </div>
     );
   }
-
-  return null;
 };
 
 export default PaymentCallback;

@@ -201,4 +201,10 @@ export const patientService = {
   startCall: async (callSessionId: string) => {
     return await api.post(`communications/calls/${callSessionId}/start`)
   },
+  endCallSession: async (callSessionId: string) => {
+    return await api.post(`communications/calls/${callSessionId}/end`)
+  },
+  cancelCallSession: async (callSessionId: string) => {
+    return await api.post(`communications/calls/${callSessionId}/cancel`)
+  }
 };
