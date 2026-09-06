@@ -35,7 +35,7 @@ const Weight = () => {
     queryFn: () => patientService.getWeight(),
   });
 
-  const {formatReadingDate} = useDate()
+  const {getReadableDate, formatTime} = useDate()
 
   const weightReadings: WeightReading[] = data?.data ?? [];
   const latestWeight = weightReadings[0];
@@ -74,10 +74,8 @@ const Weight = () => {
 
               <CardText>
                 Recorded on{" "}
-                {formatReadingDate(
-                  latestWeight?.createdAt ??
-                    latestWeight?.recordedAt
-                )}
+                {getReadableDate(latestWeight?.createdAt || 'N/A')} {" "} at {" "}
+                {formatTime(latestWeight?.createdAt || 'N/A')}
               </CardText>
 
             </DetailsContainer>
@@ -142,10 +140,8 @@ const Weight = () => {
                           </p>
 
                           <p className="mt-1 text-xs text-gray-500">
-                            {formatReadingDate(
-                              weightReading.createdAt ??
-                                weightReading.recordedAt
-                            )}
+                            {getReadableDate(weightReading.createdAt || 'N/A')} {" "} at {" "}
+                            {formatTime(weightReading.createdAt || 'N/A')}
                           </p>
 
                         </div>

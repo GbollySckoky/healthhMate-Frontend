@@ -1,20 +1,9 @@
 "use client"
 import React from 'react';
-// import { useRouter } from 'next/navigation';
 import {  Heart, Stethoscope } from 'lucide-react';
-// import {
-//   LineChart,
-//   Line,
-//   XAxis,
-//   YAxis,
-//   CartesianGrid,
-//   Tooltip,
-//   ResponsiveContainer,
-// } from 'recharts';
 import {
-    Button,
+  Button,
   Card,
-  // CardAmount,
   CardText,
   DetailsContainer,
   PageWrapper,
@@ -27,49 +16,12 @@ import { useModal } from '@/store/Modal';
 import BloodPressureModal from './BloodPressureModal';
 import { BloodPressureReading } from '@/lib/interface/create-blood-pressure';
 import { BloodPressureSkeleton } from '@/components/BloodPressureSkeleton';
-
-const formatReadingDate = (date?: string) => {
-  if (!date) return 'No date recorded';
-
-  const readingDate = new Date(date);
-  if (Number.isNaN(readingDate.getTime())) return 'No date recorded';
-
-  return `${readingDate.toLocaleDateString()} at ${readingDate.toLocaleTimeString()}`;
-};
-
-
-// const useWindowWidth = () => {
-//   const [width, setWidth] = useState(
-//     typeof window !== 'undefined' ? window.innerWidth : 375
-//   );
-
-//   useEffect(() => {
-//     const handleResize = () => setWidth(window.innerWidth);
-//     window.addEventListener('resize', handleResize);
-//     return () => window.removeEventListener('resize', handleResize);
-//   }, []);
-
-//   return width;
-// };
+import useDate from '@/hooks/useDate';
 
 
 const BloodPressure = () => {
   const { openModal } = useModal();
-  // const screenWidth = useWindowWidth();
-  // const contentWidth = screenWidth * 0.92;
-  // const chartWidth = Math.max(contentWidth - 24, 1);
-  // const chartHeight = Math.max(190, Math.min(screenWidth * 0.55, 240));
-
-  // const [readings] = useState([
-  //   { date: 'Jun 20', systolic: 82, diastolic: 62 },
-  //   { date: 'Jun 21', systolic: 95, diastolic: 75 },
-  //   { date: 'Jun 22', systolic: 118, diastolic: 105 },
-  //   { date: 'Jun 23', systolic: 118, diastolic: 95 },
-  //   { date: 'Jun 24', systolic: 140, diastolic: 82 },
-  //   { date: 'Jun 25', systolic: 140, diastolic: 82 },
-  //   { date: 'Jun 26', systolic: 140, diastolic: 82 },
-  //   { date: 'Jun 27', systolic: 140, diastolic: 82 },
-  // ]);
+  const {formatTime, getReadableDate} = useDate()
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['bloodPressure'],
@@ -78,12 +30,6 @@ const BloodPressure = () => {
 
   const bloodPressures: BloodPressureReading[] = data?.data ?? [];
   const latestBloodPressure = bloodPressures[0];
-
-  // const chartData = readings.map((r) => ({
-  //   date: r.date.split(' ')[1],
-  //   systolic: r.systolic,
-  //   diastolic: r.diastolic,
-  // }));
 
   if (isError) {
     return (
@@ -116,9 +62,10 @@ const BloodPressure = () => {
                 </Reading>
                 <CardText>
                   Recorded on:{' '}
-                  {formatReadingDate(
-                    latestBloodPressure?.recordedAt ?? latestBloodPressure?.createdAt
-                  )}
+                  {getReadableDate(
+                    latestBloodPressure?.recordedAt || 'N/A'
+                  )} {' '}
+                  {formatTime(latestBloodPressure?.createdAt || 'N/A')}
                 </CardText>
                 <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-normal mt-[7px] inline-block w-fit text-xs">
                   Normal
@@ -147,7 +94,7 @@ const BloodPressure = () => {
                                 {recent.systolic}/{recent.diastolic} mmHg
                               </p>
                               <p className="font-normal text-xs text-[#717680] pt-0.5">
-                                {formatReadingDate(recent.recordedAt ?? recent.createdAt)}
+                                {getReadableDate(recent.recordedAt || 'N/A')} {formatTime(recent?.recordedAt || 'N/A')}
                               </p>
                             </div>
                           </div>

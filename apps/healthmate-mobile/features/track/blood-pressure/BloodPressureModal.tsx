@@ -8,11 +8,14 @@ import { patientService } from '@/service/patientService';
 import { bloodPressureData } from '@/constants/data';
 import { useModal } from '@/store/Modal';
 import { SubmitButton } from '@/components/Reusable';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 type BloodPressureInputType = {
   date: string;
   systolic: string;
   diastolic: string;
+  pulseRate: string;
 };
 
 type CalendarDay = {
@@ -20,13 +23,14 @@ type CalendarDay = {
 };
 
 const BloodPressureModal = () => {
-  const { date, topNumber, lastNumber } = bloodPressureData;
+  const { date, topNumber, lastNumber, plusRate } = bloodPressureData;
   const { closeModal } = useModal();
   const queryClient = useQueryClient();
   const [inputValue, setInputValue] = useState<BloodPressureInputType>({
     date: new Date().toISOString(),
     systolic: '',
     diastolic: '',
+    pulseRate: '',
   });
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
 
@@ -45,12 +49,13 @@ const BloodPressureModal = () => {
   const mutation = useMutation({
     mutationFn: (payload: BloodPressure) =>
       patientService.createBloodPressue(payload),
-    onSuccess: async () => {
+    onSuccess: async (response) => {
+      toast.success(response.data.message || 'Blood pressure reading saved successfully');
       await queryClient.invalidateQueries({ queryKey: ['bloodPressure'] });
       closeModal();
     },
-    onError: (error: any) => {
-      console.log('Error!!', error);
+    onError: (error: AxiosError<{message: string}>) => {
+      toast.error(error.response?.data.message || 'Failed to save blood pressure reading');
     },
   });
 
@@ -59,6 +64,7 @@ const BloodPressureModal = () => {
       systolic: inputValue.systolic.trim(),
       diastolic: inputValue.diastolic.trim(),
       recordedAt: inputValue.date,
+      pulseRate: inputValue.pulseRate.trim(),
     };
 
     await mutation.mutateAsync(payload);
@@ -75,6 +81,11 @@ const BloodPressureModal = () => {
         {...lastNumber}
         value={inputValue.diastolic}
         onChangeText={(value) => handleChange('diastolic', value)}
+      />
+      <NumberInput
+        {...plusRate}
+        value={inputValue.pulseRate}
+        onChangeText={(value) => handleChange('pulseRate', value)}
       />
       <DateInput
         {...date}

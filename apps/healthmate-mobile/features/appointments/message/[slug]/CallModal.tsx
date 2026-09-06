@@ -17,14 +17,38 @@ export interface CallSession {
   expiresAt: string;
 }
 
+interface AgoraCredentials {
+  token: string;
+  appId: string;
+  channelName: string;
+  uid: number | string | null;
+  expiresAt?: string;
+}
+
+/**
+ * Axios puts the HTTP body in `response.data`. The API may itself wrap its
+ * payload in `data`, so support both `{ appId, ... }` and `{ data: { appId,
+ * ... } }` without passing undefined values to `client.join`.
+ */
 interface AgoraJoinResponse {
-  data: {
-    token: string;
-    appId: string;
-    channelName: string;
-    uid: number;
-    expiresAt: string;
-  };
+  data: AgoraCredentials | { data: AgoraCredentials };
+}
+
+function getAgoraCredentials(response: AgoraJoinResponse): AgoraCredentials {
+  const body = response.data;
+  const credentials = "data" in body ? body.data : body;
+
+  const missing = [
+    ["appId", credentials.appId],
+    ["channelName", credentials.channelName],
+    ["token", credentials.token],
+  ].filter(([, value]) => !value).map(([name]) => name);
+
+  if (missing.length > 0) {
+    throw new Error(`The start-call response is missing: ${missing.join(", ")}`);
+  }
+
+  return credentials;
 }
 
 interface VideoCallProps {
@@ -48,7 +72,6 @@ export default function VideoCallUI({
   const [camOn, setCamOn] = useState(true);
   const [remoteJoined, setRemoteJoined] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
-
   const clientRef = useRef<IAgoraRTCClient | null>(null);
   const localAudioRef = useRef<IMicrophoneAudioTrack | null>(null);
   const localVideoRef = useRef<ICameraVideoTrack | null>(null);
@@ -74,7 +97,8 @@ export default function VideoCallUI({
 
     async function join() {
       try {
-        const { data } = await startCall(callSession.id);
+        const response = await startCall(callSession.id);
+        const credentials = getAgoraCredentials(response);
         if (cancelled) return;
 
         const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
@@ -94,7 +118,12 @@ export default function VideoCallUI({
         client.on("user-unpublished", () => setRemoteJoined(false));
         client.on("user-left", () => setRemoteJoined(false));
 
-        await client.join(data.appId, data.channelName, data.token, data.uid);
+        await client.join(
+          credentials.appId,
+          credentials.channelName,
+          credentials.token,
+          credentials.uid,
+        );
 
         if (isVideo) {
           const [audioTrack, videoTrack] = await AgoraRTC.createMicrophoneAndCameraTracks();
@@ -116,7 +145,9 @@ export default function VideoCallUI({
           setErrorMsg(
             (err as Error).name === "NotAllowedError"
               ? "Camera/microphone access was denied. Please allow access and rejoin."
-              : "Could not join the call. Please try again."
+              : err instanceof Error && err.message.startsWith("The start-call response")
+                ? "The call service did not return valid join details. Please try again."
+                : "Could not join the call. Please try again."
           );
         }
       }
