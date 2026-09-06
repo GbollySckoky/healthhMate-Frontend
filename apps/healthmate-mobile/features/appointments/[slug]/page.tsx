@@ -3,12 +3,12 @@ import React from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { Video, ChevronRight, XCircle, MapPin } from "lucide-react";
+import { Video, ChevronRight, XCircle, MapPin, MessageCircleMore } from "lucide-react";
 import { patientService } from "@/service/patientService";
 import { GetAppointment } from "@/lib/interface/get-appointments-interface";
 import CreateSupportTicket from "./CreateSupport";
 import AppointmentDetailsSkeleton from "@/components/AppointmentDetailSkeleton";
-import { BtnFlex, Card, JoinBtn, MinTitle, PageWrapper, RescheduleBtn } from "@/components/Reusable";
+import { BtnFlex, Card, MinTitle, PageWrapper, RescheduleBtn } from "@/components/Reusable";
 import { doctorProfileRoute, ROUTES } from "@/constants/route";
 import { useModal } from "@/store/Modal";
 import profileFallback from "@/assets/Ellipse 165.png";
@@ -162,6 +162,9 @@ const AppointmentDetails = () => {
     });
   };
 
+  const handleMessagePress = (communicationId: number) => {
+    router.push(`/appointments/message/${communicationId}`);
+  };
   return (
     <PageWrapper>
       {isLoading && <AppointmentDetailsSkeleton />}
@@ -298,8 +301,11 @@ const AppointmentDetails = () => {
           </Card>
 
           <BtnFlex>
-            <RescheduleBtn _fn={handleViewProfile}>Reschedule</RescheduleBtn>
-            <JoinBtn _fn={() => router.push(ROUTES.home)}>Join Call</JoinBtn>
+            <RescheduleBtn _fn={() => handleMessagePress(appointmentDetails.id)} className="flex">
+              {/* <span className="mr-[5px]" > <MessageCircleMore size={20} /></span>    */}
+              Messsage
+            </RescheduleBtn>
+            {/* <JoinBtn _fn={() => router.push(ROUTES.home)}>Join Call</JoinBtn> */}
           </BtnFlex>
         </>
       )}

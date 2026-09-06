@@ -154,7 +154,7 @@ export const Button = ({
       onClick={_fn}
       className="
         absolute bottom-6 right-5 w-[200px]
-        bg-c py-[15px] rounded-[10px]
+        bg-red-800 py-[15px] rounded-[10px]
         flex items-center justify-center
         pointer-events-auto
       "
@@ -188,14 +188,15 @@ interface ActionButtonProps {
   children: ReactNode;
   _fn: () => void;
   disabled?: boolean;
+  className: string;
 }
 
-export const RescheduleBtn = ({ children, _fn, disabled }: ActionButtonProps) => (
+export const RescheduleBtn = ({ children, _fn, disabled, className }: ActionButtonProps) => (
   <button
     type="button"
     onClick={_fn}
     disabled={disabled}
-    className="flex-1 flex items-center justify-center py-3 bg-[#FAFAFA] rounded-lg border border-[#D6D7DA] disabled:opacity-50 disabled:cursor-not-allowed"
+    className={`flex-1 flex items-center justify-center py-3 bg-[#FAFAFA] rounded-lg border border-[#D6D7DA] disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
   >
     <span className="text-sm font-semibold font-inter-semibold text-[#252B37]">
       {children}

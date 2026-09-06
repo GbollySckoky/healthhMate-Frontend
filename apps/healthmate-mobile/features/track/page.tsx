@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { Plus } from 'lucide-react';
+// import { Plus } from 'lucide-react';
 import { PageWrapper } from '@/components/Reusable';
 import HealthOverview from './_components/HealthOverview';
 
@@ -12,11 +12,11 @@ const TrackPage = () => {
         <HealthOverview />
       </PageWrapper>
 
-      <button
+      {/* <button
         className="absolute bottom-5 right-5 flex items-center justify-center rounded-[40px] bg-[#DD2590] p-[15px]"
       >
         <Plus size={24} color="white" />
-      </button>
+      </button> */}
     </div>
   );
 };

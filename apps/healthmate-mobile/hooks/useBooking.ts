@@ -27,7 +27,7 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
       patientService.createPayment(payload),
 
     onSuccess: (response) => {
-      console.log("Payment created:", response);
+      toast.success("Payment created:", response.data.message ?? "Payment created successfully");
 
       queryClient.invalidateQueries({
         queryKey: ["getAppointments"],
@@ -63,7 +63,7 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
       patientService.createConsultation(payload),
 
     onSuccess: (response) => {
-      console.log("Appointment created:", response);
+      toast.success("Appointment created:", response.data.message ?? "Appointment created successfully");
 
       queryClient.invalidateQueries({
         queryKey: ["getAppointments"],
@@ -72,7 +72,7 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
       const appointmentId = response?.data?.id;
 
       if (!appointmentId) {
-        console.error("Appointment ID was not returned.");
+        toast.error("Appointment ID was not returned.");
         return;
       }
 

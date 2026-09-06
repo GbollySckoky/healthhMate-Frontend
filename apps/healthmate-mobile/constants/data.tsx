@@ -322,9 +322,9 @@ export const bloodPressureData = {
     label: 'Date',
     placeholder: '10/05/1997',
   },
-  time: {
-    label: 'Time',
-    placeholder: '10:00AM',
+  plusRate: {
+    label: 'Plus Rate',
+    placeholder: '70',
   },
 };
 
