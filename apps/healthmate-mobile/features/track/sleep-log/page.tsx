@@ -18,34 +18,7 @@ import SleepModal from "./SleepModal";
 import { SleepReading } from "@/lib/interface/create-sleep-interface";
 import { SleepSkeleton } from "@/components/SleepSkeleton";
 import useDate from "@/hooks/useDate";
-
-const getSleepEmoji = (sleepQuality?: string) => {
-  switch (sleepQuality) {
-    case "Excellent":
-      return "😴";
-    case "Average":
-      return "😐";
-    case "Poor":
-      return "😩";
-    default:
-      return "🌙";
-  }
-};
-
-const getSleepStatus = (sleepQuality?: string) => {
-  if (sleepQuality === "Excellent") return "Excellent";
-  if (sleepQuality === "Average") return "Average";
-  if (sleepQuality === "Poor") return "Low";
-  return "Logged";
-};
-
-const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  Excellent: { bg: "#ECFDF3", text: "#027A48" },
-  Average: { bg: "#FFFAEB", text: "#B54708" },
-  Low: { bg: "#FEF3F2", text: "#B42318" },
-  Logged: { bg: "#F4F3FF", text: "#5924DC" },
-};
-const getStatusColors = (status: string) => STATUS_COLORS[status] ?? STATUS_COLORS.Logged;
+import { getSleepEmoji, getSleepStatus, getStatusColors } from "@/constants/sleep";
 
 
 export default function SleepTrackerPage() {
@@ -55,7 +28,7 @@ export default function SleepTrackerPage() {
     queryFn: () => patientService.getSleep(),
   });
 
-  const {formatReadingDate} = useDate()
+  const {getReadableDate, formatTime} = useDate()
   const sleepReadings: SleepReading[] = data?.data ?? [];
   const latestSleep = sleepReadings[0];
   const latestSleepQuality = latestSleep?.sleep?.selectedMood;
@@ -84,7 +57,8 @@ export default function SleepTrackerPage() {
               <Reading>{latestSleepQuality ?? "No sleep logged"}</Reading>
               <CardText>
                 Recorded on:{" "}
-                {formatReadingDate(latestSleep?.recordedAt ?? latestSleep?.createdAt)}
+                {getReadableDate(latestSleep?.recordedAt || 'N/A')} {" "} at {" "}
+                {formatTime(latestSleep?.createdAt || 'N/A')}
               </CardText>
               {/* <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-inter-medium mt-1.5 inline-block">
                 {latestSleepStatus}
@@ -119,7 +93,8 @@ export default function SleepTrackerPage() {
                               {sleepQuality ?? "No quality"}
                             </p>
                             <p className="font-lato font-normal text-xs text-[#717680] pt-0.5">
-                              {formatReadingDate(sleep.recordedAt ?? sleep.createdAt)}
+                              {getReadableDate(sleep.recordedAt || 'N/A')} {" "} at {" "}
+                              {formatTime(sleep.createdAt || 'N/A')}
                             </p>
                           </div>
                         </div>

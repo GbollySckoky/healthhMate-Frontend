@@ -1,18 +1,8 @@
 "use client"
-import React, { useState } from 'react';
+import React from 'react';
 import {  Loader2 } from 'lucide-react';
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
-import {
   Card,
-  // CardAmount,
   CardText,
   DetailsContainer,
   SubTitle,
@@ -23,41 +13,11 @@ import {
 import { patientService } from '@/service/patientService';
 import { useQuery } from '@tanstack/react-query';
 import { useModal } from '@/store/Modal';
-// import { useRouter } from 'next/navigation';
 import MoodModal from './MoodModal';
 import useDate from '@/hooks/useDate';
 import { MoodReading } from '@/lib/interface/create-mood-interface';
+import { getMoodEmoji, getMoodStatus, statusStyles } from '@/constants/mood';
 
-
-const getMoodEmoji = (mood?: string) => {
-  switch (mood) {
-    case 'Happy':
-      return '🙂';
-    case 'Laughing':
-      return '😂';
-    case 'Angry':
-      return '😡';
-    case 'Sick':
-      return '🤢';
-    case 'Tired':
-      return '🥱';
-    default:
-      return '🙂';
-  }
-};
-
-const getMoodStatus = (mood?: string) => {
-  if (mood === 'Happy' || mood === 'Laughing') return 'Positive';
-  if (mood === 'Angry' || mood === 'Sick' || mood === 'Tired') return 'Low';
-  return 'Logged';
-};
-
-const statusStyles: Record<string, { bg: string; text: string }> = {
-  Positive: { bg: '#ECFDF3', text: '#027A48' },
-  Low: { bg: '#FEF3F2', text: '#B42318' },
-  Balanced: { bg: '#FFFAEB', text: '#B54708' },
-  Logged: { bg: '#F4F3FF', text: '#5924DC' },
-};
 
 const Mood = () => {
   const { openModal } = useModal();
@@ -65,30 +25,13 @@ const Mood = () => {
     queryKey: ['getmood'],
     queryFn: () => patientService.getMood(),
   });
-  const {formatReadingDate} = useDate()
+  const {getReadableDate, formatTime} = useDate()
 
 
   const moodReadings: MoodReading[] = data?.data ?? [];
   const latestMood = moodReadings[0];
   const latestMoodName = latestMood?.mood?.selectedMood;
   const latestMoodStatus = latestMood?.status ?? getMoodStatus(latestMoodName);
-
-  const [readings] = useState([
-    { date: 'Jun 20', systolic: 82, diastolic: 62 },
-    { date: 'Jun 21', systolic: 95, diastolic: 75 },
-    { date: 'Jun 22', systolic: 118, diastolic: 105 },
-    { date: 'Jun 23', systolic: 118, diastolic: 95 },
-    { date: 'Jun 24', systolic: 140, diastolic: 82 },
-    { date: 'Jun 25', systolic: 140, diastolic: 82 },
-    { date: 'Jun 26', systolic: 140, diastolic: 82 },
-    { date: 'Jun 27', systolic: 140, diastolic: 82 },
-  ]);
-
-  const chartData = readings.map((r) => ({
-    date: r.date.split(' ')[1],
-    systolic: r.systolic,
-    diastolic: r.diastolic,
-  }));
 
   if (isLoading) {
     return (
@@ -117,56 +60,14 @@ const Mood = () => {
               <Reading>{latestMoodName ?? 'No mood logged'}</Reading>
               <CardText>
                 Recorded on:{' '}
-                {formatReadingDate(latestMood?.recordedAt ?? latestMood?.createdAt)}
+                {getReadableDate(latestMood?.recordedAt || 'N/A')}
+                {' '} at {' '}
+                {formatTime(latestMood?.createdAt || 'N/A')}
               </CardText>
               <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 mt-[7px] inline-block w-fit text-xs font-normal">
                 {latestMoodStatus}
               </span>
             </DetailsContainer>
-
-            {/* Chart */}
-            <div className="bg-white mb-[26px] mt-[25px] rounded-xl p-3 shadow-sm border border-[#f2f2f2]">
-              <SubTitle>Mood Trends</SubTitle>
-              <div className="w-full my-2" style={{ height: 220 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData}>
-                    <CartesianGrid
-                      strokeDasharray="5 5"
-                      stroke="rgba(229, 231, 235, 1)"
-                      vertical={false}
-                    />
-                    <XAxis
-                      dataKey="date"
-                      stroke="rgba(107, 114, 128, 1)"
-                      tick={{ fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <YAxis
-                      stroke="rgba(107, 114, 128, 1)"
-                      tick={{ fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <Tooltip />
-                    <Line
-                      type="monotone"
-                      dataKey="systolic"
-                      stroke="rgba(239, 68, 68, 1)"
-                      strokeWidth={3}
-                      dot={{ r: 4, strokeWidth: 0 }}
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="diastolic"
-                      stroke="rgba(59, 130, 246, 1)"
-                      strokeWidth={3}
-                      dot={{ r: 4, strokeWidth: 0 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
 
             <div className="mb-10">
               <Card>
@@ -193,14 +94,15 @@ const Mood = () => {
                           )}
 
                           <div className="pl-4">
-                            <p className="font-medium text-sm">
+                            <p  className="font-medium text-sm text-[#414651] pt-0.5">
                               {moodName ?? 'No mood'}
                             </p>
-                            <p className="font-medium text-xs text-[#414651] ">
+                            <p className="font-normal text-xs text-[#414651] py-1">
                               {recent.notes ?? 'No notes'}
                             </p>
                             <p className="font-normal text-xs text-[#717680] pt-0.5">
-                              {formatReadingDate(recent.recordedAt ?? recent.createdAt)}
+                              {getReadableDate(recent.recordedAt || 'N/A')} {' '} at {' '}
+                              {formatTime(recent.createdAt || 'N/A')}
                             </p>
                           </div>
                         </div>

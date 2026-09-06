@@ -3,7 +3,6 @@ import React from 'react';
 import {  Pill } from 'lucide-react';
 import {
   Card,
-  // CardAmount,
   CardText,
   DetailsContainer,
   SubTitle,
@@ -21,19 +20,13 @@ import useDate from '@/hooks/useDate';
 import { MedicationReading } from '@/lib/interface/create-medication-interface';
 
 
-// const statusStyles: Record<string, { bg: string; text: string }> = {
-//   Taken: { bg: '#ECFDF3', text: '#027A48' },
-//   Missed: { bg: '#FEF3F2', text: '#B42318' },
-//   Logged: { bg: '#F4F3FF', text: '#5924DC' },
-// };
-
 const Medication = () => {
   const { openModal } = useModal();
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['getmedication'],
     queryFn: () => patientService.getMedication(),
   });
-  const {formatReadingDate} = useDate()
+  const {getReadableDate, formatTime} = useDate()
 
   const medicationReadings: MedicationReading[] = data?.data ?? [];
   const latestMedication = medicationReadings[0];
@@ -62,9 +55,8 @@ const Medication = () => {
                 <Reading>{latestMedication?.name ?? '--'}</Reading>
                 <CardText>
                   Recorded on:{' '}
-                  {formatReadingDate(
-                    latestMedication?.recordedAt ?? latestMedication?.createdAt
-                  )}
+                  {getReadableDate(latestMedication?.recordedAt || 'N/A')} {" "} at {" "}
+                  {formatTime(latestMedication?.createdAt || 'N/A')}
                 </CardText>
                 {/* <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-medium mt-[7px] inline-block w-fit">
                   {latestMedicationStatus}
@@ -96,7 +88,8 @@ const Medication = () => {
                                 {recent.name ?? 'Medication'}
                               </p>
                               <p className="font-normal text-xs text-[#717680] pt-0.5">
-                                {formatReadingDate(recent.recordedAt ?? recent.createdAt)}
+                                {getReadableDate(recent.recordedAt || 'N/A')} {" "} at {" "}
+                                {formatTime(recent.createdAt || 'N/A')}
                               </p>
                             </div>
                           </div>

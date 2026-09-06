@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Clock, Video } from "lucide-react";
+import { Clock, Video, MessageCircleMore } from "lucide-react";
 import { patientService } from "@/service/patientService";
 import { useQuery } from "@tanstack/react-query";
 import { GetAppointment } from "@/lib/interface/get-appointments-interface";
@@ -11,7 +11,6 @@ import { PageWrapper, SmallText, SubTitle } from "@/components/Reusable";
 import AppointmentCardSkeleton from "@/components/AllAppointmntSkeleton";
 import SearchInput from "@/components/SearchInput";
 import profileFallback from "@/assets/Ellipse 165.png";
-import { MessageCircleMore } from 'lucide-react';
 
 
 const formatAppointmentDate = (date: string, time: string) => {
@@ -76,7 +75,7 @@ const AllApointments = () => {
   return (
     <PageWrapper>
       <SearchInput
-        placeholder="Search for a doctor"
+        placeholder="Search for an appointment"
         value={searchInput}
         onChange={setSearchInput}
       />
@@ -153,7 +152,7 @@ const AllApointments = () => {
                 </div>
                 <div className="flex flex-row justify-between gap-[10px] border-t-2 border-t-[#F8F8F8] mt-[15px]">
                   <span 
-                    className="py-2 px-4 bg-[#FAFAFA] rounded-lg border border-[#D6D7DA] mt-[14px] text-sm font-semibold text-[#252B37] text-center flex items-center gap-1"
+                    className="py-2 px-4 bg-[#FAFAFA] rounded-lg border border-[#D6D7DA] mt-[14px] text-sm font-semibold text-[#252B37] text-center flex items-center justify-center gap-1 flex-1"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleMessagePress(id);
