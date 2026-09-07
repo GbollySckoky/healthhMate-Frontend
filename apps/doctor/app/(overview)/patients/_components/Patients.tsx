@@ -23,6 +23,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Pagination } from '@/lib/interface/pagination.interfac';
 import { Appointment } from '@/lib/interface/doctor-apppointment.interface';
 import PatientTableSkeleton from "@/lib/components/ui/PatientTableSkeleton";
+import { getStatusStyle } from '@/lib/constant/status';
 
 const Patients = () => {
     const [inputValue, setInputValue] = useState<string>('')
@@ -62,19 +63,6 @@ const Patients = () => {
             'Failed',
             'Pending'
         ]
-    }
-
-    const getStatusStyle = (status: string) => {
-        switch (status) {
-            case STATUS.COMPLETED:
-                return 'text-green-700 bg-green-100'
-            case STATUS.PENDING:
-                return 'text-gray-700 bg-gray-100'
-            case STATUS.CANCELLED:
-                return 'text-red-700 bg-red-100'
-            default:
-                return "text-gray-700 bg-gray-100";
-        }
     }
 
     const { data, isLoading, error, isError } = useQuery({

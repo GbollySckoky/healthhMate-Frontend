@@ -20,7 +20,6 @@ const LoginPage = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
-
   const handleChange = (key: string, value: string) => {
     setInputValue((prev) => ({ ...prev, [key]: value }));
   };
@@ -52,10 +51,11 @@ const LoginPage = () => {
   };
 
   const isPending = loginMutation.isPending;
-
+  // const isAuthPage = pathname === "/auth/login" || pathname === "/auth/register" || pathname === "/forgot-password";
+  
   return (
-    <div className="min-h-screen bg-gray-50 flex items-start sm:items-center justify-center px-4 py-10">
-      <div className="w-full">
+    <div className="flex justify-center items-center w-screen h-screen">
+      <div className="">
         {/* Header */}
         <div className="mb-8">
           <p className="text-xl font-medium text-[#414651] font-lato">Welcome Back</p>
@@ -65,7 +65,7 @@ const LoginPage = () => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleLogin} className="space-y-5 mb-2">
+        <form onSubmit={handleLogin} className="space-y-5 mb-2 w-full">
           <div>
             <label htmlFor="email" className="block text-sm font-normal text-[#414651] mb-1.5 font-inter">
               Email
@@ -96,7 +96,7 @@ const LoginPage = () => {
               <button
                 type="button"
                 onClick={() => setPasswordVisible((v) => !v)}
-                className="absolute right-[-5px] top-12 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="absolute right-[10px] top-5 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 aria-label={passwordVisible ? 'Hide password' : 'Show password'}
               >
                 {passwordVisible ? <Eye size={18} /> : <EyeOff size={18} />}
@@ -144,14 +144,14 @@ const LoginPage = () => {
         </div>
 
         {/* Divider */}
-        <div className="flex items-center mb-5">
+        {/* <div className="flex items-center mb-5">
           <div className="flex-1 h-2px bg-[#D5D7DA]" />
           <span className="px-4 text-sm text-gray-400">Or</span>
           <div className="flex-1 h-2px bg-[#D5D7DA]" />
-        </div>
+        </div> */}
 
         {/* Google sign-in */}
-        <button
+        {/* <button
           type="button"
           className="w-full flex items-center justify-center gap-2 rounded-md border border-borderColor10 py-2 text-sm font-medium text-[#414651]"
         >
@@ -174,7 +174,7 @@ const LoginPage = () => {
             />
           </svg>
           Sign in with Google
-        </button>
+        </button> */}
       </div>
     </div>
   );
