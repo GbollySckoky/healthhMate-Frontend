@@ -17,6 +17,7 @@ import PatientCardSkeleton from "@/lib/components/ui/PatientCardSkeleton";
 import CreateSupport from "./CreateSupport";
 import { CapitalizeName } from "@/lib/constant/capitalizeName";
 import { toast } from "react-toastify";
+import { getStatusStyle } from "@/lib/constant/status";
 
 const Page = () => {
   const { openModal } = useModal();
@@ -77,9 +78,9 @@ console.log(id)
             )}
 
             {isLoading ? (
-              <div className="h-7 w-24 rounded-full bg-gray-200 animate-pulse" />
+              <div className={`h-7 w-24 rounded-full bg-gray-200 animate-pulse` } />
             ) : (
-              <p className="text-[#414651] bg-[#f5f5f5] font-medium font-inter text-[14px] rounded-full px-5 py-1 h-fit">
+              <p className={`font-medium font-inter text-[14px] rounded-full px-5 py-1 h-fit ${getStatusStyle(appointmentDetails?.status)}`}>
                 {appointmentDetails?.status || "N/A"}
               </p>
             )}

@@ -20,8 +20,8 @@ import { useRouter } from "next/navigation";
 import Paginate from "@/lib/components/ui/Paginate";
 import { Appointment } from "@/lib/interface/doctor-apppointment.interface";
 import { Pagination } from "@/lib/interface/pagination.interfac";
-import { STATUS } from "@/types/status";
 import AppointmentTableSkeleton from "@/lib/components/ui/AppointmentTableSkeleton";
+import { getStatusStyle } from "@/lib/constant/status";
 
 
 const Page = () => {
@@ -96,19 +96,6 @@ const Page = () => {
 
   const handleAppointmentClick = (appointmentId: string) => {
     router.push(`/appointments/${appointmentId}`);
-  };
-
-  const getStatusStyle = (status: string) => {
-    switch (status) {
-      case STATUS.COMPLETED:
-        return "text-green-700 bg-green-100";
-      case STATUS.PENDING:
-        return "text-gray-700 bg-gray-100";
-      case STATUS.CANCELLED:
-        return "text-red-800 bg-red-100";
-      default:
-        return "text-gray-700 bg-gray-100";
-    }
   };
 
   const appointments = data?.data ?? [];

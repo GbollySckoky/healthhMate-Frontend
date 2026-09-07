@@ -3,13 +3,13 @@ import React from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { Video, ChevronRight, XCircle, MapPin, MessageCircleMore } from "lucide-react";
+import { Video, ChevronRight, XCircle, MapPin } from "lucide-react";
 import { patientService } from "@/service/patientService";
 import { GetAppointment } from "@/lib/interface/get-appointments-interface";
 import CreateSupportTicket from "./CreateSupport";
 import AppointmentDetailsSkeleton from "@/components/AppointmentDetailSkeleton";
 import { BtnFlex, Card, MinTitle, PageWrapper, RescheduleBtn } from "@/components/Reusable";
-import { doctorProfileRoute, ROUTES } from "@/constants/route";
+import { ROUTES } from "@/constants/route";
 import { useModal } from "@/store/Modal";
 import profileFallback from "@/assets/Ellipse 165.png";
 import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
@@ -113,10 +113,10 @@ const AppointmentDetails = () => {
     },
   ];
 
-  const handleViewProfile = () => {
-    if (!appointmentDetails?.doctor?.id) return;
-    router.push(doctorProfileRoute(appointmentDetails.doctor.id));
-  };
+  // const handleViewProfile = () => {
+  //   if (!appointmentDetails?.doctor?.id) return;
+  //   router.push(doctorProfileRoute(appointmentDetails.doctor.id));
+  // };
 
   const canCancelAppointment =
     appointmentDetails?.status?.toUpperCase() === "PENDING" ||

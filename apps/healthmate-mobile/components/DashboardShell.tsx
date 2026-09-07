@@ -15,16 +15,17 @@ export default function DashboardShell({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
 
-  const isAuthPage = pathname === "/login" || pathname === "/register" || pathname === "/forgot-password";
-
+  const isAuthPage = pathname === "/auth/login" || pathname === "/auth/register" || pathname === "/forgot-password";
+  console.log("isAuthPage", isAuthPage, pathname);
   return (
-    <div className="flex h-dvh bg-[#FAFAFA]">
+    <div className="flex h-dvh ">
       {/* Sidebar */}
       {isAuthPage ? (
         null ) :(
         <Sidebar
           open={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
+          isAuthPage={isAuthPage}
         />
       )}
       {/* <Sidebar
@@ -33,11 +34,12 @@ export default function DashboardShell({
       /> */}
 
       {/* Main */}
-      <div className="flex min-w-0 flex-1 flex-col md:ml-[250px]">
+      <div className={`${isAuthPage ? "" : "flex min-w-0 flex-1 flex-col md:ml-[250px]"}`}>
         {isAuthPage ? (
-          null ):( 
+          null ):(  
           <HeaderClient
             onMenuClick={() => setSidebarOpen(true)}
+            // isAuthPage={isAuthPage}
           />
         )}
         

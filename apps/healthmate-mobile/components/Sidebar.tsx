@@ -17,13 +17,19 @@ import { ROUTES } from "@/constants/route";
 interface SidebarProps {
   open: boolean;
   onClose: () => void;
+  isAuthPage: boolean;
 }
 
 export default function Sidebar({
-  open, 
+  open,
   onClose,
+  isAuthPage,
 }: SidebarProps) {
   const pathname = usePathname();
+
+  if (isAuthPage) {
+    return null;
+  }
 
   return (
     <>
@@ -34,11 +40,7 @@ export default function Sidebar({
           fixed inset-0 z-40 bg-black/40
           transition-opacity duration-300
           md:hidden
-          ${
-            open
-              ? "visible opacity-100"
-              : "invisible opacity-0"
-          }
+          ${open ? "visible opacity-100" : "invisible opacity-0"}
         `}
       />
 
@@ -47,19 +49,10 @@ export default function Sidebar({
         className={`
           fixed inset-y-0 left-0 z-50
           flex w-[280px] flex-col
-          bg-red-900 text-black
-          shadow-xl
+          bg-red-900 text-black shadow-xl
+          transform transition-transform duration-300 ease-in-out
 
-          transform
-          transition-transform
-          duration-300
-          ease-in-out
-
-          ${
-            open
-              ? "translate-x-0"
-              : "-translate-x-full"
-          }
+          ${open ? "translate-x-0" : "-translate-x-full"}
 
           md:translate-x-0
           md:w-[250px]
@@ -74,9 +67,9 @@ export default function Sidebar({
             onClick={onClose}
             className="text-xl font-bold text-[#147D5A]"
           >
-            <Image 
-                src={logo}
-                alt='Logo'
+            <Image
+              src={logo}
+              alt="Logo"
             />
           </Link>
 
@@ -108,15 +101,12 @@ export default function Sidebar({
                     key={id}
                     href={href}
                     onClick={onClose}
-                    aria-current={
-                      isActive ? "page" : undefined
-                    }
+                    aria-current={isActive ? "page" : undefined}
                     className={`
                       flex items-center gap-3
                       rounded-lg
                       px-3 py-3
                       transition-colors
-
                       ${
                         isActive
                           ? "bg-[#EAF6F1]"
@@ -126,9 +116,7 @@ export default function Sidebar({
                   >
                     <Icon
                       size={20}
-                      strokeWidth={
-                        isActive ? 2.4 : 2
-                      }
+                      strokeWidth={isActive ? 2.4 : 2}
                       color={
                         isActive
                           ? ACTIVE_COLOR
@@ -168,7 +156,6 @@ export default function Sidebar({
                 rounded-lg
                 px-3 py-3
                 transition-colors
-
                 ${
                   pathname === ROUTES.settings
                     ? "bg-[#EAF6F1] text-red-100"

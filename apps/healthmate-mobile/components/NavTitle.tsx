@@ -79,5 +79,8 @@ export const usePageTitle = (): ReactNode => {
     return 'Support Details'
   }
 
+  if (pathname.startsWith(`${ROUTES.appointments}/message/`)) {
+    return "Communication";
+  }
   return ROUTE_TITLES[pathname] ?? ''
 }
