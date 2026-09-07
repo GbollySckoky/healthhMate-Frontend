@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Clock, Video } from "lucide-react";
+import { ArrowRight, Clock, Video, MessageCircleMore, Mic } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SubTitle, SmallText } from "@/components/Reusable";
 import { ROUTES } from "@/constants/route";
@@ -89,13 +89,10 @@ export default function AppointmentCard() {
     if (appointment) router.push(`/appointments/${appointment.id}`);
   };
 
-  const handleReschedule = () => {
-    if (appointment) router.push(`/home-screen/appointment/${appointment.id}/reschedule`);
+  const handleMessagePress = (communicationId: number) => {
+    router.push(`/appointments/message/${communicationId}`);
   };
 
-  const handleJoinCall = () => {
-    if (appointment) router.push(`/home-screen/appointment/${appointment.id}/call`);
-  };
 
   return (
     <div>
@@ -128,7 +125,10 @@ export default function AppointmentCard() {
         <div className="w-full p-[15px] border border-[#F2F2F2] rounded-[10px] bg-white">
           <button
             type="button"
-            onClick={handleViewDetails}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleViewDetails();
+            }}
             aria-label={`View appointment with ${getDoctorName(appointment?.doctor)}`}
             className="w-full text-left flex flex-row mt-[5px] mb-[2px]"
           >
@@ -145,7 +145,7 @@ export default function AppointmentCard() {
             <div className="flex flex-row flex-1 justify-between">
               <div className="ml-2.5 flex-1">
                 <SubTitle>{getDoctorName(appointment?.doctor)}</SubTitle>
-                <div className="flex items-center mt-[5px]">
+                <div className="flex items-center">
                   <Clock size={13} color="#717680" />
                   <span className="ml-[3px]">
                     <SmallText>
@@ -153,9 +153,13 @@ export default function AppointmentCard() {
                     </SmallText>
                   </span>
                 </div>
-                <div className="flex items-center">
-                  <Video size={15} color="#717680" />
-                  <span className="ml-[3px]">
+                <div className="flex items-center pt-0.5">
+                  <span className="flex items-center gap-[5px]">
+                  {appointment.consultationType === "video_call" ? (
+                    <Video size={15} color="#717680" />
+                  ) : (
+                    <Mic size={15} color="#717680" />
+                  )}
                     <SmallText>
                       {CapitalizeName(appointment.consultationType).replaceAll("_", " ")}
                     </SmallText>
@@ -168,22 +172,26 @@ export default function AppointmentCard() {
             </div>
           </button>
 
-          <div className="flex flex-row justify-between gap-[10px] border-t-2 border-[#F8F8F8] mt-[15px] pt-[14px]">
+          {/* <div className="flex-1 flex-row justify-between gap-[10px] border-t-2 border-[#F8F8F8] mt-[15px] pt-[14px]"> */}
             <button
               type="button"
-              onClick={handleReschedule}
-              className="flex-1 py-2 px-4 bg-[#FAFAFA] rounded-lg border border-[#D6D7DA] text-sm font-semibold text-[#252B37]"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleMessagePress(appointment.id)
+              }}
+              className="flex items-center justify-center py-2 px-4 bg-[#FAFAFA] rounded-lg border border-[#D6D7DA] text-sm font-semibold text-[#252B37] w-full mt-3"
             >
-              Reschedule
+              <MessageCircleMore size={16} />
+              <span className="ml-2">Message</span>
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={handleJoinCall}
               className="flex-1 py-2 px-4 bg-[#DD2591] rounded-lg text-sm font-semibold text-[#F2F2F2]"
             >
               Join Call
-            </button>
-          </div>
+            </button> */}
+          {/* </div> */}
         </div>
       )}
     </div>

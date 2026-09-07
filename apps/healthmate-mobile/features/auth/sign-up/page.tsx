@@ -1,89 +1,58 @@
-import React, { useState, useCallback } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Keyboard,
-  Pressable,
-} from 'react-native';
-import { Wrapper } from '@/components/typography/Typography';
-import { colors } from '@/lib/colors';
-import EmailInput from '@/components/Input/EmailInput';
-import PasswordInput from '@/components/Input/PasswordInput';
-import Feather from '@expo/vector-icons/Feather';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import { Image } from 'react-native';
-import { router } from 'expo-router';
-import { ROUTES } from '@/lib/routes';
-import { CountStep } from '@/lib/constant';
-import useDisplay from '@/lib/hooks/useDisplay';
-import SafeArea from '@/components/safeAreaView/SafeAreaView';
-import { useDisplayList } from '@/lib/hooks/useDisplayList';
-import { patientService } from '@/service/patientService';
-import { useMutation } from '@tanstack/react-query';
-import Toast from 'react-native-toast-message';
-import VerifyEmail from './VerifyCode';
-import { Signup } from '@/lib/interface/signup-interface';
-import Input from '@/components/Input/Input';
-import { ScreenOverFlowLayout } from '@/components/scrollView/ScreenOverFlowLayout';
+"use client";
 
-const inputData = {
-  email: {
-    label: 'Email',
-    placeholder: 'Enter email',
-  },
-  phone: {
-    label: 'Phone Number',
-    placeholder: 'Enter phone number',
-  },
-  firstName: {
-    label: 'First Name',
-    placeholder: 'Gbolly',
-  },
-  lastName: {
-    label: 'Last Name',
-    placeholder: 'Sckoky',
-  },
-  password: {
-    label: 'Password',
-    placeholder: '*********',
-    closeIcon: <Feather name="eye-off" size={16} color="black" />,
-    openIcon: <FontAwesome5 name="eye" size={16} color="black" />,
-  },
-  confirmPassword: {
-    label: 'Confirm Password',
-    placeholder: '*********',
-    closeIcon: <Feather name="eye-off" size={16} color="black" />,
-    openIcon: <FontAwesome5 name="eye" size={16} color="black" />,
-  },
-};
+import { useCallback, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
+
+import { patientService } from "@/service/patientService";
+import { Signup } from "@/lib/interface/signup-interface";
+import { ROUTES } from "@/constants/route";
+
+import VerifyEmail from "./VerifyEmail";
+import { SignUpForm } from "./SignupForm";
+
+type SignUpStep = "signup" | "verify";
+
+export interface SignUpValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 const SignUpPage = () => {
-  const [inputValue, setInputValue] = useState({
-    firstName: '',
-    lastName: '',
-    password: '',
-    confirmPassword: '',
-    email: '',
+  const router = useRouter();
+
+  const [step, setStep] = useState<SignUpStep>("signup");
+
+  const [inputValue, setInputValue] = useState<SignUpValues>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
+
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [confirmPasswordVisibility, setConfirmPasswordVisibility] =
     useState(false);
-  const goggleLogo = require('@/assets/images/google-logo.webp');
-  const { openModal } = useDisplay();
-  const { currentStep, goToNextStep } = useDisplayList();
 
-  const handleChange = useCallback((key: string, value: string) => {
-    setInputValue((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  }, []);
+  const handleChange = useCallback(
+    (key: keyof SignUpValues, value: string) => {
+      setInputValue((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+    },
+    []
+  );
 
-  const handleToggleVisibility = useCallback(
-    (field: 'password' | 'confirmPassword') => {
-      if (field === 'password') {
+  const togglePasswordVisibility = useCallback(
+    (field: "password" | "confirmPassword") => {
+      if (field === "password") {
         setPasswordVisibility((prev) => !prev);
       } else {
         setConfirmPasswordVisibility((prev) => !prev);
@@ -94,317 +63,124 @@ const SignUpPage = () => {
 
   const signupMutation = useMutation({
     mutationFn: (payload: Signup) => patientService.signup(payload),
-    onSuccess: (response: any) => {
-      console.log('RESPONSE!!', response);
-      goToNextStep();
-      Toast.show({
-        type: 'success',
-        text1: 'Account created successfully!',
-        text2: 'Please verify your account',
-      });
-    },
-    onError: (error: any) => {
-      console.log(error); // look into the error response
-      const errorMessage = error.response.data; //Look into the error response
-      // || 'An error occurred during sign up. Please try again.';
 
-      Toast.show({
-        type: 'error',
-        text1: errorMessage,
-      });
+    onSuccess: (response) => {
+      toast.success(
+        response?.data?.message || "Account created successfully."
+      );
+
+      setStep("verify");
+    },
+
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(
+        error?.response?.data?.message ||
+          "Unable to create account. Please try again."
+      );
     },
   });
 
-  const handleSignUp = async () => {
-    Keyboard.dismiss();
-
-    // Validate passwords match
-    if (inputValue.password !== inputValue.confirmPassword) {
-      Toast.show({
-        type: 'error',
-        text1: 'Password and Confirm Password must be same',
-      });
+  const handleSignUp = () => {
+    if (!inputValue.firstName.trim()) {
+      toast.error("Please enter your first name.");
       return;
     }
 
-    // Map form state to API payload format
+    if (!inputValue.lastName.trim()) {
+      toast.error("Please enter your last name.");
+      return;
+    }
+
+    if (!inputValue.email.trim()) {
+      toast.error("Please enter your email.");
+      return;
+    }
+
+    if (!inputValue.password) {
+      toast.error("Please enter your password.");
+      return;
+    }
+
+    if (!inputValue.confirmPassword) {
+      toast.error("Please confirm your password.");
+      return;
+    }
+
+    if (inputValue.password !== inputValue.confirmPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+
     const credentials: Signup = {
-      email: inputValue.email,
+      firstName: inputValue.firstName.trim(),
+      lastName: inputValue.lastName.trim(),
+      email: inputValue.email.trim(),
       password: inputValue.password,
       confirmPassword: inputValue.confirmPassword,
-      firstName: inputValue.firstName,
-      lastName: inputValue.lastName,
     };
 
-    console.log(credentials);
-    await signupMutation.mutate(credentials);
+    signupMutation.mutate(credentials);
   };
 
+  // ---------------------------------------------
+  // VERIFY EMAIL STEP
+  // ---------------------------------------------
+
+  if (step === "verify") {
+    return (
+      <VerifyEmail
+        inputValue={inputValue}
+        onBack={() => setStep("signup")}
+      />
+    );
+  }
+
+  // ---------------------------------------------
+  // SIGN UP STEP
+  // ---------------------------------------------
+
   return (
-    <SafeArea>
-      <ScreenOverFlowLayout>
-        <Wrapper>
-          {currentStep === CountStep.ZERO && (
-            <View>
-              <View style={styles.headerContainer}>
-                <Text style={styles.welcomeTitle}>
-                  Create your HealthMate account
-                </Text>
-                <Text style={styles.welcomeSubtitle}>
-                  Sign up with your phone number or email to begin.
-                </Text>
-              </View>
+    <div className="w-full">
+      <div className="mb-8">
+        <h1 className="font-lato text-xl font-semibold text-black">
+          Create your HealthMate account
+        </h1>
 
-              {/* Form Content */}
-              <View style={styles.formContainer}>
-                <Input
-                  {...inputData.firstName}
-                  value={inputValue.firstName || ''}
-                  onChangeText={(value) => handleChange('firstName', value)}
-                />
-                <Input
-                  {...inputData.lastName}
-                  value={inputValue.lastName || ''}
-                  onChangeText={(value) => handleChange('lastName', value)}
-                />
-                <EmailInput
-                  label={inputData.email.label}
-                  placeholder={inputData.email.placeholder}
-                  value={inputValue.email}
-                  onChangeText={(value) => handleChange('email', value)}
-                />
+        <p className="mt-1 text-base leading-6 text-gray-500">
+          Sign up with your phone number or email to begin.
+        </p>
+      </div>
 
-                <View>
-                  <PasswordInput
-                    {...inputData.password}
-                    value={inputValue.password}
-                    onChangeText={(value) => handleChange('password', value)}
-                    secureTextEntry={!passwordVisibility}
-                    onToggleVisibility={() =>
-                      handleToggleVisibility('password')
-                    }
-                    isPasswordVisible={passwordVisibility}
-                  />
-                  <PasswordInput
-                    {...inputData.confirmPassword}
-                    value={inputValue.confirmPassword}
-                    onChangeText={(value) =>
-                      handleChange('confirmPassword', value)
-                    }
-                    secureTextEntry={!confirmPasswordVisibility}
-                    onToggleVisibility={() =>
-                      handleToggleVisibility('confirmPassword')
-                    }
-                    isPasswordVisible={confirmPasswordVisibility}
-                  />
-                </View>
-              </View>
+      <SignUpForm
+        values={inputValue}
+        onChange={handleChange}
+        passwordVisible={passwordVisibility}
+        confirmPasswordVisible={confirmPasswordVisibility}
+        onTogglePassword={() =>
+          togglePasswordVisibility("password")
+        }
+        onToggleConfirmPassword={() =>
+          togglePasswordVisibility("confirmPassword")
+        }
+        onSubmit={handleSignUp}
+        isLoading={signupMutation.isPending}
+      />
 
-              {/* Sign up Button */}
-              <Pressable
-                style={[
-                  styles.loginButton,
-                  signupMutation.isPending && styles.loginButtonDisabled,
-                ]}
-                onPress={handleSignUp}
-                disabled={signupMutation.isPending}
-                accessibilityRole="button"
-                accessibilityLabel="Create account"
-              >
-                <Text style={styles.loginButtonText}>
-                  {signupMutation.isPending ? 'Creating Account...' : 'Sign Up'}
-                </Text>
-              </Pressable>
+      <div className="mb-6 flex items-center justify-center">
+        <span className="text-sm text-gray-500">
+          Already have an account?
+        </span>
 
-              {/* Login Link */}
-              <View style={styles.signUpContainer}>
-                <Text style={styles.signUpText}>Already have an account? </Text>
-                <TouchableOpacity
-                  onPress={() => router.push(ROUTES.login)}
-                  accessibilityRole="link"
-                  accessibilityLabel="Go to login page"
-                >
-                  <Text style={styles.signUpLink}>Login</Text>
-                </TouchableOpacity>
-              </View>
-
-              {/* Divider */}
-              <View style={styles.dividerContainer}>
-                <View style={styles.dividerLine} />
-                <Text style={styles.dividerText}>Or</Text>
-                <View style={styles.dividerLine} />
-              </View>
-
-              {/* Google Sign In */}
-              <TouchableOpacity
-                style={styles.googleButton}
-                accessibilityRole="button"
-                accessibilityLabel="Sign up with Google"
-              >
-                <Image
-                  source={goggleLogo}
-                  alt="Google Logo"
-                  style={{ width: 20, height: 20 }}
-                />
-                <Text style={styles.googleButtonText}>
-                  {' '}
-                  Sign up with Google
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {currentStep === CountStep.ONE && (
-            <VerifyEmail
-              inputValue={inputValue}
-              handleChange={handleChange}
-              handleNextComponent={goToNextStep}
-              openModal={openModal}
-            />
-          )}
-        </Wrapper>
-      </ScreenOverFlowLayout>
-    </SafeArea>
+        <button
+          type="button"
+          onClick={() => router.push(ROUTES.login)}
+          className="ml-1 text-sm font-medium text-pink-500 hover:underline"
+        >
+          Login
+        </button>
+      </div>
+    </div>
   );
 };
 
 export default SignUpPage;
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    marginBottom: 32,
-  },
-  welcomeTitle: {
-    fontFamily: 'Lato_700Bold',
-    fontSize: 20,
-    fontWeight: '600',
-    color: colors.black,
-  },
-  welcomeSubtitle: {
-    fontFamily: 'Lato_400Regular',
-    fontSize: 16,
-    fontWeight: '400',
-    color: colors.gray,
-    marginTop: 3,
-    lineHeight: 24,
-  },
-
-  // Custom tab styling
-  tabContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#f3f4f6',
-    borderRadius: 8,
-    padding: 4,
-    marginBottom: 24,
-  },
-  tabButton: {
-    flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-    alignItems: 'center',
-  },
-  activeTabButton: {
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  tabText: {
-    fontSize: 14,
-    fontFamily: 'Lato_500Medium',
-    color: '#6b7280',
-  },
-  activeTabText: {
-    color: '#1f2937',
-    fontWeight: '600',
-  },
-
-  formContainer: {
-    marginBottom: 16,
-  },
-
-  loginButton: {
-    backgroundColor: '#ec4899',
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  loginButtonDisabled: {
-    backgroundColor: '#d1d5db',
-  },
-  loginButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-    fontFamily: 'Lato_600SemiBold',
-  },
-
-  signUpContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  signUpText: {
-    fontSize: 14,
-    color: '#6b7280',
-    fontFamily: 'LibreFranklin_400Regular',
-    fontWeight: '500',
-  },
-  signUpLink: {
-    fontSize: 14,
-    color: colors.lightRed,
-    fontFamily: 'LibreFranklin_400Regular',
-    fontWeight: '500',
-  },
-
-  dividerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#e5e7eb',
-  },
-  dividerText: {
-    paddingHorizontal: 16,
-    fontSize: 14,
-    color: '#9ca3af',
-    fontFamily: 'Lato_400Regular',
-  },
-
-  googleButton: {
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-    paddingVertical: 16,
-    borderRadius: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-  },
-  googleButtonText: {
-    color: colors.black,
-    fontSize: 16,
-    fontWeight: '600',
-    fontFamily: 'Inter_600SemiBold',
-  },
-
-  // Error text style
-  errorText: {
-    color: '#ef4444',
-    fontSize: 12,
-    fontFamily: 'Lato_400Regular',
-    marginTop: 4,
-    marginLeft: 4,
-  },
-});
