@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { Bell, ChevronLeft} from 'lucide-react';
-import profile from '@/assets/Image.png'
+import profile from '@/assets/default.jpg'
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import useGetMe from '@/lib/hooks/useGetMe';
 import MeSkeleton from './MeSkeleton';
 import useGetUnReadNotification from '@/lib/hooks/useGetUnReadNotification';
+import { CapitalizeName } from '@/lib/constant/capitalizeName';
 
 const Header = () => {
     const pathname = usePathname()
@@ -56,13 +57,19 @@ const Header = () => {
                     <MeSkeleton />
                 ) : (
                     <div className="flex items-center gap-4 pl-3">
-                        <div className='bg-red-100 rounded-full p-2 cursor-pointer hover:bg-red-200 transition-colors'>
-                            <Image src={profile} alt="Logo" priority width={35} className='rounded-full' /> 
+                        <div className='border border-border rounded-full cursor-pointer'>
+                            <Image 
+                                src={data?.profile?.profilePicture || profile} 
+                                alt={CapitalizeName(data?.firstName)} 
+                                width={10} 
+                                height={10} 
+                                className='rounded-full w-10 h-10' 
+                            /> 
                         </div>
                         <div className="hidden sm:block">
-                            <p className='font-lato font-bold text-[14px]'>Dr. 
-                                {`${data?.firstName.charAt(0)?.toUpperCase() + data?.firstName?.slice(1)?.toLowerCase()} 
-                                ${data?.lastName.charAt(0)?.toUpperCase() + data?.lastName?.slice(1)?.toLowerCase()}`}</p>
+                            <p className='font-lato font-bold text-[14px]'>Dr. {' '}
+                                {CapitalizeName(data?.firstName)} {' '} 
+                                {CapitalizeName(data?.lastName)}</p>
                             <p className='font-medium text-[12px] text-red-800 font-lato'>{data?.profile?.specialization ?? '-'}</p>
                         </div>
                     </div>
