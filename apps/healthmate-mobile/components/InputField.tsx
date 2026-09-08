@@ -21,19 +21,19 @@ const InputField = ({
         {...props}
         className="
           w-full
-          rounded-xl
+          rounded-md
           border
           border-gray-200
           bg-white
           px-4
-          py-3.5
+          py-2
           text-sm
           text-gray-900
           outline-none
           transition
           placeholder:text-gray-400
           focus:border-pink-500
-          focus:ring-2
+          focus:ring-1
           focus:ring-pink-100
         "
       />

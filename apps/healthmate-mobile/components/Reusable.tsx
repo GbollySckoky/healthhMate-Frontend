@@ -188,7 +188,7 @@ interface ActionButtonProps {
   children: ReactNode;
   _fn: () => void;
   disabled?: boolean;
-  className: string;
+  className?: string;
 }
 
 export const RescheduleBtn = ({ children, _fn, disabled, className }: ActionButtonProps) => (

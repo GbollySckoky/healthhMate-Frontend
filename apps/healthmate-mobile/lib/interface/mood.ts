@@ -1,5 +1,5 @@
 export interface Mood {
-    mood: {};
+    mood: any;
     notes: string
     recordedAt: string
 }

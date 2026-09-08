@@ -21,6 +21,7 @@ export interface SignUpValues {
   email: string;
   password: string;
   confirmPassword: string;
+  phoneNumber: string
 }
 
 const SignUpPage = () => {
@@ -34,6 +35,7 @@ const SignUpPage = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    phoneNumber: '',
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
@@ -117,14 +119,11 @@ const SignUpPage = () => {
       email: inputValue.email.trim(),
       password: inputValue.password,
       confirmPassword: inputValue.confirmPassword,
+      phoneNumber: inputValue.phoneNumber
     };
 
     signupMutation.mutate(credentials);
   };
-
-  // ---------------------------------------------
-  // VERIFY EMAIL STEP
-  // ---------------------------------------------
 
   if (step === "verify") {
     return (
@@ -135,49 +134,47 @@ const SignUpPage = () => {
     );
   }
 
-  // ---------------------------------------------
-  // SIGN UP STEP
-  // ---------------------------------------------
-
   return (
-    <div className="w-full">
-      <div className="mb-8">
-        <h1 className="font-lato text-xl font-semibold text-black">
-          Create your HealthMate account
-        </h1>
+    <div className="w-screen h-screen flex items-center justify-center">
+      <div className='w-[90%] md:w-[70%] mx-auto '>
+        <div className="mb-8">
+          <h1 className="font-lato text-xl font-semibold text-black">
+            Create your HealthMate account
+          </h1>
 
-        <p className="mt-1 text-base leading-6 text-gray-500">
-          Sign up with your phone number or email to begin.
-        </p>
-      </div>
+          <p className="mt-1 text-base leading-6 text-gray-500">
+            Sign up with your phone number or email to begin.
+          </p>
+        </div>
 
-      <SignUpForm
-        values={inputValue}
-        onChange={handleChange}
-        passwordVisible={passwordVisibility}
-        confirmPasswordVisible={confirmPasswordVisibility}
-        onTogglePassword={() =>
-          togglePasswordVisibility("password")
-        }
-        onToggleConfirmPassword={() =>
-          togglePasswordVisibility("confirmPassword")
-        }
-        onSubmit={handleSignUp}
-        isLoading={signupMutation.isPending}
-      />
+        <SignUpForm
+          values={inputValue}
+          onChange={handleChange}
+          passwordVisible={passwordVisibility}
+          confirmPasswordVisible={confirmPasswordVisibility}
+          onTogglePassword={() =>
+            togglePasswordVisibility("password")
+          }
+          onToggleConfirmPassword={() =>
+            togglePasswordVisibility("confirmPassword")
+          }
+          onSubmit={handleSignUp}
+          isLoading={signupMutation.isPending}
+        />
 
-      <div className="mb-6 flex items-center justify-center">
-        <span className="text-sm text-gray-500">
-          Already have an account?
-        </span>
+        <div className="mb-6 flex items-center justify-center">
+          <span className="text-sm text-gray-500">
+            Already have an account?
+          </span>
 
-        <button
-          type="button"
-          onClick={() => router.push(ROUTES.login)}
-          className="ml-1 text-sm font-medium text-pink-500 hover:underline"
-        >
-          Login
-        </button>
+          <button
+            type="button"
+            onClick={() => router.push(ROUTES.login)}
+            className="ml-1 text-sm font-medium text-pink-500 hover:underline"
+          >
+            Login
+          </button>
+        </div>
       </div>
     </div>
   );
