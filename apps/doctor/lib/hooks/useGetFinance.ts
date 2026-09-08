@@ -16,7 +16,7 @@ const useGetFinance = () => {
         queryFn: () => Doctor.getFinance(pagination.page, pagination.limit)
     })
     
-    const financeDatas = data?.data ?? []
+    const financeDatas = data?.data || []
     useEffect(() => {
         if (data?.meta) {
           setPagination((prev) => ({
