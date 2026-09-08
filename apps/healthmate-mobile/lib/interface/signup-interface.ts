@@ -1,6 +1,6 @@
 export interface Signup {
     email?: string ;
-    // phonenumber?: number;
+    phoneNumber: string;
     password?: string;
     confirmPassword?: string;
     firstName?: string;

@@ -54,8 +54,8 @@ const LoginPage = () => {
   // const isAuthPage = pathname === "/auth/login" || pathname === "/auth/register" || pathname === "/forgot-password";
   
   return (
-    <div className="flex justify-center items-center w-screen h-screen">
-      <div className="">
+    <div className="flex justify-center items-center w-screen h-screen ">
+      <div className=" md:w-[70%] mx-auto w-[90%]">
         {/* Header */}
         <div className="mb-8">
           <p className="text-xl font-medium text-[#414651] font-lato">Welcome Back</p>
@@ -138,7 +138,7 @@ const LoginPage = () => {
         {/* Sign up */}
         <div className="flex justify-center items-center mb-6 mt-4 text-sm font-libre">
           <span className="text-[#717680]">Don&apos;t have an account? </span>
-          <button type="button" className="text-[#c11574] font-medium ml-1 hover:underline">
+          <button type="button" className="text-[#c11574] font-medium ml-1 hover:underline" onClick={() => router.push(ROUTES.signup)}>
             Sign Up
           </button>
         </div>
