@@ -10,7 +10,7 @@ import React, {
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { ArrowLeft, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { toast } from "react-toastify";
 
 import { patientService } from "@/service/patientService";
@@ -26,7 +26,7 @@ interface VerifyEmailProps {
 
 const VerifyEmail = ({
   inputValue,
-  onBack,
+  // onBack,
   openModal = false,
 }: VerifyEmailProps) => {
   const router = useRouter();
@@ -270,31 +270,8 @@ const VerifyEmail = ({
    */
 
   return (
-    <>
-      <div className="mx-auto flex w-full max-w-md flex-col items-center pt-5">
-        {/* Back */}
-
-        <button
-          type="button"
-          onClick={onBack}
-          className="
-            mb-6
-            flex
-            w-full
-            items-center
-            gap-2
-            text-sm
-            text-gray-500
-            transition
-            hover:text-gray-800
-          "
-        >
-          <ArrowLeft size={18} />
-
-          <span>Back</span>
-        </button>
-
-        {/* Header */}
+    <div className="flex items-center justify-center w-screen h-screen">
+      <div className="mx-auto flex max-w-sm md:max-w-md flex-col items-center pt-5">
 
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-semibold text-black">
@@ -493,7 +470,7 @@ const VerifyEmail = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

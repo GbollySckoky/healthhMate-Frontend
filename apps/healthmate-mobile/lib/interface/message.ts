@@ -8,7 +8,7 @@ export type Message = {
   senderType: string
   content: string
   isRead: boolean
-  readAt: any
+  readAt: string
   createdAt: string
   updatedAt: string
 }

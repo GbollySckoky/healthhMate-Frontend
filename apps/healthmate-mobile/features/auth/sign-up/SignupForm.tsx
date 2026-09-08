@@ -72,6 +72,15 @@ export const SignUpForm = ({
           }
         />
 
+        <InputField
+          label="Phone Number"
+          placeholder="09075437117"
+          value={values.phoneNumber}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            onChange("phoneNumber", event.target.value)
+          }
+        />
+
         <PasswordInput
           label="Password"
           placeholder="********"
@@ -118,7 +127,7 @@ export const SignUpForm = ({
         type="submit"
         disabled={isLoading}
         className={`
-          mb-5
+          my-5
           w-full
           rounded-xl
           py-4

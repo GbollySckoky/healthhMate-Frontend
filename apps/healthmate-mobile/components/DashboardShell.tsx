@@ -4,6 +4,7 @@ import { useState } from "react";
 import HeaderClient from "@/components/HeaderClient";
 import Sidebar from "@/components/Sidebar";
 import { usePathname } from "next/navigation";
+import { ROUTES } from "@/constants/route";
 
 interface DashboardShellProps {
   children: React.ReactNode;
@@ -15,8 +16,8 @@ export default function DashboardShell({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
 
-  const isAuthPage = pathname === "/auth/login" || pathname === "/auth/register" || pathname === "/forgot-password";
-  console.log("isAuthPage", isAuthPage, pathname);
+  const isAuthPage = pathname === ROUTES.login || pathname === ROUTES.signup|| pathname === "/forgot-password";
+
   return (
     <div className="flex h-dvh ">
       {/* Sidebar */}
