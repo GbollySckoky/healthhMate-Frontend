@@ -4,7 +4,7 @@ import { Message } from "../interface/communication";
 let socket: Socket | null = null;
 let socketToken: string | null = null;
 
-export function connectCommunication(token: string) {
+export function connectCommunicationSocket(token: string) {
     if (!token) {
         throw new Error("Socket authentication token is required");
     }
