@@ -4,10 +4,11 @@ import { useQuery } from '@tanstack/react-query'
 const useGetCommunicationId = (appointmentId: string) => {
     const {data, isLoading, isError, error} = useQuery({
         queryKey: ['getCommunicationId'],
-        queryFn: () => patientService.getCommunicationId(appointmentId)
+        queryFn: () => patientService.getCommunicationId(appointmentId),
+        enabled: !!appointmentId
     })
 
-    const message = data ?? {}
+    const message = data || {}
   return {message, isLoading, isError, error}
 }
 

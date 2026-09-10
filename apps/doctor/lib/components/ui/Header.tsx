@@ -24,7 +24,7 @@ const Header = () => {
         if (pathname === ROUTES.patients || pathname.startsWith(ROUTES.patients + '/')) return 'Patient Details'
         if (pathname === ROUTES.appointment ) return 'Appointments'
         if (pathname === ROUTES.appointment || pathname.startsWith(ROUTES.appointment + '/')) return 'Appointments'
-        if (pathname === ROUTES.earnings || pathname.startsWith(ROUTES.earnings + '/')) return 'Payments'
+        if (pathname === ROUTES.earnings || pathname.startsWith(ROUTES.earnings + '/')) return 'Earnings'
         if (pathname === ROUTES.profile) return 'Profile'
         if (pathname === ROUTES.support) return 'Support'
         if (pathname === ROUTES.support || pathname.startsWith(ROUTES.support + '/')) return 'Support Details'

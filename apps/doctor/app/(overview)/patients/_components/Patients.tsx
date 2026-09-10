@@ -11,15 +11,13 @@ import {
 import {Search } from 'lucide-react'
 import { TableTitle } from "@/lib/components/ui/Reusable";
 import Input from "@/lib/components/ui/Input";
-import MinSelectField from "@/lib/components/ui/MinSelectField";
+// import MinSelectField from "@/lib/components/ui/MinSelectField";
 import { useEffect, useState } from "react";
-import useToggle from "@/lib/hooks/useToggle";
+// import useToggle from "@/lib/hooks/useToggle";
 import Paginate from '@/lib/components/ui/Paginate'
 import { useRouter } from 'next/navigation'
-import { STATUS } from '@/types/status'
 import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
-// import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Pagination } from '@/lib/interface/pagination.interfac';
 import { Appointment } from '@/lib/interface/doctor-apppointment.interface';
 import PatientTableSkeleton from "@/lib/components/ui/PatientTableSkeleton";
@@ -29,7 +27,7 @@ const Patients = () => {
     const [inputValue, setInputValue] = useState<string>('')
     // const [selectValue, setSelectValue] = useState('')
     const [debounceSearchQuery, setDebounceSearchQuery] = useState("")
-    const {isToggle, handleToggle} = useToggle()
+    // const {isToggle, handleToggle} = useToggle()
     const router = useRouter()
     const [pagination, setPagination] = useState<Pagination>({
         page: 1,
@@ -39,10 +37,10 @@ const Patients = () => {
     });
     const [activeStatus, setActiveStatus] = useState<string | undefined>();
 
-    const handleSelect = (option: string) => {
-        setActiveStatus((prev) => (prev === option ? '' : option ))
-        // handleToggle
-    }
+    // const handleSelect = (option: string) => {
+    //     setActiveStatus((prev) => (prev === option ? '' : option ))
+    //     // handleToggle
+    // }
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -56,25 +54,25 @@ const Patients = () => {
 
     return () => clearTimeout(timeout);
     }, [inputValue]);
-    const status = {
-        label: 'Status',
-        options: [
-            'Paid',
-            'Failed',
-            'Pending'
-        ]
-    }
+    // const status = {
+    //     label: 'Status',
+    //     options: [
+    //         'Paid',
+    //         'Failed',
+    //         'Pending'
+    //     ]
+    // }
 
     const { data, isLoading, error, isError } = useQuery({
         queryKey: [
-          "getAppointment",
-          activeStatus,
-          debounceSearchQuery,
+          "getApprovedAppointment",
           pagination.page,
           pagination.limit,
+          activeStatus,
+          debounceSearchQuery
         ],
         queryFn: () =>
-          Doctor.getAppointment(
+          Doctor.getApprovedAppointment(
             pagination.page,
             pagination.limit,
             activeStatus,
@@ -82,11 +80,18 @@ const Patients = () => {
           ),
     });
     
-    const patients = data?.data ?? []
-    console.log(patients)
+    const patients = data?.data || []
+     useEffect(() => {
+        if (data?.meta) {
+          setPagination((prev) => ({
+            ...prev,
+            total: data.meta.total,
+            totalPages: data.meta.totalPages,
+          }));
+        }
+      }, [data]);
 
-    const activePatients = patients?.filter((patient: Appointment) => patient.status !== STATUS.PENDING )
-    console.log(activePatients)
+
     const handleNext = (id: string) => {
       router.push(`/patients/${id}`)
     }
@@ -101,18 +106,18 @@ const Patients = () => {
                 <div className="flex space-x-3 my-4 px-4 ">
                     <Input 
                         value={inputValue}
-                        placeholder='Search by Name, Specialty'
+                        placeholder='Search by Name, Consultation'
                         onChange={(e) => setInputValue(e.target.value)}
                         icon={<Search size={17} color="#C11574" />}
                     />
-                    <MinSelectField 
+                    {/* <MinSelectField 
                         {...status}
                         value={activeStatus}
                         show={isToggle}
                         onSelect={handleSelect}
                         onClick={handleToggle}
                         className='w-fit'
-                    />
+                    /> */}
                 </div>
                 <Table>
                     <TableHeader className="border-t border-borderColor ">
@@ -136,13 +141,13 @@ const Patients = () => {
                                 {error.message}
                             </TableCell>
                         </TableRow>
-                    ) : activePatients.length === 0 ? (
+                    ) : patients.length === 0 ? (
                         <TableRow>
                             <TableCell colSpan={8} className="text-center py-8 text-gray-500">
                                 No active patients found
                             </TableCell>
                         </TableRow>
-                    ) :activePatients.map((data: Appointment) => (
+                    ) :patients.map((data: Appointment) => (
                         <TableRow  key={data.id} onClick={() => handleNext(data.id)} className="border-t border-borderColor hover:bg-[#FAFBFF]">
                         <TableCell className="font-inter font-medium text-[12px] text-grey-20">
                         <p> {data.user.firstName || "N/A"}  {data.user.lastName || "N/A"}</p> 
@@ -163,9 +168,12 @@ const Patients = () => {
                         {data.consultationType.charAt(0).toUpperCase() + data.consultationType.slice(1).replaceAll("_", " ")  || "N/A"}
                         </TableCell>
                         <TableCell>
-                            <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.status)} text-grey-20`}>
+                            <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.status)}`}>
                             {data.status || 'N/A'}
                             </span>
+                        </TableCell>
+                        <TableCell className="text-[12px] text-grey-20">
+                            {data.healthConcern || "N/A"}
                         </TableCell>
                         <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer" onClick={() => handleNext(data.id)}> View Details</TableCell>
                         </TableRow>

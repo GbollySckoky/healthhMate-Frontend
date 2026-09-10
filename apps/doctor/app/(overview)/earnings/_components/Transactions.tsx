@@ -8,91 +8,60 @@ import {
   TableHeader,
   TableRow,
 } from "@/lib/components/ui/table"
-import Calendar from "@/lib/components/ui/DateCalendar"
+// import Calendar from "@/lib/components/ui/DateCalendar"
 import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable"
-import { paidStatus } from "@/types/status"
 import Input from "@/lib/components/ui/Input"
 import { useState } from "react"
 import Paginate from "@/lib/components/ui/Paginate"
 import useGetFinance from '@/lib/hooks/useGetFinance';
 import { CapitalizeName } from "@/lib/constant/capitalizeName"
 import EarningsPage from "./Earnings"
-
-// Helper to style status
-const getStatusClasses = (status: string) => {
-  switch (status) {
-    case paidStatus.PAID:
-      return "text-green-500 bg-green-100"
-    case paidStatus.PENDING:
-      return "text-grey-600 bg-[#F5F5F5]"
-    case paidStatus.FAILED:
-      return "text-red-800 bg-red-100"
-    default:
-      return ""
-  }
-}
-
-const TABLE_COLUMNS = 8
-
-// Shared shimmer block — matches the SkeletonBlock pattern used elsewhere in the app
-const SkeletonBlock = ({ className = "" }: { className?: string }) => (
-  <div className={`animate-pulse bg-[#EAECF0] rounded ${className}`} />
-)
-
-const TransactionsRowSkeleton = () => (
-  <TableRow>
-    <TableCell><SkeletonBlock className="h-3 w-20" /></TableCell>
-    <TableCell><SkeletonBlock className="h-3 w-24" /></TableCell>
-    <TableCell><SkeletonBlock className="h-3 w-16" /></TableCell>
-    <TableCell><SkeletonBlock className="h-3 w-20" /></TableCell>
-    <TableCell><SkeletonBlock className="h-3 w-14" /></TableCell>
-    <TableCell><SkeletonBlock className="h-3 w-16" /></TableCell>
-    <TableCell><SkeletonBlock className="h-5 w-16 rounded-full" /></TableCell>
-    <TableCell><SkeletonBlock className="h-3 w-8" /></TableCell>
-  </TableRow>
-)
-
-const TransactionsTableSkeleton = ({ rows = 8 }: { rows?: number }) => (
-  <>
-    {Array.from({ length: rows }).map((_, i) => (
-      <TransactionsRowSkeleton key={i} />
-    ))}
-  </>
-)
-
-const TransactionsEmptyState = () => (
-  <TableRow>
-    <TableCell colSpan={TABLE_COLUMNS} className="text-center py-10">
-      <p className="text-[13px] font-medium text-grey-30">No transactions found</p>
-      <p className="text-[12px] text-[#535862] mt-1">
-        Transactions will show up here once payments start coming in.
-      </p>
-    </TableCell>
-  </TableRow>
-)
-
-const TransactionsErrorState = ({ message }: { message?: string }) => (
-  <TableRow>
-    <TableCell colSpan={TABLE_COLUMNS} className="text-center py-10">
-      <p className="text-[13px] font-medium text-red-800">Couldn&apos;t load transactions</p>
-      <p className="text-[12px] text-[#535862] mt-1">
-        {message ?? "Something went wrong. Please try again."}
-      </p>
-    </TableCell>
-  </TableRow>
-)
+import { getStatusStyle } from '@/lib/constant/status';
+import useGetDate from "@/lib/hooks/useGetDate"
+import { TransactionsEmptyState, TransactionsErrorState, TransactionsTableSkeleton } from "@/lib/components/ui/EarningSkeleton"
+import { Copy, Check } from 'lucide-react';
 
 export function TransactionsPage() {
   const [inputValue, setInputValue] = useState<string>("")
   const { pagination, setPagination, financeDatas, isLoading, isError, error } = useGetFinance()
-  // const router = useRouter()
-
-  // const handleNext = (id: string) => {
-  //   router.push(`/earnings/${id}`)
-  // }
+  const {getReadableDate} = useGetDate()
+  const [copied, setCopied] = useState("")
+  const [copyAppointment, setCopyAppointment] = useState("")
 
   const hasData = !isLoading && !isError && financeDatas?.length > 0
   const isEmpty = !isLoading && !isError && (!financeDatas || financeDatas.length === 0)
+
+  const handleSelectReference = (id: string) => {
+    setCopied((prev) => prev === id ? '' : id)
+  }
+
+   const handleSelectAppointmentId = (id: string) => {
+    setCopyAppointment((prev) => prev === id ? '' : id)
+  }
+
+  const handleCopyRefrence = async (reference: string) => {
+    if(!reference) return;
+
+    try{
+      await navigator.clipboard.writeText(reference);
+      handleSelectReference(reference);
+      setTimeout(() => handleSelectReference(reference), 2000)
+    }catch(error) {
+      console.error("Failed to copy payment reference:", error);
+    }
+  }
+
+  const handleCopyAppointmentId = async (id: string) => {
+    if(!id) return;
+
+    try{
+      await navigator.clipboard.writeText(id);
+      handleSelectAppointmentId(id);
+      setTimeout(() => handleSelectAppointmentId(id), 2000)
+    }catch(error) {
+      console.error("Failed to copy payment reference:", error);
+    }
+  }
 
   return (
     <PageWrapper>
@@ -112,19 +81,22 @@ export function TransactionsPage() {
               onChange={(e) => setInputValue(e.target.value)}
               icon={<Search size={17} color="#C11574" />}
             />
-            <Calendar />
+            {/* <Calendar /> */}
           </div>
 
           {/* Table */}
           <Table>
             <TableHeader className="border-t border-borderColor text-[#535862]">
               <TableRow className="bg-[#FAFBFF] font-inter text-[12px] font-medium">
-                <TableHead>Transaction ID</TableHead>
+                <TableHead>Appointment ID</TableHead>
                 <TableHead>Reference</TableHead>
-                <TableHead>Date & Time</TableHead>
-                <TableHead>Patient</TableHead>
+                <TableHead>Payment Date</TableHead>
+                <TableHead>Appointment Date</TableHead>
+                <TableHead>Patient Name</TableHead>
+                 <TableHead>Consultation Type</TableHead>
                 <TableHead>Amount</TableHead>
                 <TableHead>Payment Method</TableHead>
+                 <TableHead>Payment Gateway</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead></TableHead>
               </TableRow>
@@ -138,34 +110,64 @@ export function TransactionsPage() {
               {isEmpty && <TransactionsEmptyState />}
 
               {hasData &&
-                financeDatas.map((data: any) => (
+                financeDatas.map((data: any) => {
+                return  (
                   <TableRow key={data.id}>
-                    <TableCell>
-                      <p className="truncate font-inter text-[12px] text-grey-20 w-23">
-                        {data.id ?? 'N/A'}
+                    <TableCell className='flex items-center'>
+                      <p className="truncate font-inter text-[12px] text-grey-20 w-20">
+                        {data.appointmentId ?? 'N/A'}
                       </p>
+                       <span 
+                          className='cursor-pointer' 
+                          onClick={() => handleCopyAppointmentId(data.appointmentId)}> 
+                          {copyAppointment === data.appointmentId ? (
+                            <Check size={15} />
+                          ): (
+                            <Copy size={15} /> 
+                          )}
+                      </span>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className='flex items-center'>
                        <p className="truncate font-inter text-[12px] text-grey-20 w-20">
                           {data.reference ?? 'N/A'}
                        </p>
+                       <span 
+                          className='cursor-pointer' 
+                          onClick={() => handleCopyRefrence(data.reference)}> 
+                          {copied === data.reference ? (
+                            <Check size={15} />
+                          ): (
+                            <Copy size={15} /> 
+                          )}
+                      </span>
                     </TableCell>
-                    <TableCell className="font-inter text-[12px] text-grey-20">
+                    <TableCell className="font-inter text-[12px] text-grey-20"> 
+                      {getReadableDate(data.paidAt) || 'N/A' }
+                    </TableCell>
+                     <TableCell className="font-inter text-[12px] text-grey-20"> 
                       {/* {invoice.date} */}
-                      <p className="text-[12px] font-normal">10:00AM</p>
-                    </TableCell>
-                    <TableCell className="font-inter text-[12px] text-grey-20 font-medium">
-                      {data.metadata.user?.firstName ?? 'N/A'}
+                      <p className="text-[12px] font-normal">{getReadableDate(data.metadata.date) || 'N/A' }</p>
+                      <p className="text-[12px] font-normal">{data.metadata.time || 'N/A' }</p>
                     </TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20">
-                      ₦{data.amount?.toLocaleString()}
+                      {data.metadata.amount?.user?.firstName || 'N/A'}
+                      {data.metadata.amount?.user?.lastName || 'N/A'}
+                    </TableCell>
+                     <TableCell className="font-inter text-[12px] text-grey-20"> 
+                      {CapitalizeName(data.metadata?.consultationType)?.replaceAll("_", " ") || 'N/A' }
+                    </TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20">
+                      ₦{data.metadata.amount?.amount.toLocaleString() || 0}
                     </TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20">
                       {CapitalizeName(data.paymentMethod?.toLowerCase()) ?? 'N/A'}
                     </TableCell>
+                     <TableCell className="font-inter text-[12px] text-grey-20">
+                      {data.gateway ?? 'N/A'}
+                    </TableCell>
                     <TableCell>
                       <p
-                        className={`text-[12px] text-grey-20 rounded-full w-fit py-1 px-4 ${getStatusClasses(
+                        className={`text-[12px] rounded-full w-fit py-1 px-4 ${getStatusStyle(
                           data.status
                         )}`}
                       >
@@ -179,7 +181,7 @@ export function TransactionsPage() {
                       View
                     </TableCell> */}
                   </TableRow>
-                ))}
+                )})}
             </TableBody>
           </Table>
 

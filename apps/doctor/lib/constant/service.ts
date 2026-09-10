@@ -31,6 +31,22 @@ export const Doctor = {
         const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT}?${params.toString()}`); 
         return await response.data
     },
+    getApprovedAppointment: async (
+       page = 1, limit = 10, status?: string, q?: string
+    ) => {
+        const params = new URLSearchParams({
+        })
+        params.append("page", String(page))
+        params.append("limit", String(limit))
+        if(status) params.append("status", status)
+        if(q) params.append("q", q)
+        // if(q?.healthConcern) params.append("healthConcern", q.healthConcern)
+        // if(q?.user?.firstName) params.append("firstName", q?.user?.firstName)
+        // if(q?.user?.lastName) params.append("lastName", q?.user?.lastName)
+        // if(q?.hospital?.hospitalName) params.append("hospitalName", q?.hospital?.hospitalName)
+        const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPROVED_APPOINTMENT}?${params.toString()}`); 
+        return await response.data
+    },
     getPayout: async () => {
         const response = await api.get(DOCTOR_ENDPOINTS.GET_PAYMENT); 
         return await response.data
@@ -47,6 +63,11 @@ export const Doctor = {
         const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/appointments`);
         return response.data
     },
+    getApprovedAppointmentDetail: async(appointment_id: string) => {
+        const response = await api.get(`appointment/doctor/${appointment_id}/approved/appointments`);
+        return response.data
+    },
+    // /api/v1/appointment/doctor/{id}/approved/appointments
     approveAppointment: async(appointment_id: string, payload: ApproveAppointment) => {
         return await api.patch(`${DOCTOR_ENDPOINTS.APPROVE_APPOINTMENT}${appointment_id}/approve`,payload)
     },
@@ -104,11 +125,31 @@ export const Doctor = {
         return response.data
     },
     getFinance: async (page = 1, limit = 10) => {
-    const searchParams = new URLSearchParams({
-      page: page.toString(),
-      limit: limit.toString(),
-    })
-    const response = await api.get(`${DOCTOR_ENDPOINTS.GET_FINANCE}?${searchParams}`)
-    return response.data
-  },
+        const searchParams = new URLSearchParams({
+        page: page.toString(),
+        limit: limit.toString(),
+        })
+        const response = await api.get(`${DOCTOR_ENDPOINTS.GET_FINANCE}?${searchParams}`)
+        return response.data
+    },
+    getCommunicationId: async (appointmentId: string) => {
+        const response = await api.get(`communications/appointment/${appointmentId}`)
+        return response.data
+    },
+    getMessages: async (communicationId: string) => {
+        const response = await api.get(`communications/${communicationId}/messages`)
+        return response.data
+    },
+    createCall: async (communicationId: string) => {
+        return await api.post(`communications/${communicationId}/calls`)
+    },
+    startCall: async (callSessionId: string) => {
+        return await api.post(`communications/calls/${callSessionId}/start`)
+    },
+    endCallSession: async (callSessionId: string) => {
+        return await api.post(`communications/calls/${callSessionId}/end`)
+    },
+    cancelCallSession: async (callSessionId: string) => {
+        return await api.post(`communications/calls/${callSessionId}/cancel`)
+    },
 }
