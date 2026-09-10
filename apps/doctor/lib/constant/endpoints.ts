@@ -3,6 +3,7 @@ export const DOCTOR_ENDPOINTS = {
     SIGN_UP: 'auth/doctor/register/',
     REFRESH: 'doctor/token/refresh',
     GET_APPOINTMENT: "appointment/doctor/appointments",
+    GET_APPROVED_APPOINTMENT: 'appointment/doctor/approved/appointments',
     GET_PAYMENT: 'doctor/earnings/payouts/',
     GET_EARNINGS_SUMMARY: "doctor/earnings/summary/",
     GET_DOCTOR: 'doctor/me',
