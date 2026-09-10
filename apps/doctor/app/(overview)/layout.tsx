@@ -9,9 +9,9 @@ export default function OverviewLayout({
 }>) {
   return (
     <AppointmentProvider>
-      <div className="flex h-dvh overflow-hidden bg-[#FAFAFA]">
+      <div className="flex h-dvh">
         <Sidebar />
-        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <div className="flex min-w-0 flex-1 flex-col ">
           <Header />
           <main className="min-h-0 flex-1 overflow-y-auto">
             {children}

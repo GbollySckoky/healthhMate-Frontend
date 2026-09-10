@@ -16,7 +16,7 @@ const SideBar = () => {
   const [activeUrl, setActiveUrl] = useState<string>(pathname || '')
   const handleActiveUrl = (url: string) => setActiveUrl(url)
   const {myData:data, isLoading} = useGetMe()
-
+  // const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <aside className="flex h-full w-20 shrink-0 flex-col overflow-y-auto bg-red-900 text-white md:w-[260px]">
       <div className="flex h-16 items-center justify-center px-3 md:justify-start">

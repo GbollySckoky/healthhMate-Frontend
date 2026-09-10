@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { storageService } from './storage';
+import { storageService } from '@/lib/constant/storage';
 import { ROUTES } from './routes';
 
   const api = axios.create({
