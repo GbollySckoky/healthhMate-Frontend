@@ -10,7 +10,7 @@ import {
 import {Search } from 'lucide-react'
 import image from '@/assets/Image.png'
 import { TableTitle } from "@/lib/components/ui/Reusable";
-import { paidStatus } from "@/types/status";
+// import { paidStatus } from "@/types/status";
 import Input from "@/lib/components/ui/Input";
 // import { useQuery } from '@tanstack/react-query';
 // import { Doctor } from '@/lib/constant/service';
@@ -18,6 +18,8 @@ import { useState } from "react";
 // import useToggle from "@/hooks/useToggle";
 import { useRouter } from 'next/navigation'
 import Paginate from '@/lib/components/ui/Paginate'
+import { STATUS } from "@/types/status";
+import { getStatusStyle } from "@/lib/constant/status";
 
   const invoices = [
     {
@@ -125,13 +127,13 @@ import Paginate from '@/lib/components/ui/Paginate'
                     <TableCell className="font-inter font-normal text-[13px] text-grey-20">12 Aug 2025</TableCell>
                     <TableCell className="font-inter font-normal text-[12px] text-grey-20">₦7,000</TableCell>
                     <TableCell className="font-inter font-normal text-[12px] text-grey-20">₦170,000</TableCell>
-                    <TableCell > <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === paidStatus.PAID && 'text-green-800 bg-green-100' || invoice.paymentMethod === paidStatus.PENDING && 'text-grey-600 bg-[#F5F5F5]'|| invoice.paymentMethod === paidStatus.FAILED && 'text-red-10 bg-red-100'  }`}>{invoice.paymentMethod} </p></TableCell>
+                    <TableCell > <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${getStatusStyle(invoice.paymentMethod) }`}>{invoice.paymentMethod} </p></TableCell>
                     <TableCell className="font-inter font-medium text-[14px] text-red-800 cursor-pointer" onClick={() => handleNext(invoice.invoice)}> View Details</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
             </Table>
-            <Paginate />
+            {/* <Paginate /> */}
         </div>
     )
   }
