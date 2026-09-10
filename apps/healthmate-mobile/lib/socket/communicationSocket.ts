@@ -69,7 +69,7 @@ export function connectCommunicationSocket(token: string): Socket {
 export function getCommunicationSocket(): Socket {
   if (!socket) {
     throw new Error(
-      "Socket not connected — call connectCommunicationSocket first"
+      "Socket not connected, call connectCommunicationSocket first"
     );
   }
 
