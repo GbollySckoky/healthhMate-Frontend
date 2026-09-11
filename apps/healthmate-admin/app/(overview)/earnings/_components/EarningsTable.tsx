@@ -19,7 +19,7 @@ import { useState } from "react";
 import useToggle from "@/lib/hooks/useToggle";
 import Paginate from '@/components/ui/paginate'
 import { useRouter } from 'next/navigation'
-import { STATUS } from '@/types/status'
+import { getStatusStyle } from '@/lib/constant/status'
 
   const invoices = [
     {
@@ -58,20 +58,6 @@ import { STATUS } from '@/types/status'
       image: image,
     },
   ]
-  
-  const getStatusStyle = (status: string) => {
-    switch (status) {
-      case STATUS.COMPLETED:
-        return "text-green-700 bg-green-100";
-      case STATUS.PENDING:
-        return "text-gray-700 bg-gray-100";
-      case STATUS.CANCELLED:
-      case STATUS.REJECTED:
-        return "text-red-800 bg-red-100";
-      default:
-        return "text-gray-700 bg-gray-100";
-    }
-  };
 
   export function EarningsTable() {
     const [inputValue, setInputValue] = useState<string>('')
