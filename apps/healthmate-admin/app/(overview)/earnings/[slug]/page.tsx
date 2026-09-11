@@ -3,24 +3,25 @@ import image from '@/assets/Image.png'
 import Image from 'next/image'
 import { Card, CardText, CardTitle, Info, PageWrapper } from '@/components/ui/Reusable'
 import EarningsTable  from './EarningsTable'
-import { paidStatus } from '@/types/status'
+// import { getStatusStyle } from "@/lib/constant/status";
 import DetailsNav from '@/components/ui/DetailsNav'
+import { STATUS } from '@/types/status'
 
-
-const getStatusClasses = (status: string) => {
-    switch (status) {
-      case paidStatus.PAID:
-        return "text-green-800 bg-green-100"
-      case paidStatus.PENDING:
-        return "text-grey-600 bg-[#F5F5F5]"
-      case paidStatus.FAILED:
-        return "text-red-800 bg-red-100"
-      default:
-        return ""
-    }
-}
 
 const SupportDetails = () => {
+  const getStatusStyle = (status: string) => {
+    switch (status) {
+      case STATUS.COMPLETED:
+        return "text-green-700 bg-green-100";
+      case STATUS.PENDING:
+        return "text-gray-700 bg-gray-100";
+      case STATUS.CANCELLED:
+      case STATUS.REJECTED:
+        return "text-red-800 bg-red-100";
+      default:
+        return "text-gray-700 bg-gray-100";
+    }
+  };
   return (
     <PageWrapper>
         <DetailsNav text='Earnings & Transactions' detailsText='Earning & Transaction Details'/>
@@ -33,7 +34,7 @@ const SupportDetails = () => {
                 <CardText>170 consultations</CardText>
             </div>
             </div>
-            <p className={`rounded-lg px-3  h-fit ${getStatusClasses('Pending')}`} >Pending</p>
+            <p className={`rounded-lg px-3  h-fit ${getStatusStyle('Pending')}`} >Pending</p>
         </div>
         {/* Card 2 */}
         <Card>

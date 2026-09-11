@@ -12,13 +12,14 @@ import {Search } from 'lucide-react'
 import image from '@/assets/Image.png'
 import Image from "next/image";
 import { TableTitle } from "@/components/ui/Reusable";
-import { paidStatus } from "@/types/status";
+// import { getStatusStyle } from "@/lib/constant/status";
 import Input from "@/components/Inputs/Input";
 import MinSelectField from "@/components/Inputs/MinSelectField";
 import { useState } from "react";
 import useToggle from "@/lib/hooks/useToggle";
 import Paginate from '@/components/ui/paginate'
 import { useRouter } from 'next/navigation'
+import { STATUS } from '@/types/status'
 
   const invoices = [
     {
@@ -58,6 +59,20 @@ import { useRouter } from 'next/navigation'
     },
   ]
   
+  const getStatusStyle = (status: string) => {
+    switch (status) {
+      case STATUS.COMPLETED:
+        return "text-green-700 bg-green-100";
+      case STATUS.PENDING:
+        return "text-gray-700 bg-gray-100";
+      case STATUS.CANCELLED:
+      case STATUS.REJECTED:
+        return "text-red-800 bg-red-100";
+      default:
+        return "text-gray-700 bg-gray-100";
+    }
+  };
+
   export function EarningsTable() {
     const [inputValue, setInputValue] = useState<string>('')
     const [selectValue, setSelectValue] = useState('')
@@ -152,7 +167,7 @@ import { useRouter } from 'next/navigation'
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">₦170,000</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">₦1,860</TableCell>
                     <TableCell className="font-inter font-normal text-[14px] text-grey-20">₦28,475</TableCell>
-                    <TableCell > <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${invoice.paymentMethod === paidStatus.PAID && 'text-green-800 bg-green-100' || invoice.paymentMethod === paidStatus.PENDING && 'text-grey-600 bg-[#F5F5F5]'|| invoice.paymentMethod === paidStatus.FAILED && 'text-red-10 bg-red-100'  }`}>{invoice.paymentMethod} </p></TableCell>
+                    <TableCell > <p className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 text-grey-20 ${getStatusStyle(invoice.paymentMethod)   }`}>{invoice.paymentMethod} </p></TableCell>
                     <TableCell className="font-inter font-medium text-[14px] text-red-800 cursor-pointer" onClick={handleNext}> View</TableCell>
                     </TableRow>
                 ))}
