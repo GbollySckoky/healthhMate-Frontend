@@ -1,8 +1,8 @@
-import { House, Wallet, CalendarDays, MessageSquareMore, User, Headset, Settings,CircleUserRound, Clock9, Bell } from 'lucide-react';
+import { House, Wallet, CalendarDays, User, Headset, Settings,CircleUserRound, Clock9, Bell } from 'lucide-react';
 import { ROUTES } from '@/lib/routes';
 import image from '@/assets/Image.png'
 import image1 from '@/assets/Image (1).png'
-
+// MessageSquareMore
 export const sideBarData = [
     {
         id: 1,
@@ -28,12 +28,12 @@ export const sideBarData = [
         text: 'Earnings',
         url: ROUTES.earnings
     },
-    {
-        id: 5,
-        icon: <MessageSquareMore size={18} />,
-        text: 'Messages',
-        url: ROUTES.message
-    },
+    // {
+    //     id: 5,
+    //     icon: <MessageSquareMore size={18} />,
+    //     text: 'Messages',
+    //     url: ROUTES.message
+    // },
     {
         id: 6,
         icon: <Clock9 size={18} />,

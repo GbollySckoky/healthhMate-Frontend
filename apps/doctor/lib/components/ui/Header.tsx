@@ -51,7 +51,7 @@ const Header = () => {
                 <div className='h-8 w-[1px] bg-slate-300 mr-5'/>
                 <div className='relative cursor-pointer' onClick={() => router.push(ROUTES.notifications)}>
                     <Bell size={22} className="text-gray-600 hover:text-gray-800" />
-                    <span className='bg-red-800  text-white text-xs rounded-full absolute -top-1 -right-2 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center'>{unReadNotifications}</span>
+                    <span className='bg-red-800  text-white text-xs rounded-full absolute -top-1 -right-2 px-1.5 py-1 min-w-[18px] h-[18px] flex items-center justify-center'>{unReadNotifications > 99 ? '99+' : unReadNotifications}</span>
                 </div>
                 {isLoading ? (
                     <MeSkeleton />
