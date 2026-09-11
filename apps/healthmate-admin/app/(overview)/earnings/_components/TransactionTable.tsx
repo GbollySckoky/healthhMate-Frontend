@@ -10,7 +10,7 @@ import {
 } from "@/lib/components/ui/table"
 // import Calendar from "@/lib/components/ui/DateCalendar"
 import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable"
-import { paidStatus } from "@/types/status"
+// import { getStatusStyle } from "@/lib/constant/status";
 // import Input from "@/lib/components/ui/Input"
 import { useState } from "react"
 // import Paginate from "@/lib/components/ui/Paginate"
@@ -19,20 +19,21 @@ import { CapitalizeName } from "@/lib/constant/capitalizeName"
 import EarningsPage from "./Earnings"
 import Input from "@/components/Inputs/Input"
 import Paginate from "@/lib/components/ui/paginate"
+import { STATUS } from "@/types/status"
 
-// Helper to style status
-const getStatusClasses = (status: string) => {
+const getStatusStyle = (status: string) => {
   switch (status) {
-    case paidStatus.PAID:
-      return "text-green-500 bg-green-100"
-    case paidStatus.PENDING:
-      return "text-grey-600 bg-[#F5F5F5]"
-    case paidStatus.FAILED:
-      return "text-red-800 bg-red-100"
+    case STATUS.COMPLETED:
+      return "text-green-700 bg-green-100";
+    case STATUS.PENDING:
+      return "text-gray-700 bg-gray-100";
+    case STATUS.CANCELLED:
+    case STATUS.REJECTED:
+      return "text-red-800 bg-red-100";
     default:
-      return ""
+      return "text-gray-700 bg-gray-100";
   }
-}
+};
 
 const TABLE_COLUMNS = 8
 
@@ -167,7 +168,7 @@ export function TransactionsPage() {
                     </TableCell>
                     <TableCell>
                       <p
-                        className={`text-[12px] text-grey-20 rounded-full w-fit py-1 px-4 ${getStatusClasses(
+                        className={`text-[12px] text-grey-20 rounded-full w-fit py-1 px-4 ${getStatusStyle(
                           data.status
                         )}`}
                       >
