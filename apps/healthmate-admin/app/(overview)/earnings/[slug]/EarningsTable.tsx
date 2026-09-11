@@ -7,9 +7,10 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import { paidStatus } from '@/types/status'
+// import { getStatusStyle } from "@/lib/constant/status";
 import { Card, Info, TableTitle } from '@/components/ui/Reusable'
 import { CloudUpload } from 'lucide-react'
+import { STATUS } from '@/types/status'
 
   // Mock data
 const invoices = [
@@ -42,19 +43,19 @@ const invoices = [
     },
 ]
 
-// Helper to style status
-const getStatusClasses = (status: string) => {
-    switch (status) {
-      case paidStatus.PAID:
-        return "text-green-800 bg-green-100"
-      case paidStatus.PENDING:
-        return "text-grey-600 bg-[#F5F5F5]"
-      case paidStatus.FAILED:
-        return "text-red-800 bg-red-100"
-      default:
-        return "" 
-    }
-}
+const getStatusStyle = (status: string) => {
+  switch (status) {
+    case STATUS.COMPLETED:
+      return "text-green-700 bg-green-100";
+    case STATUS.PENDING:
+      return "text-gray-700 bg-gray-100";
+    case STATUS.CANCELLED:
+    case STATUS.REJECTED:
+      return "text-red-800 bg-red-100";
+    default:
+      return "text-gray-700 bg-gray-100";
+  }
+};
 
 
 const EarningsTable = () => {
@@ -101,7 +102,7 @@ const EarningsTable = () => {
                 </TableCell>
                 <TableCell>
                   <p
-                    className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 ${getStatusClasses(
+                    className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-4 ${getStatusStyle(
                       invoice.paymentStatus
                     )}`}
                   >
