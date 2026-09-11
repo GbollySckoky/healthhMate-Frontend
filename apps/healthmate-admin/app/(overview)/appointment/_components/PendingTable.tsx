@@ -11,7 +11,6 @@ import {
 import image from '@/assets/Image.png'
 import Image from "next/image"
 import { TableTitle } from "@/components/ui/Reusable"
-import { STATUS } from "@/types/status"
 import Input from "@/components/Inputs/Input"
 import MinSelectField from "@/components/Inputs/MinSelectField"
 import { useState } from "react"

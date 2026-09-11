@@ -19,27 +19,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "
 import useGetAllAppointments from "@/lib/hooks/useGetAllAppointments";
 import Paginate from "@/lib/components/ui/paginate";
 import { CapitalizeName } from "@/lib/constant/capitalizeName";
+import { getStatusStyle } from "@/lib/constant/status";
 
 const tabs = [
   { key: "all", title: "All Appointment" },
+  { key: "upcoming", title: "UPCOMING" },
   { key: "completed", title: "Completed" },
   { key: "pending", title: "Pending" },
   { key: "cancelled", title: "Cancelled" },
 ];
-
-const getStatusStyle = (status: string) => {
-  switch (status) {
-    case STATUS.COMPLETED:
-      return "text-green-700 bg-green-100";
-    case STATUS.PENDING:
-      return "text-gray-700 bg-gray-100";
-    case STATUS.CANCELLED:
-    case STATUS.REJECTED:
-      return "text-red-800 bg-red-100";
-    default:
-      return "text-gray-700 bg-gray-100";
-  }
-};
 
 const Appointment = () => {
   const router = useRouter();
@@ -88,6 +76,7 @@ const Appointment = () => {
   const handleTabChange = (tab: string) => {
     const statusMap: Record<string, string | undefined> = {
       all: undefined,
+      upcoming: STATUS.UPCOMING,
       completed: STATUS.COMPLETED,
       pending: STATUS.PENDING,
       cancelled: STATUS.CANCELLED,

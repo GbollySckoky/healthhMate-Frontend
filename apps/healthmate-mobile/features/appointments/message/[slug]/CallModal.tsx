@@ -7,6 +7,8 @@ import AgoraRTC, {
   ICameraVideoTrack,
   IMicrophoneAudioTrack,
 } from "agora-rtc-sdk-ng";
+import useCall from "@/hooks/useCall";
+import useCreateCall from "@/hooks/useCreateCall";
 
 export interface CallSession {
   id: string;
@@ -53,18 +55,20 @@ function getAgoraCredentials(response: AgoraJoinResponse): AgoraCredentials {
 
 interface VideoCallProps {
   callSession: CallSession;
-  startCall: (callSessionId: string) => Promise<AgoraJoinResponse>;
-  cancelCall: (callSessionId: string) => Promise<unknown>;
-  endCall: (callSessionId: string) => Promise<unknown>;
+  // startCall: (callSessionId: string) => Promise<AgoraJoinResponse>;
+  // cancelCall: (callSessionId: string) => Promise<unknown>;
+  // endCall: (callSessionId: string) => Promise<unknown>;
   onCallEnded: () => void;
+  communicationId: string
 }
 
 export default function VideoCallUI({
   callSession,
-  startCall,
-  cancelCall,
-  endCall,
+  // startCall,
+  // cancelCall,
+  // endCall,
   onCallEnded,
+  communicationId
 }: VideoCallProps) {
   const [status, setStatus] = useState<"connecting" | "connected" | "error">("connecting");
   const [errorMsg, setErrorMsg] = useState("");
@@ -78,12 +82,14 @@ export default function VideoCallUI({
   const localContainerRef = useRef<HTMLDivElement>(null);
   const remoteContainerRef = useRef<HTMLDivElement>(null);
 
+  const { cancelCallSession, endCallSession } = useCall();
+  const {startCall} = useCreateCall()
   const isVideo = callSession.consultationType === "video_call";
 
-  const cleanup = useCallback(() => {
+  const cleanup = useCallback(async () => {
     localAudioRef.current?.close();
     localVideoRef.current?.close();
-    clientRef.current?.leave();
+    await clientRef.current?.leave();
     localAudioRef.current = null;
     localVideoRef.current = null;
     clientRef.current = null;
@@ -97,7 +103,10 @@ export default function VideoCallUI({
 
     async function join() {
       try {
-        const response = await startCall(callSession.id);
+        const response = await startCall.mutateAsync({
+          communicationId,
+          callSessionId: callSession.id,
+        });
         const credentials = getAgoraCredentials(response);
         if (cancelled) return;
 
@@ -157,7 +166,7 @@ export default function VideoCallUI({
 
     return () => {
       cancelled = true;
-      cleanup();
+      void cleanup();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callSession.id]);
@@ -198,18 +207,18 @@ export default function VideoCallUI({
   };
 
   const handleEndCall = async () => {
-    cleanup();
+    await cleanup();
     try {
-      await endCall(callSession.id);
+      await endCallSession.mutateAsync(callSession.id);
     } finally {
       onCallEnded();
     }
   };
 
   const handleCancelBeforeConnect = async () => {
-    cleanup();
+    await cleanup();
     try {
-      await cancelCall(callSession.id);
+      await cancelCallSession.mutateAsync(callSession.id);
     } finally {
       onCallEnded();
     }

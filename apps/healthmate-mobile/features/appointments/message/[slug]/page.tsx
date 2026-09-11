@@ -27,9 +27,9 @@ import {
 import { storageService } from "@/constants/storage";
 import useDate from "@/hooks/useDate";
 import { CapitalizeName } from "@/constants/capitalizeName";
-import useCall from "@/hooks/useCall";
+// import useCall from "@/hooks/useCall";
 import VideoCallUI, { CallSession } from "./CallModal";
-import { patientService } from "@/service/patientService";
+// import { patientService } from "@/service/patientService";
 
 const Page = () => {
   const videoCall = "video_call";
@@ -49,7 +49,7 @@ const Page = () => {
   } = useGetMessags(message?.id);
 
   const { createCall } = useCreateCall(message?.id);
-  const { cancelCallSession, endCallSession } = useCall();
+  // const { cancelCallSession, endCallSession } = useCall();
 
   const communicationId = message?.id ?? "";
   const authToken = storageService.getAuthToken();
@@ -339,10 +339,11 @@ const Page = () => {
       {activeCallSession && (
         <VideoCallUI
           callSession={activeCallSession}
-          startCall={(id) => patientService.startCall(id)}
-          cancelCall={(id) => cancelCallSession.mutateAsync(id)}
-          endCall={(id) => endCallSession.mutateAsync(id)}
+          // startCall={( id) => patientService.startCall(communicationid, id)}
+          // cancelCall={(id) => cancelCallSession.mutateAsync(id)}
+          // endCall={(id) => endCallSession.mutateAsync(id)}
           onCallEnded={() => setActiveCallSession(null)}
+          communicationId={communicationId}
         />
       )}
     </div>
