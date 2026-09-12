@@ -3,7 +3,6 @@ import useGetDate from '@/lib/hooks/useGetDate';
 import { useParams } from 'next/navigation';
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import useGetAppointmentCommunicationId from '@/lib/hooks/useGetAppointmentCommunicationId'
-import useCall from '@/lib/hooks/useCall';
 import useCreateCall from '@/lib/hooks/useCreateCall';
 import useGetMessages from '@/lib/hooks/useGetMessages';
 import { CallSession, Message } from '@/lib/interface/communication';
@@ -23,6 +22,39 @@ import { CheckCheck, Phone, Send, Video } from 'lucide-react';
 import { CapitalizeName } from '@/lib/constant/capitalizeName';
 import Image from 'next/image';
 import defaultImage from "@/assets/default.jpg";
+// import VideoCallUI from "./VideoCallUI";
+import { Doctor } from '@/lib/constant/service';
+import useCall from '@/lib/hooks/useCall';
+import VideoCallUI from './VideoCallUI';
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function isCallSession(value: unknown): value is CallSession {
+  return (
+    isRecord(value) &&
+    typeof value.id === "string" &&
+    typeof value.communicationId === "string" &&
+    (value.consultationType === "video_call" || value.consultationType === "audio_call") &&
+    typeof value.status === "string" &&
+    typeof value.agoraChannelName === "string" &&
+    (typeof value.expiresAt === "string" || value.expiresAt === null)
+  );
+}
+
+function getCreatedCallSession(response: { data: unknown }): CallSession {
+  if (!isRecord(response.data)) {
+    throw new Error("The create-call response did not include a call session");
+  }
+
+  const session = isCallSession(response.data.data) ? response.data.data : response.data;
+  if (!isCallSession(session)) {
+    throw new Error("The create-call response did not include a valid call session");
+  }
+
+  return session;
+}
 
 const Page = () => {
     const videoCall = "video_call";
@@ -39,10 +71,8 @@ const Page = () => {
       msgIsError,
       msgError,
     } = useGetMessages(communicationId);
-    console.log('Initial', initialMessages)
     const { createCall } = useCreateCall(communicationId);
     const { cancelCallSession, endCallSession } = useCall();
-    console.log('Messahge', message)
 
     const [messages, setMessages] = useState<Message[]>([]);
     const seededCommunicationRef = useRef<string | null>(null);
@@ -124,7 +154,25 @@ const Page = () => {
     connectCommunicationSocket(authToken);
 
     const handleIncomingCall = (data: unknown) => {
-      setActiveCallSession(data as CallSession);
+      if (isCallSession(data)) {
+        setActiveCallSession(data);
+        return;
+      }
+
+      if (!isRecord(data) || typeof data.callSessionId !== "string") {
+        console.error("Received an invalid incoming-call payload", data);
+        return;
+      }
+
+      setActiveCallSession({
+        id: data.callSessionId,
+        communicationId,
+        consultationType:
+          data.consultationType === "audio_call" ? "audio_call" : "video_call",
+        status: typeof data.status === "string" ? data.status : "WAITING",
+        agoraChannelName: "",
+        expiresAt: null,
+      });
     };
 
     onIncomingCall(handleIncomingCall);
@@ -184,7 +232,7 @@ const Page = () => {
   const handleCreateCall = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await createCall.mutateAsync();
-    setActiveCallSession(response.data as CallSession);
+    setActiveCallSession(getCreatedCallSession(response));
   };
 
   if (isLoading) {
@@ -233,7 +281,7 @@ return (
             </div>
           </div>
 
-          <form onSubmit={handleCreateCall} className="flex items-center gap-2">
+          <form onSubmit={handleCreateCall} className="flex items-center gap-2 w-full bg-red-800">
             {message?.appointment.consultationType === videoCall ? (
               <button
                 type="submit"
@@ -326,15 +374,15 @@ return (
         </form>
       </div>
 
-      {/* {activeCallSession && (
+      {activeCallSession && (
         <VideoCallUI
           callSession={activeCallSession}
-          startCall={(id) => patientService.startCall(id)}
+          startCall={(callSessionId) => Doctor.startCall(communicationId, callSessionId)}
           cancelCall={(id) => cancelCallSession.mutateAsync(id)}
           endCall={(id) => endCallSession.mutateAsync(id)}
           onCallEnded={() => setActiveCallSession(null)}
         />
-      )} */}
+      )} 
     </div>
   )
 }

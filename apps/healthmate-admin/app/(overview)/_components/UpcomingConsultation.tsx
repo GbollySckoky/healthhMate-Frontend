@@ -5,7 +5,7 @@ import { ChevronRight } from 'lucide-react';
 import image from '@/assets/Image.png'
 import { Hospital_Admin } from '@/lib/service/service';
 import { useQuery } from '@tanstack/react-query';
-import { STATUS } from '@/types/status';
+import { STATUS } from '@/lib/types/status';
 import { GET_ALL_APPOINTMENTS } from '@/lib/interface/get_all_appointyment'
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/constant/Routes';

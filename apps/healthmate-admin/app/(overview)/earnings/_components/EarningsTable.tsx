@@ -19,7 +19,7 @@ import { useState } from "react";
 import useToggle from "@/lib/hooks/useToggle";
 import Paginate from '@/components/ui/paginate'
 import { useRouter } from 'next/navigation'
-import { STATUS } from '@/types/status'
+import { STATUS } from '@/lib/types/status'
 
   const invoices = [
     {

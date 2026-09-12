@@ -31,6 +31,35 @@ import useCall from "@/hooks/useCall";
 import VideoCallUI, { CallSession } from "./CallModal";
 import { patientService } from "@/service/patientService";
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function isCallSession(value: unknown): value is CallSession {
+  return (
+    isRecord(value) &&
+    typeof value.id === "string" &&
+    typeof value.communicationId === "string" &&
+    (value.consultationType === "video_call" || value.consultationType === "audio_call") &&
+    typeof value.status === "string" &&
+    typeof value.agoraChannelName === "string" &&
+    (typeof value.expiresAt === "string" || value.expiresAt === null)
+  );
+}
+
+function getCreatedCallSession(response: { data: unknown }): CallSession {
+  if (!isRecord(response.data)) {
+    throw new Error("The create-call response did not include a call session");
+  }
+
+  const session = isCallSession(response.data.data) ? response.data.data : response.data;
+  if (!isCallSession(session)) {
+    throw new Error("The create-call response did not include a valid call session");
+  }
+
+  return session;
+}
+
 const Page = () => {
   const videoCall = "video_call";
   const params = useParams();
@@ -133,7 +162,27 @@ const Page = () => {
     connectCommunicationSocket(authToken);
 
     const handleIncomingCall = (data: unknown) => {
-      setActiveCallSession(data as CallSession);
+      if (isCallSession(data)) {
+        setActiveCallSession(data);
+        return;
+      }
+
+      if (!isRecord(data) || typeof data.callSessionId !== "string") {
+        console.error("Received an invalid incoming-call payload", data);
+        return;
+      }
+
+      // Socket payload: { callSessionId, consultationType, status }.
+      // Modal contract: { id, communicationId, ... }.
+      setActiveCallSession({
+        id: data.callSessionId,
+        communicationId,
+        consultationType:
+          data.consultationType === "audio_call" ? "audio_call" : "video_call",
+        status: typeof data.status === "string" ? data.status : "WAITING",
+        agoraChannelName: "",
+        expiresAt: null,
+      });
     };
 
     onIncomingCall(handleIncomingCall);
@@ -193,7 +242,7 @@ const Page = () => {
   const handleCreateCall = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await createCall.mutateAsync();
-    setActiveCallSession(response.data as CallSession);
+    setActiveCallSession(getCreatedCallSession(response));
   };
 
   if (isLoading) {
@@ -339,7 +388,7 @@ const Page = () => {
       {activeCallSession && (
         <VideoCallUI
           callSession={activeCallSession}
-          startCall={(id) => patientService.startCall(id)}
+          startCall={(callSessionId) => patientService.startCall(communicationId, callSessionId)}
           cancelCall={(id) => cancelCallSession.mutateAsync(id)}
           endCall={(id) => endCallSession.mutateAsync(id)}
           onCallEnded={() => setActiveCallSession(null)}

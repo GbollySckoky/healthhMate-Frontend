@@ -18,24 +18,11 @@ import {
   TableRow,
 } from "@/lib/components/ui/table";
 
-import { STATUS } from "@/types/status";
+import { STATUS } from "@/lib/types/status";
 import useToggle from "@/lib/hooks/useToggle";
 import { CapitalizeName } from "../../../../../healthmate-mobile/constants/capitalizeName";
 import useGetAllPatients from "@/lib/hooks/useGetAllPatients";
-
-const getStatusStyle = (status: string) => {
-  switch (status) {
-    case STATUS.COMPLETED:
-      return "text-green-700 bg-green-100";
-    case STATUS.PENDING:
-      return "text-gray-700 bg-gray-100";
-    case STATUS.CANCELLED:
-    case STATUS.REJECTED:
-      return "text-red-800 bg-red-100";
-    default:
-      return "text-gray-700 bg-gray-100";
-  }
-};
+import { getStatusStyle } from "@/lib/constant/status";
 
 const Patients = () => {
   const router = useRouter();

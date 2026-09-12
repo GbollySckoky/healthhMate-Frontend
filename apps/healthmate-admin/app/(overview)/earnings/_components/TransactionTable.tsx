@@ -19,7 +19,7 @@ import { CapitalizeName } from "@/lib/constant/capitalizeName"
 import EarningsPage from "./Earnings"
 import Input from "@/components/Inputs/Input"
 import Paginate from "@/lib/components/ui/paginate"
-import { STATUS } from "@/types/status"
+import { STATUS } from "@/lib/types/status"
 
 const getStatusStyle = (status: string) => {
   switch (status) {

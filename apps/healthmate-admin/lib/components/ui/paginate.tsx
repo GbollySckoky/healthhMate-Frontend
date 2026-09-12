@@ -27,14 +27,14 @@ const Paginate = ({pagination, setPagination}:PaginationInterface ) => {
   return (
    <div className="flex items-center justify-between px-4 py-4 border-t border-borderColor">
       <p className="text-sm text-gray-500">
-        Page {pagination.page} of {pagination.totalPages || 1}  Total{" "}
-        {pagination.total}
+        Page {pagination?.page} of {pagination?.totalPages || 1}  Total{" "}
+        {pagination?.total}
       </p>
 
       <div className="flex gap-2">
         <button
           onClick={handlePreviousPage}
-          disabled={pagination.page === 1}
+          disabled={pagination?.page === 1}
           className="px-3 py-1 text-sm border rounded disabled:opacity-50"
         >
           Previous
@@ -43,8 +43,8 @@ const Paginate = ({pagination, setPagination}:PaginationInterface ) => {
         <button
           onClick={handleNextPage}
           disabled={
-            pagination.page === pagination.totalPages ||
-            pagination.totalPages === 0
+            pagination?.page === pagination?.totalPages ||
+            pagination?.totalPages === 0
           }
           className="px-3 py-1 text-sm border rounded disabled:opacity-50"
         >

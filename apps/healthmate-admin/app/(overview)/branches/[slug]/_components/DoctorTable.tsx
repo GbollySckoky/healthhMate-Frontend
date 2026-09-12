@@ -10,7 +10,7 @@ import {
 import image from '@/assets/Image.png'
 import Image from "next/image";
 import { MinTexts } from "@/components/ui/Reusable";
-import {  activeStatus } from "@/types/status";
+import {  activeStatus } from "@/lib/types/status";
 // import {
 //   Pagination,
 //   PaginationContent,

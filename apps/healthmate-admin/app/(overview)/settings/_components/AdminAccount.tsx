@@ -9,7 +9,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { Trash2 } from 'lucide-react';
-import { activeStatus } from "@/types/status";
+import { activeStatus } from "@/lib/types/status";
 import DeleteModal from "./DeleteModal";
 import AddNewAdmin from "./AddNewAdmin";
 import { useFormModal } from "@/components/Modal/FormModal";

@@ -72,6 +72,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.90.10
         version: 5.90.10(react@19.1.0)
+      agora-rtc-sdk-ng:
+        specifier: ^4.24.8
+        version: 4.24.8
       axios:
         specifier: ^1.13.2
         version: 1.13.2

@@ -23,6 +23,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
 import DoctorTableSkeleton from "@/components/ui/DoctorPageSkeleton";
 import { useModal } from "@/components/Modal/Modal";
+import { CapitalizeName } from "@/lib/constant/capitalizeName";
 
 const All = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -158,8 +159,8 @@ const All = () => {
 
                       <div className="ml-2">
                         <p className="font-inter text-[12px] font-normal text-grey-20">
-                          {`${doctor.firstName || ""} ${
-                            doctor.lastName || ""
+                          {`${CapitalizeName(doctor.firstName) || ""} ${
+                            CapitalizeName(doctor.lastName) || ""
                           }`.trim() || "-"}
                         </p>
 
@@ -178,8 +179,8 @@ const All = () => {
                     {doctor.phoneNumber || "-"}
                   </TableCell>
 
-                  <TableCell className="font-inter text-[14px] font-normal text-grey-20">
-                    {doctor.gender || "-"}
+                  <TableCell className="font-inter text-[12px] text-grey-20">
+                    {CapitalizeName(doctor.gender) || "-"}
                   </TableCell>
 
                   <TableCell className="font-inter text-[12px] font-normal text-grey-20">
@@ -208,7 +209,7 @@ const All = () => {
         )}
       </Table>
 
-      <Paginate />
+      {/* <Paginate pagination={pagination} setPagination={setPagination}/> */}
     </div>
   );
 };

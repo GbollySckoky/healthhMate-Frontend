@@ -1,5 +1,5 @@
 import Input from '@/components/Inputs/Inputs';
-import { Branch } from '@/types/branch.schema';
+import { Branch } from '@/lib/types/branch.schema';
 import React, { useState } from 'react'
 import { newBranch } from '@/components/data';
 import Footer from '@/components/ui/Footer';

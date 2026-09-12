@@ -1,5 +1,5 @@
 import Input from '@/components/Inputs/Inputs';
-import { Admin } from '@/types/addAdmin.schema';
+import { Admin } from '@/lib/types/addAdmin.schema';
 import React, { FormEvent, useState } from 'react';
 import { admin } from '@/components/data';
 import SelectField from '@/components/Inputs/Select';

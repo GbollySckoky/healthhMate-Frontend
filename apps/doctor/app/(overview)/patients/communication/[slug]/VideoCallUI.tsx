@@ -59,13 +59,13 @@ interface VideoCallProps {
   onCallEnded: () => void;
 }
 
-export default function VideoCallUI({
+const VideoCallUI = ({
   callSession,
   startCall,
   cancelCall,
   endCall,
   onCallEnded,
-}: VideoCallProps) {
+}: VideoCallProps) => {
   const [status, setStatus] = useState<"connecting" | "connected" | "error">("connecting");
   const [errorMsg, setErrorMsg] = useState("");
   const [micOn, setMicOn] = useState(true);
@@ -309,3 +309,4 @@ export default function VideoCallUI({
     </div>
   );
 }
+export default VideoCallUI

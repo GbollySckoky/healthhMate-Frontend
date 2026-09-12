@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react'
 import { Hospital_Admin } from '../service/service';
 import { GET_ALL_APPOINTMENTS } from '../interface/get_all_appointyment';
-import { STATUS } from '@/types/status';
+import { STATUS } from '@/lib/types/status';
 
 const useGetAllPatients = () => {
      const [searchInput, setSearchInput] = useState("");

@@ -10,7 +10,7 @@ import {
 // import { getStatusStyle } from "@/lib/constant/status";
 import { Card, Info, TableTitle } from '@/components/ui/Reusable'
 import { CloudUpload } from 'lucide-react'
-import { STATUS } from '@/types/status'
+import { STATUS } from '@/lib/types/status'
 
   // Mock data
 const invoices = [
