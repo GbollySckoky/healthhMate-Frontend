@@ -85,6 +85,7 @@ export default function VideoCallUI({
   const { cancelCallSession, endCallSession } = useCall();
   const {startCall} = useCreateCall()
   const isVideo = callSession.consultationType === "video_call";
+  console.log('ISVIDEO!!', isVideo)
 
   const cleanup = useCallback(async () => {
     localAudioRef.current?.close();
