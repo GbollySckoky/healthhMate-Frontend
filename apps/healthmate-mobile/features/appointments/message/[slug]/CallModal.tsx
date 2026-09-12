@@ -79,6 +79,7 @@ export default function VideoCallUI({
   const remoteContainerRef = useRef<HTMLDivElement>(null);
 
   const isVideo = callSession.consultationType === "video_call";
+  console.log('ISVIDEO!!', isVideo)
 
   const cleanup = useCallback(() => {
     localAudioRef.current?.close();
