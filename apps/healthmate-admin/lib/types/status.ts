@@ -15,10 +15,14 @@ export const paidStatus = {
     PENDING: 'Pending'
 } 
 
+
 export const STATUS = {
     COMPLETED: 'COMPLETED',
     CANCELLED: 'CANCELLED',
     PENDING: 'PENDING',
+    ONGOING: 'ONGOING',
+    REJECTED: 'REJECTED',
     UPCOMING: 'UPCOMING',
-    REJECTED: 'REJECTED'
+    PAID: 'SUCESS',
+    FAILED: 'FAILED',
 } 

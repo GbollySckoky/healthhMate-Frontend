@@ -9,7 +9,7 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import { Status } from "@/types/status"
+import { Status } from "@/lib/types/status"
 import { useState } from "react"
 import {Search } from 'lucide-react'
 import Calendar from "@/components/calendar/Calendar"

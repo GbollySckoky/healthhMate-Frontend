@@ -1,15 +1,20 @@
-import { STATUS } from "@/types/status"
+import { STATUS } from "@/lib/types/status";
 
-export const getStatusStyle = (status: string) => {
-  switch (status) {
-    case STATUS.COMPLETED:
-      return "text-green-700 bg-green-100";
-    case STATUS.PENDING:
-      return "text-gray-700 bg-gray-100";
-    case STATUS.CANCELLED:
-    case STATUS.REJECTED:
-      return "text-red-800 bg-red-100";
-    default:
-      return "text-gray-700 bg-gray-100";
-  }
-};
+  export const getStatusStyle = (status: string) => {
+    switch (status) {
+      case STATUS.COMPLETED:
+        return "text-[#2F855A] bg-[#EAF7EE]";
+      case STATUS.PENDING:
+        return "text-[#2B6CB0] bg-[#EAF2FF]";
+      case STATUS.CANCELLED:
+        return "text-[#C53030] bg-[#FDECEC]";
+     case STATUS.UPCOMING:
+        return "text-[#B7791F] bg-[#FFF7E6]";
+      case STATUS.PAID:
+        return "text-[#2F855A] bg-[#EAF7EE]";
+      case STATUS.FAILED:
+        return "text-[#C53030] bg-[#FDECEC]";
+      default:
+        return "text-gray-700 bg-gray-100";
+    }
+}

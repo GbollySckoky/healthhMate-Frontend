@@ -14,7 +14,7 @@ import {
   TabsTrigger,
 } from "@/lib/components/ui/tabs";
 ;
-import { STATUS } from "@/types/status";
+import { STATUS } from "@/lib/types/status";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/lib/components/ui/table";
 import useGetAllAppointments from "@/lib/hooks/useGetAllAppointments";
 import Paginate from "@/lib/components/ui/paginate";

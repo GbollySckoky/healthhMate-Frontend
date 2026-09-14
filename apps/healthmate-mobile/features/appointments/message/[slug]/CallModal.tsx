@@ -16,7 +16,7 @@ export interface CallSession {
   consultationType: "video_call" | "audio_call";
   status: string;
   agoraChannelName: string;
-  expiresAt: string;
+  expiresAt: string | null;
 }
 
 interface AgoraCredentials {
@@ -85,7 +85,6 @@ export default function VideoCallUI({
   const { cancelCallSession, endCallSession } = useCall();
   const {startCall} = useCreateCall()
   const isVideo = callSession.consultationType === "video_call";
-  console.log('ISVIDEO!!', isVideo)
 
   const cleanup = useCallback(async () => {
     localAudioRef.current?.close();
@@ -176,8 +175,14 @@ export default function VideoCallUI({
   // COUNTDOWN TO EXPIRY
   // ============================================================
   useEffect(() => {
+    const expiresAt = callSession.expiresAt;
+    if (!expiresAt) {
+      setTimeLeft("");
+      return;
+    }
+
     const interval = setInterval(() => {
-      const diff = new Date(callSession.expiresAt).getTime() - Date.now();
+      const diff = new Date(expiresAt).getTime() - Date.now();
       if (diff <= 0) {
         setTimeLeft("00:00");
         handleEndCall();

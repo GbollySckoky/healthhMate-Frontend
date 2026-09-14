@@ -11,7 +11,7 @@ import {
 import image from '@/assets/Image.png'
 import Image from "next/image"
 import { TableTitle } from "@/components/ui/Reusable"
-import {  activeStatus } from "@/types/status"
+import {  activeStatus } from "@/lib/types/status"
 import Input from "@/components/Inputs/Input"
 import MinSelectField from "@/components/Inputs/MinSelectField"
 import { useState } from "react"
@@ -269,7 +269,7 @@ const Pending = () => {
                                 'Deactivate this Doctor?',
                               className: 'max-w-lg',
                               onClose: () => {},
-                              confirmDelete() {},
+                            //   confirmDelete() {},
                             })
                           }> <Trash2 color="#F04438" size={15}/>
                           </TableCell>

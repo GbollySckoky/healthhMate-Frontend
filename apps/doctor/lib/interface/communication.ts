@@ -19,7 +19,7 @@ export interface CallSession {
   consultationType: "video_call" | "audio_call";
   status: string;
   agoraChannelName: string;
-  expiresAt: string;
+  expiresAt: string | null;
 }
 
 export interface AgoraCredentials {
