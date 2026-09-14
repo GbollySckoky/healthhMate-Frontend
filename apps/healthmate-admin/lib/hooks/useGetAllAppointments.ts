@@ -68,7 +68,11 @@ const useGetAllAppointments = () => {
       const pendingAppointments = appointmentData.filter(
         (appointment) => appointment.status === STATUS.PENDING
       ).length;
-    
+      
+      const upcomingingAppointments = appointmentData.filter(
+        (appointment) => appointment.status === STATUS.UPCOMING
+      ).length;
+
       const totalAmount = appointmentData.reduce(
         (total, appointment) => total + (appointment.amount ?? 0),
         0
@@ -77,6 +81,7 @@ const useGetAllAppointments = () => {
     totalAppointments,
     completedAppointments,
     pendingAppointments,
+    upcomingingAppointments,
     totalAmount,
     isLoading, 
     isError, 

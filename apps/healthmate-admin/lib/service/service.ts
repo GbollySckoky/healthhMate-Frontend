@@ -17,8 +17,13 @@ export const Hospital_Admin = {
     createProfile: async (payload: Profile) => {
         return await api.post(ADMIN_ENDPOINTS.CREATE_HOSPITAL_PROFILE, payload); 
     },
-    getAllDoctor: async() => {
-        const response = await api.get(ADMIN_ENDPOINTS.GET_ALL_DOCTORS);
+    getAllDoctor: async(q: string, page = 1, limit = 10) => {
+        const searchParams = new URLSearchParams({
+            q: q,
+            page: page.toString(),
+            limit: limit.toString()
+        })
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_ALL_DOCTORS}?${searchParams}`);
         return response.data
     },
     createDoctor: async (payload: DOCTOR_SIGNUP) => {
@@ -113,11 +118,31 @@ export const Hospital_Admin = {
         return response.data
     },
     getFinance: async (page = 1, limit = 10) => {
-    const searchParams = new URLSearchParams({
-      page: page.toString(),
-      limit: limit.toString(),
-    })
-    const response = await api.get(`${ADMIN_ENDPOINTS.GET_FINANCE}?${searchParams}`)
-    return response.data
-  },
+        const searchParams = new URLSearchParams({
+        page: page.toString(),
+        limit: limit.toString(),
+        })
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_FINANCE}?${searchParams}`)
+        return response.data
+    },
+    getApprovedAppointment: async (
+        page = 1, limit = 10, status?: string, q?: string
+    ) => {
+        const params = new URLSearchParams({
+        })
+        params.append("page", String(page))
+        params.append("limit", String(limit))
+        if(status) params.append("status", status)
+        if(q) params.append("q", q)
+        // if(q?.healthConcern) params.append("healthConcern", q.healthConcern)
+        // if(q?.user?.firstName) params.append("firstName", q?.user?.firstName)
+        // if(q?.user?.lastName) params.append("lastName", q?.user?.lastName)
+        // if(q?.hospital?.hospitalName) params.append("hospitalName", q?.hospital?.hospitalName)
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_APPROVED_APPOINTMENT}?${params.toString()}`); 
+        return await response.data
+    },
+    getEarningStats: async () => {
+        const response = await api.get(ADMIN_ENDPOINTS.GET_EARNING_STATS); 
+        return await response.data
+    },
 }

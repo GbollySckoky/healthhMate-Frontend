@@ -7,15 +7,18 @@ import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/constant/Routes';
 import useGetMe from '@/lib/hooks/useGetMe';
 import MeSkeleton from './MeSkeleton';
+import useGetUnReadNotification from '@/lib/hooks/useGetUnReadNotification';
 const Header = () => {
     const pathname = usePathname()
     const Title = pathname === ROUTES.dashboard && 'Dashboard' || pathname === ROUTES.patients && 'Patients' || 
     pathname === ROUTES.appointment && 'Appointments' || pathname === ROUTES.earnings && 'Paymemts' || 
     pathname === ROUTES.report && 'Reports & Analytics' || pathname === ROUTES.support && 'Support' || 
     pathname === ROUTES.settings && 'Settings' || pathname === ROUTES.doctors && 'Doctors' || 
-    pathname === ROUTES.branches && 'Branches' || pathname === ROUTES.notifications && 'Notifications'
+    pathname === ROUTES.branches && 'Branches' || pathname === ROUTES.notifications && 'Notifications'  || 
+    pathname === ROUTES.profile && 'Profile'
 
     const {myData:data, isLoading} = useGetMe()
+    const {unReadNotifications} = useGetUnReadNotification()
 
   return (
     <div className='flex items-center justify-between bg-white shadow-sm  z-20 fixed top-0 left-2 right-0 pr-10 h-16 px-8 ml-[50px] md:ml-[250px]'>
@@ -25,7 +28,7 @@ const Header = () => {
                 <div className='h-8 w-[1px] bg-slate-300 mr-5'/>
                 <div className='relative cursor-pointer'>
                     <Bell size={22} className="text-gray-600 hover:text-gray-800" />
-                    <span className='bg-red-800  text-white text-xs rounded-full absolute -top-1 -right-2 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center'>4</span>
+                    <span className='bg-red-800  text-white text-xs rounded-full absolute -top-1 -right-2 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center'>{unReadNotifications > 99 ? '99+' : unReadNotifications}</span>
                 </div>
                  {isLoading ? (
                     <MeSkeleton />

@@ -152,4 +152,8 @@ export const Doctor = {
     cancelCallSession: async (callSessionId: string) => {
         return await api.post(`communications/calls/${callSessionId}/cancel`)
     },
+    getEarningStats: async () => {
+        const response = await api.get(DOCTOR_ENDPOINTS.GET_EARNING_STATS); 
+        return await response.data
+    },
 }

@@ -501,6 +501,12 @@ export const sideBarData = [
     },
     {
         id: 9,
+        icon: <User size={18} />,
+        text: 'Profile',
+        url: ROUTES.profile
+    },
+    {
+        id: 29,
         icon: <Settings size={18} />,
         text: 'Settings',
         url: ROUTES.settings

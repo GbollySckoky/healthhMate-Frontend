@@ -22,12 +22,14 @@ import { Pagination } from '@/lib/interface/pagination.interfac';
 import { Appointment } from '@/lib/interface/doctor-apppointment.interface';
 import PatientTableSkeleton from "@/lib/components/ui/PatientTableSkeleton";
 import { getStatusStyle } from '@/lib/constant/status';
+import MinSelectField from '@/lib/components/ui/MinSelectField';
+import useToggle from '@/lib/hooks/useToggle';
 
 const Patients = () => {
     const [inputValue, setInputValue] = useState<string>('')
     // const [selectValue, setSelectValue] = useState('')
     const [debounceSearchQuery, setDebounceSearchQuery] = useState("")
-    // const {isToggle, handleToggle} = useToggle()
+    const {isToggle, handleToggle} = useToggle()
     const router = useRouter()
     const [pagination, setPagination] = useState<Pagination>({
         page: 1,
@@ -37,10 +39,10 @@ const Patients = () => {
     });
     const [activeStatus, setActiveStatus] = useState<string | undefined>();
 
-    // const handleSelect = (option: string) => {
-    //     setActiveStatus((prev) => (prev === option ? '' : option ))
-    //     // handleToggle
-    // }
+    const handleSelect = (option: string) => {
+        setActiveStatus((prev) => (prev === option ? '' : option ))
+        handleToggle()
+    }
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -54,14 +56,15 @@ const Patients = () => {
 
     return () => clearTimeout(timeout);
     }, [inputValue]);
-    // const status = {
-    //     label: 'Status',
-    //     options: [
-    //         'Paid',
-    //         'Failed',
-    //         'Pending'
-    //     ]
-    // }
+
+    const status = {
+        label: 'Status',
+        options: [
+            'Paid',
+            'Failed',
+            'Pending'
+        ]
+    }
 
     const { data, isLoading, error, isError } = useQuery({
         queryKey: [
@@ -81,6 +84,7 @@ const Patients = () => {
     });
     
     const patients = data?.data || []
+    console.log(patients)
      useEffect(() => {
         if (data?.meta) {
           setPagination((prev) => ({
@@ -110,14 +114,14 @@ const Patients = () => {
                         onChange={(e) => setInputValue(e.target.value)}
                         icon={<Search size={17} color="#C11574" />}
                     />
-                    {/* <MinSelectField 
+                    <MinSelectField 
                         {...status}
                         value={activeStatus}
                         show={isToggle}
                         onSelect={handleSelect}
                         onClick={handleToggle}
                         className='w-fit'
-                    /> */}
+                    />
                 </div>
                 <Table>
                     <TableHeader className="border-t border-borderColor ">

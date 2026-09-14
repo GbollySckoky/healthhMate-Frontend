@@ -1,14 +1,14 @@
-import {  FlexWrapper, PageWrapper, TableTitle } from '@/lib/components/ui/Reusable'
+import {  FlexWrapper, PageWrapper } from '@/lib/components/ui/Reusable'
 import React from 'react'
 import ChangePassword from './_components/ChangePassword'
 
 
 const Page = () => {
-    const notifications = ["Email Notification", "In-App Notification", "Push Notification"]
+    // const notifications = ["Email Notification", "In-App Notification", "Push Notification"]
   return (
     <PageWrapper >
         <FlexWrapper className='w-[70%] mx-auto'>
-            <div className='border border-borderColor rounded-lg p-3'>
+            {/* <div className='border border-borderColor rounded-lg p-3'>
                 <TableTitle className='border-b  py-3'>Notification Preferences</TableTitle>
                 {notifications.map((notification, index) => (
                     <div className="flex items-center justify-between py-3" key={index}>
@@ -19,7 +19,7 @@ const Page = () => {
                         </span>
                     </div>
                 ))}
-            </div>
+            </div> */}
             <ChangePassword />
         </FlexWrapper>
     </PageWrapper>

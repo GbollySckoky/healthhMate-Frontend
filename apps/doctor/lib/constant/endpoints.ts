@@ -3,7 +3,7 @@ export const DOCTOR_ENDPOINTS = {
     SIGN_UP: 'auth/doctor/register/',
     REFRESH: 'doctor/token/refresh',
     GET_APPOINTMENT: "appointment/doctor/appointments",
-    GET_APPROVED_APPOINTMENT: 'appointment/doctor/approved/appointments',
+    GET_APPROVED_APPOINTMENT: 'appointment/approved/',
     GET_PAYMENT: 'doctor/earnings/payouts/',
     GET_EARNINGS_SUMMARY: "doctor/earnings/summary/",
     GET_DOCTOR: 'doctor/me',
@@ -22,5 +22,6 @@ export const DOCTOR_ENDPOINTS = {
     GET_NOTIFICATIONS: 'notifications/doctor',
     UN_READ_NOTIFICATIONS: 'notifications/doctor/unread-count',
     READ_ALL_NOTIFICATIONS: 'notifications/doctor/read-all',
-    GET_FINANCE: 'payment/doctor'
+    GET_FINANCE: 'payment/doctor',
+    GET_EARNING_STATS: 'payment/doctor/stats'
 }

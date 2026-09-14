@@ -20,6 +20,7 @@ import useGetAllAppointments from "@/lib/hooks/useGetAllAppointments";
 import Paginate from "@/lib/components/ui/paginate";
 import { CapitalizeName } from "@/lib/constant/capitalizeName";
 import { getStatusStyle } from "@/lib/constant/status";
+import useGetStats from "@/lib/hooks/useGetStats";
 
 const tabs = [
   { key: "all", title: "All Appointment" },
@@ -33,9 +34,6 @@ const Appointment = () => {
   const router = useRouter();
   const {
     totalAppointments,
-    completedAppointments,
-    pendingAppointments,
-    totalAmount,
     isLoading, 
     isError, 
     error,
@@ -46,6 +44,7 @@ const Appointment = () => {
     searchInput, 
     setSearchInput 
   } = useGetAllAppointments()
+  const {stats} = useGetStats()
   const summaryCards = [
     {
       id: 1,
@@ -56,20 +55,20 @@ const Appointment = () => {
     {
       id: 2,
       title: "Completed",
-      value: completedAppointments,
-      percent: 8,
+      value: stats?.appointments?.completedConsultation?.count ?? 0,
+      percent: stats?.appointments?.completedConsultation?.percentage ?? 0,
     },
     {
       id: 3,
       title: "Pending",
-      value: pendingAppointments,
-      percent: -4,
+      value: stats?.appointments?.pendingRequest?.count ?? 0,
+      percent: stats?.appointments?.pendingRequest?.percentage ?? 0,
     },
     {
       id: 4,
       title: "Upcoming",
-      value: `₦${totalAmount.toLocaleString()}`,
-      percent: 15,
+      value: stats?.appointments?.upcomingConsultation?.count ?? 0,
+      percent: stats?.appointments?.upcomingConsultation?.percentage ?? 0,
     },
   ];
 
