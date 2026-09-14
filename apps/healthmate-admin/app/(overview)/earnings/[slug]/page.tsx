@@ -5,7 +5,7 @@ import { Card, CardText, CardTitle, Info, PageWrapper } from '@/components/ui/Re
 import EarningsTable  from './EarningsTable'
 // import { getStatusStyle } from "@/lib/constant/status";
 import DetailsNav from '@/components/ui/DetailsNav'
-import { STATUS } from '@/types/status'
+import { STATUS } from '@/lib/types/status'
 
 
 const SupportDetails = () => {

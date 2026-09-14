@@ -1,4 +1,4 @@
-import { STATUS } from '@/types/status';
+import { STATUS } from '@/lib/types/status';
 import { useEffect, useState } from 'react'
 import { GET_ALL_APPOINTMENTS } from '../interface/get_all_appointyment';
 import { Hospital_Admin } from '../service/service';
