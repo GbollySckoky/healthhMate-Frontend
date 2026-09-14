@@ -25,7 +25,7 @@ const SideBar = () => {
         <div className="flex flex-col justify-between h-[75vh] mt-3">
           {/* First 7 links */}
           <div>
-            {sideBarData.slice(0, 9).map(({ id, icon, text, url }) => (
+            {sideBarData.map(({ id, icon, text, url }) => (
               <div key={id}>
                 <Link
                   href={url}
@@ -34,26 +34,6 @@ const SideBar = () => {
                       ? 'bg-red-100 font-medium text-grey-900 rounded-lg my-3 '
                       : 'text-white'
                   } p-4 hover:bg-red-100 hover:text-grey-900 rounded-lg transition-colors duration-200  cursor-pointer`}
-                  onClick={() => handleActiveUrl(url)}
-                >
-                  <span className="flex-shrink-0">{icon}</span>
-                  <p className="font-normal text-[14px] font-sans hidden md:block">{text}</p>
-                </Link>
-              </div>
-            ))}
-          </div>
-
-          {/* Last 2 links */}
-          <div>
-            {sideBarData.slice(9, 10).map(({ id, icon, text, url }) => (
-              <div key={id}>
-                <Link
-                  href={url}
-                  className={`flex items-center gap-3 no-underline ${
-                    activeUrl === url
-                      ? 'bg-red-100 font-medium text-grey-900 rounded-lg mb-3 '
-                      : 'text-white'
-                  } p-4 hover:bg-red-100 hover:text-grey-900 rounded-lg transition-colors duration-200 cursor-pointer`}
                   onClick={() => handleActiveUrl(url)}
                 >
                   <span className="flex-shrink-0">{icon}</span>

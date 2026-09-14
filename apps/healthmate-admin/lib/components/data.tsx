@@ -1,6 +1,6 @@
 import image1 from '@/assets/Image (1).png' 
 import image from '@/assets/Image.png'
-import { House, Wallet, Activity, CalendarDays, HouseWifi, User, Headset, Settings } from 'lucide-react';
+import { House, Wallet, Activity, CalendarDays, HouseWifi, User, Headset, Settings,  } from 'lucide-react';
 import { ROUTES } from '@/lib/constant/Routes';
 
 
@@ -493,8 +493,8 @@ export const sideBarData = [
     },
     {
         id: 9,
-        icon: <Settings size={18} />,
-        text: 'Settings',
-        url: ROUTES.settings
+        icon: <User size={18} />,
+        text: 'Profile',
+        url: ROUTES.profile
     },
 ]

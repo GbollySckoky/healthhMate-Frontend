@@ -20,25 +20,27 @@ import {
 
 import useToggle from "@/lib/hooks/useToggle";
 import { CapitalizeName } from "../../../../../healthmate-mobile/constants/capitalizeName";
-import useGetAllPatients from "@/lib/hooks/useGetAllPatients";
 import { getStatusStyle } from "@/lib/constant/status";
-import { STATUS } from "@/types/status";
+// import { STATUS } from "@/types/status";
+import useGetApprovedPatients from "@/lib/hooks/useGetApprovedPatients";
+import { STATUS } from "@/lib/types/status";
 
 const Patients = () => {
   const router = useRouter();
   const { isToggle, handleToggle } = useToggle();
-  const { 
+
+  const {
+    inputValue, 
+    setInputValue,  
     patients,
-    isLoading,
-    isError,
+    isLoading, 
     error, 
-    setSearchInput, 
-    setPagination, 
+    isError, 
     pagination, 
-    setActiveStatus, 
-    searchInput, 
-    activeStatus
-  } = useGetAllPatients()
+    setPagination, 
+    activeStatus, 
+    setActiveStatus   
+  } = useGetApprovedPatients() 
   
   const handleSelect = (option: string | undefined) => {
     setActiveStatus(option);
@@ -55,7 +57,7 @@ const Patients = () => {
     router.push(`/patients/${id}`);
   };
 
-  const statusOptions = [STATUS.COMPLETED, STATUS.PENDING, STATUS.CANCELLED];
+  const statusOptions = [STATUS.COMPLETED, STATUS.PENDING, STATUS.CANCELLED, STATUS.UPCOMING];
 
   return (
     <PageWrapper>
@@ -74,9 +76,9 @@ const Patients = () => {
 
           <div className="flex items-center gap-3 px-4 py-4">
             <Input
-              value={searchInput}
+              value={inputValue}
               placeholder="Search by patient, doctor or health concern"
-              onChange={(e) => setSearchInput(e.target.value)}
+              onChange={(e) => setInputValue(e.target.value)}
               icon={<Search size={17} color="#C11574" />}
             />
 
@@ -128,7 +130,7 @@ const Patients = () => {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  patients.map((patient) => (
+                  patients.map((patient: any) => (
                     <TableRow
                       key={patient.id}
                       className="cursor-pointer hover:bg-[#FAFBFF]"

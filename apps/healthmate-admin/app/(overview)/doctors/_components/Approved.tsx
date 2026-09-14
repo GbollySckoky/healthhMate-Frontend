@@ -21,7 +21,7 @@ import { useRouter } from 'next/navigation'
 import Calendar from '@/components/calendar/Calendar'
 import { Trash2} from 'lucide-react';
 import { useModal } from '@/components/Modal/Modal'
-import DeleteModal from '../../settings/_components/DeleteModal'
+import DeleteModal from '../../profile/_components/DeleteModal'
 
 
 // Types for better type safety

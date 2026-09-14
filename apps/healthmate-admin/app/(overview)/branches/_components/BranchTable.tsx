@@ -13,7 +13,7 @@ import { Trash2, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
-import DeleteModal from "../../settings/_components/DeleteModal";
+import DeleteModal from "../../profile/_components/DeleteModal";
 import { Hospital_Admin } from "@/lib/service/service";
 import BranchTableSkeleton from "@/components/ui/BranchPageSkeleton";
 import { Branch } from "@/lib/interface/branch";

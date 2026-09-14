@@ -21,7 +21,7 @@ import {  activeStatus } from "@/lib/types/status";
 //   PaginationPrevious,
 // } from "@/components/ui/pagination";
 import { Trash2, Pencil } from 'lucide-react';
-import DeleteModal from "@/app/(overview)/settings/_components/DeleteModal";
+import DeleteModal from "@/app/(overview)/profile/_components/DeleteModal";
 import Paginate from "@/components/ui/paginate";
 
 
