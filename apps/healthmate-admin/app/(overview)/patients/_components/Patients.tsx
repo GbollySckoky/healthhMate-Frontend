@@ -18,11 +18,11 @@ import {
   TableRow,
 } from "@/lib/components/ui/table";
 
-import { STATUS } from "@/lib/types/status";
 import useToggle from "@/lib/hooks/useToggle";
 import { CapitalizeName } from "../../../../../healthmate-mobile/constants/capitalizeName";
 import useGetAllPatients from "@/lib/hooks/useGetAllPatients";
 import { getStatusStyle } from "@/lib/constant/status";
+import { STATUS } from "@/types/status";
 
 const Patients = () => {
   const router = useRouter();

@@ -27,9 +27,9 @@ import {
 import { storageService } from "@/constants/storage";
 import useDate from "@/hooks/useDate";
 import { CapitalizeName } from "@/constants/capitalizeName";
-import useCall from "@/hooks/useCall";
+// import useCall from "@/hooks/useCall";
 import VideoCallUI, { CallSession } from "./CallModal";
-import { patientService } from "@/service/patientService";
+// import { patientService } from "@/service/patientService";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -78,7 +78,7 @@ const Page = () => {
   } = useGetMessags(message?.id);
 
   const { createCall } = useCreateCall(message?.id);
-  const { cancelCallSession, endCallSession } = useCall();
+  // const { cancelCallSession, endCallSession } = useCall();
 
   const communicationId = message?.id ?? "";
   const authToken = storageService.getAuthToken();
@@ -388,10 +388,11 @@ const Page = () => {
       {activeCallSession && (
         <VideoCallUI
           callSession={activeCallSession}
-          startCall={(callSessionId) => patientService.startCall(communicationId, callSessionId)}
-          cancelCall={(id) => cancelCallSession.mutateAsync(id)}
-          endCall={(id) => endCallSession.mutateAsync(id)}
+          // startCall={( id) => patientService.startCall(communicationid, id)}
+          // cancelCall={(id) => cancelCallSession.mutateAsync(id)}
+          // endCall={(id) => endCallSession.mutateAsync(id)}
           onCallEnded={() => setActiveCallSession(null)}
+          communicationId={communicationId}
         />
       )}
     </div>

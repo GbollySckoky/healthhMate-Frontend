@@ -4,23 +4,28 @@ import { AxiosError } from 'axios'
 import { useState } from 'react'
 import { toast } from "react-toastify";
 
+interface StartCallVariables {
+  communicationId: string
+  callSessionId: string
+}
+
 const useCreateCall = (communicationId?: string) => {
   const [callSessionId, setCallSessionId] = useState<string | null>(null)
-  // const startCall = useMutation({
-  //   mutationKey: ['startCall', communicationId],
+  const startCall = useMutation({
+    mutationKey: ['startCall'],
 
-  //   mutationFn: (callSessionId: string) =>
-  //     patientService.startCall(callSessionId),
+    mutationFn: ({ communicationId, callSessionId }: StartCallVariables) =>
+      patientService.startCall(communicationId, callSessionId),
 
-  //   onSuccess: (response) => {
-  //     console.log('Call started:', response)
-  //   },
+    onSuccess: (response) => {
+      console.log('Call started:', response)
+    },
 
-  //   onError: (error: AxiosError<{message: string}>) => {
-  //     console.error('Failed to start call:', error)
-  //     toast.error(error?.response?.data?.message ?? "Failed to start call")
-  //   },
-  // })
+    onError: (error: AxiosError<{message: string}>) => {
+      console.error('Failed to start call:', error)
+      toast.error(error?.response?.data?.message ?? "Failed to start call")
+    },
+  })
 
   const createCall = useMutation({
     mutationKey: ['createCall', communicationId],
@@ -55,7 +60,7 @@ const useCreateCall = (communicationId?: string) => {
   
   return {
     createCall,
-    // startCall,
+    startCall,
     callSessionId,
   }
 }

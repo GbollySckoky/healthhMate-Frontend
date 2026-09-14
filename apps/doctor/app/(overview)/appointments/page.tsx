@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/ta
 import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable";
 import Input from "@/lib/components/ui/Input";
 import { Search } from "lucide-react";
-import Calendar from "@/lib/components/ui/DateCalendar";
+// import Calendar from "@/lib/components/ui/DateCalendar";
 import {
   Table,
   TableBody,
@@ -81,8 +81,9 @@ const Page = () => {
   const handleTabChange = (status: string) => {
     const statusMap: Record<string, string | undefined> = {
       all: undefined,
-      completed: "COMPLETED",
+      upcoming: 'UPCOMING',
       pending: "PENDING",
+      completed: "COMPLETED",
       cancelled: "CANCELLED",
     };
 
@@ -101,8 +102,9 @@ const Page = () => {
   const appointments = data?.data ?? [];
   const tables = [
     {key: "all", title: 'All Appointment'},
-    {key: "completed", title: 'Completed'},
+    {key: "upcoming", title: 'Upcoming'},
     {key: "pending", title: 'Pending'},
+    {key: "completed", title: 'Completed'},
     {key: "cancelled", title: 'Cancelled'},
   ]
 
@@ -213,7 +215,7 @@ const Page = () => {
               icon={<Search size={17} color="#C11574" />}
             />
 
-            <Calendar />
+            {/* <Calendar /> */}
           </div>
 
           <Tabs defaultValue="all" onValueChange={handleTabChange}>
@@ -224,6 +226,7 @@ const Page = () => {
             </TabsList>
 
             <TabsContent value="all">{renderTable()}</TabsContent>
+            <TabsContent value="upcoming">{renderTable()}</TabsContent>
             <TabsContent value="completed">{renderTable()}</TabsContent>
             <TabsContent value="pending">{renderTable()}</TabsContent>
             <TabsContent value="cancelled">{renderTable()}</TabsContent>
