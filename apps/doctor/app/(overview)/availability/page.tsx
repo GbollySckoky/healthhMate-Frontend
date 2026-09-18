@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Edit2, Trash2, X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import { Button } from "@/lib/components/ui/button";
 import {
   Dialog,
@@ -11,10 +11,11 @@ import {
 } from "@/lib/components/ui/dialog";
 import { FlexWrapper, PageWrapper } from "@/lib/components/ui/Reusable";
 import { Doctor } from "@/lib/constant/service";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import useGetDoctorAvailability from "@/lib/hooks/useGetDoctorAvailability";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/lib/components/ui/table";
+import { toast } from "react-toastify";
 
 const timeSlots = [
   "08:00",
@@ -96,6 +97,7 @@ export default function AvailabilityPage() {
     (event) => event.dayOfWeek === selectedDay
   );
 
+  const queryClient = useQueryClient()
   const {doctorAvailability, isLoading, isError, error} = useGetDoctorAvailability()
   console.log(doctorAvailability)
 
@@ -171,10 +173,12 @@ export default function AvailabilityPage() {
     mutationKey: ['createAvailability'],
     mutationFn: (payload: Availability) => Doctor.createDoctorAvailability(payload),
     onSuccess: (response) => {
+      toast.success(response.data.message)
+      queryClient.invalidateQueries({queryKey: ['getDoctorAvailability']})
       console.log(response)
     },
-    onError: (error: AxiosError) => {
-      console.log(error)
+    onError: (error: AxiosError<{message: string}>) => {
+      toast.error(error.response?.data.message)
     }
   })
 
@@ -260,7 +264,7 @@ export default function AvailabilityPage() {
               onClick={openEditModal}
               className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#D92D8A] transition"
             >
-              <Edit2 size={15} /> Edit
+             Create
             </button>
           </div>
         </div>

@@ -35,7 +35,7 @@ const Header = () => {
                 ) : (
                     <div className="flex items-center gap-4 pl-3">
                         <div className='border border-border cursor-pointer rounded-full w-30 h-30'>
-                            <Image src={data?.profile.proffilePicture || logo} alt="Logo" priority  width={35} className='rounded-full' /> 
+                            <Image src={data?.profile?.profilePicture || logo} alt="Logo" priority  width={35} height={35} className='object-cover' /> 
                         </div>
                         <div>
                             <p className='font-lato font-bold text-[14px]'>{data?.hospitalName ?? '-'}</p>

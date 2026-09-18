@@ -7,6 +7,7 @@ import AgoraRTC, {
   ICameraVideoTrack,
   IMicrophoneAudioTrack,
 } from "agora-rtc-sdk-ng";
+import Image from "next/image";
 
 export interface CallSession {
   id: string;
@@ -57,6 +58,7 @@ interface VideoCallProps {
   cancelCall: (callSessionId: string) => Promise<unknown>;
   endCall: (callSessionId: string) => Promise<unknown>;
   onCallEnded: () => void;
+  appointment: any
 }
 
 const VideoCallUI = ({
@@ -65,6 +67,7 @@ const VideoCallUI = ({
   cancelCall,
   endCall,
   onCallEnded,
+  appointment,
 }: VideoCallProps) => {
   const [status, setStatus] = useState<"connecting" | "connected" | "error">("connecting");
   const [errorMsg, setErrorMsg] = useState("");
@@ -79,6 +82,16 @@ const VideoCallUI = ({
   const remoteContainerRef = useRef<HTMLDivElement>(null);
 
   const isVideo = callSession.consultationType === "video_call";
+  const doctorName = [appointment?.doctor?.firstName, appointment?.doctor?.lastName]
+    .filter(Boolean)
+    .join(" ") || "your doctor";
+  const doctorInitials = doctorName
+    .split(" ")
+    .map((name: string) => name.charAt(0))
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+  const isWaitingForDoctor = status === "connected" && !remoteJoined;
 
   const cleanup = useCallback(() => {
     localAudioRef.current?.close();
@@ -244,16 +257,51 @@ const VideoCallUI = ({
 
   return (
     <div className="fixed inset-0 z-50 flex h-[100dvh] flex-col bg-black">
-      <div className="absolute top-0 z-10 flex w-full items-center justify-between px-4 py-3">
-        <span className="rounded-full bg-black/50 px-3 py-1 text-xs font-medium text-white">
-          {status === "connecting" ? "Connecting…" : remoteJoined ? "In call" : "Waiting for other party…"}
-        </span>
-        <span className="rounded-full bg-black/50 px-3 py-1 text-xs font-mono text-white">
-          {timeLeft}
-        </span>
-      </div>
+      {isWaitingForDoctor ? (
+        <div className="absolute inset-x-0 bottom-[104px] top-0 z-10 flex flex-col items-center justify-center bg-gradient-to-b from-[#4b1132] via-[#1b1020] to-[#080808] px-6 text-center text-white">
+          <div className="mb-6 rounded-full bg-white/10 p-1 ring-1 ring-white/25 shadow-2xl shadow-pink-500/20">
+            <div className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full text-3xl font-semibold">
+              {appointment?.doctor?.profile?.profilePicture ? (
+                <Image
+                  src={appointment.doctor.profile.profilePicture}
+                  alt={`Dr. ${doctorName}`}
+                  width={112}
+                  height={112}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                doctorInitials
+              )}
+            </div>
+          </div>
+          <span className="mb-3 flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-pink-100 ring-1 ring-white/10">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-[#FF70B7]" />
+            Call connected
+          </span>
+          <h2 className="text-xl font-semibold">Dr. {doctorName}</h2>
+          <p className="mt-2 max-w-xs text-sm leading-6 text-white/70">
+            Your doctor has been notified and will join the call shortly.
+          </p>
+          {timeLeft && (
+            <p className="mt-6 rounded-full bg-black/25 px-4 py-2 font-mono text-sm text-white/90 ring-1 ring-white/10">
+              {timeLeft}
+            </p>
+          )}
+        </div>
+      ) : (
+        <div className="absolute left-4 right-4 top-4 z-10 flex items-center justify-between gap-3">
+          <span className="rounded-full bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
+            {status === "connecting" ? "Connecting…" : "In call"}
+          </span>
+          {timeLeft && (
+            <span className="rounded-full bg-black/50 px-3 py-1.5 font-mono text-xs text-white backdrop-blur-sm">
+              {timeLeft}
+            </span>
+          )}
+        </div>
+      )}
 
-      <div className="flex-1 bg-gray-900">
+      <div className="flex-1 bg-gray-900 ">
         {isVideo ? (
           <div ref={remoteContainerRef} className="h-full w-full" />
         ) : (

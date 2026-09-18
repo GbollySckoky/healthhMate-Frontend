@@ -6,6 +6,7 @@ import Activities from '@/features/home/_components/Activities';
 import useGetMe from '@/hooks/useGetMe';
 import { PageWrapper, Title } from '@/components/Reusable';
 import AppointmentCard from './_components/AppointmentCard';
+import { CapitalizeName } from '@/constants/capitalizeName';
 
 
 const HomePage = () => {
@@ -23,7 +24,7 @@ const HomePage = () => {
     <PageWrapper>
       <section className="flex flex-row justify-between items-start">
         <div>
-          <Title>{getGreeting()}, {patient?.firstName || ''} 👋</Title>
+          <Title>{getGreeting()}, {CapitalizeName(patient?.firstName) || ''} 👋</Title>
           <p className="font-libre font-normal text-xs text-[#717680] mt-0.5">
             Let&apos;s take a step toward a healthier you today.
           </p>

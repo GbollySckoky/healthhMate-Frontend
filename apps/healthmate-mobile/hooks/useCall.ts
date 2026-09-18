@@ -1,3 +1,4 @@
+// import { storageService } from '@/constants/storage';
 import { patientService } from '@/service/patientService';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -23,6 +24,7 @@ const useCall = () => {
       patientService.endCallSession(callSessionId),
     onSuccess: (response) => {
       toast.success(response.data?.message ?? 'Call session ended successfully');
+      // storageService.removeCallSessionId()
     },
     onError: (error: AxiosError<{ message: string }>) => {
       console.error('Failed to end call session:', error);

@@ -4,6 +4,10 @@ import "./globals.css";
 import Providers from "../providers/Provider";
 import DashboardShell from "@/components/DashboardShell";
 import AuthExpiredLoader from "@/components/Client/AuthExpiredLoader";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Healthmate Mobile App",
@@ -16,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <head>
         <link
           rel="preconnect"

@@ -11,6 +11,8 @@ import useGreeting from '@/lib/hooks/useGreeting';
 import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
 import { OverviewStatsSkeleton } from '@/lib/components/ui/DashboardSkeleton';
+import useGetMe from '@/lib/hooks/useGetMe';
+import { CapitalizeName } from '@/lib/constant/capitalizeName';
 
 
 const Overview = () => {
@@ -21,7 +23,7 @@ const Overview = () => {
     })
     console.log(today) 
     const {greeting} = useGreeting()
-
+    const {myData} = useGetMe()
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['getStats'],
         queryFn: () => Doctor.getStats(),
@@ -39,9 +41,9 @@ const Overview = () => {
         },
         {
             id: 6,
-            about: 'In Progress Consults',
-            value: stats?.pendingRequest?.count ?? 0,
-            percent: stats?.pendingRequest?.percentage ?? 0,
+            about: 'Upcoming Consults',
+            value: stats?.upcomingConsultation?.count ?? 0,
+            percent: stats?.upcomingConsultation?.percentage ?? 0,
             month: 'this month',
         },
         {
@@ -54,8 +56,8 @@ const Overview = () => {
         {
             id: 8,
             about: 'Pending Consults',
-            value: stats?.pendingConsultation?.count ?? 0,
-            percent: stats?.pendingConsultation?.percentage ?? 0,
+            value: stats?.pendingRequest?.count ?? 0,
+            percent: stats?.pendingRequest?.percentage ?? 0,
             month: 'this month',
         },
     ]
@@ -64,7 +66,7 @@ const Overview = () => {
     <div className="min-h-full bg-[#FAFAFA] p-8">
         <div className="flex items-center justify-between mb-5">
             <div>
-                <Title>{greeting}, Dr. Uche </Title>
+                <Title>{greeting}, {myData?.title ? myData.title : 'Dr'}. {CapitalizeName(myData?.firstName)} </Title>
                 <Text>You have 6 appointments today, take good care of their health.</Text>
             </div> 
             <div className="flex bg-white rounded-lg p-3 border border-borderColor w-fit px-5 py-4">

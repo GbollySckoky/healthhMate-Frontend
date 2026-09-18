@@ -1,5 +1,6 @@
 import LoaadingSkeleton from "@/lib/components/ui/LoaadingSkeleton";
 import { Infos } from "@/lib/components/ui/Reusable";
+import { CapitalizeName } from "@/lib/constant/capitalizeName";
 // import { DOCTOR_PROFILE } from "@/lib/interface/get-doctor-profile.interface";
 import React from "react";
 
@@ -67,6 +68,10 @@ const Overview = ({
           }
         />
         <Infos
+          label="Department:"
+          value={CapitalizeName(profileData?.department) || "N/A"}
+        />
+        <Infos
           label="Specialization:"
           value={profileData?.profile?.specialization || "N/A"}
         />
@@ -77,6 +82,10 @@ const Overview = ({
         <Infos
           label="Hospital:"
           value={profileData?.hospital?.hospitalName || "N/A"}
+        />
+        <Infos
+          label="Bio:"
+          value={profileData?.profile?.bio || "N/A"}
         />
       </div>
 

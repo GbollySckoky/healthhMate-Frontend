@@ -14,6 +14,8 @@ import { STATUS } from "@/types/status";
         return "text-[#2F855A] bg-[#EAF7EE]";
       case STATUS.FAILED:
         return "text-[#C53030] bg-[#FDECEC]";
+      case STATUS.APPROVED:
+        return "text-[#2F855A] bg-[#EAF7EE]";
       default:
         return "text-gray-700 bg-gray-100";
     }

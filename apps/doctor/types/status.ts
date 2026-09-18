@@ -16,6 +16,7 @@ export const STATUS = {
     ONGOING: 'ONGOING',
     REJECTED: 'REJECTED',
     UPCOMING: 'UPCOMING',
-    PAID: 'SUCESS',
+    PAID: 'SUCCESS',
     FAILED: 'FAILED',
+    APPROVED: 'APPROVED'
 } 

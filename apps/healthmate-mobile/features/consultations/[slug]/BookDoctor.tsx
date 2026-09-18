@@ -36,10 +36,10 @@ const BookDoctor = ({ consultation, onClose }: BookDoctorProps) => {
 
               <p className="mt-1 text-sm font-medium text-pink-600">
                 {consultation?.profile?.specialization ||
-                  "General Practitioner"}
+                  "n/a"}
               </p>
 
-              <div className="mt-2 flex flex-wrap items-center gap-5 text-sm text-gray-500">
+              <div className="mt-1 flex flex-wrap items-center gap-5 text-sm text-gray-500">
                 <div className="flex items-center gap-1">
                   <MapPin className="h-4 w-4 text-gray-400" />
                   <span className="text-gray-500 text-sm font-normal">

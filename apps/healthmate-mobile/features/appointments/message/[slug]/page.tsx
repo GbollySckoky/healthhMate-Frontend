@@ -69,18 +69,19 @@ const Page = () => {
   const [activeCallSession, setActiveCallSession] = useState<CallSession | null>(null);
 
   const { message, isLoading, isError, error } = useGetCommunicationId(rawId);
-
+  console.log('Appointment!', message)
+  const communicationId = message?.id ?? "";
   const {
     messages: initialMessages,
     msgIsLoading,
     msgIsError,
     msgError,
-  } = useGetMessags(message?.id);
+  } = useGetMessags(communicationId);
 
-  const { createCall } = useCreateCall(message?.id);
+  const { createCall } = useCreateCall(communicationId);
   // const { cancelCallSession, endCallSession } = useCall();
 
-  const communicationId = message?.id ?? "";
+  
   const authToken = storageService.getAuthToken();
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -271,13 +272,14 @@ const Page = () => {
     );
   }
 
+  console.log(message)
   return (
     <div className="flex h-[100dvh] flex-col bg-gray-50">
       <header className="fixed top-0 z-20 mt-14 w-full bg-red-900 px-4 py-3 shadow-sm">
         <div className="mx-auto flex w-full max-w-3xl items-center justify-between">
           <div className="flex items-center gap-3">
             <Image
-              src={defaultImage}
+              src={message?.appointment?.doctor?.profile.profilePicture || defaultImage}
               alt="Default profile"
               width={48}
               height={48}
@@ -388,9 +390,7 @@ const Page = () => {
       {activeCallSession && (
         <VideoCallUI
           callSession={activeCallSession}
-          // startCall={( id) => patientService.startCall(communicationid, id)}
-          // cancelCall={(id) => cancelCallSession.mutateAsync(id)}
-          // endCall={(id) => endCallSession.mutateAsync(id)}
+          appointment={message?.appointment}
           onCallEnded={() => setActiveCallSession(null)}
           communicationId={communicationId}
         />

@@ -2,7 +2,7 @@
 import { CardTitle, MinCard, SubTitle } from "@/components/Reusable";
 import React, { ReactNode, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Heart, Smile, Moon, Scale, Pill } from "lucide-react";
+import { Heart, Smile, Moon, Scale, Pill, Popcorn } from "lucide-react";
 // import { ROUTES } from "@/lib/routes";
 import useDate from "@/hooks/useDate";
 import useGetOverview from "@/hooks/useGetOverview";
@@ -62,7 +62,8 @@ const Activities = () => {
       overview?.mood ||
       overview?.sleep ||
       overview?.weight ||
-      overview?.medication
+      overview?.medication || 
+      overview?.bloodSugar
   );
 
   const readableDate = (value?: string | null) =>
@@ -113,6 +114,16 @@ const Activities = () => {
       icon: <Pill size={24} color="#C11574" />,
       url: ROUTES.medication,
     },
+    {
+      title: 'Blood Sugar',
+      value: `${overview?.bloodSugar?.value || 0} ${overview?.bloodSugar?.unit?.replace('_', '/') || 'mmol/l'}`,
+      text: overview?.bloodSugar
+        ? readableDate(overview.bloodSugar.createdAt)
+        : 'No blood sugar',
+      id: 6,
+      icon: <Popcorn size={24} color="#C11574" />,
+      url: ROUTES.bloodSugar,
+    },
   ];
 
   const handlePress = useCallback(
@@ -124,7 +135,7 @@ const Activities = () => {
 
   const renderLoadingState = () => (
     <div className="flex flex-row gap-3 overflow-x-auto pb-1">
-      {[1, 2, 3, 4, 5].map((key) => (
+      {[1, 2, 3, 4, 5, 6].map((key) => (
         <OverviewCardSkeleton key={key} />
       ))}
     </div>

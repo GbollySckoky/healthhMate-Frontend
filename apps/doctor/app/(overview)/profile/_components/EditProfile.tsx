@@ -8,7 +8,7 @@ import { DisplayFlex } from "@/lib/components/ui/Reusable";
 import TextArea from "@/lib/components/ui/TextArea";
 import { Profile } from "@/lib/interface/doctor.schema";
 import React, { FormEvent, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Doctor } from "@/lib/constant/service";
 import UploadImage from "./UploadImage";
 import { AxiosError } from "axios";
@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const { closeModal } = useFormModal();
-
+  const queryClient = useQueryClient()
   const [inputValue, setInputValue] = useState<Profile>({
     yearsOfExperience: "",
     specialization: "",
@@ -44,6 +44,7 @@ const EditProfile = () => {
     mutationFn: (payload: FormData) => Doctor.createProfile(payload),
     onSuccess: (response) => {
       console.log(response.data);
+      queryClient.invalidateQueries({ queryKey: ['getDoctor'] })
       closeModal();
     },
     onError: (error: AxiosError<{message: string}>) => {

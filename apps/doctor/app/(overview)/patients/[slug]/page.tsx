@@ -50,13 +50,13 @@ const Page = () => {
                     </div>
                     <div className="ml-2">
                     <p className="font-medium text-[18px] text-grey-800">
-                        {`${appointmentDetails?.user?.firstName || ""} ${
-                        appointmentDetails?.user?.lastName || ""
+                        {`${CapitalizeName(appointmentDetails?.user?.firstName) || ""} ${
+                        CapitalizeName(appointmentDetails?.user?.lastName) || ""
                         }`.trim() || "-"}
                     </p>
 
                     <p className="font-normal text-[14px] text-grey-20 pt-[2px]">
-                      {CapitalizeName(appointmentDetails?.user?.profile?.gender) || "-"}
+                      {CapitalizeName(appointmentDetails?.status) || "-"}
                     </p>
 
                     <p className="font-normal text-[14px] text-grey-20 pt-[2px]">
@@ -86,7 +86,7 @@ const Page = () => {
                 disabled={isLoading}
                 onClick={() => router.push(`/patients/communication/${appointmentDetails.id}`)}>
                     <span> <MessageCircleMore size={15} /> </span>
-                    Chat with doctor
+                    Chat with patient
                 </button>
             </div>
         </FlexWrapper>

@@ -37,7 +37,7 @@ const About = ({ consultation }: Props) => {
   // const { openModal } =/ useModal();
   const [openModal, setOpenModal] = React.useState(false);
   const handleCloseModal = () => {
-    setOpenModal(true);
+    setOpenModal((prev) => !prev);
   }
 
   return (

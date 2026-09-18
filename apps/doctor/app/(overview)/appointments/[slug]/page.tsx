@@ -62,8 +62,8 @@ console.log(id)
 
                 <div className="ml-2">
                   <p className="font-medium text-[18px] text-grey-800">
-                    {`${appointmentDetails?.user?.firstName || ""} ${
-                      appointmentDetails?.user?.lastName || ""
+                    {`${CapitalizeName(appointmentDetails?.user?.firstName) || ""} ${
+                      CapitalizeName(appointmentDetails?.user?.lastName) || ""
                     }`.trim() || "-"}
                   </p>
 
@@ -112,6 +112,7 @@ console.log(id)
                     : "-"
                 }
               />
+              <Infos label='Approval/Rejection Note' value={appointmentDetails?.note || '-'}/>
             </div>
 
             <div className="border border-borderColor p-4 rounded-lg space-y-2">

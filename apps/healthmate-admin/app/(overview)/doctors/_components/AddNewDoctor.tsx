@@ -8,12 +8,13 @@ import AuthPassword from '@/components/Inputs/AuthPassword'
 import { DisplayFlex } from '@/components/ui/Reusable'
 import Footer from '@/components/ui/Footer'
 import { useState } from 'react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Hospital_Admin } from '@/lib/service/service'
 import { AxiosError } from 'axios'
 import { DOCTOR_SIGNUP } from '@/lib/interface/signup-interface'
 import DateInput from '@/components/Inputs/Date'
 import { useModal } from '@/components/Modal/Modal'
+import { toast } from 'react-toastify'
 
 
 interface SelectOption {
@@ -26,6 +27,20 @@ const GENDER_OPTIONS: SelectOption[] = [
   { value: 'male', label: 'Male' },
   { value: 'female', label: 'Female' },
   { value: 'other', label: 'Other' },
+]
+
+const DEPARTMENT_OPTIONS: SelectOption[] = [
+  { value: '', label: 'Select department' },
+  { value: 'GENERAL_MEDICINE', label: 'GENERAL MEDICINE' },
+  { value: 'PEDIATRICS', label: 'PEDIATRICS' },
+  { value: 'OBSTETRICS_GYNECOLOGY', label: '  OBSTETRICS GYNECOLOGY' },
+  { value: 'CARDIOLOGY', label: 'CARDIOLOGY' },
+  { value: 'DERMATOLOGY', label: 'DERMATOLOGY' },
+  { value: 'MENTAL_HEALTH', label: 'MENTAL HEALTH' },
+  { value: 'ORTHOPEDICS', label: 'ORTHOPEDICS' },
+  { value: 'NEUROLOGY', label: 'NEUROLOGY' },
+  { value: 'GASTROENTEROLOGY', label: 'GASTROENTEROLOGY' },
+  { value: 'UROLOGY', label: 'UROLOGY' }
 ]
 
 const SELECT_CLASS =
@@ -42,6 +57,8 @@ const initialFormState = {
   phoneNumber: '',
   password: '',
   confirmPassword: '',
+  department: '',
+  title: ''
 }
 
 const AddNewDoctor = () => {
@@ -50,15 +67,8 @@ const AddNewDoctor = () => {
     password: false,
     confirmPassword: false,
   })
-
+  const queryClient = useQueryClient()
   const { closeModal } = useModal()
-
-  // const { data: hospitals, isLoading: hospitalsLoading } = useQuery({
-  //   queryKey: ['hospitals'],
-  //   queryFn: () => Hospital_Admin.getAllHospitals(),
-  // })
-
-  // console.log(hospitals, "Hospitals")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -75,10 +85,12 @@ const AddNewDoctor = () => {
     mutationFn: (payload: DOCTOR_SIGNUP) => Hospital_Admin.createDoctor(payload),
     onSuccess: (response) => {
         console.log('Doctor created successfully:', response)
+        toast.success(response.data.message)
+        queryClient.invalidateQueries({ queryKey: ['getAllDoctor'] })
         closeModal()
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.error('Error creating doctor:', error.response?.data?.message)
+      toast.error(error.response?.data?.message)
     },
   })
 
@@ -94,14 +106,53 @@ const AddNewDoctor = () => {
       gender: inputValue.gender,
       // hospitalId: inputValue.hospital,
       password: inputValue.password,
+      department: inputValue.department,
+      title: inputValue.title
     }
 
     mutation.mutate(data)
   }
-  
-  console.log(inputValue)
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-2">
+      <DisplayFlex>
+        <div className="block w-full mb-2">
+          <label htmlFor="title" className={LABEL_CLASS}>
+            Title
+          </label>
+          <select
+            id="title"
+            name="title"
+            value={inputValue.title}
+            onChange={handleChange}
+            className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}>
+              <option  value="" disabled>
+                Select Value
+              </option>
+              <option  value="Dr">
+                Dr
+              </option>
+          </select>
+        </div>
+         <div className="block w-full mb-2">
+          <label htmlFor="department" className={LABEL_CLASS}>
+            Department
+          </label>
+          <select
+            id="department"
+            name="department"
+            value={inputValue.department}
+            onChange={handleChange}
+            className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}>
+            {DEPARTMENT_OPTIONS.map(({ value, label }) => (
+              <option key={value} value={value} disabled={value === ''}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </DisplayFlex>
+
       <DisplayFlex>
         <AuthInput
           label="First Name"
@@ -213,7 +264,7 @@ const AddNewDoctor = () => {
         text="Add Doctor"
         closeModal={closeModal}
         isLoading={mutation.isPending}
-        disabled={isDisabled}
+        // disabled={isDisabled}
       />
     </form>
   )

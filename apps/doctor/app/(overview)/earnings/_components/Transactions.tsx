@@ -127,7 +127,7 @@ export function TransactionsPage() {
                           )}
                       </span>
                     </TableCell>
-                    <TableCell className='flex items-center'>
+                    <TableCell className=''>
                        <p className="truncate font-inter text-[12px] text-grey-20 w-20">
                           {data.reference ?? 'N/A'}
                        </p>
@@ -150,8 +150,8 @@ export function TransactionsPage() {
                       <p className="text-[12px] font-normal">{data.metadata.time || 'N/A' }</p>
                     </TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20">
-                      {data.metadata.amount?.user?.firstName || 'N/A'}
-                      {data.metadata.amount?.user?.lastName || 'N/A'}
+                      {CapitalizeName(data.metadata.amount?.user?.firstName) || 'N/A'} {" "}
+                      {CapitalizeName(data.metadata.amount?.user?.lastName) || 'N/A'}
                     </TableCell>
                      <TableCell className="font-inter text-[12px] text-grey-20"> 
                       {CapitalizeName(data.metadata?.consultationType)?.replaceAll("_", " ") || 'N/A' }
