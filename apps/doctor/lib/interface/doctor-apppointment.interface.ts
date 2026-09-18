@@ -10,6 +10,8 @@ export interface Appointment {
   user: User
   doctor: Doctor
   hospital: Hospital
+  approvalStatus: string
+  note?: string
 }
 
 export interface User {

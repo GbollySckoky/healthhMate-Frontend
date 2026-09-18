@@ -22,12 +22,15 @@ import { Pagination } from '@/lib/interface/pagination.interfac';
 import { Appointment } from '@/lib/interface/doctor-apppointment.interface';
 import PatientTableSkeleton from "@/lib/components/ui/PatientTableSkeleton";
 import { getStatusStyle } from '@/lib/constant/status';
+import MinSelectField from '@/lib/components/ui/MinSelectField';
+import useToggle from '@/lib/hooks/useToggle';
+import { CapitalizeName } from '@/lib/constant/capitalizeName';
 
 const Patients = () => {
     const [inputValue, setInputValue] = useState<string>('')
     // const [selectValue, setSelectValue] = useState('')
     const [debounceSearchQuery, setDebounceSearchQuery] = useState("")
-    // const {isToggle, handleToggle} = useToggle()
+    const {isToggle, handleToggle} = useToggle()
     const router = useRouter()
     const [pagination, setPagination] = useState<Pagination>({
         page: 1,
@@ -37,10 +40,10 @@ const Patients = () => {
     });
     const [activeStatus, setActiveStatus] = useState<string | undefined>();
 
-    // const handleSelect = (option: string) => {
-    //     setActiveStatus((prev) => (prev === option ? '' : option ))
-    //     // handleToggle
-    // }
+    const handleSelect = (option: string) => {
+        setActiveStatus((prev) => (prev === option ? '' : option ))
+        handleToggle()
+    }
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -54,14 +57,15 @@ const Patients = () => {
 
     return () => clearTimeout(timeout);
     }, [inputValue]);
-    // const status = {
-    //     label: 'Status',
-    //     options: [
-    //         'Paid',
-    //         'Failed',
-    //         'Pending'
-    //     ]
-    // }
+
+    const status = {
+        label: 'Status',
+        options: [
+            'Paid',
+            'Failed',
+            'Pending'
+        ]
+    }
 
     const { data, isLoading, error, isError } = useQuery({
         queryKey: [
@@ -81,6 +85,7 @@ const Patients = () => {
     });
     
     const patients = data?.data || []
+    console.log(patients)
      useEffect(() => {
         if (data?.meta) {
           setPagination((prev) => ({
@@ -110,14 +115,14 @@ const Patients = () => {
                         onChange={(e) => setInputValue(e.target.value)}
                         icon={<Search size={17} color="#C11574" />}
                     />
-                    {/* <MinSelectField 
+                    <MinSelectField 
                         {...status}
                         value={activeStatus}
                         show={isToggle}
                         onSelect={handleSelect}
                         onClick={handleToggle}
                         className='w-fit'
-                    /> */}
+                    />
                 </div>
                 <Table>
                     <TableHeader className="border-t border-borderColor ">
@@ -129,6 +134,8 @@ const Patients = () => {
                             <TableHead>Consultation Type</TableHead>
                             <TableHead>Status</TableHead>
                             <TableHead>Health Concern</TableHead>
+                            <TableHead>Approval Status</TableHead>
+                            <TableHead>Payment Status</TableHead>
                             <TableHead></TableHead>
                         </TableRow>
                     </TableHeader>
@@ -150,22 +157,22 @@ const Patients = () => {
                     ) :patients.map((data: Appointment) => (
                         <TableRow  key={data.id} onClick={() => handleNext(data.id)} className="border-t border-borderColor hover:bg-[#FAFBFF]">
                         <TableCell className="font-inter font-medium text-[12px] text-grey-20">
-                        <p> {data.user.firstName || "N/A"}  {data.user.lastName || "N/A"}</p> 
+                        <p> {CapitalizeName(data.user.firstName) || "N/A"}  {CapitalizeName(data.user.lastName) || "N/A"}</p> 
                             <p className="text-grey-20 text-[12px] font-normal">{data.user.email || 'N/A'}</p>
                         </TableCell>
                          <TableCell className="text-[12px] text-grey-20">
                             {data.hospital.hospitalName || "N/A"}
                         </TableCell>
                             <TableCell className="text-[12px] text-grey-20">
-                            {data.doctor?.firstName.charAt(0).toUpperCase() + data.doctor?.firstName.slice(1) || "N/A"} {" "}
-                            {data.doctor?.lastName.charAt(0).toUpperCase() + data.doctor?.lastName.slice(1) || "N/A"}
+                            {CapitalizeName(data.doctor?.firstName)|| "N/A"} {" "}
+                            {CapitalizeName(data.doctor?.lastName) || "N/A"}
                         </TableCell>
                         <TableCell className="font-inter font-normal text-[12px] text-grey-20">
                             <p>{data.date || "N/A"}</p> 	
                             <p className="text-grey-20 text-[12px]">{data.time || "N/A"}</p>
                         </TableCell>
                         <TableCell className="font-inter font-normal text-[12px] text-grey-20"> 
-                        {data.consultationType.charAt(0).toUpperCase() + data.consultationType.slice(1).replaceAll("_", " ")  || "N/A"}
+                        {CapitalizeName(data.consultationType).replaceAll("_", " ")  || "N/A"}
                         </TableCell>
                         <TableCell>
                             <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.status)}`}>
@@ -174,6 +181,11 @@ const Patients = () => {
                         </TableCell>
                         <TableCell className="text-[12px] text-grey-20">
                             {data.healthConcern || "N/A"}
+                        </TableCell>
+                         <TableCell>
+                            <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(data.approvalStatus)}`}>
+                            {data.approvalStatus || 'N/A'}
+                            </span>
                         </TableCell>
                         <TableCell className="font-inter font-medium text-[12px] text-red-800 cursor-pointer" onClick={() => handleNext(data.id)}> View Details</TableCell>
                         </TableRow>

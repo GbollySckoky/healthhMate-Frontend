@@ -44,8 +44,6 @@ const useCreateCall = (communicationId?: string) => {
         console.error('Call session ID was not returned')
         return
       }
-
-      // startCall.mutate(callSessionId)
     },
 
     onError: (error: AxiosError<{message: string}>) => {

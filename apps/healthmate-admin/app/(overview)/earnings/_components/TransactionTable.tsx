@@ -103,7 +103,7 @@ export function TransactionsPage() {
                     </TableCell>
                     <TableCell>
                       <p
-                        className={`text-[12px] text-grey-20 rounded-full w-fit py-1 px-4 ${getStatusStyle(
+                        className={`text-[12px] rounded-full w-fit py-1 px-4 ${getStatusStyle(
                           data.status
                         )}`}
                       >

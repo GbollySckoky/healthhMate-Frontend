@@ -32,11 +32,12 @@ export const ROUTES = {
     support: '/support',
     appointments: '/appointments',
     notifications: '/notifications',
+    bloodSugar: '/track/blood_sugar'
     // settings: '/settings'
 } as const;
 
 export const doctorProfileRoute = (doctorId: string | number) =>
-    `/consultations/consultation-details/${doctorId}`;
+    `/consultations/${doctorId}`;
 
 export type RouteValues = typeof ROUTES[keyof typeof ROUTES];
 // This creates: '/auth/forgot-password' | '/auth/login' | '/auth/signup'

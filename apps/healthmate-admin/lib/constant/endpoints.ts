@@ -23,5 +23,7 @@ READ_ALL_NOTIFICATIONS: 'notifications/hospital/read-all',
 GET_SUPPORT: 'support/hospital/mine',
 GET_SUPPORT_DETAILS: 'support/hospital/',
 GET_DOCTOR_AVAILABILITY: 'hospital/doctor/availability/',
-GET_FINANCE:'payment/hospital'
+GET_FINANCE:'payment/hospital',
+GET_APPROVED_APPOINTMENT: 'appointment/approved/',
+ GET_EARNING_STATS: 'payment/hospital/stats'
 }

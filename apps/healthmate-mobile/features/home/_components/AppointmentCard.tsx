@@ -12,6 +12,11 @@ import useGetAppointment from "@/hooks/useGetAppointment";
 
 type Doctor = { firstName?: string; lastName?: string };
 
+const STATUS = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED'
+}
+
 const getDoctorName = (doctor?: Doctor | null) => {
   if (!doctor) return "Doctor unavailable";
   const fullName = [CapitalizeName(doctor.firstName ?? ""), CapitalizeName(doctor.lastName ?? "")]
@@ -101,7 +106,7 @@ export default function AppointmentCard() {
         <button
           type="button"
           className="flex flex-row items-center"
-          onClick={() => router.push(ROUTES.allApointments)}
+          onClick={() => router.push(ROUTES.appointments)}
         >
           <span className="text-[#DD2590] font-normal text-xs">See All</span>
           <ArrowRight size={15} color="#DD2590" />
@@ -171,8 +176,12 @@ export default function AppointmentCard() {
               </span>
             </div>
           </button>
-
-          {/* <div className="flex-1 flex-row justify-between gap-[10px] border-t-2 border-[#F8F8F8] mt-[15px] pt-[14px]"> */}
+          {appointment.approvalStatus === STATUS.PENDING ? (
+            <p className="text-sm font-normal text-[#717680] text-center pt-2">
+              Once approved, you can message, Dr.{' '}
+              {CapitalizeName(appointment.doctor?.firstName)}.
+            </p>
+          ) : (
             <button
               type="button"
               onClick={(e) => {
@@ -184,14 +193,7 @@ export default function AppointmentCard() {
               <MessageCircleMore size={16} />
               <span className="ml-2">Message</span>
             </button>
-            {/* <button
-              type="button"
-              onClick={handleJoinCall}
-              className="flex-1 py-2 px-4 bg-[#DD2591] rounded-lg text-sm font-semibold text-[#F2F2F2]"
-            >
-              Join Call
-            </button> */}
-          {/* </div> */}
+          )}
         </div>
       )}
     </div>

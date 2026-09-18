@@ -9,7 +9,7 @@ import {
   GetAppointmentDetailsResponse,
   GetAppointmentsResponse,
 } from '@/lib/interface/get-appointments-interface';
-import { GetDoctorsResponse } from '@/lib/interface/get-doctors-interface';
+// import { GetDoctorsResponse } from '@/lib/interface/get-doctors-interface';
 import { GetOverview } from '@/lib/interface/get-overview-interface';
 import { GetHospitalsResponse } from '@/lib/interface/get-hospitals-interface';
 import { ReplyToTicket, SUPPORT_TICKET } from '@/lib/interface/support';
@@ -22,6 +22,7 @@ import { verifyEmail } from '@/lib/interface/verifyEmail';
 // import { io } from 'socket.io-client';
 import { InitializePayment } from '@/lib/interface/payment';
 import { CreateMessage } from '@/lib/interface/message';
+import { BLOOD_SUGAR } from '@/lib/interface/blood_sugar';
 
 export const patientService = {
   login: async (payload: login) => {
@@ -78,9 +79,17 @@ export const patientService = {
   createConsultation: async (payload: Appointment) => {
     return await api.post(PATIENTS_ENDPOINTS.BOOK_APPOINTMENT, payload);
   },
-  getDoctors: async (hospitalId: string): Promise<GetDoctorsResponse> => {
+  getDoctors: async (hospitalId: string, page = 1, limit = 10, q?: string , department?: string ) => {
+    const searchParams = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+    })
+
+    if(q) searchParams.append('q', q)
+    if(department) searchParams.append('department', department)
+
     const response = await api.get(
-      `${PATIENTS_ENDPOINTS.GET_ALL_DOCTORS}${hospitalId}/doctors`
+      `${PATIENTS_ENDPOINTS.GET_ALL_DOCTORS}${hospitalId}/doctors?${searchParams}`
     );
     return await response.data;
   },
@@ -108,13 +117,15 @@ export const patientService = {
     page = 1,
     limit = 10,
     q?: string,
-    status?: string
+    status?: string,
+    department?: string
   ): Promise<GetAppointmentsResponse> => {
     const params = new URLSearchParams({});
     if (page) params.append('page', String(page));
     if (limit) params.append('limit', String(limit));
     if (q) params.append('q', q);
     if (status) params.append('status', status);
+    if (department) params.append('department', department);
     const response = await api.get(
       `${PATIENTS_ENDPOINTS.GET_ALL_APPOINTMENT}?${params.toString()}`
     );
@@ -214,5 +225,12 @@ export const patientService = {
     })
     const response = await api.get(`${PATIENTS_ENDPOINTS.GET_FINANCE}?${searchParams}`)
     return response.data
-  }
+  },
+  createBloodSugar: async (payload: BLOOD_SUGAR) => {
+    return await api.post(PATIENTS_ENDPOINTS.BLOOD_SUGAR, payload);
+  },
+  getBloodSugar: async () => {
+    const response = await api.get(PATIENTS_ENDPOINTS.BLOOD_SUGAR);
+    return response.data;
+  },
 };

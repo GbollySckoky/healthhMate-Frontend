@@ -24,6 +24,7 @@ const Overview = ({appointmentDetails, isLoading}:{appointmentDetails: Appointme
               <Infos label='Patient Email' value={appointmentDetails?.user?.email || '-'}/>
               <Infos label='Doctor Name' value={`${appointmentDetails?.doctor?.firstName} ${appointmentDetails?.doctor?.lastName}`}/>
               <Infos label='Doctor Email' value={appointmentDetails?.doctor?.email || '-'}/>
+              <Infos label='Approval/Rejection Note' value={appointmentDetails?.note || '-'}/>
           </div>
           <div className=' border border-borderColor p-4 rounded-lg space-y-2'>
             <Infos label='Hospital Name' value={appointmentDetails?.hospital?.hospitalName || '-'}/>

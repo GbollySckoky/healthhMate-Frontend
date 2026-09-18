@@ -9,46 +9,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/lib/components/ui/table";
-import image from "@/assets/Image.png";
+import image from "@/assets/default.jpg";
 import Image from "next/image";
 import { Button, TableTitle } from "@/lib/components/ui/Reusable";
 import Input from "@/lib/components/Inputs/Input";
-import { useState } from "react";
 import Paginate from "@/lib/components/ui/paginate";
 import { useRouter } from "next/navigation";
-import Calendar from "@/lib/components/calendar/Calendar";
-import DeleteModal from "../../settings/_components/DeleteModal";
+// import Calendar from "@/lib/components/calendar/Calendar";
+import DeleteModal from "../../profile/_components/DeleteModal";
 import AddNewDoctor from "./AddNewDoctor";
-import { useQuery } from "@tanstack/react-query";
-import { Hospital_Admin } from "@/lib/service/service";
 import DoctorTableSkeleton from "@/components/ui/DoctorPageSkeleton";
 import { useModal } from "@/components/Modal/Modal";
 import { CapitalizeName } from "@/lib/constant/capitalizeName";
+import useGetDoctor from "@/lib/hooks/useGetDoctor";
 
 const All = () => {
-  const [searchInput, setSearchInput] = useState("");
   const router = useRouter();
   const { openModal } = useModal();
+  const {pagination, doctors, isLoading, isError, error, setPagination, searchInput, setSearchInput} = useGetDoctor()
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["getAllDoctor"],
-    queryFn: () => Hospital_Admin.getAllDoctor(),
-  });
-
-  const doctors = data?.data ?? [];
-
-  const filteredDoctors = doctors.filter((doctor: any) => {
-    const search = searchInput.toLowerCase();
-
-    const fullName = `${doctor.firstName || ""} ${doctor.lastName || ""}`.toLowerCase();
-
-    return (
-      fullName.includes(search) ||
-      doctor.email?.toLowerCase().includes(search) ||
-      doctor.phoneNumber?.toLowerCase().includes(search) ||
-      doctor.profile?.specialization?.toLowerCase().includes(search)
-    );
-  });
 
   const handleAppointmentClick = (doctorId: string | number) => {
     router.push(`/doctors/${doctorId}`);
@@ -101,7 +80,7 @@ const All = () => {
           icon={<Search size={17} color="#C11574" />}
         />
 
-        <Calendar />
+        {/* <Calendar /> */}
       </div>
 
       <Table>
@@ -131,7 +110,7 @@ const All = () => {
                   {error?.message || "Something went wrong"}
                 </TableCell>
               </TableRow>
-            ) : filteredDoctors.length === 0 ? (
+            ) : doctors.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={8}
@@ -141,7 +120,7 @@ const All = () => {
                 </TableCell>
               </TableRow>
             ) : (
-              filteredDoctors.map((doctor: any) => (
+              doctors.map((doctor: any) => (
                 <TableRow
                   key={doctor.id}
                   className="cursor-pointer hover:bg-gray-50"
@@ -150,11 +129,11 @@ const All = () => {
                   <TableCell className="font-inter text-[14px] font-normal text-grey-30">
                     <div className="flex items-center">
                       <Image
-                        src={image}
+                        src={doctor?.profile?.profilePicture || image}
                         alt="Doctor"
                         width={40}
                         height={40}
-                        className="rounded-full"
+                        className="object-cover border rounded-full border-border "
                       />
 
                       <div className="ml-2">
@@ -209,7 +188,7 @@ const All = () => {
         )}
       </Table>
 
-      {/* <Paginate pagination={pagination} setPagination={setPagination}/> */}
+      <Paginate pagination={pagination} setPagination={setPagination}/>
     </div>
   );
 };

@@ -11,6 +11,7 @@ import { useFormModal } from '@/lib/components/modal/FormModal'
 import EditProfile from './_components/EditProfile'
 import { useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
+import DoctorProfileSkeleton from '@/lib/components/ui/DoctorProfileSkeleto'
 // import { DOCTOR_PROFILE } from '@/lib/interface/get-doctor-profile.interface'
 
 const Page = () => {
@@ -21,81 +22,79 @@ const Page = () => {
     })
     const profileData = data?.data
 
-    // const resolveUrl = (path: string) => {
-    //   if(!path) return image
-    //   if(path?.startsWith('http://') || path?.startsWith('https://')){
-    //     return path
-    //   }
-    //   return `${BASE_URL}${path}`;
-    // }
   return (
     <PageWrapper>
       <FlexWrapper>
-        <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
-            <div className="mb-3  border-b pb-6 border-borderColor">
-                <div className="flex h-fit items-center justify-between">
-                    <div className="flex items-center">
-                      <Image 
-                        src={profileData?.profile?.profilePicture || image} 
-                        alt={profileData?.firstName} 
-                        className="w-[50px] h-[50px] rounded-full border border-border" 
-                        width={300} 
-                        height={300} 
-                      />
-                      <div className='ml-2'>
-                          <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>Dr {`${profileData?.firstName.charAt(0).toUpperCase() + profileData?.firstName.slice(1) || ""} ${
-                              profileData?.lastName.charAt(0).toUpperCase() + profileData?.lastName.slice(1) || ""
-                            }`.trim() || "N/A"} </p>
-                          <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
+        {isLoading ? (
+          <DoctorProfileSkeleton />
+
+        ) : (
+          <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
+              <div className="mb-3  border-b pb-6 border-borderColor">
+                  <div className="flex h-fit items-center justify-between">
+                      <div className="flex items-center">
+                        <Image 
+                          src={profileData?.profile?.profilePicture || image} 
+                          alt={profileData?.firstName} 
+                          className="w-[50px] h-[50px] rounded-full border border-border" 
+                          width={300} 
+                          height={300} 
+                        />
+                        <div className='ml-2'>
+                            <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>{profileData?.title} {`${profileData?.firstName.charAt(0).toUpperCase() + profileData?.firstName.slice(1) || ""} ${
+                                profileData?.lastName.charAt(0).toUpperCase() + profileData?.lastName.slice(1) || ""
+                              }`.trim() || "N/A"} </p>
+                            <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
+                        </div>
                       </div>
-                    </div>
-                    {profileData?.profile === null && (
-                      <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
-                        onClick={() =>
-                        openModal(<EditProfile
-                          />, {
-                          title:
-                            'Edit Profile',
-                          className: 'max-w-lg',
-                          onClose: () => {},
-                        })
-                      }>
-                        {/* <PencilLine size={15} className='mr-2' /> */}
-                          Create Profile
-                        </button>
-                    )}
-                    {profileData?.profile !== null && (
-                      <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
-                        onClick={() =>
-                        openModal(<EditProfile
-                          />, {
-                          title:
-                            'Edit Profile',
-                          className: 'max-w-lg',
-                          onClose: () => {},
-                        })
-                      }>
-                        <PencilLine size={15} className='mr-2' />
-                        Edit Profile
-                    </button>
-                    )}
-                </div>
-                <div className='mt-3'>
-                    <p className='font-semibold font-libre text-[14px] text-[#414651] pb-[2px]'>About me</p>
-                    <p className='font-inter font-normal text-[14px] text-[#717680]'>{profileData?.profile?.bio || "N/A"}</p>
-                </div>
-            </div>
-            
-            <Tabs defaultValue="overview" className='bg-white mt-4'>
-                <TabsList className='mb-5'>
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="documents">Documents</TabsTrigger>
-                </TabsList>
-                <TabsContent value="overview"><Overview  profileData={profileData} isLoading={isLoading} isError={isError} error={error} /> </TabsContent>
-                <TabsContent value="documents"> <Documents/> </TabsContent>
-            </Tabs>
-        </div>
-      </FlexWrapper>
+                      {profileData?.profile === null && (
+                        <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
+                          onClick={() =>
+                          openModal(<EditProfile
+                            />, {
+                            title:
+                              'Edit Profile',
+                            className: 'max-w-lg',
+                            onClose: () => {},
+                          })
+                        }>
+                          {/* <PencilLine size={15} className='mr-2' /> */}
+                            Create Profile
+                          </button>
+                      )}
+                      {profileData?.profile !== null && (
+                        <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
+                          onClick={() =>
+                          openModal(<EditProfile
+                            />, {
+                            title:
+                              'Edit Profile',
+                            className: 'max-w-lg',
+                            onClose: () => {},
+                          })
+                        }>
+                          <PencilLine size={15} className='mr-2' />
+                          Edit Profile
+                      </button>
+                      )}
+                  </div>
+                  <div className='mt-3'>
+                      <p className='font-semibold font-libre text-[14px] text-[#414651] pb-[2px]'>About me</p>
+                      <p className='font-inter font-normal text-[14px] text-[#717680]'>{profileData?.profile?.bio || "N/A"}</p>
+                  </div>
+              </div>
+              
+              <Tabs defaultValue="overview" className='bg-white mt-4'>
+                  <TabsList className='mb-5'>
+                      <TabsTrigger value="overview">Overview</TabsTrigger>
+                      <TabsTrigger value="documents">Documents</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="overview"><Overview  profileData={profileData} isLoading={isLoading} isError={isError} error={error} /> </TabsContent>
+                  <TabsContent value="documents"> <Documents/> </TabsContent>
+              </Tabs>
+          </div>
+        )}
+        </FlexWrapper>
     </PageWrapper>
   )
 }

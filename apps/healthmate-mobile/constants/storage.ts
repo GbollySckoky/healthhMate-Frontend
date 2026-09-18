@@ -4,6 +4,7 @@ export const STORAGE_KEYS = {
   AUTH_TOKEN: 'app.authToken',
   USER_DATA: 'app.userData',
   REFRESH_TOKEN: 'app.refreshToken',
+  CALL_SESSION_ID: 'callSessionId'
 } as const;
 
 const isBrowser = typeof window !== 'undefined';
@@ -65,6 +66,21 @@ export const storageService = {
   setUserData: (userData: unknown): void => {
     if (!isBrowser) return;
     localStorage.setItem(STORAGE_KEYS.USER_DATA, JSON.stringify(userData));
+  },
+
+  setCallSessionId: (token: string): void => {
+    if (!isBrowser) return 
+    sessionStorage.setItem(STORAGE_KEYS.CALL_SESSION_ID, token)
+  },
+
+  getCallSessionId: (): string | null => {
+    if (!isBrowser) return null;
+    return localStorage.getItem(STORAGE_KEYS.CALL_SESSION_ID);
+  },
+
+  removeCallSessionId: (): void => {
+    if (!isBrowser) return;
+    localStorage.removeItem(STORAGE_KEYS.CALL_SESSION_ID);
   },
 
   // Clear all auth data on logout

@@ -3,7 +3,8 @@ import image  from'@/assets/Mobile.png';
 import { 
   Moon, Eye, EyeOff, CalendarDays, Phone, Bell, Mail, Scale, Home, Activity, CalendarCheck, 
   UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain, Heart, Smile,
-  MessageCircle, User 
+  MessageCircle, User, 
+  Medal
 } from 'lucide-react';
 import { ROUTES } from './route';
 
@@ -325,6 +326,33 @@ export const bloodPressureData = {
   plusRate: {
     label: 'Plus Rate',
     placeholder: '70',
+  },
+};
+
+export const bloodSugarData = {
+  value: {
+    label: 'Value',
+    placeholder: '7.2',
+  },
+  unit: {
+    label: 'Unit',
+    placeholder: 'mmol/L',
+  },
+  date: {
+    label: 'Date',
+    placeholder: '10/05/1997',
+  },
+  timing: {
+    label: 'Timing',
+    placeholder: 'AFTER MEAL',
+  },
+  notes: {
+    label: 'Note',
+    placeholder: 'I ate late this morning',
+  },
+  meal: {
+    label: 'Meal',
+    placeholder: 'BREAKFAST',
   },
 };
 

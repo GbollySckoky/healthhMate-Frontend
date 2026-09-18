@@ -7,10 +7,16 @@ export interface AppointmentDoctor {
   name?: string;
   fullName?: string;
   specialty?: string;
-  specialization?: string;
-  profileImage?: string | null;
+  profile: DoctorProfile
   image?: string | null;
   email?: string;
+  title: string
+  department: string
+}
+
+export interface DoctorProfile{
+ specialization?: string;
+  profilePicture?: string | null;
 }
 
 export interface AppointmentUser {
@@ -41,6 +47,7 @@ export interface GetAppointment {
   time: string;
   user: AppointmentUser | null;
   hospital?: AppointmentHospital | null;
+  approvalStatus: string
 }
 
 export interface PaginationMeta {

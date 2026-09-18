@@ -6,7 +6,7 @@ import Image from "next/image";
 import profileImage from "@/assets/default.jpg";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Doctor } from "@/lib/constant/service";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import InputField from "@/lib/components/ui/InputField";
 import { useModal } from "@/lib/components/modal/Modal";
 import { AxiosError } from "axios";
@@ -18,6 +18,7 @@ import CreateSupport from "./CreateSupport";
 import { CapitalizeName } from "@/lib/constant/capitalizeName";
 import { toast } from "react-toastify";
 import { getStatusStyle } from "@/lib/constant/status";
+import { ROUTES } from "@/lib/routes";
 
 const Page = () => {
   const { openModal } = useModal();
@@ -61,8 +62,8 @@ console.log(id)
 
                 <div className="ml-2">
                   <p className="font-medium text-[18px] text-grey-800">
-                    {`${appointmentDetails?.user?.firstName || ""} ${
-                      appointmentDetails?.user?.lastName || ""
+                    {`${CapitalizeName(appointmentDetails?.user?.firstName) || ""} ${
+                      CapitalizeName(appointmentDetails?.user?.lastName) || ""
                     }`.trim() || "-"}
                   </p>
 
@@ -96,7 +97,7 @@ console.log(id)
               <Infos label="Consultation Time" value={appointmentDetails?.time || "-"} />
               <Infos
                 label="Consultation Type"
-                value={appointmentDetails?.consultationType.charAt(0).toUpperCase() + appointmentDetails?.consultationType.slice(1).replaceAll("_", " ") || "-"}
+                value={CapitalizeName(appointmentDetails?.consultationType).replaceAll("_", " ") || "-"}
               />
               {/* <Infos label='Consultation Type' value={appointmentDetails?.consultationType.charAt(0).toUpperCase() + appointmentDetails?.consultationType.slice(1).replaceAll("_", " ")}/> */}
               <Infos
@@ -111,6 +112,7 @@ console.log(id)
                     : "-"
                 }
               />
+              <Infos label='Approval/Rejection Note' value={appointmentDetails?.note || '-'}/>
             </div>
 
             <div className="border border-borderColor p-4 rounded-lg space-y-2">
@@ -203,6 +205,7 @@ const ApproveAppointment = () => {
   const params = useParams();
   const appointment_id = String(params.slug);
   const { closeModal } = useModal();
+  const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: ({ appointment_id, payload }: ApprovePayload) =>
@@ -210,6 +213,7 @@ const ApproveAppointment = () => {
     onSuccess: (response) => {
       toast.success(response.data.message)
       closeModal();
+      router.push(ROUTES.appointment)
     },
     onError: (error: AxiosError<{message: string}>) => {
       toast.error(error?.response?.data.message);
@@ -222,6 +226,7 @@ const ApproveAppointment = () => {
     onSuccess: (response) => {
       toast.success(response.data.message)
       closeModal();
+      router.push(ROUTES.appointment)
     },
     onError: (error: AxiosError<{message: string}>) => {
       toast.error(error?.response?.data.message);

@@ -1,0 +1,1 @@
+export { default } from '@/features/track/blood_sugar/page'

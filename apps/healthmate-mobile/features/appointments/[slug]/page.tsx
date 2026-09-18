@@ -9,9 +9,8 @@ import { GetAppointment } from "@/lib/interface/get-appointments-interface";
 import CreateSupportTicket from "./CreateSupport";
 import AppointmentDetailsSkeleton from "@/components/AppointmentDetailSkeleton";
 import { BtnFlex, Card, MinTitle, PageWrapper, RescheduleBtn } from "@/components/Reusable";
-import { ROUTES } from "@/constants/route";
 import { useModal } from "@/store/Modal";
-import profileFallback from "@/assets/Ellipse 165.png";
+import profileFallback from "@/assets/default.jpg";
 import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
 
 const getDoctorName = (doctor: GetAppointment["doctor"]) => {
@@ -23,15 +22,13 @@ const getDoctorName = (doctor: GetAppointment["doctor"]) => {
     .filter((value): value is string => Boolean(value))
     .map((value) => value.charAt(0).toUpperCase() + value.slice(1).toLocaleLowerCase())
     .join(" ");
+  
+
   return name || "Doctor unavailable";
 };
 
-const getDoctorSpecialty = (doctor: GetAppointment["doctor"]) => {
-  return doctor?.specialty || doctor?.specialization || "Doctor";
-};
-
 const getDoctorImage = (doctor: GetAppointment["doctor"]) => {
-  return doctor?.profileImage || doctor?.image || null;
+  return doctor?.profile.profilePicture || null;
 };
 
 const resolveImageSrc = (src: string | null) => {
@@ -96,7 +93,7 @@ const AppointmentDetails = () => {
   const detailItems = [
     {
       text: appointmentDetails?.note || "No consultation note added yet for this appointment.",
-      title: "About",
+      title: "Approval/Rejection Note",
     },
     {
       text: formatAppointmentDate(appointmentDetails?.date, appointmentDetails?.time),
@@ -158,6 +155,7 @@ const AppointmentDetails = () => {
     openModal(<CreateSupportTicket appointmentId={appointmentId as string} />, {
       title: "Create Support Ticket",
       description: "",
+      className: "max-w-2xl",
       onClose: () => {},
     });
   };
@@ -189,7 +187,7 @@ const AppointmentDetails = () => {
         <>
           <div className="mb-5 flex flex-row bg-white p-4 rounded-[10px] border border-[#F2F2F2]">
             <Image
-              src={resolveImageSrc(doctorImage)}
+              src={resolveImageSrc(appointmentDetails.doctor?.profile.profilePicture || doctorImage)}
               alt={getDoctorName(appointmentDetails.doctor)}
               width={80}
               height={80}
@@ -197,9 +195,9 @@ const AppointmentDetails = () => {
               className="w-20 h-20 rounded-full border-2 border-[#E8E8E8] object-cover"
             />
             <div className="ml-4 flex-1 flex flex-col justify-center">
-              <MinTitle>{getDoctorName(appointmentDetails.doctor)}</MinTitle>
-              <p className="font-inter text-sm font-normal text-[#C11574] my-1.5">
-                {getDoctorSpecialty(appointmentDetails.doctor)}
+              <MinTitle>{appointmentDetails?.doctor?.title ? `${appointmentDetails.doctor.title}.` : 'Dr.'} {getDoctorName(appointmentDetails.doctor)}</MinTitle>
+              <p className="font-inter text-sm font-normal py-0.5 text-[#666]">
+                {appointmentDetails.doctor?.department}
               </p>
               <div className="flex flex-row items-center">
                 <MapPin size={16} color="#666" />
@@ -237,14 +235,14 @@ const AppointmentDetails = () => {
             })}
           </Card>
 
-          <Card className="mt-6">
+          <Card className="mt-6 cursor-pointer">
             <button
               type="button"
-              onClick={() => router.push(ROUTES.messages)}
+              onClick={() => handleMessagePress(appointmentDetails.id)}
               className="w-full flex flex-row items-center justify-between py-2 text-left"
             >
-              <div>
-                <p className="font-lato text-sm text-[#414651] font-medium mb-1">Chat Doctor</p>
+              <div >
+                <p className="font-lato text-sm text-[#414651] font-medium mb-1">Chat With Doctor</p>
                 <p className="font-lato text-xs text-[#414651] font-normal">
                   Send a message to your doctor
                 </p>

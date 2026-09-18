@@ -7,7 +7,7 @@ export interface DoctorHospital {
 export interface DoctorProfile {
   specialization?: string | null;
   consultationFee?: number | string | null;
-  profileImage?: string | null;
+  profilePicture?: string | null;
   bio?: string | null;
   yearsOfExperience?: number | string | null;
 }
@@ -18,10 +18,12 @@ export interface GetDoctor {
   lastName?: string | null;
   fullName?: string | null;
   email?: string | null;
-  profileImage?: string | null;
+  profilePicture?: string | null;
   image?: string | null;
   profile?: DoctorProfile | null;
   hospital?: DoctorHospital | null;
+  title?: string | undefined;
+  department?: string| undefined
 }
 
 export interface GetDoctorsResponse {

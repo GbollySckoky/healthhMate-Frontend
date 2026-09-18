@@ -32,7 +32,7 @@ const Overview = () => {
     {
         id: 2,
         about: 'Registered Patients',
-        value: stats?.totalPatients ?? 0,
+        value: stats?.registeredPatients ?? 0,
         percent: 12,
     },
     {
@@ -49,16 +49,16 @@ const Overview = () => {
     },
     {
         id: 5,
-            about: 'Completed Consults',
-            value: stats?.appointments?.completedConsultation?.count ?? 0,
+        about: 'Completed Consults',
+        value: stats?.appointments?.completedConsultation?.count ?? 0,
         percent: stats?.appointments?.completedConsultation?.percentage ?? 0,
         month: 'this month',
     },
     {
         id: 6,
-        about: 'In Progress Consults',
-        value: stats?.appointments?.pendingRequest?.count ?? 0,
-        percent: stats?.appointments?.pendingRequest?.percentage ?? 0,
+        about: 'Upcoming Consults',
+        value: stats?.appointments?.upcomingConsultation?.count ?? 0,
+        percent: stats?.appointments?.upcomingConsultation?.percentage ?? 0,
         month: 'this month',
     },
     {
@@ -71,8 +71,8 @@ const Overview = () => {
     {
         id: 8,
         about: 'Pending Consults',
-        value: stats?.appointments?.pendingConsultation?.count ?? 0,
-        percent: stats?.appointments?.pendingConsultation?.percentage ?? 0,
+        value: stats?.appointments?.pendingRequest?.count ?? 0,
+        percent: stats?.appointments?.pendingRequest?.percentage ?? 0,
         month: 'this month',
     },
 ]

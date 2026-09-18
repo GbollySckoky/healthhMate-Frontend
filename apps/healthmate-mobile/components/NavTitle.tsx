@@ -34,6 +34,11 @@ const PAGE_META: Record<
     description:
       'Tracking your meds ensures better treatment outcomes',
   },
+  [ROUTES.bloodSugar]: {
+    title: 'Blood Sugar Tracker',
+    description:
+      'Tracking your readings to monitor your sugar',
+  },
 }
 
 const ROUTE_TITLES: Record<string, string> = {
