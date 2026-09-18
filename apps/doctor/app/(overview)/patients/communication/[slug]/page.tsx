@@ -381,6 +381,7 @@ return (
           cancelCall={(id) => cancelCallSession.mutateAsync(id)}
           endCall={(id) => endCallSession.mutateAsync(id)}
           onCallEnded={() => setActiveCallSession(null)}
+          appointment={message?.appointment}
         />
       )} 
     </div>

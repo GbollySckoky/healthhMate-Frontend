@@ -1,7 +1,7 @@
 "use client"
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Heart, Smile, Moon, Scale, Pill } from 'lucide-react';
+import { Heart, Smile, Moon, Scale, Pill, Popcorn } from 'lucide-react';
 import { CardText, CardTitle, Reading } from '@/components/Reusable';
 // import OverviewCardSkeleton from '@/components/TrackSkeleton';
 import useGetOverview from '@/hooks/useGetOverview';
@@ -14,7 +14,7 @@ const HealthOverview = () => {
   const { overview, isError, isLoading, error, refetch } = useGetOverview();
   const { getReadableDate } = useDate();
 
-  const readableDate = (value: any) => (value ? getReadableDate(value) : 'N/A');
+  const readableDate = (value: string | undefined) => (value ? getReadableDate(value) : 'N/A');
 
   const handlePress = useCallback(
     (url: string) => {
@@ -28,52 +28,62 @@ const HealthOverview = () => {
       title: 'Blood Pressure',
       value: overview?.bloodPressure
         ? `${overview.bloodPressure.systolic || '-'}/${overview.bloodPressure.diastolic || '-'}mmHg`
-        : 'N/A',
-      text: readableDate(overview?.bloodPressure?.recordedAt),
+        : 0,
+      text: readableDate(overview?.bloodPressure?.createdAt),
       id: 1,
       icon: <Heart size={24} color="#DF0000" fill="#DF0000" />,
       url: ROUTES.bloodPressure,
     },
     {
       title: 'Mood',
-      value: overview?.mood?.mood.selectedMood || 'N/A',
-      text: readableDate(overview?.mood?.recordedAt),
+      value: overview?.mood?.mood.selectedMood || 0,
+      text: readableDate(overview?.mood?.createdAt),
       id: 2,
       icon: <Smile size={24} color="#FFC847" />,
       url: ROUTES.mood,
     },
     {
       title: 'Sleep',
-      value: overview?.sleep?.sleep.selectedMood || 'N/A',
-      text: readableDate(overview?.sleep?.recordedAt),
+      value: overview?.sleep?.sleep.selectedMood || 0,
+      text: readableDate(overview?.sleep?.createdAt),
       id: 3,
       icon: <Moon size={24} color="black" />,
       url: ROUTES.sleep,
     },
     {
       title: 'Weight',
-      value: overview?.weight ? `${overview.weight.weight}kg` : 'N/A',
-      text: readableDate(overview?.weight?.recordedAt),
+      value: overview?.weight ? `${overview.weight.weight}kg` : 0,
+      text: readableDate(overview?.weight?.createdAt),
       id: 4,
       icon: <Scale size={24} color="blue" />,
       url: ROUTES.weight,
     },
     {
       title: 'Medications',
-      value: overview?.medication?.name || 'N/A',
+      value: overview?.medication?.name || 0,
       text: overview?.medication
-        ? readableDate(overview.medication.recordedAt)
+        ? readableDate(overview.medication.createdAt)
         : 'No medication',
       id: 5,
       icon: <Pill size={24} color="#C11574" />,
       url: ROUTES.medication,
     },
+    {
+      title: 'Blood Sugar',
+      value: `${overview?.bloodSugar?.value || 0} ${overview?.bloodSugar?.unit?.replace('_', '/') || 'mmol/l'}`,
+      text: overview?.bloodSugar
+        ? readableDate(overview.bloodSugar.createdAt)
+        : 'No blood sugar',
+      id: 6,
+      icon: <Popcorn size={24} color="#C11574" />,
+      url: ROUTES.bloodSugar,
+    },
   ];
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 gap-5 justify-between mb-[30px] px-[5px]">
-        {[1, 2, 3, 4, 5].map((key) => (
+      <div className="grid grid-cols-2 gap-2 justify-between mb-[30px] px-[5px]">
+        {[1, 2, 3, 4, 5, 6].map((key) => (
           <OverviewCardSkeleton key={key} />
         ))}
       </div>

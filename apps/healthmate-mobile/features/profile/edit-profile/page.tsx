@@ -11,6 +11,7 @@ import ProfileForm from './ProfileForm';
 import { PageWrapper } from '@/components/Reusable';
 import { ROUTES } from '@/constants/route';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 export default function EditProfileScreen() {
   const queryClient = useQueryClient();
@@ -21,14 +22,15 @@ export default function EditProfileScreen() {
     mutationFn: (payload: EditProfile) =>
       patientService.editProfile(payload),
 
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['me'] });
+      toast.success(response.data.message)
       refetch();
       router.replace(ROUTES.profile);
     },
 
-    onError: (err: AxiosError) => {
-      console.log(err.response?.data);
+    onError: (err: AxiosError<{message: string}>) => {
+      toast.error(err.response?.data.message);
     },
   });
 
@@ -60,14 +62,14 @@ export default function EditProfileScreen() {
   }
 
   const initialValues: EditProfile = {
-    firstName: patient.firstName,
-    lastName: patient.lastName,
+    firstName: patient?.firstName,
+    lastName: patient?.lastName,
     phoneNumber: '',
-    dateOfBirth: patient.profile.dateOfBirth,
-    gender: patient.profile.gender,
-    healthCondition: patient.profile.healthCondition,
-    allergies: patient.profile.allergies,
-    profilePicture: patient.profile.profilePicture,
+    dateOfBirth: patient?.profile?.dateOfBirth,
+    gender: patient?.profile?.gender,
+    healthCondition: patient?.profile?.healthCondition,
+    allergies: patient?.profile?.allergies,
+    profilePicture: patient?.profile?.profilePicture,
   };
 
   return (

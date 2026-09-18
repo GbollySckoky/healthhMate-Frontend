@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/lib/components/ui/table";
-import image from "@/assets/Image.png";
+import image from "@/assets/default.jpg";
 import Image from "next/image";
 import { Button, TableTitle } from "@/lib/components/ui/Reusable";
 import Input from "@/lib/components/Inputs/Input";
@@ -129,11 +129,11 @@ const All = () => {
                   <TableCell className="font-inter text-[14px] font-normal text-grey-30">
                     <div className="flex items-center">
                       <Image
-                        src={image}
+                        src={doctor?.profile?.profilePicture || image}
                         alt="Doctor"
                         width={40}
                         height={40}
-                        className="rounded-full"
+                        className="object-cover border rounded-full border-border "
                       />
 
                       <div className="ml-2">

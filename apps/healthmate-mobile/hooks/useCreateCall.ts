@@ -1,3 +1,4 @@
+// import { storageService } from '@/constants/storage';
 import { patientService } from '@/service/patientService'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
@@ -40,8 +41,8 @@ const useCreateCall = (communicationId?: string) => {
 
     onSuccess: (response) => {
       const callSessionId = response.data?.id
-
-      console.log('Created call ID:', callSessionId)
+      console.log('CALLID!', callSessionId)
+      // storageService.setCallSessionId(response.data?.id)
       toast.success(response.data?.message ?? "Call created successfully")
       setCallSessionId(callSessionId)
       if (!callSessionId) {

@@ -22,6 +22,7 @@ import { Appointment } from "@/lib/interface/doctor-apppointment.interface";
 import { Pagination } from "@/lib/interface/pagination.interfac";
 import AppointmentTableSkeleton from "@/lib/components/ui/AppointmentTableSkeleton";
 import { getStatusStyle } from "@/lib/constant/status";
+import { CapitalizeName } from "@/lib/constant/capitalizeName";
 
 
 const Page = () => {
@@ -121,6 +122,7 @@ const Page = () => {
               <TableHead>Consultation Type</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Health Concern</TableHead>
+              <TableHead>Approval Status</TableHead>
             </TableRow>
           </TableHeader>
           {isLoading ? (
@@ -148,8 +150,8 @@ const Page = () => {
                   >
                     <TableCell>
                       <p className="text-[12px] text-grey-20">
-                        {appointment.user?.firstName || "N/A"}{" "}
-                        {appointment.user?.lastName || ""}
+                        {CapitalizeName(appointment.user?.firstName) || "N/A"}{" "}
+                        {CapitalizeName(appointment.user?.lastName) || ""}
                       </p>
                       <p className="text-[12px] text-grey-20">
                         {appointment.user?.email || "N/A"}
@@ -159,8 +161,8 @@ const Page = () => {
                       {appointment.hospital.hospitalName || "N/A"}
                     </TableCell>
                      <TableCell className="text-[12px] text-grey-20">
-                      {appointment.doctor?.firstName.charAt(0).toUpperCase() + appointment.doctor?.firstName.slice(1)  || "N/A"} {" "}
-                      {appointment.doctor?.lastName.charAt(0).toUpperCase() + appointment.doctor?.lastName.slice(1) || "N/A"}
+                      {CapitalizeName(appointment.doctor?.firstName) || "N/A"} {" "}
+                      {CapitalizeName(appointment.doctor?.lastName) || "N/A"}
                     </TableCell>
                     <TableCell>
                       <p className="text-[12px] text-grey-20">
@@ -172,7 +174,7 @@ const Page = () => {
                     </TableCell>
 
                     <TableCell className="text-[12px] text-grey-20">
-                      {appointment.consultationType.charAt(0).toUpperCase() + appointment.consultationType.slice(1).replaceAll("_", " ")  || "N/A"}
+                      {CapitalizeName(appointment.consultationType).slice(1).replaceAll("_", " ")  || "N/A"}
                     </TableCell>
 
                     <TableCell>
@@ -187,6 +189,15 @@ const Page = () => {
 
                     <TableCell className="text-[12px]">
                       {appointment.healthConcern || "N/A"}
+                    </TableCell>
+                     <TableCell>
+                      <span
+                        className={`rounded-full text-[12px] py-1 px-3 ${getStatusStyle(
+                          appointment.approvalStatus
+                        )}`}
+                      >
+                        {appointment.approvalStatus || "N/A"}
+                      </span>
                     </TableCell>
                   </TableRow>
                 ))

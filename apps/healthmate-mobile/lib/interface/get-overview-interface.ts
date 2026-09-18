@@ -45,9 +45,20 @@ export interface OverviewData {
   mood: OverviewMood | null;
   sleep: OverviewSleep | null;
   weight: OverviewWeight | null;
+  bloodSugar: BloodSugar | null
 }
 
 export interface GetOverview {
   data: OverviewData;
   message: string;
+}
+
+export interface BloodSugar {
+value: number,
+unit: string,
+timing: string,
+meal: string,
+notes: string,
+measuredAt: string,
+createdAt: string;
 }

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Pencil, User, Mail, Phone, Calendar, ChevronRight, LogOut, AlertCircle, Transgender, BeanOff } from "lucide-react";
 import { ROUTES } from "@/constants/route";
-import { otherMenuItems } from "@/constants/data";
+// import { otherMenuItems } from "@/constants/data";
 import useGetMe from "@/hooks/useGetMe";
 import { useAuth } from "@/hooks/useAuthWeb";
 import { colors } from "@/constants/colors";
@@ -145,7 +145,7 @@ const Profile = () => {
   console.log(patient)
   const handleDisplay = () => setOpenModal((v) => !v);
   const navigate = () => router.push(ROUTES.editProfileName);
-  const handleMenuNavigation = (route: string) => router.push(route);
+  // const handleMenuNavigation = (route: string) => router.push(route);
   const handleConfirmLogout = () => {
     setOpenModal(false);
     logout();
@@ -179,7 +179,7 @@ const Profile = () => {
       <div className="flex flex-col items-center justify-center">
         <div className="relative">
           <Image
-            src={patient.profile.profilePicture || defaultImage}
+            src={patient?.profile?.profilePicture || defaultImage}
             alt="Profile"
             width={100}
             height={100}
@@ -242,7 +242,7 @@ const Profile = () => {
       </div>
 
       {/* Other */}
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <span className="text-sm font-lato text-[#717680]">Other</span>
         <div className="mt-2 rounded-2xl border border-[#F1F1F1] bg-white px-4">
           {otherMenuItems.map((item, index) => {
@@ -265,7 +265,7 @@ const Profile = () => {
             );
           })}
         </div>
-      </div>
+      </div> */}
 
       {/* Log out */}
       <button

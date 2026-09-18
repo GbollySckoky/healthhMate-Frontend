@@ -97,7 +97,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
             }}
           >
             <div
-              className={`relative flex max-h-[85vh] w-full flex-col overflow-hidden rounded-lg bg-white shadow-xl ${
+              className={`relative flex max-h-[calc(100dvh-2rem)] min-h-0 w-full flex-col overflow-hidden rounded-lg bg-white shadow-xl ${
                 modalConfig.className ?? "max-w-3xl"
               }`}
               onMouseDown={(event) => event.stopPropagation()}
@@ -134,7 +134,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
                 </div>
               )}
 
-              <div className="flex-1 overflow-y-auto p-6 text-sm">
+              <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain p-6 text-sm">
                 {modalContent}
               </div>
 

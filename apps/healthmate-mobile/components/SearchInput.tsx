@@ -18,6 +18,7 @@ interface SearchInputProps {
   editable?: boolean;
   autoFocus?: boolean;
   clearButtonMode?: "never" | "while-editing" | "unless-editing" | "always";
+  className?: string
 }
 
 const SearchInput = ({
@@ -27,6 +28,7 @@ const SearchInput = ({
   onSearchPress,
   editable = true,
   autoFocus = false,
+  className,
   clearButtonMode = "while-editing",
 }: SearchInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -53,7 +55,7 @@ const SearchInput = ({
       <div className="relative w-full">
         <input
           type="text"
-          className="w-full h-11 py-2.5 pl-[35px] pr-9 border border-[#D6D7DA] rounded-lg font-inter text-sm font-normal bg-white text-[#414651] placeholder:text-[#414651]  focus:outline-none focus:border-[#DD2590] disabled:opacity-60 disabled:cursor-not-allowed"
+          className={`w-full h-11 py-2.5 pl-[35px] pr-9 border border-[#D6D7DA] rounded-lg font-inter text-sm font-normal bg-white text-[#414651] placeholder:text-[#414651]  focus:outline-none focus:border-[#DD2590] disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
           onChange={(event) => onChange(event.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}

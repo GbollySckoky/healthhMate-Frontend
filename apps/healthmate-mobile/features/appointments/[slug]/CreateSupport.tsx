@@ -126,8 +126,8 @@ const CreateSupportTicket = ({ appointmentId }: { appointmentId: string }) => {
   const isValid = Object.values(inputValue).every((v) => v !== "") && isUrlValid;
 
   return (
-    <div>
-      <div className="mt-5">
+    <div className="space-y-5 pb-1">
+      <div>
         <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">Subject</p>
         <input
           className="w-full border border-[#D6D7DA] rounded-[10px] p-[15px] text-[15px] text-black placeholder:text-[#D6D7DA] focus:outline-none focus:border-[#C11574]"
@@ -137,91 +137,91 @@ const CreateSupportTicket = ({ appointmentId }: { appointmentId: string }) => {
         />
       </div>
 
-      <div className="mt-5">
-        <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">Description</p>
-        <input
-          className="w-full border border-[#D6D7DA] rounded-[10px] p-[15px] text-[15px] text-black placeholder:text-[#D6D7DA] focus:outline-none focus:border-[#C11574]"
-          placeholder="Briefly describe the issue"
-          value={inputValue.description}
-          onChange={(e) => handleChange("description", e.target.value)}
-        />
-      </div>
-
-      <div className="mt-5">
-        <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">Message</p>
-        <textarea
-          className="w-full min-h-[120px] border border-[#D6D7DA] rounded-[10px] p-[15px] text-[15px] text-black placeholder:text-[#D6D7DA] focus:outline-none focus:border-[#C11574] align-top"
-          placeholder="Give us more details"
-          rows={5}
-          value={inputValue.message}
-          onChange={(e) => handleChange("message", e.target.value)}
-        />
-      </div>
-
-      <div className="mt-5">
-        <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">
-          Attachment Name
-        </p>
-        <input
-          className="w-full border border-[#D6D7DA] rounded-[10px] p-[15px] text-[15px] text-black placeholder:text-[#D6D7DA] focus:outline-none focus:border-[#C11574]"
-          placeholder="medical-report.pdf"
-          value={inputValue.attachmentName}
-          onChange={(e) => handleChange("attachmentName", e.target.value)}
-        />
-      </div>
-
-      <div className="mt-5">
-        <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">
-          Attachment URL
-        </p>
-        <input
-          className={`w-full border rounded-[10px] p-[15px] text-[15px] text-black placeholder:text-[#D6D7DA] focus:outline-none focus:border-[#C11574] ${
-            urlTouched && inputValue.attachmentUrl !== "" && !isUrlValid
-              ? "border-[#C11574]"
-              : "border-[#D6D7DA]"
-          }`}
-          placeholder="https://example.com/attachments/report.pdf"
-          value={inputValue.attachmentUrl}
-          onChange={(e) => handleChange("attachmentUrl", e.target.value)}
-          onBlur={() => setUrlTouched(true)}
-          type="url"
-          autoCapitalize="none"
-          autoCorrect="off"
-        />
-        {urlTouched && inputValue.attachmentUrl !== "" && !isUrlValid && (
-          <p className="text-[#C11574] text-xs mt-1.5">
-            Enter a valid URL (must start with http:// or https://)
-          </p>
-        )}
-      </div>
-
-      <div className="mt-5">
-        <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">Category</p>
-        <div className="flex flex-col gap-[13px]">
-          {CATEGORY_OPTIONS.map((option) => {
-            const active = inputValue.category === option;
-            return (
-              <button
-                type="button"
-                key={option}
-                onClick={() => handleSelectCategory(option)}
-                className={`flex flex-row items-center gap-[10px] border rounded-[10px] p-[15px] text-left ${
-                  active ? "border-[#C11574] bg-[#F4F3FF]" : "border-[#D6D7DA]"
-                }`}
-              >
-                <span className="h-5 w-5 rounded-full border border-[#717680] flex items-center justify-center shrink-0">
-                  {active && <span className="h-[10px] w-[10px] rounded-full bg-[#C11574]" />}
-                </span>
-                <span className="text-[15px] text-black font-medium">{option}</span>
-              </button>
-            );
-          })}
+        <div>
+          <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">Description</p>
+          <input
+            className="w-full border border-[#D6D7DA] rounded-[10px] p-[15px] text-[15px] text-black placeholder:text-[#D6D7DA] focus:outline-none focus:border-[#C11574]"
+            placeholder="Briefly describe the issue"
+            value={inputValue.description}
+            onChange={(e) => handleChange("description", e.target.value)}
+          />
         </div>
-      </div>
 
-      <SubmitButton _fn={handleSubmit} disabled={!isValid || mutation.isPending}>
-        {mutation.isPending ? "Saving..." : "Save"}
-      </SubmitButton>
+        <div>
+          <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">Message</p>
+          <textarea
+            className="w-full min-h-[120px] border border-[#D6D7DA] rounded-[10px] p-[15px] text-[15px] text-black placeholder:text-[#D6D7DA] focus:outline-none focus:border-[#C11574] align-top"
+            placeholder="Give us more details"
+            rows={5}
+            value={inputValue.message}
+            onChange={(e) => handleChange("message", e.target.value)}
+          />
+        </div>
+
+        <div>
+          <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">
+            Attachment Name
+          </p>
+          <input
+            className="w-full border border-[#D6D7DA] rounded-[10px] p-[15px] text-[15px] text-black placeholder:text-[#D6D7DA] focus:outline-none focus:border-[#C11574]"
+            placeholder="medical-report.pdf"
+            value={inputValue.attachmentName}
+            onChange={(e) => handleChange("attachmentName", e.target.value)}
+          />
+        </div>
+
+        <div>
+          <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">
+            Attachment URL
+          </p>
+          <input
+            className={`w-full border rounded-[10px] p-[15px] text-[15px] text-black placeholder:text-[#D6D7DA] focus:outline-none focus:border-[#C11574] ${
+              urlTouched && inputValue.attachmentUrl !== "" && !isUrlValid
+                ? "border-[#C11574]"
+                : "border-[#D6D7DA]"
+            }`}
+            placeholder="https://example.com/attachments/report.pdf"
+            value={inputValue.attachmentUrl}
+            onChange={(e) => handleChange("attachmentUrl", e.target.value)}
+            onBlur={() => setUrlTouched(true)}
+            type="url"
+            autoCapitalize="none"
+            autoCorrect="off"
+          />
+          {urlTouched && inputValue.attachmentUrl !== "" && !isUrlValid && (
+            <p className="text-[#C11574] text-xs mt-1.5">
+              Enter a valid URL (must start with http:// or https://)
+            </p>
+          )}
+        </div>
+
+        <div>
+          <p className="font-semibold text-[15px] font-lato-bold mb-2 text-black">Category</p>
+          <div className="flex flex-col gap-[13px]">
+            {CATEGORY_OPTIONS.map((option) => {
+              const active = inputValue.category === option;
+              return (
+                <button
+                  type="button"
+                  key={option}
+                  onClick={() => handleSelectCategory(option)}
+                  className={`flex flex-row items-center gap-[10px] border rounded-[10px] p-[15px] text-left ${
+                    active ? "border-[#C11574] bg-[#F4F3FF]" : "border-[#D6D7DA]"
+                  }`}
+                >
+                  <span className="h-5 w-5 rounded-full border border-[#717680] flex items-center justify-center shrink-0">
+                    {active && <span className="h-[10px] w-[10px] rounded-full bg-[#C11574]" />}
+                  </span>
+                  <span className="text-[15px] text-black font-medium">{option}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <SubmitButton _fn={handleSubmit} disabled={!isValid || mutation.isPending}>
+          {mutation.isPending ? "Saving..." : "Save"}
+        </SubmitButton>
     </div>
   );
 };
