@@ -12,6 +12,8 @@ export interface Appointment {
   hospital: Hospital
   approvalStatus: string
   note?: string
+  prescriptions : []
+  consultationNotes: []
 }
 
 export interface User {

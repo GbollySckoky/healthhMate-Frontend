@@ -6,6 +6,7 @@ import { ApproveAppointment } from "../interface/approve-appointment.interface";
 import api from "../ClientHttps";
 import { Availability } from "../interface/availability.interface";
 import { Message, ReplyToTicket, SUPPORT_TICKET } from "../interface/support";
+import { ConsultationNote, Prescription } from "../interface/prescription";
 
 
 export const Doctor = {
@@ -155,5 +156,11 @@ export const Doctor = {
     getEarningStats: async () => {
         const response = await api.get(DOCTOR_ENDPOINTS.GET_EARNING_STATS); 
         return await response.data
+    },
+    createPrescription: async (id: string, payload: Prescription) => {
+        return await api.post(`doctor/prescription/${id}`, payload)
+    },
+    createConsultationNote: async (id: string, payload: ConsultationNote) => {
+        return await api.post(`doctor/consultationNote/${id}`, payload)
     },
 }
