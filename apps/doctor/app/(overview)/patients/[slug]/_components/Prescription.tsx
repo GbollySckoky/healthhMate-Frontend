@@ -2,10 +2,19 @@
 import React, { useState } from 'react'
 import { recentActivities } from '@/lib/components/ui/data'
 import TextArea from '@/lib/components/ui/TextArea'
+import useCreatePrescription from '@/lib/hooks/useCreatePrescription'
 
 
-const Prescription = () => {
+const Prescription = ({id}:{id: string}) => {
     const [inputValue, setInputValue] = useState('')
+    const {prescription} = useCreatePrescription(id)
+
+    const handleSubmit = async () => {
+        const data = {
+          prescription:  inputValue
+        }
+        prescription.mutateAsync(data)
+    }
   return (
     <div>
         <div className="flex-1 overflow-y-auto p-4 pt-0 border border-borderColor mb-5">
@@ -32,7 +41,13 @@ const Prescription = () => {
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
         />
         <div className="flex justify-end mt-3">
-            <button className='bg-red-800 text-white font-medium rounded-lg px-5 py-2'>Add Prescription</button>
+            <button 
+                className='bg-red-800 text-white font-medium rounded-lg px-5 py-2' 
+                type='button' 
+                onClick={() => handleSubmit()}
+                disabled={prescription.isPending || !inputValue.trim()}>
+                {prescription.isPending ? 'Addding....' : 'Add Prescription'}
+            </button>
         </div>
     </div>
   )
