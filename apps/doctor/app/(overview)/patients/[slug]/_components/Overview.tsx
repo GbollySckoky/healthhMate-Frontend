@@ -18,7 +18,7 @@ const Overview = ({appointmentDetails, isLoading}:{appointmentDetails: Appointme
               <Infos label='Consultation Time' value={appointmentDetails?.time}/>
               <Infos label='Consultation Type' value={CapitalizeName(appointmentDetails?.consultationType)}/>
               <Infos label='Primary Health Concern' value={appointmentDetails?.healthConcern}/>
-              <Infos label='Consultation Fee' value={appointmentDetails?.amount.toLocaleString()}/>
+              <Infos label='Consultation Fee' value={`₦${appointmentDetails?.amount.toLocaleString() || 0}`}/>
           </div>
           <div className=' border border-borderColor p-4 rounded-lg space-y-2 mb-4'>
               <Infos label='Patient Name' value={CapitalizeName(appointmentDetails?.user?.firstName) + ' ' + CapitalizeName(appointmentDetails?.user?.lastName) || '-'}/>

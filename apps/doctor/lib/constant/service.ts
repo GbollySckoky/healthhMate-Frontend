@@ -61,7 +61,7 @@ export const Doctor = {
         return response.data
     },
     getAppointmentDetail: async(appointment_id: string) => {
-        const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}/appointments`);
+        const response = await api.get(`${DOCTOR_ENDPOINTS.GET_APPOINTMENT_DETAILS}${appointment_id}`);
         return response.data
     },
     getApprovedAppointmentDetail: async(appointment_id: string) => {

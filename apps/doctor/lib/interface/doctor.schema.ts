@@ -7,7 +7,7 @@ export const DoctorProfileSchema = z.object({
   consultationFee: z.string().min(1, "Consultation Fee is required"),
   // address: z.string().min(1, "Input your address"),
   bio: z.string().min(1, "Bio is required"),
-  logo: z.instanceof(File, { message: "A valid image is required" }),
+  profilePicture: z.instanceof(File).nullable().optional(),
   // consultationType: z.string().min(1, "Consultation Type is required"),
   // branchName: z.string().min(1, "Branch name is required"),
   // availableTimeSlots: z.array(z.string('Available Time Slots')),

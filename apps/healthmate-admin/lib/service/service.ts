@@ -70,7 +70,7 @@ export const Hospital_Admin = {
         return response.data
     },
     getAppointmentDetails: async(id: string) => {
-        const response = await api.get(`${ADMIN_ENDPOINTS.GET_APPOINTMENT_DETAILS}${id}/appointments`);
+        const response = await api.get(`${ADMIN_ENDPOINTS.GET_APPOINTMENT_DETAILS}${id}`);
          return response.data
     },
     createSupportTicket: async (payload: SUPPORT_TICKET) => {
