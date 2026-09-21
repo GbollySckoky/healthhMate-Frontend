@@ -102,25 +102,27 @@ const About = ({ consultation }: Props) => {
         <p className="mt-2 text-base font-medium text-green-600">
           ₦
           {consultation?.profile?.consultationFee?.toLocaleString() ??
-            "0"}
+            0}
         </p>
       </div>
-
-      <button
-        className="mt-8 mb-[50px] w-full rounded-xl bg-pink-600 py-3 font-semibold text-white transition hover:bg-pink-700"
-        onClick={() => handleCloseModal()}
-        //   openModal(<BookDoctor consultation={consultation} />, {
-        //   title: "Book Appointment",
-        //   footer: (
-        //     <button className="w-full rounded-xl bg-pink-600 py-3 font-semibold text-white">
-        //       Confirm Booking
-        //     </button>
-        //   ),
-        // })
-        // }
-      >
-        Book Consultation
-      </button>
+      
+      <div>
+        {consultation?.availability?.length > 0 ? (
+        <button
+          className="mt-8 mb-[50px] w-full rounded-xl bg-pink-600 py-3 font-semibold text-white transition "
+          onClick={() => handleCloseModal()}
+        >
+          Book Consultation
+        </button>
+        ): (
+         <button 
+          className="text-sm rounded-xl px-3 mt-5 text-center bg-pink-600 py-3 font-semibold text-white transition opacity-80 cursor-not-allowed"
+          disabled>
+            Dr. James is not currently available for consultation.
+        </button>
+        )}
+      </div>
+     
       {openModal && (
         <BookDoctor consultation={consultation} onClose={handleCloseModal} />
       )}

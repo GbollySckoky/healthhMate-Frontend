@@ -1,79 +1,131 @@
-import { SkeletonBoxProps } from "@/lib/interface/blood-pressure";
-import { Card, DetailsContainer, SubTitle } from "./Reusable";
+import { SkeletonBoxProps } from "@/lib/interface/blood-pressure"
+import {
+  Card,
+  DetailsContainer,
+  SubTitle,
+} from "./Reusable"
 
 const SkeletonBox = ({
-  // width,
-  // height,
+  width,
+  height,
   borderRadius = 6,
-  className = '',
+  className = "",
 }: SkeletonBoxProps) => (
   <div
     className={`bg-gray-200 animate-pulse ${className}`}
     style={{
-      // width,
-      // height,
+      width,
+      height,
       borderRadius,
     }}
   />
-);
+)
 
-const ReadingSkeletonItem = ({ isLastItem }: { isLastItem: boolean }) => (
-  <div
-    className={`pt-[5px] border-[#F2F2F2] ${
-      isLastItem ? 'border-b-0' : 'border-b'
-    }`}
-  >
-    <div className="flex items-center justify-between py-[18px]">
-      <div className="flex items-center">
-        <SkeletonBox width={38} height={38} borderRadius={8} />
-        <div className="pl-4">
-          <SkeletonBox width={100} height={14} className="mb-1.5" />
-          <SkeletonBox width={130} height={12} />
+const ReadingSkeletonItem = ({
+  isLastItem,
+}: {
+  isLastItem: boolean
+}) => {
+  return (
+    <div
+      className={`pt-[5px] border-[#F2F2F2] ${
+        isLastItem ? "border-b-0" : "border-b"
+      }`}
+    >
+      <div className="flex items-center justify-between py-[18px]">
+        <div className="flex items-center">
+          {/* Stethoscope icon */}
+          <SkeletonBox
+            width={38}
+            height={38}
+            borderRadius={8}
+          />
+
+          {/* Reading details */}
+          <div className="pl-4">
+            {/* Blood pressure value */}
+            <SkeletonBox
+              width={100}
+              height={14}
+              borderRadius={4}
+              className="mb-2"
+            />
+
+            {/* Date and time */}
+            <SkeletonBox
+              width={145}
+              height={12}
+              borderRadius={4}
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  )
+}
 
-export const BloodPressureSkeleton = () => (
-  <div className="self-center w-[92%] mx-auto pt-[10px] pb-[110px]">
-    <DetailsContainer>
-      <SkeletonBox width={48} height={48} borderRadius={100} className="mb-2.5" />
-      <SkeletonBox width={110} height={12} className="mb-2" />
-      <SkeletonBox width={130} height={22} className="mb-2.5" />
-      <SkeletonBox width={180} height={12} className="mb-2.5" />
-      <SkeletonBox width={70} height={20} borderRadius={50} />
-    </DetailsContainer>
+export const BloodPressureSkeleton = () => {
+  return (
+    <div className="self-center w-[92%] mx-auto pt-[10px] pb-[110px]">
+      {/* Today's Reading */}
+      <DetailsContainer>
+        {/* Heart icon */}
+        <SkeletonBox
+          width={48}
+          height={48}
+          borderRadius={999}
+          className="mb-2.5"
+        />
 
-    {/* Chart placeholder */}
-    {/* <div className="bg-white mb-[26px] rounded-xl p-3 shadow-sm border border-[#f2f2f2]">
-      <SubTitle>BP Trends</SubTitle>
-      <SkeletonBox
-        width={chartWidth}
-        height={chartHeight}
-        borderRadius={8}
-        className="my-2 mx-auto"
-      />
-      <div className="flex justify-center mt-[15px] gap-[30px]">
-        <div className="flex items-center">
-          <SkeletonBox width={12} height={12} borderRadius={6} className="mr-2" />
-          <SkeletonBox width={50} height={12} />
-        </div>
-        <div className="flex items-center">
-          <SkeletonBox width={12} height={12} borderRadius={6} className="mr-2" />
-          <SkeletonBox width={60} height={12} />
-        </div>
+        {/* Today's Readings */}
+        <SkeletonBox
+          width={110}
+          height={14}
+          borderRadius={4}
+          className="mb-2"
+        />
+
+        {/* Blood pressure */}
+        <SkeletonBox
+          width={140}
+          height={28}
+          borderRadius={5}
+          className="mb-2.5"
+        />
+
+        {/* Recorded date */}
+        <SkeletonBox
+          width={200}
+          height={13}
+          borderRadius={4}
+          className="mb-2.5"
+        />
+
+        {/* Normal status */}
+        <SkeletonBox
+          width={70}
+          height={24}
+          borderRadius={999}
+        />
+      </DetailsContainer>
+
+      {/* Recent Readings */}
+      <div className="mb-10">
+        <Card>
+          <SubTitle>
+            Recent Readings
+          </SubTitle>
+
+          {Array.from({ length: 4 }).map(
+            (_, index) => (
+              <ReadingSkeletonItem
+                key={index}
+                isLastItem={index === 3}
+              />
+            )
+          )}
+        </Card>
       </div>
-    </div> */}
-
-    {/* Recent readings placeholder */}
-    <div className="mb-10">
-      <Card>
-        <SubTitle>Recent Readings</SubTitle>
-        {Array.from({ length: 4 }).map((_, index) => (
-          <ReadingSkeletonItem key={index} isLastItem={index === 3} />
-        ))}
-      </Card>
     </div>
-  </div>
-);
+  )
+}

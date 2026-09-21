@@ -52,7 +52,7 @@ const ConsultationDetails = () => {
         {/* Banner */}
         <div className="relative h-52 w-full">
           <Image
-            src={consultation.profile.profilePicture || profileImage}
+            src={consultation?.profile?.profilePicture || profileImage}
             alt="Doctor Banner"
             fill
             priority
@@ -61,7 +61,7 @@ const ConsultationDetails = () => {
           />
 
           <Image
-            src={consultation.profile.profilePicture || profileImage}
+            src={consultation?.profile?.profilePicture || profileImage}
             alt="Doctor"
             width={80}
             height={80}

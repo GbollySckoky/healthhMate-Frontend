@@ -3,13 +3,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Pencil, User, Mail, Phone, Calendar, ChevronRight, LogOut, AlertCircle, Transgender, BeanOff } from "lucide-react";
+import { Pencil, User, Mail, Phone, Calendar, ChevronRight, LogOut, AlertCircle, Transgender, BeanOff, Syringe } from "lucide-react";
 import { ROUTES } from "@/constants/route";
 // import { otherMenuItems } from "@/constants/data";
 import useGetMe from "@/hooks/useGetMe";
 import { useAuth } from "@/hooks/useAuthWeb";
 import { colors } from "@/constants/colors";
 import defaultImage from '@/assets/default.jpg'
+import { CapitalizeName } from "@/constants/capitalizeName";
 
 function getAge(dateOfBirth?: string) {
   if (!dateOfBirth) return null;
@@ -196,7 +197,7 @@ const Profile = () => {
           </button>
         </div>
         <span className="text-sm font-libre font-semibold text-[#414651] mt-2">
-          {patient.firstName || "-"} {patient.lastName || "-"}
+          {CapitalizeName(patient.firstName) || "-"} {CapitalizeName(patient.lastName) || "-"}
         </span>
         {age !== null && (
           <span className="text-xs font-normal mt-1" style={{ color: colors.purple }}>
@@ -212,8 +213,8 @@ const Profile = () => {
           <AccountInfoRow
             icon={<User size={18} color={colors.lightRed} />}
             title="Name"
-            value={patient.firstName}
-            subValue={patient.lastName}
+            value={CapitalizeName(patient.firstName)}
+            subValue={CapitalizeName(patient.lastName)}
             next={<ChevronRight size={22} color="#A4A7AE" />}
           />
           <AccountInfoRow icon={<Mail size={18} color={colors.lightRed} />} title="Email" value={patient.email} />
@@ -228,7 +229,7 @@ const Profile = () => {
             value={patient?.profile?.dateOfBirth}
           />
           <AccountInfoRow
-            icon={<Transgender size={18} color={colors.lightRed}/>}
+            icon={<Transgender size={18} color={colors.lightRed} />}
             title="Gender"
             value={capitalize(patient?.profile?.gender)}
           />
@@ -236,6 +237,11 @@ const Profile = () => {
             icon={<BeanOff size={18} color={colors.lightRed} />}
             title="Allergies"
             value={patient?.profile?.allergies}
+          />
+          <AccountInfoRow
+            icon={<Syringe size={18} color={colors.lightRed} />}
+            title="Blood Group"
+            value={patient?.profile?.bloodGroup}
             isLast
           />
         </div>

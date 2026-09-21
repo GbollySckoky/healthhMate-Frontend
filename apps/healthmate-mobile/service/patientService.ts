@@ -135,7 +135,7 @@ export const patientService = {
     appointmentId: string
   ): Promise<GetAppointmentDetailsResponse> => {
     const response = await api.get(
-      `${PATIENTS_ENDPOINTS.GET_APPOINTMENT}${appointmentId}/appointments`
+      `${PATIENTS_ENDPOINTS.GET_APPOINTMENT}${appointmentId}`
     );
     return await response.data;
   },
@@ -185,8 +185,8 @@ export const patientService = {
   editProfile: async (payload: EditProfile) => {
       return await api.post(PATIENTS_ENDPOINTS.CREATE_PROFILE, payload)
   },
-  createSupportTicket: async (payload: SUPPORT_TICKET) => {
-      return await api.post(PATIENTS_ENDPOINTS.CREATE_SUPPORT, payload)
+  createSupportTicket: async (id:string, payload: SUPPORT_TICKET) => {
+      return await api.post(`support/patient/${id}`, payload)
   },
   createPayment: async (payload: InitializePayment) => {
     return await api.post(PATIENTS_ENDPOINTS.PAYMENT, payload)
@@ -233,4 +233,8 @@ export const patientService = {
     const response = await api.get(PATIENTS_ENDPOINTS.BLOOD_SUGAR);
     return response.data;
   },
+  getMedicalRecords: async () => {
+    const response = await api.get(PATIENTS_ENDPOINTS.GET_MEDICAL_RECORDS);
+    return response.data;
+  }
 };
