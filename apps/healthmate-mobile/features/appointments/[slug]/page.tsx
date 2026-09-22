@@ -6,12 +6,12 @@ import Image from "next/image";
 import { Video, ChevronRight, XCircle, MapPin } from "lucide-react";
 import { patientService } from "@/service/patientService";
 import { GetAppointment } from "@/lib/interface/get-appointments-interface";
-import CreateSupportTicket from "./CreateSupport";
 import AppointmentDetailsSkeleton from "@/components/AppointmentDetailSkeleton";
 import { BtnFlex, Card, MinTitle, PageWrapper, RescheduleBtn } from "@/components/Reusable";
 import { useModal } from "@/store/Modal";
 import profileFallback from "@/assets/default.jpg";
 import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
+import { CapitalizeName } from "@/constants/capitalizeName";
 
 const getDoctorName = (doctor: GetAppointment["doctor"]) => {
   if (!doctor) return "Doctor unavailable";
@@ -151,16 +151,17 @@ const AppointmentDetails = () => {
     );
   };
 
-  const handleReportIssue = () => {
-    openModal(<CreateSupportTicket appointmentId={appointmentId as string} />, {
-      title: "Create Support Ticket",
-      description: "",
-      className: "max-w-2xl",
-      onClose: () => {},
-    });
+  const handleReportIssue = (id: string) => {
+    // openModal(<CreateSupportTicket appointmentId={appointmentId as string} />, {
+    //   title: "Create Support Ticket",
+    //   description: "",
+    //   className: "max-w-2xl",
+    //   onClose: () => {},
+    // });
+    router.push(`/appointments/create-support/${id}`);
   };
 
-  const handleMessagePress = (communicationId: number) => {
+  const handleMessagePress = (communicationId: string) => {
     router.push(`/appointments/message/${communicationId}`);
   };
   return (
@@ -236,6 +237,9 @@ const AppointmentDetails = () => {
           </Card>
 
           <Card className="mt-6 cursor-pointer">
+             {appointmentDetails.approvalStatus === "PENDING" ? (
+               <p className="font-lato text-sm text-[#414651] font-medium mb-1">Once approved, you can message Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}.</p>
+             ) :(
             <button
               type="button"
               onClick={() => handleMessagePress(appointmentDetails.id)}
@@ -249,11 +253,12 @@ const AppointmentDetails = () => {
               </div>
               <ChevronRight size={18} color="#717680" />
             </button>
+             )}
             <div className="h-px bg-[#F5F5F5] mt-3" />
 
             <button
               type="button"
-              onClick={handleReportIssue}
+              onClick={() => handleReportIssue(appointmentDetails.id)}
               className="w-full flex flex-row items-center justify-between py-2 text-left"
             >
               <div>
@@ -299,10 +304,17 @@ const AppointmentDetails = () => {
           </Card>
 
           <BtnFlex>
-            <RescheduleBtn _fn={() => handleMessagePress(appointmentDetails.id)} className="flex">
+            {appointmentDetails.approvalStatus === "PENDING" ?
+             <p 
+              className="text-sm text-white text-center bg-red-800 p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80"
+              aria-disabled>
+                Once approved, you can message Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}.
+            </p> : (
+            <RescheduleBtn _fn={() => handleMessagePress(appointmentDetails.id)} className="flex text-gray-600">
               {/* <span className="mr-[5px]" > <MessageCircleMore size={20} /></span>    */}
-              Messsage
+              Messsag Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}
             </RescheduleBtn>
+            )}
             {/* <JoinBtn _fn={() => router.push(ROUTES.home)}>Join Call</JoinBtn> */}
           </BtnFlex>
         </>

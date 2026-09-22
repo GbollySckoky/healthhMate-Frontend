@@ -57,8 +57,8 @@ const PriorityBadge = ({
       }}
     >
       <p
-        className="text-[10px] font-medium"
-        style={{ color: style.text }}
+        className="text-[10px] font-medium text-red-800"
+        // style={{ color: style.text }}
       >
         {capitalize(priority)}
       </p>

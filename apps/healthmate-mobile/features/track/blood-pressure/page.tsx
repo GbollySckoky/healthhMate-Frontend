@@ -65,11 +65,11 @@ const BloodPressure = () => {
                   {getReadableDate(
                     latestBloodPressure?.recordedAt || 'N/A'
                   )} {' '}
-                  {formatTime(latestBloodPressure?.createdAt || 'N/A')}
+                  {formatTime(latestBloodPressure?.recordedAt || 'N/A')}
                 </CardText>
-                <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-normal mt-[7px] inline-block w-fit text-xs">
+                {/* <span className="text-[#027A48] bg-[#ECFDF3] rounded-full px-2.5 py-1.5 font-normal mt-[7px] inline-block w-fit text-xs">
                   Normal
-                </span>
+                </span> */}
               </DetailsContainer>
 
               <div className="mb-10">

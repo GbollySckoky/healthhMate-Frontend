@@ -55,9 +55,8 @@ const WeightModal = () => {
     mutationFn: (payload: Weight) =>
       patientService.createWeight(payload),
 
-    onSuccess: async () => {
-    //   toast.success("Weight created successfully");
-
+    onSuccess: async (response) => {
+       toast.success(response.data?.message || 'Weight reading saved successfully');
       await queryClient.invalidateQueries({
         queryKey: ["weight"],
       });
@@ -92,7 +91,7 @@ const WeightModal = () => {
         {...date}
         value={
           inputValue.date
-            ? new Date(inputValue.date).toLocaleDateString()
+            ? inputValue.date.slice(0, 10)
             : ""
         }
         _fn={() => setShowDatePicker(true)}
@@ -106,7 +105,7 @@ const WeightModal = () => {
 
       <SubmitButton
         _fn={handleCreateWeight}
-        disabled={mutation.isPending || !inputValue.weight || !inputValue.date}
+        disabled={mutation.isPending || !inputValue.weight.trim() || !inputValue.date}
       >
         {mutation.isPending
           ? "Saving..."

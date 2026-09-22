@@ -10,6 +10,8 @@ import { MedicationData } from '@/constants/data';
 import DateInput from '@/components/DateInput';
 import CustomCalendar from '@/components/CustomCalendar';
 import Input from '@/components/Input';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 type MedicationInputType = Record<string, string>;
 const date = {
@@ -43,16 +45,13 @@ const MedicationModal = () => {
 
    const mutation = useMutation({
       mutationFn: (payload: Medication) => patientService.createMedication(payload),
-      onSuccess: async () => {
-        // Toast.show({
-        //   type: 'success',
-        //   text1: 'Medication created successfully',
-        // });
+      onSuccess: async (response) => {
+        toast.success(response.data.message)
        await queryClient.invalidateQueries({ queryKey: ['getmedication'] });
         closeModal();
       },
-      onError: (error: any) => {
-        console.log('Error!!', error);
+      onError: (error: AxiosError<{message: string | undefined}>) => {
+        toast.error(error.response?.data.message || 'Failed to save medication reading');
         // Toast.show({
         //   type: 'error',
         //   text1: error.response.data.message,
@@ -86,7 +85,7 @@ const MedicationModal = () => {
        <DateInput
           {...date}
           value={
-            inputValue.date ? new Date(inputValue.date).toLocaleDateString() : ''
+            inputValue.date ? inputValue.date.slice(0, 10) : ''
           } // Show formatted date safely
           _fn={() => setShowDatePicker(true)} // Open calendar directly
         />
@@ -96,7 +95,17 @@ const MedicationModal = () => {
           onChangeText={handleDateSelect}
           onClose={handleCloseCalendar}
         />
-      <SubmitButton _fn={handleCreateMedication}>{mutation.isPending ? "Saving..." : "Save Medication Log"}</SubmitButton>
+      <SubmitButton
+        _fn={handleCreateMedication}
+        disabled={
+          mutation.isPending ||
+          !inputValue.name?.trim() ||
+          !inputValue.dosage?.trim() ||
+          !inputValue.date
+        }
+      >
+        {mutation.isPending ? "Saving..." : "Save Medication Log"}
+      </SubmitButton>
     </div>
   );
 };

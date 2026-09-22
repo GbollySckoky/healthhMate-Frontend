@@ -1,7 +1,7 @@
 export type AppointmentStatus = 'PENDING' | 'UPCOMING' | 'COMPLETED' | 'CANCELLED' | string;
 
 export interface AppointmentDoctor {
-  id?: number;
+  id?: string;
   firstName?: string;
   lastName?: string;
   name?: string;
@@ -20,7 +20,7 @@ export interface DoctorProfile{
 }
 
 export interface AppointmentUser {
-  id?: number;
+  id?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -29,13 +29,13 @@ export interface AppointmentUser {
 }
 
 export interface AppointmentHospital {
-  id: number;
+  id: string;
   hospitalName: string;
   email: string;
 }
 
 export interface GetAppointment {
-  id: number;
+  id: string;
   amount: number;
   consultationType: string;
   createdAt: string;

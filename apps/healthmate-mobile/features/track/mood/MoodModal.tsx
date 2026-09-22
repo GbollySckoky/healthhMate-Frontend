@@ -9,6 +9,8 @@ import { MoodData } from "@/constants/data";
 import DateInput from "@/components/DateInput";
 import CustomCalendar from "@/components/CustomCalendar";
 import TextAreaInput from "@/components/TextAreaInput";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 type MoodInput = {
   description: string;
@@ -68,9 +70,8 @@ const MoodModal = ({ onClose }: { onClose?: () => void }) => {
   const mutation = useMutation({
     mutationFn: (payload: Mood) => patientService.createMood(payload),
 
-    onSuccess: async () => {
-    //   Toast.success("Mood created successfully");
-
+    onSuccess: async (response) => {
+      toast.success(response.data?.message || 'Mood reading saved successfully');
       await queryClient.invalidateQueries({
         queryKey: ["getmood"],
       });
@@ -78,8 +79,8 @@ const MoodModal = ({ onClose }: { onClose?: () => void }) => {
       onClose?.();
     },
 
-    onError: (error: any) => {
-    //   Toast.error(error?.response?.data?.message || "Something went wrong");
+    onError: (error: AxiosError<{message: string}>) => {
+      toast.error(error.response?.data.message || 'Failed to save mood reading');
     },
   });
 
@@ -138,7 +139,7 @@ const MoodModal = ({ onClose }: { onClose?: () => void }) => {
           placeholder="10/05/1997"
           value={
             inputValue.date
-              ? new Date(inputValue.date).toLocaleDateString()
+              ? inputValue.date.slice(0, 10)
               : ""
           }
           _fn={() => setShowDatePicker(true)}

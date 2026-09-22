@@ -123,6 +123,7 @@ const Page = () => {
               <TableHead>Status</TableHead>
               <TableHead>Health Concern</TableHead>
               <TableHead>Approval Status</TableHead>
+              <TableHead>Payment Status</TableHead>
             </TableRow>
           </TableHeader>
           {isLoading ? (
@@ -174,7 +175,7 @@ const Page = () => {
                     </TableCell>
 
                     <TableCell className="text-[12px] text-grey-20">
-                      {CapitalizeName(appointment.consultationType).slice(1).replaceAll("_", " ")  || "N/A"}
+                      {CapitalizeName(appointment.consultationType).replaceAll("_", " ")  || "N/A"}
                     </TableCell>
 
                     <TableCell>
@@ -197,6 +198,15 @@ const Page = () => {
                         )}`}
                       >
                         {appointment.approvalStatus || "N/A"}
+                      </span>
+                    </TableCell>
+                       <TableCell>
+                      <span
+                        className={`rounded-full text-[12px] py-1 px-3 ${getStatusStyle(
+                          appointment.payments?.[0]?.status
+                        )}`}
+                      >
+                       {appointment.payments?.[0]?.status || "N/A"}
                       </span>
                     </TableCell>
                   </TableRow>

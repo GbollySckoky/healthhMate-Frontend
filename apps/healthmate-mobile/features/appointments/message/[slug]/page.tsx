@@ -29,6 +29,9 @@ import useDate from "@/hooks/useDate";
 import { CapitalizeName } from "@/constants/capitalizeName";
 // import useCall from "@/hooks/useCall";
 import VideoCallUI, { CallSession } from "./CallModal";
+import CommunicationSkeleton, {
+  MessageListSkeleton,
+} from "@/components/CommunicationSkeleton";
 // import { patientService } from "@/service/patientService";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -40,7 +43,8 @@ function isCallSession(value: unknown): value is CallSession {
     isRecord(value) &&
     typeof value.id === "string" &&
     typeof value.communicationId === "string" &&
-    (value.consultationType === "video_call" || value.consultationType === "audio_call") &&
+    (value.consultationType === "video_call" ||
+      value.consultationType === "audio_call") &&
     typeof value.status === "string" &&
     typeof value.agoraChannelName === "string" &&
     (typeof value.expiresAt === "string" || value.expiresAt === null)
@@ -52,9 +56,13 @@ function getCreatedCallSession(response: { data: unknown }): CallSession {
     throw new Error("The create-call response did not include a call session");
   }
 
-  const session = isCallSession(response.data.data) ? response.data.data : response.data;
+  const session = isCallSession(response.data.data)
+    ? response.data.data
+    : response.data;
   if (!isCallSession(session)) {
-    throw new Error("The create-call response did not include a valid call session");
+    throw new Error(
+      "The create-call response did not include a valid call session"
+    );
   }
 
   return session;
@@ -66,10 +74,12 @@ const Page = () => {
   const { formatTime } = useDate();
   const rawId = String(params?.slug);
 
-  const [activeCallSession, setActiveCallSession] = useState<CallSession | null>(null);
+  const [activeCallSession, setActiveCallSession] =
+    useState<CallSession | null>(null);
+  const [isStartingCall, setIsStartingCall] = useState(false);
+  const [callError, setCallError] = useState<string | null>(null);
 
   const { message, isLoading, isError, error } = useGetCommunicationId(rawId);
-  console.log('Appointment!', message)
   const communicationId = message?.id ?? "";
   const {
     messages: initialMessages,
@@ -81,14 +91,15 @@ const Page = () => {
   const { createCall } = useCreateCall(communicationId);
   // const { cancelCallSession, endCallSession } = useCall();
 
-  
   const authToken = storageService.getAuthToken();
 
   const [messages, setMessages] = useState<Message[]>([]);
   const seededCommunicationRef = useRef<string | null>(null);
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const socketRef = useRef<ReturnType<typeof connectCommunicationSocket> | null>(null);
+  const socketRef = useRef<ReturnType<
+    typeof connectCommunicationSocket
+  > | null>(null);
 
   useEffect(() => {
     if (messages.length === 0) return;
@@ -106,11 +117,21 @@ const Page = () => {
 
   // reset on conversation switch
   useEffect(() => {
-    if (seededCommunicationRef.current && seededCommunicationRef.current !== communicationId) {
+    if (
+      seededCommunicationRef.current &&
+      seededCommunicationRef.current !== communicationId
+    ) {
       setMessages([]);
       seededCommunicationRef.current = null;
     }
   }, [communicationId]);
+
+  // clear call error after a few seconds
+  useEffect(() => {
+    if (!callError) return;
+    const timeout = setTimeout(() => setCallError(null), 5000);
+    return () => clearTimeout(timeout);
+  }, [callError]);
 
   // socket connection + message listener
   useEffect(() => {
@@ -123,7 +144,9 @@ const Page = () => {
       joinCommunication(socket, communicationId);
     };
 
-    const handleNewMessage = (newMessage: Message & { clientTempId?: string }) => {
+    const handleNewMessage = (
+      newMessage: Message & { clientTempId?: string }
+    ) => {
       setMessages((previous) => {
         const alreadyExists = previous.some((m) => m.id === newMessage.id);
         if (alreadyExists) return previous;
@@ -131,7 +154,10 @@ const Page = () => {
         const tempIndex = previous.findIndex((m) => {
           if (!m.id.startsWith("temp-")) return false;
           if (newMessage.clientTempId) return m.id === newMessage.clientTempId;
-          return m.senderType === newMessage.senderType && m.content === newMessage.content;
+          return (
+            m.senderType === newMessage.senderType &&
+            m.content === newMessage.content
+          );
         });
 
         if (tempIndex !== -1) {
@@ -164,7 +190,9 @@ const Page = () => {
 
     const handleIncomingCall = (data: unknown) => {
       if (isCallSession(data)) {
-        setActiveCallSession(data);
+        // Don't overwrite a session we already have (e.g. the caller
+        // receiving their own broadcast).
+        setActiveCallSession((prev) => (prev?.id === data.id ? prev : data));
         return;
       }
 
@@ -173,17 +201,27 @@ const Page = () => {
         return;
       }
 
+      const callSessionId = data.callSessionId;
+      const consultationType =
+        data.consultationType === "audio_call" ? "audio_call" : "video_call";
+      const status = typeof data.status === "string" ? data.status : "WAITING";
+
       // Socket payload: { callSessionId, consultationType, status }.
       // Modal contract: { id, communicationId, ... }.
-      setActiveCallSession({
-        id: data.callSessionId,
-        communicationId,
-        consultationType:
-          data.consultationType === "audio_call" ? "audio_call" : "video_call",
-        status: typeof data.status === "string" ? data.status : "WAITING",
-        agoraChannelName: "",
-        expiresAt: null,
-      });
+      // If we already hold this session (the caller, with a real
+      // agoraChannelName), keep it instead of replacing it with a stub.
+      setActiveCallSession((prev) =>
+        prev?.id === callSessionId
+          ? prev
+          : {
+              id: callSessionId,
+              communicationId,
+              consultationType,
+              status,
+              agoraChannelName: "",
+              expiresAt: null,
+            }
+      );
     };
 
     onIncomingCall(handleIncomingCall);
@@ -240,25 +278,37 @@ const Page = () => {
     setInputValue("");
   };
 
-  const handleCreateCall = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const response = await createCall.mutateAsync();
-    setActiveCallSession(getCreatedCallSession(response));
+  const handleCreateCall = async () => {
+    if (isStartingCall) return;
+
+    setIsStartingCall(true);
+    setCallError(null);
+
+    try {
+      const response = await createCall.mutateAsync();
+      setActiveCallSession(getCreatedCallSession(response));
+    } catch (err) {
+      console.error("Failed to start call", err);
+      setCallError(
+        err instanceof Error ? err.message : "Couldn't start the call. Try again."
+      );
+    } finally {
+      setIsStartingCall(false);
+    }
   };
 
+  // Full-page skeleton while the conversation itself loads
   if (isLoading) {
-    return (
-      <div className="flex h-[90vh] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-red-900 border-t-transparent" />
-      </div>
-    );
+    return <CommunicationSkeleton />;
   }
 
   if (isError) {
     return (
       <div className="flex h-[90vh] items-center justify-center p-4 text-center">
         <p className="text-sm text-red-600">
-          {error instanceof Error ? error.message : "Failed to load conversation."}
+          {error instanceof Error
+            ? error.message
+            : "Failed to load conversation."}
         </p>
       </div>
     );
@@ -272,59 +322,66 @@ const Page = () => {
     );
   }
 
-  console.log(message)
+  const appointment = message.appointment;
+  const doctor = appointment?.doctor;
+  const isVideoConsultation = appointment?.consultationType === videoCall;
+
   return (
     <div className="flex h-[100dvh] flex-col bg-gray-50">
       <header className="fixed top-0 z-20 mt-14 w-full bg-red-900 px-4 py-3 shadow-sm">
         <div className="mx-auto flex w-full max-w-3xl items-center justify-between">
           <div className="flex items-center gap-3">
             <Image
-              src={message?.appointment?.doctor?.profile.profilePicture || defaultImage}
-              alt="Default profile"
+              src={doctor?.profile?.profilePicture || defaultImage}
+              alt="Doctor profile"
               width={48}
               height={48}
               className="h-12 w-12 rounded-full border border-white/30 object-cover"
             />
             <div>
               <h2 className="text-sm font-semibold text-white">
-                Dr. {CapitalizeName(message?.appointment.doctor.firstName)}{" "}
-                {CapitalizeName(message?.appointment.doctor.lastName)}
+                Dr. {CapitalizeName(doctor?.firstName ?? "")}{" "}
+                {CapitalizeName(doctor?.lastName ?? "")}
               </h2>
               <p className="text-xs text-red-200">Online</p>
             </div>
           </div>
 
-          <form onSubmit={handleCreateCall} className="flex items-center gap-2">
-            {message?.appointment.consultationType === videoCall ? (
-              <button
-                type="submit"
-                aria-label="Start video call"
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white transition hover:bg-white/10"
-              >
-                <Video size={20} />
-              </button>
-            ) : (
-              <button
-                type="submit"
-                aria-label="Start phone call"
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white transition hover:bg-white/10"
-              >
-                <Phone size={20} />
-              </button>
-            )}
-          </form>
+          <button
+            type="button"
+            onClick={handleCreateCall}
+            disabled={isStartingCall}
+            aria-label={
+              isVideoConsultation ? "Start video call" : "Start phone call"
+            }
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isVideoConsultation ? <Video size={20} /> : <Phone size={20} />}
+          </button>
         </div>
       </header>
 
+      {callError && (
+        <div
+          role="alert"
+          className="fixed top-[7.5rem] z-20 w-full px-4"
+        >
+          <div className="mx-auto max-w-3xl rounded-lg bg-red-100 px-4 py-2 text-sm text-red-800 shadow-sm">
+            {callError}
+          </div>
+        </div>
+      )}
+
       <main className="mt-16 flex-1 overflow-y-auto px-4 py-6 pb-24">
         {msgIsLoading ? (
-          <div className="flex h-full items-center justify-center">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-red-900 border-t-transparent" />
-          </div>
+          // Message-list skeleton only: real header and input stay visible
+          <MessageListSkeleton />
         ) : msgIsError ? (
           <div className="flex h-full items-center justify-center text-center">
             <p className="text-sm text-red-600">
-              {msgError instanceof Error ? msgError.message : "Failed to load messages."}
+              {msgError instanceof Error
+                ? msgError.message
+                : "Failed to load messages."}
             </p>
           </div>
         ) : messages.length === 0 ? (
@@ -332,7 +389,9 @@ const Page = () => {
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
               <Send className="text-red-900" size={28} />
             </div>
-            <h2 className="text-lg font-semibold text-gray-900">Start a conversation</h2>
+            <h2 className="text-lg font-semibold text-gray-900">
+              Start a conversation
+            </h2>
             <p className="mt-2 max-w-sm text-sm leading-6 text-gray-500">
               Send a message below to start your conversation.
             </p>
@@ -342,7 +401,10 @@ const Page = () => {
             {messages.map((item: Message) => {
               const isPatient = item.senderType === "PATIENT";
               return (
-                <div key={item.id} className={`flex ${isPatient ? "justify-end" : "justify-start"}`}>
+                <div
+                  key={item.id}
+                  className={`flex ${isPatient ? "justify-end" : "justify-start"}`}
+                >
                   <div
                     className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                       isPatient
@@ -350,7 +412,9 @@ const Page = () => {
                         : "rounded-bl-sm bg-white text-gray-900 shadow-sm"
                     }`}
                   >
-                    <p className="break-words text-sm leading-6">{item.content}</p>
+                    <p className="break-words text-sm leading-6">
+                      {item.content}
+                    </p>
                     <div
                       className={`mt-1 flex items-center justify-end gap-1 text-xs ${
                         isPatient ? "text-red-200" : "text-gray-400"
@@ -369,7 +433,10 @@ const Page = () => {
       </main>
 
       <div className="fixed bottom-0 w-full border-t border-gray-200 bg-white p-4">
-        <form onSubmit={handleSubmit} className="mx-auto flex max-w-3xl items-center gap-3">
+        <form
+          onSubmit={handleSubmit}
+          className="mx-auto flex max-w-3xl items-center gap-3"
+        >
           <input
             type="text"
             value={inputValue}
@@ -380,6 +447,7 @@ const Page = () => {
           <button
             type="submit"
             disabled={!inputValue.trim()}
+            aria-label="Send message"
             className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-900 text-white transition hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Send size={20} />
@@ -390,7 +458,7 @@ const Page = () => {
       {activeCallSession && (
         <VideoCallUI
           callSession={activeCallSession}
-          appointment={message?.appointment}
+          appointment={appointment}
           onCallEnded={() => setActiveCallSession(null)}
           communicationId={communicationId}
         />

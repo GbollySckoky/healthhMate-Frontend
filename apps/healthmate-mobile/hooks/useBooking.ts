@@ -16,7 +16,7 @@ interface UseBookingProps {
   onSuccess?: () => void;
 }
 
-export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
+export const useBooking = (id?:string, { onSuccess }: UseBookingProps = {}) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -59,9 +59,12 @@ export const useBooking = ({ onSuccess }: UseBookingProps = {}) => {
   const appointmentMutation = useMutation({
     mutationKey: ["createConsultation"],
 
-    mutationFn: (payload: Appointment) =>
-      patientService.createConsultation(payload),
-
+    mutationFn: (payload: Appointment) => {
+      if (!id) {
+          throw new Error('id is required')
+      }
+      return patientService.createConsultation(id, payload)
+    },
     onSuccess: (response) => {
       toast.success("Appointment created:", response.data.message ?? "Appointment created successfully");
 

@@ -8,6 +8,8 @@ import { sleepData, sleepExperienceData } from "@/constants/data";
 import { useModal } from "@/store/Modal";
 import DateInput from "@/components/DateInput";
 import CustomCalendar from "@/components/CustomCalendar";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 interface SleepQuality {
   selectedMood: string;
@@ -61,12 +63,13 @@ const SleepModal = () => {
 
   const mutation = useMutation({
     mutationFn: (payload: Sleep) => patientService.createSleep(payload),
-    onSuccess: async () => {
+     onSuccess: async (response) => {
+      toast.success(response.data?.message || 'Sleep reading saved successfully');
       await queryClient.invalidateQueries({ queryKey: ["getSleep"] });
       closeModal();
     },
-    onError: (error: any) => {
-      // toast.error(error?.response?.data?.message || "Unable to save sleep log. Please try again.");
+    onError: (error: AxiosError<{message: string}>) => {
+      toast.error(error?.response?.data?.message || "Unable to save sleep log. Please try again.");
     },
   });
 
@@ -85,7 +88,7 @@ const SleepModal = () => {
     <div>
       <DateInput
         {...date}
-        value={inputValue.date ? new Date(inputValue.date).toLocaleDateString() : ""}
+        value={inputValue.date ? inputValue.date.slice(0, 10) : ""}
         _fn={() => setSelectDatePicker(true)}
       />
       <CustomCalendar
@@ -117,7 +120,7 @@ const SleepModal = () => {
           })}
         </div>
       </div>
-      <SubmitButton _fn={handleCreateSleep}>
+      <SubmitButton _fn={handleCreateSleep} disabled={mutation.isPending || !inputValue.date}>
         {mutation.isPending ? "Saving..." : "Save Sleep Log"}
       </SubmitButton>
     </div>

@@ -20,7 +20,7 @@ const EditProfile = () => {
   const [inputValue, setInputValue] = useState<Profile>({
     yearsOfExperience: "",
     specialization: "",
-    logo: new File([], ""),
+    profilePicture: null,
     liscenceNumber: "",
     consultationFee: "",
     bio: "",
@@ -64,8 +64,8 @@ const EditProfile = () => {
     formData.append("specialization", inputValue.specialization);
     formData.append("yearsOfExperience", inputValue.yearsOfExperience);
 
-    if (inputValue.logo) {
-      formData.append("profilePicture", inputValue.logo);
+    if (inputValue.profilePicture instanceof File && inputValue.profilePicture.size > 0) {
+      formData.append("profilePicture", inputValue.profilePicture);
     }
 
     for (const [key, value] of formData.entries()) {

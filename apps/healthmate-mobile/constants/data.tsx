@@ -4,7 +4,7 @@ import {
   Moon, Eye, EyeOff, CalendarDays, Phone, Bell, Mail, Scale, Home, Activity, CalendarCheck, 
   UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain, Heart, Smile,
   MessageCircle, User, 
-  Medal
+  BriefcaseMedical
 } from 'lucide-react';
 import { ROUTES } from './route';
 
@@ -757,10 +757,10 @@ export const PATIENT_NAV_ITEMS = [
   //   icon: FileText,
   // },
   {
-    id: "messages",
-    label: "Messages",
-    href: ROUTES.messages,
-    icon: MessageCircle,
+    id: "medical-records",
+    label: "Medical Records",
+    href: ROUTES.medicalRecords,
+    icon: BriefcaseMedical,
   },
   {
     id: "profile",

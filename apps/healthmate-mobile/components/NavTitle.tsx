@@ -50,6 +50,8 @@ const ROUTE_TITLES: Record<string, string> = {
   [ROUTES.support]: 'Support',
   [ROUTES.settings]: 'Settings',
   [ROUTES.notifications]: 'Notifications',
+  [ROUTES.medicalRecords]: 'Medical Records',
+  [ROUTES.communication]: 'Communication',
 }
 
 export const usePageTitle = (): ReactNode => {
@@ -84,7 +86,7 @@ export const usePageTitle = (): ReactNode => {
     return 'Support Details'
   }
 
-  if (pathname.startsWith(`${ROUTES.appointments}/message/`)) {
+  if (pathname.startsWith(`${ROUTES.communication}/`)) {
     return "Communication";
   }
   return ROUTE_TITLES[pathname] ?? ''

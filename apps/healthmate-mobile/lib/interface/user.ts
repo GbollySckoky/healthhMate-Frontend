@@ -7,6 +7,7 @@ export interface EditProfile {
     healthCondition: string;
     allergies: string;
     profilePicture: string;
+    bloodGroup: string
 }
 
 export interface Profile {

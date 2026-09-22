@@ -70,6 +70,7 @@ export default function EditProfileScreen() {
     healthCondition: patient?.profile?.healthCondition,
     allergies: patient?.profile?.allergies,
     profilePicture: patient?.profile?.profilePicture,
+    bloodGroup: patient?.profile?.bloodGroup
   };
 
   return (
