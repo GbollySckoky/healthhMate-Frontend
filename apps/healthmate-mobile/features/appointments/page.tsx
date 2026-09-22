@@ -104,7 +104,7 @@ const AllAppointments = () => {
                     </div>
                   </div>
                   <div className="mt-[15px] border-t-2 border-[#F8F8F8] pt-3 ">
-                    {approvalStatus === "PENDING" ? <p className="text-sm text-[#717680] text-center">Once approved, you can message Dr. {CapitalizeName(doctor?.firstName)}.</p> : (
+                    {approvalStatus === "PENDING" ? <p className="text-sm text-[#717680] text-center">Once approved, you can message Dr. {CapitalizeName(doctor?.firstName)}</p> : (
                       <button 
                         type="button" 
                         onClick={(event) => { event.stopPropagation(); router.push(`/appointments/message/${id}`); }} 

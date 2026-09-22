@@ -31,9 +31,10 @@ const formatConsultationType = (type: string) => {
 
 interface Props {
   consultation: any;
+  id: string
 }
 
-const About = ({ consultation }: Props) => {
+const About = ({ consultation, id }: Props) => {
   // const { openModal } =/ useModal();
   const [openModal, setOpenModal] = React.useState(false);
   const handleCloseModal = () => {
@@ -124,7 +125,7 @@ const About = ({ consultation }: Props) => {
       </div>
      
       {openModal && (
-        <BookDoctor consultation={consultation} onClose={handleCloseModal} />
+        <BookDoctor consultation={consultation} onClose={handleCloseModal} id={id} />
       )}
     </div>
   );

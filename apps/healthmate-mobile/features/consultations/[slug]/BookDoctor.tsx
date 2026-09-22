@@ -9,9 +9,10 @@ import { CapitalizeName } from "@/constants/capitalizeName";
 interface BookDoctorProps {
   consultation: any;
   onClose: () => void;
+  id: string
 }
 
-const BookDoctor = ({ consultation, onClose }: BookDoctorProps) => {
+const BookDoctor = ({ consultation, onClose, id }: BookDoctorProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="relative flex max-h-[95vh] w-full max-w-5xl flex-col overflow-hidden bg-[#F8F9FC] shadow-2xl">
@@ -65,7 +66,7 @@ const BookDoctor = ({ consultation, onClose }: BookDoctorProps) => {
 
         {/* Body */}
         <div className="overflow-y-auto px-6 py-6">
-          <Booking consultation={consultation} />
+          <Booking consultation={consultation} id={id} />
         </div>
       </div>
     </div>

@@ -90,7 +90,7 @@ const BloodPressureModal = () => {
       <DateInput
         {...date}
         value={
-          inputValue.date ? new Date(inputValue.date).toLocaleDateString() : ''
+          inputValue.date ? inputValue.date.slice(0, 10) : ''
         }
         _fn={() => setShowDatePicker(true)}
       />
@@ -99,7 +99,16 @@ const BloodPressureModal = () => {
         onChangeText={handleDateSelect}
         onClose={() => setShowDatePicker(false)}
       />
-      <SubmitButton _fn={handleCreatePressure} disabled={mutation.isPending}>
+      <SubmitButton
+        _fn={handleCreatePressure}
+        disabled={
+          mutation.isPending ||
+          !inputValue.systolic.trim() ||
+          !inputValue.diastolic.trim() ||
+          !inputValue.pulseRate.trim() ||
+          !inputValue.date
+        }
+      >
         {mutation.isPending ? 'Saving...' : 'Save Reading'}
       </SubmitButton>
     </div>

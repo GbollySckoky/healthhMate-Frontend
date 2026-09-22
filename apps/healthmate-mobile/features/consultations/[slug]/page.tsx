@@ -118,7 +118,7 @@ const ConsultationDetails = () => {
           </p>
         </div>
 
-        <About consultation={consultation} />
+        <About consultation={consultation} id={id} />
       </div>
     </main>
   );

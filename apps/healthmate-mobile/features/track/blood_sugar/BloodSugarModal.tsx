@@ -104,7 +104,7 @@ const BloodSugarModal = () => {
         <select
           id="timing"
           name="timing"
-          value={inputValue.unit}
+          value={inputValue.timing}
             onChange={(event) => handleChange('timing', event.target.value)}
           className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}>
           {SUGAR_TIMING_OPTIONS.map(({ value, label }) => (
@@ -119,7 +119,7 @@ const BloodSugarModal = () => {
         <select
           id="meal"
           name="meal"
-          value={inputValue.unit}
+          value={inputValue.meal}
             onChange={(event) => handleChange('meal', event.target.value)}
           className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}>
           {MEAL_TYPE_OPTIONS.map(({ value, label }) => (
@@ -152,7 +152,17 @@ const BloodSugarModal = () => {
         />
       </div>
 
-      <SubmitButton _fn={handleCreateBloodSugar} disabled={mutation.isPending || !inputValue.value.trim()}>
+      <SubmitButton
+        _fn={handleCreateBloodSugar}
+        disabled={
+          mutation.isPending ||
+          !inputValue.value.trim() ||
+          !inputValue.unit ||
+          !inputValue.timing ||
+          !inputValue.meal ||
+          !inputValue.measuredAt
+        }
+      >
         {mutation.isPending ? 'Saving...' : 'Save Reading'}
       </SubmitButton>
     </div>

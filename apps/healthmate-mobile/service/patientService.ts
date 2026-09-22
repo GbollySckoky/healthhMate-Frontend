@@ -76,8 +76,8 @@ export const patientService = {
     const response = await api.get(PATIENTS_ENDPOINTS.SLEEP);
     return await response.data;
   },
-  createConsultation: async (payload: Appointment) => {
-    return await api.post(PATIENTS_ENDPOINTS.BOOK_APPOINTMENT, payload);
+  createConsultation: async (doctorId:string, payload: Appointment) => {
+    return await api.post(`appointment/${doctorId}/consultation/`, payload);
   },
   getDoctors: async (hospitalId: string, page = 1, limit = 10, q?: string , department?: string ) => {
     const searchParams = new URLSearchParams({

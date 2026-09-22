@@ -16,6 +16,7 @@ import BookingSummary from "./BookingSummary";
 
 interface BookingProps {
   consultation: any;
+  id: string
 }
 
 interface BookingForm {
@@ -25,9 +26,9 @@ interface BookingForm {
   healthConcern: string;
 }
 
-const Booking = ({ consultation }: BookingProps) => {
+const Booking = ({ consultation, id }: BookingProps) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
-
+  console.log(consultation)
   const [form, setForm] = useState<BookingForm>({
     date: new Date().toISOString().split("T")[0],
     time: "",
@@ -48,7 +49,7 @@ const Booking = ({ consultation }: BookingProps) => {
     // isBooking,
     isPaymentProcessing,
     isProcessing,
-  } = useBooking();
+  } = useBooking(id);
 
   const consultationFee =
     consultation?.profile?.consultationFee ?? 0;
@@ -76,8 +77,8 @@ const Booking = ({ consultation }: BookingProps) => {
       time: form.time,
       consultationType: form.consultationType,
       healthConcern: form.healthConcern.trim(),
-      doctorId: consultation?.id,
-      hospitalId: consultation?.hospital?.id,
+      // doctorId: consultation?.id,
+      // hospitalId: consultation?.hospital?.id,
       amount: consultationFee,
     };
 
