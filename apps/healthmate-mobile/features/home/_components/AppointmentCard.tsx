@@ -7,7 +7,7 @@ import { ROUTES } from "@/constants/route";
 import { CapitalizeName } from "@/constants/capitalizeName";
 import useDate from "@/hooks/useDate";
 import Image from 'next/image';
-import profileFallback from '@/assets/Ellipse 165.png';
+import profileFallback from '@/assets/default.jpg';
 import useGetAppointment from "@/hooks/useGetAppointment";
 
 type Doctor = { firstName?: string; lastName?: string };
@@ -94,7 +94,7 @@ export default function AppointmentCard() {
     if (appointment) router.push(`/appointments/${appointment.id}`);
   };
 
-  const handleMessagePress = (communicationId: number) => {
+  const handleMessagePress = (communicationId: string) => {
     router.push(`/appointments/message/${communicationId}`);
   };
 
@@ -140,11 +140,13 @@ export default function AppointmentCard() {
             {/* <span className="w-[50px] h-[50px] rounded-full bg-[#FDF2FA] text-[#DD2590] flex items-center justify-center font-semibold shrink-0">
               {getDoctorInitials(appointment?.doctor)}
             </span> */}
-            <div className="w-[70px] shrink-0">
+            <div className="w-[70px] h-[70px] shrink-0">
               <Image
-                src={profileFallback}
+                src={appointment?.doctor?.profile.profilePicture || profileFallback}
                 alt={getDoctorInitials(appointment?.doctor)}
-                className="w-[70px] h-[70px] rounded-full object-cover"
+                className="w-[70px] h-[70px] rounded-full object-cover border border-border"
+                width={75}
+                height={70}
               />
             </div>
             <div className="flex flex-row flex-1 justify-between">

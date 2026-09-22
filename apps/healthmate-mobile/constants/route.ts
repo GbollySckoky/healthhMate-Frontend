@@ -32,8 +32,9 @@ export const ROUTES = {
     support: '/support',
     appointments: '/appointments',
     notifications: '/notifications',
-    bloodSugar: '/track/blood_sugar'
-    // settings: '/settings'
+    bloodSugar: '/track/blood_sugar',
+    medicalRecords: '/medical-records',
+    communication: '/appointments/message'
 } as const;
 
 export const doctorProfileRoute = (doctorId: string | number) =>

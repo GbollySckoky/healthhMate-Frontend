@@ -31,6 +31,7 @@ const DEFAULT_FORM_STATE: EditProfile = {
   healthCondition: "",
   allergies: "",
   profilePicture: "",
+  bloodGroup: "",
 };
 
 const ProfileForm = ({
@@ -169,6 +170,15 @@ const ProfileForm = ({
         value={form.allergies}
         onChangeText={(value) =>
           updateField("allergies", value)
+        }
+      />
+
+      <Input
+        label="Blood Group"
+        placeholder="O+"
+        value={form.bloodGroup}
+        onChangeText={(value) =>
+          updateField("bloodGroup", value)
         }
       />
 

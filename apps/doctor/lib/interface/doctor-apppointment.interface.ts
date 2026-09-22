@@ -12,6 +12,9 @@ export interface Appointment {
   hospital: Hospital
   approvalStatus: string
   note?: string
+  prescriptions : []
+  consultationNotes: []
+  payments: Payment[]
 }
 
 export interface User {
@@ -38,4 +41,8 @@ export interface Hospital {
   id: string
   hospitalName: string
   email: string
+}
+
+export interface Payment {
+  status: string
 }

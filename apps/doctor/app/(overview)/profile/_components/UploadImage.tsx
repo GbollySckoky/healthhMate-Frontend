@@ -7,26 +7,43 @@ const UploadImage = ({
   inputValue,
   setInputValue,
 }: {
-  inputValue: any;
-  setInputValue: any;
+  inputValue: {
+    yearsOfExperience: string;
+    specialization: string;
+    liscenceNumber: string;
+    consultationFee: string;
+    bio: string;
+    profilePicture?: File | null;
+  };
+  setInputValue: React.Dispatch<
+    React.SetStateAction<{
+      yearsOfExperience: string;
+      specialization: string;
+      liscenceNumber: string;
+      consultationFee: string;
+      bio: string;
+      profilePicture?: File | null;
+    }>
+  >;
 }) => {
   const [preview, setPreview] = useState("");
 
-  // If a logo File already exists (e.g. carried over in form state),
-  // show it as the preview
   useEffect(() => {
-    if (inputValue?.logo && inputValue.logo.size > 0) {
-      const url = URL.createObjectURL(inputValue.logo);
+    if (inputValue?.profilePicture instanceof File && inputValue.profilePicture.size > 0) {
+      const url = URL.createObjectURL(inputValue.profilePicture);
       setPreview(url);
       return () => URL.revokeObjectURL(url);
     }
-  }, [inputValue?.logo]);
+  }, [inputValue?.profilePicture]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
 
-    setInputValue((prev: any) => ({ ...prev, logo: selected }));
+    setInputValue((prev) => ({
+      ...prev,
+      profilePicture: selected,
+    }));
 
     if (preview) URL.revokeObjectURL(preview);
     setPreview(URL.createObjectURL(selected));

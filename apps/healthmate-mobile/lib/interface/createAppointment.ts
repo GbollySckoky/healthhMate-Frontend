@@ -3,7 +3,7 @@ export interface Appointment {
   time: string
   consultationType: string
   healthConcern: string
-  doctorId: string
-  hospitalId: string
+  // doctorId: string
+  // hospitalId: string
   amount: number
 }

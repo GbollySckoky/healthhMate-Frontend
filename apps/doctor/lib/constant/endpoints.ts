@@ -23,5 +23,5 @@ export const DOCTOR_ENDPOINTS = {
     UN_READ_NOTIFICATIONS: 'notifications/doctor/unread-count',
     READ_ALL_NOTIFICATIONS: 'notifications/doctor/read-all',
     GET_FINANCE: 'payment/doctor',
-    GET_EARNING_STATS: 'payment/doctor/stats'
+    GET_EARNING_STATS: 'payment/doctor/stats',
 }

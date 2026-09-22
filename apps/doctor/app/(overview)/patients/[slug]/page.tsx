@@ -77,8 +77,20 @@ const Page = () => {
                         isLoading={isLoading}
                     /> 
                 </TabsContent>
-                <TabsContent value="consultationNotes"> <Consultation />  </TabsContent>
-                <TabsContent value="prescription"> <Prescription />  </TabsContent>
+                <TabsContent value="consultationNotes"> 
+                    <Consultation 
+                        id={id}
+                        appointmentDetails={appointmentDetails} 
+                        isLoading={isLoading}
+                    />  
+                </TabsContent>
+                <TabsContent value="prescription"> 
+                    <Prescription 
+                        id={id}
+                        appointmentDetails={appointmentDetails} 
+                        isLoading={isLoading} 
+                    />  
+                </TabsContent>
             </Tabs>
 
             <div className="mt-6 ">

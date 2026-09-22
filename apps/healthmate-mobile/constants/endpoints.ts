@@ -27,6 +27,7 @@ export const PATIENTS_ENDPOINTS = {
     CREATE_SUPPORT: 'support/patient',
     PAYMENT:'payment/initialize',
     GET_FINANCE: 'payment/user',
-    BLOOD_SUGAR: 'track/blood-sugar'
+    BLOOD_SUGAR: 'track/blood-sugar',
+    GET_MEDICAL_RECORDS: 'medical-records'
     // GET_ALL_HOSPITALS: 'hospital/hospitals',
 }

@@ -104,8 +104,14 @@ const AllAppointments = () => {
                     </div>
                   </div>
                   <div className="mt-[15px] border-t-2 border-[#F8F8F8] pt-3 ">
-                    {approvalStatus === "PENDING" ? <p className="text-sm text-[#717680] text-center">Once approved, you can message Dr. {CapitalizeName(doctor?.firstName)}.</p> : (
-                      <button type="button" onClick={(event) => { event.stopPropagation(); router.push(`/appointments/message/${id}`); }} className="flex w-full items-center justify-center gap-1 rounded-lg border border-[#D6D7DA] bg-[#FAFAFA] px-4 py-2 text-sm font-semibold text-[#252B37]"><MessageCircleMore size={17} />Messages</button>
+                    {approvalStatus === "PENDING" ? <p className="text-sm text-[#717680] text-center">Once approved, you can message Dr. {CapitalizeName(doctor?.firstName)}</p> : (
+                      <button 
+                        type="button" 
+                        onClick={(event) => { event.stopPropagation(); router.push(`/appointments/message/${id}`); }} 
+                        className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#D6D7DA] bg-[#FAFAFA] px-4 py-2 text-sm font-semibold text-gray-600">
+                          <MessageCircleMore size={17} />
+                          Message Dr. {CapitalizeName(doctor?.firstName)}
+                      </button>
                     )}
                   </div>
                 </article>
