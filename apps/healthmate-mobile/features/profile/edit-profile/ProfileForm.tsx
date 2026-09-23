@@ -11,7 +11,7 @@ type ProfileFormState = EditProfile;
 
 interface Props {
   initialValues: EditProfile;
-  onSubmit: (values: EditProfile) => void;
+  onSubmit: (values: FormData) => void;
   submitting?: boolean;
   submitLabel?: string;
 }
@@ -44,6 +44,7 @@ const ProfileForm = ({
     ...DEFAULT_FORM_STATE,
     ...initialValues,
   });
+  const [profilePictureFile, setProfilePictureFile] = useState<File | null>(null);
 
   const updateField = <K extends keyof ProfileFormState>(
     key: K,
@@ -62,7 +63,24 @@ const ProfileForm = ({
 
     const imageUrl = URL.createObjectURL(file);
 
+    setProfilePictureFile(file);
     updateField("profilePicture", imageUrl);
+  };
+
+  const handleSubmit = () => {
+    const payload = new FormData();
+
+    Object.entries(form).forEach(([key, value]) => {
+      if (key !== "profilePicture" && value) {
+        payload.append(key, value);
+      }
+    });
+
+    if (profilePictureFile) {
+      payload.append("profilePicture", profilePictureFile);
+    }
+
+    onSubmit(payload);
   };
 
   return (
@@ -185,7 +203,7 @@ const ProfileForm = ({
       <button
         type="button"
         disabled={submitting}
-        onClick={() => onSubmit(form)}
+        onClick={handleSubmit}
         className="w-full rounded-lg bg-pink-600 py-3 font-semibold text-white transition hover:bg-pink-700 disabled:opacity-50"
       >
         {submitting ? "Saving..." : submitLabel}

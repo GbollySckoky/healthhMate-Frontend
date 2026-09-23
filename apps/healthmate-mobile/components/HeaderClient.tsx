@@ -103,7 +103,7 @@ export default function HeaderClient({
   }
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between bg-white border-b border-[#F1F1F1] px-5 py-3 shrink-0">
+    <header className="sticky top-0 z-40 flex items-center justify-between bg-white border-b border-[#F1F1F1] px-3 py-3 shrink-0">
       {/* Left */}
       <div className="flex items-center gap-3">
         {isDetailRoute ? (

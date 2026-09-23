@@ -19,7 +19,7 @@ export default function EditProfileScreen() {
   const { patient, isLoading, refetch } = useGetMe();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (payload: EditProfile) =>
+    mutationFn: (payload: FormData) =>
       patientService.editProfile(payload),
 
     onSuccess: (response) => {

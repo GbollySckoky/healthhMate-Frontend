@@ -182,7 +182,7 @@ export const patientService = {
   createProfile: async (payload: Profile) => {
       return await api.post(PATIENTS_ENDPOINTS.CREATE_PROFILE, payload)
   },
-  editProfile: async (payload: EditProfile) => {
+  editProfile: async (payload: FormData) => {
       return await api.post(PATIENTS_ENDPOINTS.CREATE_PROFILE, payload)
   },
   createSupportTicket: async (id:string, payload: SUPPORT_TICKET) => {
