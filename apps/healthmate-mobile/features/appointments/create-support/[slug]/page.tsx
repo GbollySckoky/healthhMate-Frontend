@@ -22,10 +22,11 @@ const CATEGORY_OPTIONS = ["ACCOUNT", "APPOINTMENT", "BILLING", "TECHNICAL", "MED
 
 const URL_REGEX = /^(https?:\/\/)[^\s$.?#].[^\s]*$/i;
 
-const Page = ({ appointmentId }: { appointmentId: string }) => {
+const Page = () => {
   const queryClient = useQueryClient();
   const params = useParams()
   const id = String(params.slug)
+  const appointmentId = id
   const router = useRouter()
 
   const [inputValue, setInputValue] = useState<InputValue>({
