@@ -85,7 +85,7 @@ const AllAppointments = () => {
         {isError && <TableRow><TableCell colSpan={4} className="py-10 text-center text-sm text-[#B42318]">{(error as Error).message || "Unable to load appointments"}</TableCell></TableRow>}
         {!isLoading && !isError && appointments.length === 0 && <TableRow><TableCell colSpan={4} className="py-10 text-center text-sm text-[#414651]">No appointments found for this department.</TableCell></TableRow>}
         {!isLoading && !isError && appointments.map((appointment, index) => {
-          const { id, doctor, date, time, status, consultationType, approvalStatus } = appointment;
+          const { id, doctor, date, time, status, consultationType, approvalStatus, payments } = appointment;
           return (
             <TableRow key={id} className="hover:bg-transparent">
               <TableCell colSpan={4} className="whitespace-normal p-3 ">
@@ -104,7 +104,14 @@ const AllAppointments = () => {
                     </div>
                   </div>
                   <div className="mt-[15px] border-t-2 border-[#F8F8F8] pt-3 ">
-                    {approvalStatus === "PENDING" ? <p className="text-sm text-[#717680] text-center">Once approved, you can message Dr. {CapitalizeName(doctor?.firstName)}</p> : (
+                    {approvalStatus === "PENDING" ? 
+                    <p className="text-sm text-[#717680] text-center">Once approved, you can message Dr. {CapitalizeName(doctor?.firstName)}</p> 
+                    : payments?.[0]?.status === "FAILED" ||
+                      payments?.[0]?.status === "CANCELLED" ? (
+                      <p className="text-sm text-white text-center bg-red-800 p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80">
+                        This appointment cannot proceed because the payment was unsuccessful.
+                      </p>
+                    ) : (
                       <button 
                         type="button" 
                         onClick={(event) => { event.stopPropagation(); router.push(`/appointments/message/${id}`); }} 
