@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/ta
 import Appointment from './Appointment'
 import Image from 'next/image'
 import image from '@/assets/Image.png'
-import { Trash2 } from 'lucide-react'
+// import { Trash2 } from 'lucide-react'
 import Overview from './Overview'
 import Documents from './Documents'
 import { useQuery } from '@tanstack/react-query'
@@ -52,10 +52,10 @@ const Page = () => {
                     </div>
                     </div>
 
-                    <button className="text-inter font-semibold text-[14px] text-white flex items-center space-x-2 bg-red-600 rounded-lg p-3 cursor-pointer">
+                    {/* <button className="text-inter font-semibold text-[14px] text-white flex items-center space-x-2 bg-red-600 rounded-lg p-3 cursor-pointer">
                     <Trash2 size={15} className="mr-2" />
                     Deactivate Doctor
-                    </button>
+                    </button> */}
                 </div>
                 )}
                 <Tabs defaultValue="overview" className='bg-white mt-4'>

@@ -8,9 +8,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/lib/components/ui/table";
-import Paginate from "@/lib/components/ui/paginate";
+// import Paginate from "@/lib/components/ui/paginate";
 import { APPOINTMENT } from "@/lib/interface/appointment";
 import { DoctorAppointmentSkeleton } from "@/components/ui/DoctorDetailsSkeleton";
+import { CapitalizeName } from "@/lib/constant/capitalizeName";
 
 const Appointment = ({
   appointments,
@@ -75,7 +76,7 @@ const Appointment = ({
                   </TableCell>
 
                   <TableCell className="font-inter text-[12px] text-grey-20">
-                    {appointment.consultationType || "-"}
+                    {CapitalizeName(appointment.consultationType).replaceAll("_", " ") || "-"}
                   </TableCell>
 
                   <TableCell className="font-inter text-[14px] text-grey-20">
@@ -110,7 +111,7 @@ const Appointment = ({
         )}
       </Table>
 
-      <Paginate />
+      {/* <Paginate /> */}
     </div>
   );
 };

@@ -270,7 +270,7 @@ const Approved = () => {
                                 'Deactivate this Doctor?',
                               className: 'max-w-lg',
                               onClose: () => {},
-                              confirmDelete() {},
+                            //   confirmDelete() {},
                             })
                           }> <Trash2 color="#F04438" size={15}/>
                           </TableCell>
