@@ -57,6 +57,21 @@ const formatConsultationType = (consultationType?: string) => {
   );
 };
 
+const getPaymentStatusClass = (status?: string) => {
+  switch (status?.toUpperCase()) {
+    case "SUCCESS":
+    case "COMPLETED":
+      return "text-green-600";
+    case "FAILED":
+    case "CANCELLED":
+      return "text-red-600";
+    case "PENDING":
+      return "text-amber-600";
+    default:
+      return "text-[#414651]";
+  }
+};
+
 const AppointmentDetails = () => {
   const params = useParams();
   const rawId = params?.slug;
@@ -91,6 +106,11 @@ const AppointmentDetails = () => {
   const doctorImage = appointmentDetails ? getDoctorImage(appointmentDetails.doctor) : null;
 
   const detailItems = [
+    {
+      text: appointmentDetails?.payments?.[0]?.status || 'N/A',
+      title: "Payment Status",
+      textClassName: getPaymentStatusClass(appointmentDetails?.payments?.[0]?.status),
+    },
     {
       text: appointmentDetails?.note || "No consultation note added yet for this appointment.",
       title: "Approval/Rejection Note",
@@ -152,12 +172,7 @@ const AppointmentDetails = () => {
   };
 
   const handleReportIssue = (id: string) => {
-    // openModal(<CreateSupportTicket appointmentId={appointmentId as string} />, {
-    //   title: "Create Support Ticket",
-    //   description: "",
-    //   className: "max-w-2xl",
-    //   onClose: () => {},
-    // });
+
     router.push(`/appointments/create-support/${id}`);
   };
 
@@ -225,7 +240,11 @@ const AppointmentDetails = () => {
                     <p className="font-lato text-sm text-[#414651] font-medium mb-1">{title}</p>
                     <div className="flex flex-row items-center">
                       {icon && <span className="mr-1.5">{icon}</span>}
-                      <p className="font-lato text-xs text-[#414651] font-normal not-italic">
+                      <p
+                        className={`font-lato text-xs font-normal not-italic ${
+                          item.textClassName || "text-[#414651]"
+                        }`}
+                      >
                         {text}
                       </p>
                     </div>
@@ -304,16 +323,22 @@ const AppointmentDetails = () => {
           </Card>
 
           <BtnFlex>
-            {appointmentDetails.approvalStatus === "PENDING" ?
-             <p 
-              className="text-sm text-white text-center bg-red-800 p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80"
-              aria-disabled>
+            {appointmentDetails.approvalStatus === "PENDING" ? (
+              <p
+                className="text-sm text-gray-600 border border-border text-center bg-white p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80"
+                aria-disabled
+              >
                 Once approved, you can message Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}.
-            </p> : (
-            <RescheduleBtn _fn={() => handleMessagePress(appointmentDetails.id)} className="flex text-gray-600">
-              {/* <span className="mr-[5px]" > <MessageCircleMore size={20} /></span>    */}
-              Messsag Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}
-            </RescheduleBtn>
+              </p>
+            ) : appointmentDetails.payments?.[0]?.status === "FAILED" ||
+              appointmentDetails.payments?.[0]?.status === "CANCELLED" ? (
+              <p className="text-sm text-gray-600 border border-border text-center bg-white p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80">
+                This appointment cannot proceed because the payment was unsuccessful.
+              </p>
+            ) : (
+              <RescheduleBtn _fn={() => handleMessagePress(appointmentDetails.id)} className="flex text-gray-600">
+                Messsag Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}
+              </RescheduleBtn>
             )}
             {/* <JoinBtn _fn={() => router.push(ROUTES.home)}>Join Call</JoinBtn> */}
           </BtnFlex>

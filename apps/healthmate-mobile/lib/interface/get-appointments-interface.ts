@@ -48,6 +48,7 @@ export interface GetAppointment {
   user: AppointmentUser | null;
   hospital?: AppointmentHospital | null;
   approvalStatus: string
+  payments: Payments[]
 }
 
 export interface PaginationMeta {
@@ -66,4 +67,8 @@ export interface GetAppointmentsResponse {
 export interface GetAppointmentDetailsResponse {
   data: GetAppointment;
   message: string;
+}
+
+export interface Payments {
+  status: string
 }

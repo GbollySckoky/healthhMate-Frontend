@@ -6,20 +6,21 @@ import DateInput from '@/components/Inputs/Date'
 import { DisplayFlex } from '@/components/ui/Reusable'
 import { useHospitalForm } from '@/lib/context/HospitalContextForm'
 import { useMutation } from '@tanstack/react-query'
-import { Register } from '@/lib/interface/register.interface'
+// import { Register } from '@/lib/interface/register.interface'
 import { Hospital_Admin } from '@/lib/service/service'
+// import { Profile } from '@/lib/interface/register.interface'
 
 const Doctor = ({handleNextStep}: {handleNextStep: () => void}) => {
     const {hospitalFormData, updateHospitalData} = useHospitalForm()
     
     const mutation = useMutation({
-        mutationFn: (payload: Register) => Hospital_Admin.createProfile(payload),
+        mutationFn: (payload: any) => Hospital_Admin.createProfile(payload),
         onSuccess: (response) => {
             console.log(response)
             handleNextStep()
           // Handle success
         },
-        onError: (error: any) => {
+        onError: (error: unknown) => {
             console.log(error)
           // Handle error
         }

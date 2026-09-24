@@ -14,12 +14,12 @@ export const Hospital_Admin = {
     login: async (payload: LogIn) => {
         return await api.post(ADMIN_ENDPOINTS.LOGIN, payload); 
     },
-    createProfile: async (payload: Profile) => {
+    createProfile: async (payload: any) => {
         return await api.post(ADMIN_ENDPOINTS.CREATE_HOSPITAL_PROFILE, payload); 
     },
-    getAllDoctor: async(q: string, page = 1, limit = 10) => {
+    getAllDoctor: async(q: string = "", page = 1, limit = 10) => {
         const searchParams = new URLSearchParams({
-            q: q,
+            q: q.toString(),
             page: page.toString(),
             limit: limit.toString()
         })
@@ -40,9 +40,9 @@ export const Hospital_Admin = {
     createBranch: async (payload: BRANCH_INTERFACE) => {
         return await api.post(ADMIN_ENDPOINTS.CREATE_BRANCH, payload); 
     },
-    getBranch: async( q: string, page = 1, limit = 10) => {
+    getBranch: async( q: string = "", page = 1, limit = 10) => {
         const searchParams = new URLSearchParams({
-            q: q,
+            q: q.toString(),
             page: page.toString(),
             limit: limit.toString()
         })

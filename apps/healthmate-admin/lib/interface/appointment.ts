@@ -12,6 +12,9 @@ export interface APPOINTMENT {
   note: any
   createdAt: string
   updatedAt: string
+  user?: User
+  doctor?: Doctor
+  hospital?: Hospital
 }
 
 

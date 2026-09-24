@@ -42,7 +42,7 @@ const AssignBranch = () => {
     const isDisabled = Object.values(inputValue).some((v) => v === '')
 
     const { data, isLoading } = useQuery({
-        queryKey: ['branch'],
+        queryKey: ['branch', inputValue],
         queryFn: () => Hospital_Admin.getBranch(),
     })
     console.log('DATA!!', data)
