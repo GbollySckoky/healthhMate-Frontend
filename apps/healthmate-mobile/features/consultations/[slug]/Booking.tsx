@@ -145,14 +145,16 @@ const Booking = ({ consultation, id }: BookingProps) => {
       <BookingSummary amount={consultationFee} />
 
       {/* Submit */}
-      <button
-        type="button"
-        disabled={isDisabled}
-        onClick={handleSubmit}
-        className="w-full rounded-lg bg-pink-600 py-3 font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {getButtonLabel()}
-      </button>
+      <div className="mb-[15px]">
+        <button
+          type="button"
+          disabled={isDisabled}
+          onClick={handleSubmit}
+          className="w-full rounded-lg bg-pink-600 py-3 font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50 mb-[45px]"
+        >
+          {getButtonLabel()}
+        </button>
+      </div>
     </div>
   );
 };
