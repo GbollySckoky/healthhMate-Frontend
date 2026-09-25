@@ -21,20 +21,6 @@ const VerifyCode = ({handleNextStep}: {handleNextStep: (value: number) => void})
     e.preventDefault()
     handleNextStep(STEP.THREE)
     setIsLoading(true)
-
-    // try {
-    //   const code = otp.join('')
-    //   console.log('Verification attempt:', code)
-
-    //   // simulate API call
-    //   await new Promise(resolve => setTimeout(resolve, 1000))
-
-    //   // handle success (redirect, etc.)
-    // } catch (error) {
-    //   console.error('Verification error:', error)
-    // } finally {
-    //   setIsLoading(false)
-    // }
   }
 
   return (

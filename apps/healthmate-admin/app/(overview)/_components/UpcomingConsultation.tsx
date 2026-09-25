@@ -24,7 +24,7 @@ const UpcomingConsultation = () => {
   const upcomingConsultation = datas.filter(
     (item: GET_ALL_APPOINTMENTS) => item.status === STATUS.UPCOMING
   )
-  console.log(upcomingConsultation, "DATA!!")
+
   return (
     <div className="bg-white rounded-lg border border-gray-200 w-full h-[400px] flex flex-col">
     {/* Fixed header */}

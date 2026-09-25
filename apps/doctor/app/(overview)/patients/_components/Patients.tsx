@@ -85,7 +85,6 @@ const Patients = () => {
     });
     
     const patients = data?.data || []
-    console.log(patients)
      useEffect(() => {
         if (data?.meta) {
           setPagination((prev) => ({

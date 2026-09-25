@@ -4,7 +4,6 @@ import { Hospital_Admin } from '../service/service';
 
 const useGetApprovedPatients = () => {
     const [inputValue, setInputValue] = useState<string>('')
-    // const [selectValue, setSelectValue] = useState('')
     const [debounceSearchQuery, setDebounceSearchQuery] = useState("")
      const [pagination, setPagination] = useState({
         page: 1,
@@ -31,7 +30,6 @@ const useGetApprovedPatients = () => {
         });
         
         const patients = data?.data || []
-        console.log(patients)
          useEffect(() => {
             if (data?.meta) {
               setPagination((prev) => ({
@@ -41,6 +39,7 @@ const useGetApprovedPatients = () => {
               }));
             }
           }, [data]);
+
   return {inputValue, setInputValue, setDebounceSearchQuery, patients ,isLoading, error, isError, pagination, setPagination, activeStatus, setActiveStatus }
 }
 

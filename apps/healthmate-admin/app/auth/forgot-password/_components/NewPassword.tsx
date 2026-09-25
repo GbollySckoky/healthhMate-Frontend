@@ -1,6 +1,5 @@
 "use client"
 import AuthPassword from '@/components/Inputs/AuthPassword'
-import { STEP } from '@/lib/interface/step'
 import React, { useState } from 'react'
 
 const NewPassword = ({handleNextStep}: {handleNextStep: () => void}) => {
@@ -17,27 +16,11 @@ const NewPassword = ({handleNextStep}: {handleNextStep: () => void}) => {
           [name]: value
         }));
     };
-    console.log(inputValue)
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         handleNextStep()
         setIsLoading(true);
-   
-        // try {
-        //     // Add your authentication logic here
-        //     console.log('Login attempt:', inputValue);
-            
-        //     // Simulate API call
-        //     await new Promise(resolve => setTimeout(resolve, 1000));
-            
-        //     // Handle successful login (redirect, etc.)
-            
-        // } catch (error) {
-        //     console.error('Login error:', error);
-        //     // Handle login error
-        // } finally {
-        //     setIsLoading(false);
-        // }
     };
   return (
     <div className=' w-full max-w-md'>

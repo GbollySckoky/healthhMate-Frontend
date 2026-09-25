@@ -13,7 +13,6 @@ const useCall = () => {
       toast.success(response.data?.message ?? 'Call session canceled successfully');
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.error('Failed to cancel call session:', error);
       toast.error(error?.response?.data?.message ?? 'Failed to cancel call session');
     },
   });
@@ -26,7 +25,6 @@ const useCall = () => {
       toast.success(response.data?.message ?? 'Call session ended successfully');
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.error('Failed to end call session:', error);
       toast.error(error?.response?.data?.message ?? 'Failed to end call session');
     },
   });

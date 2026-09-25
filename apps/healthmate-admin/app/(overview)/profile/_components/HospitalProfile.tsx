@@ -86,7 +86,6 @@ const HospitalProfile = () => {
 
     // call your API here
     mutation.mutate(formData as unknown as Profile);
-    // console.log(Object.fromEntries(formData));
   };
 
   return (

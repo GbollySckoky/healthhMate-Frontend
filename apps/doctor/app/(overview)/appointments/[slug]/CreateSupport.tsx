@@ -62,7 +62,7 @@ const CreateSupport = ({ appointmentDetails }: { appointmentDetails: APPOINTMENT
     mutationFn: (payload: SUPPORT_TICKET) =>
       Doctor.createSupportTicket(payload),
     onSuccess: (response) => {
-      console.log('Support ticket created successfully:', response.data);
+      toast.success(response.data?.message);
       closeModal();
     },
     onError: (error: AxiosError<{ message: string }>) => {

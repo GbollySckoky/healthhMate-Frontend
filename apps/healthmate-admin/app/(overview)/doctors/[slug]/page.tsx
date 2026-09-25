@@ -24,10 +24,8 @@ const Page = () => {
         queryFn: () => Hospital_Admin.getDoctorDetails(String(hospitalId)),
         enabled: !!hospitalId
     });
-    console.log('DATA!!', data?.data)
+    
     const doctorDetails = data?.data || {}
-    console.log('DOCTOR DETAILS!!', doctorDetails)
-    console.log("Appoint:", doctorDetails.appointments)
     const capitalize = (value?: string) =>
         value ? value.charAt(0).toUpperCase() + value.slice(1) : "";
   return (
@@ -51,11 +49,6 @@ const Page = () => {
                         </p>
                     </div>
                     </div>
-
-                    {/* <button className="text-inter font-semibold text-[14px] text-white flex items-center space-x-2 bg-red-600 rounded-lg p-3 cursor-pointer">
-                    <Trash2 size={15} className="mr-2" />
-                    Deactivate Doctor
-                    </button> */}
                 </div>
                 )}
                 <Tabs defaultValue="overview" className='bg-white mt-4'>

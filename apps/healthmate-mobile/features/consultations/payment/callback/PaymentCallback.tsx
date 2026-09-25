@@ -13,6 +13,7 @@ import {
 
 import useVerifyPayment from "@/hooks/useVerifyPayment";
 import { ROUTES } from "@/constants/route";
+import { toast } from "react-toastify";
 
 const PaymentCallback = () => {
   const router = useRouter();
@@ -43,6 +44,7 @@ const PaymentCallback = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
+      toast.error("Failed to copy payment reference:");
       console.error("Failed to copy payment reference:", error);
     }
   };

@@ -2,16 +2,10 @@ import { transactionData } from '@/components/data';
 import { Card, MediumText, Value } from '@/components/ui/Reusable';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
-import { TransactionsPage } from './TransactionTable';
-// import useGetEarningStats from '@/lib/hooks/useGetEarningStats';
+import { TransactionsPage } from './TransactionTable'
 
 
 const Transactions = () => {
-//     const {
-//     earningStats,
-//     isLoading,
-//   } = useGetEarningStats();
-//   console.log(earningStats)
   return (
     <div>
         <Card className='flex items-center gap-4'>

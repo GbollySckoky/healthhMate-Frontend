@@ -107,7 +107,7 @@ const SupportTicketDetailScreen = () => {
   const params = useParams();
 
   const id = params?.slug as string;
-  console.log('ID:', id);
+
   const queryClient = useQueryClient();
 
   const [inputValue, setInputValue] =
