@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { MapPin, X } from "lucide-react";
-import profile from "@/assets/Ellipse 165.png";
+import profile from "@/assets/default.jpg";
 import Booking from "./Booking";
 import { CapitalizeName } from "@/constants/capitalizeName";
 
@@ -13,19 +13,20 @@ interface BookDoctorProps {
 }
 
 const BookDoctor = ({ consultation, onClose, id }: BookDoctorProps) => {
+  console.log(consultation)
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 mt-[50px]">
       <div className="relative flex max-h-[95vh] w-full max-w-5xl flex-col overflow-hidden bg-[#F8F9FC] shadow-2xl">
 
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-6 py-5">
           <div className="flex items-center gap-4">
             <Image
-              src={profile}
+              src={consultation?.profile.profilePicture || profile}
               alt={`${consultation?.firstName} ${consultation?.lastName}`}
               width={70}
               height={70}
-              className="rounded-full object-cover"
+              className="rounded-full object-cover border border-border"
               loading="lazy"
             />
 
@@ -35,8 +36,8 @@ const BookDoctor = ({ consultation, onClose, id }: BookDoctorProps) => {
                 {CapitalizeName(consultation?.lastName) || ""}
               </p>
 
-              <p className="mt-1 text-sm font-medium text-pink-600">
-                {consultation?.profile?.specialization ||
+              <p className="mt-1 text-sm font-medium text-gray-500">
+                {consultation?.department ||
                   "n/a"}
               </p>
 
