@@ -10,22 +10,6 @@ const ForgotPassword = ({handleNextStep}: {handleNextStep: () => void}) => {
         e.preventDefault();
         handleNextStep()
         setIsLoading(true);
-   
-        // try {
-        //     // Add your authentication logic here
-        //     console.log('Login attempt:', inputValue);
-            
-        //     // Simulate API call
-        //     await new Promise(resolve => setTimeout(resolve, 1000));
-            
-        //     // Handle successful login (redirect, etc.)
-            
-        // } catch (error) {
-        //     console.error('Login error:', error);
-        //     // Handle login error
-        // } finally {
-        //     setIsLoading(false);
-        // }
     };
   return (
     <div className=' w-full max-w-md'>

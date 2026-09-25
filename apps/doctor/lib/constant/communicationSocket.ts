@@ -1,5 +1,6 @@
 import { io, Socket } from "socket.io-client";
 import { Message } from "../interface/communication";
+import { toast } from "react-toastify";
 
 let socket: Socket | null = null;
 let socketToken: string | null = null;
@@ -31,15 +32,15 @@ export function connectCommunicationSocket(token: string) {
     });
 
     socket.on("connect", () => {
-        console.log("✅ Communication socket connected:", socket?.id);
+        console.log("Communication socket connected:", socket?.id);
     });
 
     socket.on("disconnect", (reason) => {
-        console.log("❌ Communication socket disconnected:", reason);
+        console.log("Communication socket disconnected:", reason);
     });
 
     socket.on("connect_error", (error) => {
-        console.error("❌ SOCKET CONNECT ERROR:", error);
+        console.error("SOCKET CONNECT ERROR:", error);
     });
 
     return socket;
@@ -68,16 +69,16 @@ export function joinCommunication (
     communicationId: string
 ) {
     if(!communicationId){
-        console.error("Cannot join communication: communicationId is missing");
-        console.log("Cannot join communication: communicationId is missing");
+        toast.error("Cannot join communication: communicationId is missing");
+        // console.log("Cannot join communication: communicationId is missing");
         return
     }
 
     if(!communicationSocket.connected){
         communicationSocket.once('connect', () => {
-            console.log(
-            "Joining communication after socket connected:",
-            communicationId
+            toast.error(
+            "Joining communication after socket connected:"
+            // communicationId
         );
         })
 
@@ -87,8 +88,6 @@ export function joinCommunication (
 
         return
     }
-
-    console.log("Joining communication:", communicationId);
 
   communicationSocket.emit("joinCommunication", {
     communicationId,
@@ -102,12 +101,12 @@ export function sendMessage(
     clientTempId?: string
 ){
     if (!communicationId) {
-        console.error("Cannot send message: communicationId is missing");
+        toast.error("Cannot send message: communicationId is missing");
         return;
     }
 
     if (!content.trim()) {
-        console.error("Cannot send message: message is empty");
+        toast.error("Cannot send message: message is empty");
         return;
     }
 
@@ -118,7 +117,7 @@ export function sendMessage(
   };
 
   if (!communicationSocket.connected) {
-    console.log("Socket not connected yet. Waiting to send message...");
+    toast.error("Socket not connected yet. Waiting to send message...");
 
     communicationSocket.once("connect", () => {
       console.log("Socket connected. Sending message:", communicationId);
@@ -128,7 +127,7 @@ export function sendMessage(
     return;
   }
 
-  console.log("Socket sending message:", communicationId);
+  // console.log("Socket sending message:", communicationId);
 
   communicationSocket.emit("sendMessage", payload);
 }
@@ -142,7 +141,7 @@ export function markMessageRead(
   messageId: string
 ) {
   if (!messageId) {
-    console.error("Cannot mark message as read: messageId is missing");
+    toast.error("Cannot mark message as read: messageId is missing");
     return;
   }
 
@@ -206,7 +205,7 @@ export function offIncomingCall(callback: (data: unknown) => void) {
 
 export function disconnectCommunicationSocket() {
   if (socket) {
-    console.log("Disconnecting communication socket...");
+    toast.error("Disconnecting communication socket...");
     socket.disconnect();
   }
   socket = null;

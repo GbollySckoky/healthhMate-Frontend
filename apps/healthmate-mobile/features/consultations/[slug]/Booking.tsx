@@ -28,7 +28,7 @@ interface BookingForm {
 
 const Booking = ({ consultation, id }: BookingProps) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
-  console.log(consultation)
+
   const [form, setForm] = useState<BookingForm>({
     date: new Date().toISOString().split("T")[0],
     time: "",
@@ -46,7 +46,6 @@ const Booking = ({ consultation, id }: BookingProps) => {
 
   const {
     createBooking,
-    // isBooking,
     isPaymentProcessing,
     isProcessing,
   } = useBooking(id);
@@ -77,8 +76,6 @@ const Booking = ({ consultation, id }: BookingProps) => {
       time: form.time,
       consultationType: form.consultationType,
       healthConcern: form.healthConcern.trim(),
-      // doctorId: consultation?.id,
-      // hospitalId: consultation?.hospital?.id,
       amount: consultationFee,
     };
 
@@ -94,9 +91,6 @@ const Booking = ({ consultation, id }: BookingProps) => {
   const isDisabled = isFormInvalid || isProcessing;
 
   const getButtonLabel = () => {
-    // if (isBooking) {
-    //   return "Booking appointment...";
-    // }
 
     if (isPaymentProcessing) {
       return "Redirecting to payment...";

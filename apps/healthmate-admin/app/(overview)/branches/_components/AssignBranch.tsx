@@ -5,6 +5,7 @@ import { Hospital_Admin } from '@/lib/service/service';
 import { ASSIGN_BRANCH } from '@/lib/interface/branch.interface';
 import { AxiosError } from 'axios';
 import { useModal } from '@/components/Modal/Modal';
+import { toast } from 'react-toastify';
 
 const SELECT_CLASS =
   'border border-gray-300 rounded-md py-2 focus:outline-none focus:ring-1  w-full text-sm'
@@ -22,7 +23,7 @@ const AssignBranch = () => {
         branchId: "",
         doctorIds: [],
     });
-    console.log(inputValue)
+
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
         setInputValue((prev) => ({
@@ -45,23 +46,21 @@ const AssignBranch = () => {
         queryKey: ['branch', inputValue],
         queryFn: () => Hospital_Admin.getBranch(),
     })
-    console.log('DATA!!', data)
 
-    // const hospitalId = 1;
     const { data: doc, isLoading: docLoading } = useQuery({
         queryKey: ['getAllDoctor'],
         queryFn: () => Hospital_Admin.getAllDoctor(),
         // enabled: !!hospitalId
     });
-    console.log(doc)
+
     const mutation = useMutation({
         mutationFn: (payload: ASSIGN_BRANCH) => Hospital_Admin.assignBranch(payload),
         onSuccess: (response) => {
-            console.log('Doctor created successfully:', response)
+            toast.success( response.data.message)
             closeModal()
         },
         onError: (error: AxiosError<{ message: string }>) => {
-          console.error('Error creating doctor:', error.response?.data?.message)
+          toast.error(error.response?.data?.message)
         },
     })
 
@@ -73,8 +72,7 @@ const AssignBranch = () => {
             doctorIds: inputValue.doctorIds,
         };
         mutation.mutate(data)
-        console.log("DATA!!", data)
-        // await mutation.mutateAsync(data) 
+
     }
   return (
     <form className=" " onSubmit={handleSubmit}>

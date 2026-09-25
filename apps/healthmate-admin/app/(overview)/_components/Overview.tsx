@@ -19,7 +19,6 @@ const Overview = () => {
         queryKey: ['stats'],
         queryFn: () => Hospital_Admin.getStats(),
     })
-    console.log('DATA!!', data?.data)
 
     const stats = data?.data;
     const overviewData = [

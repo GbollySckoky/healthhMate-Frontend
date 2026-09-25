@@ -21,14 +21,13 @@ const Overview = () => {
         year: "numeric",
         month: "long",
     })
-    console.log(today) 
     const {greeting} = useGreeting()
     const {myData} = useGetMe()
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['getStats'],
         queryFn: () => Doctor.getStats(),
     })
-    console.log('DATA!!', data?.data)
+
 
     const stats = data?.data;
     const overviewData = [

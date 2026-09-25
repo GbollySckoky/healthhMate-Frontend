@@ -6,7 +6,7 @@ const EarningsPage = () => {
         earningStats,
         isLoading,
     } = useGetEarningStats();
-      console.log(earningStats)
+
       const earningData = [
     {
       id: 2,

@@ -92,14 +92,12 @@ export default function AvailabilityPage() {
   const [draftTimes, setDraftTimes] = useState<string[]>([]);
   const [draftConsultationTypes, setDraftConsultationTypes] = useState<string[]>([]);
   const [availabilityEvents, setAvailabilityEvents] = useState<Availability[]>([]);
-  console.log(draftConsultationTypes)
   const selectedEvent = availabilityEvents.find(
     (event) => event.dayOfWeek === selectedDay
   );
 
   const queryClient = useQueryClient()
   const {doctorAvailability, isLoading, isError, error} = useGetDoctorAvailability()
-  console.log(doctorAvailability)
 
   const selectedDayTimes = selectedEvent?.availableTimeSlots || [];
   const selectedConsultations = selectedEvent?.consultationType || [];
@@ -175,7 +173,6 @@ export default function AvailabilityPage() {
     onSuccess: (response) => {
       toast.success(response.data.message)
       queryClient.invalidateQueries({queryKey: ['getDoctorAvailability']})
-      console.log(response)
     },
     onError: (error: AxiosError<{message: string}>) => {
       toast.error(error.response?.data.message)
@@ -188,8 +185,6 @@ export default function AvailabilityPage() {
       availableTimeSlots: draftTimes,
       consultationType: draftConsultationTypes
     }
-
-    console.log("JAMES", payload)
     await mutation.mutateAsync(payload)
   }
 

@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query'
 import { Hospital_Admin } from '@/lib/service/service'
 import { LogIn } from '@/lib/interface/login.interface'
 import { AxiosError } from 'axios'
+import { toast } from 'react-toastify'
 
 
 const Page = () => {
@@ -32,14 +33,12 @@ const Page = () => {
     const mutation = useMutation({
         mutationFn: (payload: LogIn) => Hospital_Admin.login(payload),
         onSuccess: (response) => {
-            console.log(response)
             localStorage.setItem('access_token', response.data.access_token)
+            toast.success(response.data.message ?? 'Login successful.')
             router.push(ROUTES.dashboard)
-          // Handle success
         },
-        onError: (error: AxiosError) => {
-            console.log(error)
-          // Handle error
+        onError: (error: AxiosError<{message: string}>) => {
+            toast.error(error?.response?.data?.message)
         }
     })
 

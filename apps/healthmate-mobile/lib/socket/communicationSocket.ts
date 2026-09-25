@@ -25,7 +25,7 @@ export function connectCommunicationSocket(token: string): Socket {
   socketToken = token;
 
   socket = io(
-    "https://healthcare-backend-5y5b.onrender.com/communications",
+    process.env.NEXT_PUBLIC_WEBSOCKET_API_URL,
     {
       auth: {
         token,

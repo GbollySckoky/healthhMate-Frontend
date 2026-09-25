@@ -43,12 +43,11 @@ const EditProfile = () => {
   const mutation = useMutation({
     mutationFn: (payload: FormData) => Doctor.createProfile(payload),
     onSuccess: (response) => {
-      console.log(response.data);
+      toast.success(response.data.message);
       queryClient.invalidateQueries({ queryKey: ['getDoctor'] })
       closeModal();
     },
     onError: (error: AxiosError<{message: string}>) => {
-      console.log(error?.response?.data);
       toast.error(error?.response?.data.message)
     },
   });
@@ -66,10 +65,6 @@ const EditProfile = () => {
 
     if (inputValue.profilePicture instanceof File && inputValue.profilePicture.size > 0) {
       formData.append("profilePicture", inputValue.profilePicture);
-    }
-
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
     }
 
     await mutation.mutateAsync(formData);

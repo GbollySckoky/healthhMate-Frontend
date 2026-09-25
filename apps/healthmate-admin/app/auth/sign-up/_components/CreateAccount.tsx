@@ -11,6 +11,7 @@ import { Hospital_Admin } from '@/lib/service/service'
 import { Signup as SIGN_UP } from '@/lib/interface/signup-interface'
 import { AxiosError } from 'axios'
 import DateInput from '@/components/Inputs/Date'
+import { toast } from 'react-toastify'
 
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
     const [inputValue, setInputValue] = useState<Signup>({
@@ -30,14 +31,13 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
     const mutation = useMutation({
         mutationFn: (payload: SIGN_UP) => Hospital_Admin.signup(payload),
         onSuccess: (response) => {
-            console.log("hello",response)
+            toast.success(response.data.message)
             localStorage.setItem('access_token', response.data.access_token);
             handleNextStep(STEP.TWO)
 
         },
-        onError: (error: AxiosError) => {
-            console.log(error)
-          // Handle error
+        onError: (error: AxiosError<{message: string | undefined}>) => {
+          toast.error(error?.response?.data?.message)
         }
     })
 
@@ -60,9 +60,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
             password: inputValue.password ?? '',
             confirmPassword: inputValue.confirmPassword ?? ''
         }
-        console.log("Submitting data:", data);
         await mutation.mutate(data)
-        //  handleNextStep(STEP.TWO)
     };
 
     const disabled = mutation.isPending || !inputValue.workEmail || !inputValue.password ||
@@ -89,13 +87,6 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                     name='hospitalName'
                     onChange={handleChange}
                 />
-                {/* <AuthInput
-                    label='Date Of Establishment'
-                    placeholder='19/06/2026'
-                    value={inputValue.dateOfEstablishment}
-                    name='dateOfEstablishment'
-                    onChange={handleChange}
-                /> */}
                 <DateInput 
                     label='Date Of Establishment'
                     placeholder='19/06/2026'
