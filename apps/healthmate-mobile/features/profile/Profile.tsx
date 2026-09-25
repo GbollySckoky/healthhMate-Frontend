@@ -143,7 +143,7 @@ const Profile = () => {
   const { patient, isLoading, isError, error } = useGetMe();
   const { logout } = useAuth();
   const [openModal, setOpenModal] = useState(false);
-  console.log(patient)
+
   const handleDisplay = () => setOpenModal((v) => !v);
   const navigate = () => router.push(ROUTES.editProfileName);
   // const handleMenuNavigation = (route: string) => router.push(route);

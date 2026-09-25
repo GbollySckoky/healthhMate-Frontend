@@ -27,18 +27,13 @@ const LoginPage = () => {
   const loginMutation = useMutation({
     mutationFn: (payload: { email: string; password: string }) => patientService.login(payload),
     onSuccess: (response) => {
-      console.log('access_token', response.data.access_token);
       storageService.setAuthToken(response.data.access_token);
-    //   setToast({ type: 'success', message: 'Logged in successfully' });
+      toast.success('Logged in successfully')
       router.push(ROUTES.home);
     },
     onError: (error: AxiosError<{message: string}>) => {
-      console.log('ERROR!!!!', error?.response?.data?.message);
       toast.error(error?.response?.data?.message)
-    //   setToast({ type: 'error', message: error.response.data.message });
     },
-    // retry: 3,
-    // retryDelay: 1000,
   });
 
   const handleLogin = (e: FormEvent) => {
@@ -51,7 +46,6 @@ const LoginPage = () => {
   };
 
   const isPending = loginMutation.isPending;
-  // const isAuthPage = pathname === "/auth/login" || pathname === "/auth/register" || pathname === "/forgot-password";
   
   return (
     <div className="flex justify-center items-center w-screen h-screen ">

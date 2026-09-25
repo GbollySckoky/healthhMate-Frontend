@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from "react-toastify";
 
+
 const useCall = () => {
   const cancelCallSession = useMutation({
     mutationKey: ['cancelCallSession'],
@@ -13,7 +14,6 @@ const useCall = () => {
       toast.success(response.data?.message ?? 'Call session canceled successfully');
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.error('Failed to cancel call session:', error);
       toast.error(error?.response?.data?.message ?? 'Failed to cancel call session');
     },
   });
@@ -24,10 +24,8 @@ const useCall = () => {
       patientService.endCallSession(callSessionId),
     onSuccess: (response) => {
       toast.success(response.data?.message ?? 'Call session ended successfully');
-      // storageService.removeCallSessionId()
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.error('Failed to end call session:', error);
       toast.error(error?.response?.data?.message ?? 'Failed to end call session');
     },
   });

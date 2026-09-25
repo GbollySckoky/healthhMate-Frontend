@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import Input from '@/components/Input/Input';
 import { SubmitButton } from '@/components/Reusable';
 import { Medication } from '@/lib/interface/medication';
 import { patientService } from '@/service/patientService';
@@ -52,10 +51,6 @@ const MedicationModal = () => {
       },
       onError: (error: AxiosError<{message: string | undefined}>) => {
         toast.error(error.response?.data.message || 'Failed to save medication reading');
-        // Toast.show({
-        //   type: 'error',
-        //   text1: error.response.data.message,
-        // });
       },
     })
   
@@ -64,9 +59,7 @@ const MedicationModal = () => {
         name: inputValue.name,
         dosage: inputValue.dosage,
         recordedAt: inputValue.date,
-        // time: inputValue.time,
       }
-      console.log("PAYLOAD:", data);
       await mutation.mutateAsync(data)
     }
 

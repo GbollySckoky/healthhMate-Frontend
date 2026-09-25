@@ -1,5 +1,5 @@
 import { LogIn } from "../interface/login.interface";
-import { Profile } from "../interface/register.interface";
+// import { Profile } from "../interface/register.interface";
 import { DOCTOR_SIGNUP, Signup } from "../interface/signup-interface";
 import { ADMIN_ENDPOINTS } from "../constant/endpoints";
 import { BRANCH_INTERFACE, ASSIGN_BRANCH } from "../interface/branch.interface";

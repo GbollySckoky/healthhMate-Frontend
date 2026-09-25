@@ -8,6 +8,8 @@ import { useHospitalForm } from '@/lib/context/HospitalContextForm'
 import { useMutation } from '@tanstack/react-query'
 // import { Register } from '@/lib/interface/register.interface'
 import { Hospital_Admin } from '@/lib/service/service'
+import { toast } from 'react-toastify'
+import { AxiosError } from 'axios'
 // import { Profile } from '@/lib/interface/register.interface'
 
 const Doctor = ({handleNextStep}: {handleNextStep: () => void}) => {
@@ -16,13 +18,11 @@ const Doctor = ({handleNextStep}: {handleNextStep: () => void}) => {
     const mutation = useMutation({
         mutationFn: (payload: any) => Hospital_Admin.createProfile(payload),
         onSuccess: (response) => {
-            console.log(response)
+            toast.success(response.data.message)
             handleNextStep()
-          // Handle success
         },
-        onError: (error: unknown) => {
-            console.log(error)
-          // Handle error
+        onError: (error: AxiosError<{message: string}>) => {
+            toast.error(error?.response?.data.message)
         }
     })
     
@@ -44,7 +44,6 @@ const Doctor = ({handleNextStep}: {handleNextStep: () => void}) => {
             formData.append("branchAddress", String(hospitalFormData.register.email || ''));
             formData.append("branchState", String(hospitalFormData.register.branchAddress || ''));
             formData.append("branchPhoneNumber", Number(hospitalFormData.register.branchPhoneNumber || 0));
-            console.log(formData)
         await mutation.mutate(formData)
     };
 

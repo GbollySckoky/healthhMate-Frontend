@@ -2,7 +2,7 @@ import axios from 'axios';
 import { storageService } from '@/constants/storage';
 
 const api = axios.create({
-  baseURL: 'https://healthcare-backend-5y5b.onrender.com/api/v1/',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   // timeout: 15000,
 });
 

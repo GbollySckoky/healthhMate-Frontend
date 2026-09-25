@@ -98,10 +98,6 @@ export const useBooking = (id?:string, { onSuccess }: UseBookingProps = {}) => {
 
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(error.response?.data?.message ?? "Something went wrong");
-      console.log(
-        "Appointment creation failed:",
-        error.response?.data?.message ?? error
-      );
     },
   });
 

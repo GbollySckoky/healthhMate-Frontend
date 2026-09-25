@@ -9,10 +9,9 @@ const useCreateMessage = (communicationId: string) => {
         mutationKey: ['createMessage'],
         mutationFn: (payload: CreateMessage) => patientService.createMessage(communicationId, payload),
         onSuccess: (response) => {
-            console.log(response)
+            toast.success(response.data.message)
         },
         onError: (error: AxiosError<{message: string}>) => {
-            console.log(error)
             toast.error(error?.response?.data?.message ?? "Failed to create message")
         }
     })

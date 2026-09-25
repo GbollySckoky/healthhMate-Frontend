@@ -91,8 +91,6 @@ const MoodModal = ({ onClose }: { onClose?: () => void }) => {
       recordedAt: inputValue.date,
     };
 
-    console.log(payload);
-
     await mutation.mutateAsync(payload);
   };
 
@@ -155,7 +153,11 @@ const MoodModal = ({ onClose }: { onClose?: () => void }) => {
       <div className="mt-6">
         <SubmitButton
           _fn={handleCreateMood}
-          disabled={mutation.isPending || !inputValue.mood.selectedEmoji || !inputValue.date}
+          disabled={
+            mutation.isPending || 
+            !inputValue.mood.selectedEmoji || 
+            !inputValue.date
+          }
         >
           {mutation.isPending ? "Saving..." : "Save Mood"}
         </SubmitButton>

@@ -1,4 +1,3 @@
-// import { storageService } from '@/constants/storage';
 import { patientService } from '@/service/patientService'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
@@ -19,11 +18,10 @@ const useCreateCall = (communicationId?: string) => {
       patientService.startCall(communicationId, callSessionId),
 
     onSuccess: (response) => {
-      console.log('Call started:', response)
+      toast.success(response.data.message)
     },
 
     onError: (error: AxiosError<{message: string}>) => {
-      console.error('Failed to start call:', error)
       toast.error(error?.response?.data?.message ?? "Failed to start call")
     },
   })
@@ -41,20 +39,16 @@ const useCreateCall = (communicationId?: string) => {
 
     onSuccess: (response) => {
       const callSessionId = response.data?.id
-      console.log('CALLID!', callSessionId)
       // storageService.setCallSessionId(response.data?.id)
       toast.success(response.data?.message ?? "Call created successfully")
       setCallSessionId(callSessionId)
       if (!callSessionId) {
-        console.error('Call session ID was not returned')
+        toast.error('Call session ID was not returned')
         return
       }
-
-      // startCall.mutate(callSessionId)
     },
 
     onError: (error: AxiosError<{message: string}>) => {
-      console.log('Failed to create call:', error.response?.data?.message ?? error)
       toast.error(error?.response?.data?.message ?? "Failed to create call")
     },
   })

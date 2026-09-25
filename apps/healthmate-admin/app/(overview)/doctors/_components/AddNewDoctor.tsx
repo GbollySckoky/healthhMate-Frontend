@@ -84,8 +84,7 @@ const AddNewDoctor = () => {
   const mutation = useMutation({
     mutationFn: (payload: DOCTOR_SIGNUP) => Hospital_Admin.createDoctor(payload),
     onSuccess: (response) => {
-        console.log('Doctor created successfully:', response)
-        toast.success(response.data.message)
+        toast.success(response.data.message || 'Account Created')
         queryClient.invalidateQueries({ queryKey: ['getAllDoctor'] })
         closeModal()
     },

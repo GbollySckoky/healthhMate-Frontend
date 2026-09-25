@@ -14,6 +14,7 @@ import { storageService } from '@/lib/constant/storage'
 // import { toast } from 'react-toastify'
 import { LOGIN } from '@/lib/interface/login.interface'
 import { AxiosError } from 'axios'
+import { toast } from 'react-toastify'
 // import { AxiosError } from 'axios'
 
 const Page = () => {
@@ -35,14 +36,12 @@ const Page = () => {
     const mutation = useMutation({
         mutationFn: (payload: LOGIN) => Doctor.login(payload),
         onSuccess: (response) => {
-            console.log(response.data)
             storageService.setAuthToken(response.data.access_token)
-          router.push(ROUTES.dashboard)
+            toast.success(response.data.message ?? 'Login successful.')
+            router.push(ROUTES.dashboard)
         },
-        onError: (error: AxiosError) => {
-            console.log(error)
-            // toast.error(error?.response?.data)
-          // Handle error
+        onError: (error: AxiosError<{message: string}>) => {
+            toast.error(error?.response?.data?.message)
         }
     })
 

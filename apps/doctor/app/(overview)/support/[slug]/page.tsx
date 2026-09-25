@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { FlexWrapper, PageWrapper } from '@/lib/components/ui/Reusable'
 // import InputField from '@/components/ui/InputField'
 import SupportField from '@/lib/components/ui/SupportField'
+import { toast } from 'react-toastify'
 
 
 const statusStyles: Record<string, string> = {
@@ -80,22 +81,23 @@ const Page = () => {
   const replyMutation = useMutation({
     mutationFn: (payload: ReplyToTicket) => Doctor.replyToTicket(id, payload),
     onSuccess: (response) => {
-        console.log(response)
+      toast.success(response.data.message)
       queryClient.invalidateQueries({ queryKey: ['getSupportDetails', id] })
     },
     onError: (err: AxiosError<{ message: string }>) => {
-      console.error('Failed to send reply:', err.response?.data?.message)
+      toast.error(err.response?.data?.message)
     },
   })
 
   const noteMutation = useMutation({
     mutationFn: (message: Message) => Doctor.addInternalNote(id, message ),
-    onSuccess: () => {
+    onSuccess: (response) => {
       setNoteMessage('')
+      toast.success(response.data.message)
       queryClient.invalidateQueries({ queryKey: ['getSupportDetails', id] })
     },
     onError: (err: AxiosError<{ message: string }>) => {
-      console.error('Failed to add internal note:', err.response?.data?.message)
+      toast.error( err.response?.data?.message)
     },
   })
 
