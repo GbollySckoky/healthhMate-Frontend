@@ -48,6 +48,7 @@ const Booking = ({ consultation, id }: BookingProps) => {
     createBooking,
     isPaymentProcessing,
     isProcessing,
+    isBooking
   } = useBooking(id);
 
   const consultationFee =
@@ -88,10 +89,14 @@ const Booking = ({ consultation, id }: BookingProps) => {
     !form.consultationType ||
     !form.healthConcern.trim();
 
-  const isDisabled = isFormInvalid || isProcessing;
+  const isDisabled = isFormInvalid || isProcessing || isBooking;
 
   const getButtonLabel = () => {
 
+    if(isBooking){
+      return 'Processing...'
+    }
+    
     if (isPaymentProcessing) {
       return "Redirecting to payment...";
     }

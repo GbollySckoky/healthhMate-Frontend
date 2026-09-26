@@ -70,7 +70,7 @@ const PaymentCallback = () => {
           <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-gray-500">
             We couldn&apos;t find a valid payment reference for this
             transaction. If you believe you completed a payment,
-            check your appointments first — it may already be
+            check your appointments first it may already be
             confirmed.
           </p>
 
@@ -154,7 +154,7 @@ const PaymentCallback = () => {
 
           <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-gray-500">
             This might just be a delay on our end. If your account
-            was charged, don&apos;t worry — save your reference
+            was charged, don&apos;t worry save your reference
             below and contact support so we can look into it.
           </p>
 
@@ -298,7 +298,7 @@ const PaymentCallback = () => {
             </div>
 
             <p className="mt-4 text-xs leading-5 text-gray-400">
-              Keep this reference for your records — you may need
+              Keep this reference for your records you may need
               it if you contact support about this payment.
             </p>
           </div>
@@ -316,7 +316,7 @@ const PaymentCallback = () => {
           </div>
 
           <p className="mt-5 text-xs leading-5 text-gray-400">
-            You can safely leave this page — your appointment is
+            You can safely leave this page your appointment is
             already confirmed.
           </p>
         </div>

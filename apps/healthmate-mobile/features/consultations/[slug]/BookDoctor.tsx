@@ -13,10 +13,10 @@ interface BookDoctorProps {
 }
 
 const BookDoctor = ({ consultation, onClose, id }: BookDoctorProps) => {
-  console.log(consultation)
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 mt-[50px]">
-      <div className="relative flex max-h-[95vh] w-full max-w-5xl flex-col overflow-hidden bg-[#F8F9FC] shadow-2xl">
+      <div className="relative flex min-h-[95vh] w-full max-w-5xl flex-col overflow-hidden bg-[#F8F9FC] shadow-2xl">
 
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-6 py-5">

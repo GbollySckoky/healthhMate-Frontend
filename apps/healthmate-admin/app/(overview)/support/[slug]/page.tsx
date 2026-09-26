@@ -10,6 +10,7 @@ import { FlexWrapper, PageWrapper } from '@/lib/components/ui/Reusable'
 import { Hospital_Admin } from '@/lib/service/service'
 import { Message, ReplyToTicket, SupportTicketDetail } from '@/lib/interface/supportTicket'
 import SupportField from '@/lib/components/ui/SupportField'
+import { toast } from 'react-toastify'
 
 
 const statusStyles: Record<string, string> = {
@@ -80,22 +81,23 @@ const Page = () => {
   const replyMutation = useMutation({
     mutationFn: (payload: ReplyToTicket) => Hospital_Admin.replyToTicket(id, payload),
     onSuccess: (response) => {
-        console.log(response)
+        toast.success(response.data?.message)
       queryClient.invalidateQueries({ queryKey: ['getSupportDetails', id] })
     },
-    onError: (err: AxiosError<{ message: string }>) => {
-      console.error('Failed to send reply:', err.response?.data?.message)
+    onError: (error: AxiosError<{ message: string | undefined }>) => {
+      toast.error(error.response?.data?.message)
     },
   })
 
   const noteMutation = useMutation({
     mutationFn: (message: Message) => Hospital_Admin.addInternalNote(id, message ),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      toast.success(response.data?.message)
       setNoteMessage('')
       queryClient.invalidateQueries({ queryKey: ['getSupportDetails', id] })
     },
-    onError: (err: AxiosError<{ message: string }>) => {
-      console.error('Failed to add internal note:', err.response?.data?.message)
+    onError: (err: AxiosError<{ message: string | undefined}>) => {
+      toast.error(err.response?.data?.message)
     },
   })
 

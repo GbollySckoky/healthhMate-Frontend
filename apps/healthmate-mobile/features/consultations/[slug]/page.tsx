@@ -100,10 +100,10 @@ const ConsultationDetails = () => {
              <p className="mt-1 text-sm text-gray-500">
                 {consultation?.department ?? '-'}
             </p>
-            <p className="mt-1 text-sm text-pink-600">
+            {/* <p className="mt-1 text-sm text-pink-600">
               {consultation?.profile?.specialization ??
                 '-'}
-            </p>
+            </p> */}
 
             <div className="mt-1 flex items-center gap-1 text-sm text-gray-500">
               <MapPin size={14} />

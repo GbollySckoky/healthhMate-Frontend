@@ -38,7 +38,7 @@ const AddNewAdmin = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log('Submitted: ', inputValue);
+
   };
 
   return (

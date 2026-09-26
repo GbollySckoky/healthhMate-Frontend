@@ -141,7 +141,7 @@ const Pending = () => {
 
     const handleExport = () => {
         // Export functionality
-        console.log('Exporting data...', filteredAppointments)
+        // console.log('Exporting data...', filteredAppointments)
     }
 
     const handleAppointmentClick = (appointmentId: string) => {
