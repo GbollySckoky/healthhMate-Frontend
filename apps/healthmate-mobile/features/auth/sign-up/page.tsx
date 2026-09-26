@@ -138,8 +138,8 @@ const SignUpPage = () => {
   }
 
   return (
-    <main className="min-h-screen w-screen bg-[#FAFAFA] flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-[520px]">
+    <main className="min-h-screen w-screen overflow-y-auto bg-[#FAFAFA] px-4 py-8">
+      <div className="mx-auto w-full max-w-[520px]">
         {/* Logo */}
         <div className="mb-6 flex justify-center">
           <Image
@@ -151,8 +151,8 @@ const SignUpPage = () => {
         </div>
 
         {/* Header */}
-        <div className="mb-6 text-center sm:text-left">
-          <h1 className="font-lato text-xl sm:text-2xl font-semibold text-[#414651]">
+        <div className="mb-6 text-center">
+          <h1 className="font-lato text-xl font-semibold text-[#414651] sm:text-2xl">
             Create your HealthMate account
           </h1>
 
@@ -167,9 +167,7 @@ const SignUpPage = () => {
           onChange={handleChange}
           passwordVisible={passwordVisibility}
           confirmPasswordVisible={confirmPasswordVisibility}
-          onTogglePassword={() =>
-            togglePasswordVisibility("password")
-          }
+          onTogglePassword={() => togglePasswordVisibility("password")}
           onToggleConfirmPassword={() =>
             togglePasswordVisibility("confirmPassword")
           }
@@ -178,7 +176,7 @@ const SignUpPage = () => {
         />
 
         {/* Login */}
-        <div className="mt-6 flex items-center justify-center">
+        <div className="mt-6 flex items-center justify-center pb-4">
           <span className="text-sm text-gray-500">
             Already have an account?
           </span>
