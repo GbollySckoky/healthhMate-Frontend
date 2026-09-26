@@ -13,7 +13,7 @@ const InputField = ({
 }: InputProps) => {
   return (
     <div className="w-full">
-      <label className="mb-2 block text-sm font-medium text-gray-700">
+      <label className="mb-2 block text-sm font-normal text-gray-700">
         {label}
       </label>
 
