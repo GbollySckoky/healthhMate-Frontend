@@ -9,7 +9,8 @@ import { ROUTES } from '@/constants/route';
 import { useRouter } from 'next/navigation';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
-// import { storageService } from '@/lib/storage';
+import Logo from "@/assets/Group 19156 copy.png";
+import Image from 'next/image';
 // import { ROUTES } from '@/lib/routes';
 
 const LoginPage = () => {
@@ -48,12 +49,22 @@ const LoginPage = () => {
   const isPending = loginMutation.isPending;
   
   return (
-    <div className="flex justify-center items-center w-screen h-screen ">
+    <div className="flex justify-center items-center w-screen min-h-screen bg-[#FAFAFA] ">
+      {/* Logo */}
+
       <div className=" md:w-[70%] mx-auto w-[90%]">
+        <div className="mb-6 flex justify-center">
+          <Image
+            src={Logo}
+            alt="HealthMate Logo"
+            priority
+            className="h-auto w-[150px] sm:w-[170px]"
+          />
+        </div>
         {/* Header */}
         <div className="mb-8">
-          <p className="text-xl font-medium text-[#414651] font-lato">Welcome Back</p>
-          <p className="text-sm text-[#717680] mt-1 font-lato font-normal">
+          <p className="text-xl font-medium text-[#414651] font-lato text-center">Welcome Back</p>
+          <p className="text-sm text-[#717680] mt-1 font-lato font-normal text-center">
             Log in to access your HealthMate account.
           </p>
         </div>

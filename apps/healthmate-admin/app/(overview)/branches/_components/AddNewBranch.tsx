@@ -9,6 +9,7 @@ import { Hospital_Admin } from '@/lib/service/service';
 import { BRANCH_INTERFACE } from '@/lib/interface/branch.interface';
 import { AxiosError } from 'axios';
 import { useModal } from '@/components/Modal/Modal';
+import { toast } from 'react-toastify';
 
 const AddNewBranch = () => {
     const {branchName,branchAddress, number, city} = newBranch;
@@ -20,7 +21,7 @@ const AddNewBranch = () => {
         phoneNumber: "",
         city: "",
     });
-    console.log(inputValue)
+  
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setInputValue((prev) => ({
@@ -34,11 +35,11 @@ const AddNewBranch = () => {
     const mutation = useMutation({
         mutationFn: (payload: BRANCH_INTERFACE) => Hospital_Admin.createBranch(payload),
         onSuccess: (response) => {
-            console.log('Doctor created successfully:', response)
+            toast.success(response.data?.message)
             closeModal()
         },
         onError: (error: AxiosError<{ message: string }>) => {
-          console.error('Error creating doctor:', error.response?.data?.message)
+          toast.error(error.response?.data?.message)
         },
     })
 
@@ -51,7 +52,7 @@ const AddNewBranch = () => {
             state: inputValue.city,
             phoneNumber: inputValue.phoneNumber,
         };
-        console.log("DATA!!", data)
+
         await mutation.mutateAsync(data)
     }
   return (

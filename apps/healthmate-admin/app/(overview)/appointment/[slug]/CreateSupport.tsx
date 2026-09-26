@@ -11,6 +11,7 @@ import { Hospital_Admin } from '@/lib/service/service';
 import { AxiosError } from 'axios';
 import { SUPPORT_TICKET } from '@/lib/interface/supportTicket';
 import { APPOINTMENT_DETAILS } from '@/lib/interface/appointment';
+import { toast } from 'react-toastify';
 
 type InputValue = {
   subject: string;
@@ -52,11 +53,11 @@ const CreateSupport = ({ appointment }: { appointment: APPOINTMENT_DETAILS }) =>
     mutationFn: (payload: SUPPORT_TICKET) =>
       Hospital_Admin.createSupportTicket(payload),
     onSuccess: (response) => {
-      console.log('Support ticket created successfully:', response);
+      toast.success(response.data.messsage);
       closeModal();
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.error('Error creating support ticket:', error.response?.data?.message);
+      toast.error(error.response?.data?.message);
     },
   });
 

@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 import { patientService } from "@/service/patientService";
 import { Signup } from "@/lib/interface/signup-interface";
@@ -12,6 +13,8 @@ import { ROUTES } from "@/constants/route";
 
 import VerifyEmail from "./VerifyEmail";
 import { SignUpForm } from "./SignupForm";
+
+import Logo from "@/assets/Group 19156 copy.png";
 
 type SignUpStep = "signup" | "verify";
 
@@ -21,7 +24,7 @@ export interface SignUpValues {
   email: string;
   password: string;
   confirmPassword: string;
-  phoneNumber: string
+  phoneNumber: string;
 }
 
 const SignUpPage = () => {
@@ -35,7 +38,7 @@ const SignUpPage = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    phoneNumber: '',
+    phoneNumber: "",
   });
 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
@@ -119,7 +122,7 @@ const SignUpPage = () => {
       email: inputValue.email.trim(),
       password: inputValue.password,
       confirmPassword: inputValue.confirmPassword,
-      phoneNumber: inputValue.phoneNumber
+      phoneNumber: inputValue.phoneNumber,
     };
 
     signupMutation.mutate(credentials);
@@ -135,18 +138,30 @@ const SignUpPage = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <div className='w-[90%] md:w-[70%] mx-auto '>
-        <div className="mb-8">
-          <h1 className="font-lato text-xl font-semibold text-black">
+    <main className="min-h-screen w-screen bg-[#FAFAFA] flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-[520px]">
+        {/* Logo */}
+        <div className="mb-6 flex justify-center">
+          <Image
+            src={Logo}
+            alt="HealthMate Logo"
+            priority
+            className="h-auto w-[150px] sm:w-[170px]"
+          />
+        </div>
+
+        {/* Header */}
+        <div className="mb-6 text-center sm:text-left">
+          <h1 className="font-lato text-xl sm:text-2xl font-semibold text-[#414651]">
             Create your HealthMate account
           </h1>
 
-          <p className="mt-1 text-base leading-6 text-gray-500">
+          <p className="mt-2 text-sm text-[#414651]">
             Sign up with your phone number or email to begin.
           </p>
         </div>
 
+        {/* Form */}
         <SignUpForm
           values={inputValue}
           onChange={handleChange}
@@ -162,7 +177,8 @@ const SignUpPage = () => {
           isLoading={signupMutation.isPending}
         />
 
-        <div className="mb-6 flex items-center justify-center">
+        {/* Login */}
+        <div className="mt-6 flex items-center justify-center">
           <span className="text-sm text-gray-500">
             Already have an account?
           </span>
@@ -176,7 +192,7 @@ const SignUpPage = () => {
           </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

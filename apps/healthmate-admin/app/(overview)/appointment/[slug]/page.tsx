@@ -55,7 +55,7 @@ const Page = () => {
   const params = useParams();
   const {openModal} = useModal()
   const id = String(params?.slug);
-  console.log("Appointment ID:", id);
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["getAppointmentDetails", id],
     queryFn: () => Hospital_Admin.getAppointmentDetails(id),

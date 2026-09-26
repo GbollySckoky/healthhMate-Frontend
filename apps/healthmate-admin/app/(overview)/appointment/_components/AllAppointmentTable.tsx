@@ -31,11 +31,11 @@ const AllAppointmentTable = () => {
     const { isToggle: showSpecialtyDropdown, handleToggle: toggleSpecialtyDropdown } = useToggle()
     const router = useRouter()
 
-     const { data, isLoading, isError, error } = useQuery({
+     const { data} = useQuery({
         queryKey: ['appointment'],
         queryFn: () => Hospital_Admin.getAllAppointments(),
     })
-    console.log('DATA!!', data?.data)
+   
     const appointments = data?.data || []
 
     const handleStatusSelect = (option: string) => {
