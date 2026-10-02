@@ -323,7 +323,7 @@ const AppointmentDetails = () => {
           </Card>
 
           <BtnFlex>
-            {appointmentDetails.approvalStatus === "PENDING" ? (
+            {appointmentDetails.approvalStatus === "PENDING" || appointmentDetails.approvalStatus === "CANCELLED"  ? (
               <p
                 className="text-sm text-gray-600 border border-border text-center bg-white p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80"
                 aria-disabled
