@@ -58,7 +58,7 @@ const LoginPage = () => {
             src={Logo}
             alt="HealthMate Logo"
             priority
-            className="h-auto w-[150px] sm:w-[170px]"
+            className="h-auto w-[150px] sm:w-[170px] text-cred-900"
           />
         </div>
         {/* Header */}
