@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 
 import { patientService } from "@/service/patientService";
 import { verifyEmail } from "@/lib/interface/verifyEmail";
-import { ROUTES } from "@/constants/route";
+import { publicRoutes } from "@/constants/route";
 import type { SignUpValues } from "./page";
 
 interface VerifyEmailProps {
@@ -260,7 +260,7 @@ const VerifyEmail = ({
   const continueAfterVerification = () => {
     setIsModalOpen(false);
 
-    router.push(ROUTES.success);
+    router.push(publicRoutes.success);
   };
 
   /**
