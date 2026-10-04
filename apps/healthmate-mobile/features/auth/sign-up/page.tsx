@@ -9,7 +9,7 @@ import Image from "next/image";
 
 import { patientService } from "@/service/patientService";
 import { Signup } from "@/lib/interface/signup-interface";
-import { ROUTES } from "@/constants/route";
+import { publicRoutes } from "@/constants/route";
 
 import VerifyEmail from "./VerifyEmail";
 import { SignUpForm } from "./SignupForm";
@@ -183,7 +183,7 @@ const SignUpPage = () => {
 
           <button
             type="button"
-            onClick={() => router.push(ROUTES.login)}
+            onClick={() => router.push(publicRoutes.login)}
             className="ml-1 text-sm font-medium text-pink-500 hover:underline"
           >
             Login

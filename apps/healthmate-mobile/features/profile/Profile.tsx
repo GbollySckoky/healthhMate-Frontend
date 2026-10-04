@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Pencil, User, Mail, Phone, Calendar, ChevronRight, LogOut, AlertCircle, Transgender, BeanOff, Syringe } from "lucide-react";
+import { Pencil, User, Mail, Phone, Calendar, LogOut, AlertCircle, Transgender, BeanOff, Syringe } from "lucide-react";
 import { ROUTES } from "@/constants/route";
 // import { otherMenuItems } from "@/constants/data";
 import useGetMe from "@/hooks/useGetMe";
@@ -64,14 +64,14 @@ const AccountInfoRow = ({
   title,
   value,
   subValue,
-  next,
+  // next,
   isLast,
 }: {
   icon: React.ReactNode;
   title: string;
   value?: string | null;
   subValue?: string | null;
-  next?: React.ReactNode;
+  // next?: React.ReactNode;
   isLast?: boolean;
 }) => (
   <div
@@ -90,7 +90,7 @@ const AccountInfoRow = ({
         </span>
       </div>
     </div>
-    {next}
+    {/* next */}
   </div>
 );
 
@@ -186,6 +186,7 @@ const Profile = () => {
             height={100}
             className="w-[100px] h-[100px] rounded-full object-cover mb-1.5 border border-[#D6D7DA]"
             priority
+            loading="eager"
           />
           <button
             type="button"
@@ -215,7 +216,7 @@ const Profile = () => {
             title="Name"
             value={CapitalizeName(patient.firstName)}
             subValue={CapitalizeName(patient.lastName)}
-            next={<ChevronRight size={22} color="#A4A7AE" />}
+            // next={<ChevronRight size={22} color="#A4A7AE" />}
           />
           <AccountInfoRow icon={<Mail size={18} color={colors.lightRed} />} title="Email" value={patient.email} />
           <AccountInfoRow

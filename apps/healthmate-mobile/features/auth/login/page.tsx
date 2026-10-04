@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 // import { useNavigate } from 'react-router-dom'; // swap for your router (expo-router's `router` won't work on web)
 import { patientService } from '@/service/patientService';
 import { storageService } from '@/constants/storage';
-import { ROUTES } from '@/constants/route';
+import { publicRoutes, ROUTES } from '@/constants/route';
 import { useRouter } from 'next/navigation';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
@@ -33,6 +33,7 @@ const LoginPage = () => {
       router.push(ROUTES.home);
     },
     onError: (error: AxiosError<{message: string}>) => {
+      // console.log(error.response)
       toast.error(error?.response?.data?.message)
     },
   });
@@ -143,7 +144,7 @@ const LoginPage = () => {
         {/* Sign up */}
         <div className="flex justify-center items-center mb-6 mt-4 text-sm font-libre">
           <span className="text-[#717680]">Don&apos;t have an account? </span>
-          <button type="button" className="text-[#c11574] font-medium ml-1 hover:underline" onClick={() => router.push(ROUTES.signup)}>
+          <button type="button" className="text-[#c11574] font-medium ml-1 hover:underline" onClick={() => router.push(publicRoutes.signup)}>
             Sign Up
           </button>
         </div>

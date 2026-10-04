@@ -104,22 +104,27 @@ const AllAppointments = () => {
                     </div>
                   </div>
                   <div className="mt-[15px] border-t-2 border-[#F8F8F8] pt-3 ">
-                    {approvalStatus === "PENDING" || approvalStatus === "CANCELLED" ? 
+                    {approvalStatus === "PENDING" ? 
                     <p className="text-sm text-[#717680] text-center">Once approved, you can message Dr. {CapitalizeName(doctor?.firstName)}</p> 
-                    : payments?.[0]?.status === "FAILED" ||
-                      payments?.[0]?.status === "CANCELLED" ? (
+                    : payments?.[0]?.status === "FAILED"  ? (
                       <p className="text-sm text-white text-center bg-red-800 p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80">
                         This appointment cannot proceed because the payment was unsuccessful.
                       </p>
                     ) : (
-                      <button 
+                       approvalStatus === "DECLINED" ? (
+                      <p className="text-sm text-[#717680] text-center">
+                        Dr. {CapitalizeName(doctor?.firstName)} has cancelled this appointment.
+                      </p>
+                     
+                    ) : (
+                       <button 
                         type="button" 
                         onClick={(event) => { event.stopPropagation(); router.push(`/appointments/message/${id}`); }} 
                         className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#D6D7DA] bg-[#FAFAFA] px-4 py-2 text-sm font-semibold text-gray-600">
                           <MessageCircleMore size={17} />
                           Message Dr. {CapitalizeName(doctor?.firstName)}
                       </button>
-                    )}
+                    ))}
                   </div>
                 </article>
               </TableCell>
