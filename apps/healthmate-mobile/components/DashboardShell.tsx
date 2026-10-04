@@ -4,7 +4,7 @@ import { useState } from "react";
 import HeaderClient from "@/components/HeaderClient";
 import Sidebar from "@/components/Sidebar";
 import { usePathname } from "next/navigation";
-import { ROUTES } from "@/constants/route";
+import { publicRoutes} from "@/constants/route";
 
 interface DashboardShellProps {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ export default function DashboardShell({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
 
-  const isAuthPage = pathname === ROUTES.login || pathname === ROUTES.signup|| pathname === "/forgot-password";
+  const isAuthPage = pathname === publicRoutes.login || pathname === publicRoutes.signup|| pathname === publicRoutes.forgotPassword;
 
   return (
     <div className="flex h-dvh ">

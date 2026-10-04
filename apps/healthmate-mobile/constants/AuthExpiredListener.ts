@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/constants/route";
+import { publicRoutes} from "@/constants/route";
 
 /**
  * Listens for the 'auth:expired' event dispatched by the axios
@@ -15,7 +15,7 @@ export function AuthExpiredListener() {
 
   useEffect(() => {
     const handleAuthExpired = () => {
-      router.push(ROUTES.login ?? "/auth/login");
+      router.push(publicRoutes.login ?? "/auth/login");
     };
 
     window.addEventListener("auth:expired", handleAuthExpired);

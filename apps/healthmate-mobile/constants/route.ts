@@ -1,8 +1,8 @@
 export const ROUTES = {
-    forgotPassword: '/auth/forgot-password',
-    login: '/auth/login',
-    signup: '/auth/sign-up',
-    success: '/auth/success',
+    // forgotPassword: '/auth/forgot-password',
+    // login: '/auth/login',
+    // signup: '/auth/sign-up',
+    // success: '/auth/success',
     reportIssue: '/home/report-issues',
     home: '/',
     track: '/track',
@@ -42,3 +42,10 @@ export const doctorProfileRoute = (doctorId: string | number) =>
 
 export type RouteValues = typeof ROUTES[keyof typeof ROUTES];
 // This creates: '/auth/forgot-password' | '/auth/login' | '/auth/signup'
+
+export const publicRoutes = {
+    forgotPassword: '/auth/forgot-password',
+    login: '/auth/login',
+    signup: '/auth/sign-up',
+    success: '/auth/success',
+}
