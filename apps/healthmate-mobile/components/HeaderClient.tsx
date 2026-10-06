@@ -3,12 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Bell, Menu, ChevronLeft } from "lucide-react";
-import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { ROUTES } from "@/constants/route";
 import { usePageTitle } from "./NavTitle";
-import { patientService } from "@/service/patientService";
+import useGetUnReadNotification from "@/hooks/useGetUnReadNotification";
 import useGetMe from "@/hooks/useGetMe";
 import defaultImage from "@/assets/default.jpg";
 
@@ -22,11 +21,9 @@ export default function HeaderClient({
   onMenuClick,
   backFallbackHref = ROUTES.home,
 }: HeaderClientProps) {
-  const [loading, setLoading] = useState(true);
-  const [unReadNotifications, setUnReadNotifications] = useState<number | null>(0);
-  const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const { unReadNotifications } = useGetUnReadNotification();
 
-  const { patient: me } = useGetMe();
+  const { patient: me, isLoading: loading } = useGetMe();
   const router = useRouter();
   const pathname = usePathname();
   const pageTitle = usePageTitle();
@@ -35,38 +32,6 @@ export default function HeaderClient({
   // ones. /track -> hamburger, /track/medication -> back button.
   const segments = pathname.split("/").filter(Boolean);
   const isDetailRoute = segments.length > 1;
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function load() {
-      try {
-        const p = await patientService.getMe();
-        const data = p?.data ?? p ?? null;
-        if (mounted) setProfilePicture(data?.profile?.profilePicture ?? null);
-      } catch (e: unknown) {
-        console.error(e);
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    }
-
-    async function loadUnread() {
-      try {
-        const count = await patientService.unReadNotifications();
-        if (mounted) setUnReadNotifications(count ?? 0);
-      } catch (e: unknown) {
-        console.error(e);
-      }
-    }
-
-    load();
-    loadUnread();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   function handleBack() {
     // No meaningful history (deep link, refresh, new tab) -> go to a known
@@ -152,7 +117,7 @@ export default function HeaderClient({
         {/* Profile */}
         <Link href={ROUTES.profile} aria-label="Profile">
           <Image
-            src={me?.profile?.profilePicture || profilePicture || defaultImage}
+            src={me?.profile?.profilePicture || defaultImage}
             alt="Profile"
             width={36}
             height={36}

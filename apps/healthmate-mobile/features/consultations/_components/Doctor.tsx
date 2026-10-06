@@ -55,7 +55,7 @@ const getConsultationFee = (doctor: GetDoctor) => {
   return fee ? `₦ ${fee}` : '₦ 0';
 };
 
-const Doctor  = ({hospitalId}:{hospitalId: string}) => {
+const Doctor  = ({hospitalId}:{hospitalId?: string}) => {
   const router = useRouter();
   const [pagination, setPagination] = useState({
     page: 1,
@@ -67,14 +67,24 @@ const Doctor  = ({hospitalId}:{hospitalId: string}) => {
   // const id = params?.slug;
 
   const [searchInput, setSearchInput] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [department, setDepartment] = useState<string | undefined>()
   // const hospitalId = String(id);
 
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['getAllDoctors', hospitalId, pagination.page, pagination.limit, searchInput, department],
-    queryFn: () => patientService.getDoctors(hospitalId, pagination.page, pagination.limit, searchInput, department),
+    queryKey: ['getAllDoctors', hospitalId, pagination.page, pagination.limit, debouncedSearch, department],
+    queryFn: () => patientService.getDoctors(hospitalId!, pagination.page, pagination.limit, debouncedSearch, department),
     enabled: !!hospitalId,
+    staleTime: 5 * 60 * 1000,
   });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchInput.trim());
+      setPagination((prev) => ({ ...prev, page: 1 }));
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchInput]);
 
   const doctors = data?.data ?? [];
   const searchQuery = searchInput.trim();

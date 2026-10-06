@@ -6,6 +6,7 @@ const useGetUnReadNotification = () => {
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ["un-read-notification"],
         queryFn: () => patientService.unReadNotifications(),
+        staleTime: 30 * 1000,
     });
     const unReadNotifications = data ?? null
   return {unReadNotifications, isLoading, isError, error}

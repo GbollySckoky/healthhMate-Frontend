@@ -20,6 +20,7 @@ const useGetAllHospitals = () => {
     queryKey: ['getAllHospitals', page, limit, searchDebounceQuery],
     queryFn: () =>
       patientService.getHospitals(page, limit, searchDebounceQuery),
+    staleTime: 5 * 60 * 1000,
   });
 
   const hospitals = data?.data ?? [];
