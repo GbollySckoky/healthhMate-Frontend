@@ -16,16 +16,15 @@ import { toast } from 'react-toastify';
 export default function EditProfileScreen() {
   const queryClient = useQueryClient();
   const router = useRouter()
-  const { patient, isLoading, refetch } = useGetMe();
+  const { patient, isLoading } = useGetMe();
 
   const { mutate, isPending } = useMutation({
     mutationFn: (payload: FormData) =>
       patientService.editProfile(payload),
 
-    onSuccess: (response) => {
-      queryClient.invalidateQueries({ queryKey: ['me'] });
+    onSuccess: async (response) => {
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
       toast.success(response.data.message)
-      refetch();
       router.replace(ROUTES.profile);
     },
 

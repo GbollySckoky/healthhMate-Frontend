@@ -7,7 +7,7 @@ import { Video, ChevronRight, XCircle, MapPin } from "lucide-react";
 import { patientService } from "@/service/patientService";
 import { GetAppointment } from "@/lib/interface/get-appointments-interface";
 import AppointmentDetailsSkeleton from "@/components/AppointmentDetailSkeleton";
-import { BtnFlex, Card, MinTitle, PageWrapper, RescheduleBtn } from "@/components/Reusable";
+import { BtnFlex, Card, PageWrapper, RescheduleBtn } from "@/components/Reusable";
 import { useModal } from "@/store/Modal";
 import profileFallback from "@/assets/default.jpg";
 import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
@@ -28,7 +28,7 @@ const getDoctorName = (doctor: GetAppointment["doctor"]) => {
 };
 
 const getDoctorImage = (doctor: GetAppointment["doctor"]) => {
-  return doctor?.profile.profilePicture || null;
+  return doctor?.profile?.profilePicture || null;
 };
 
 const resolveImageSrc = (src: string | null) => {
@@ -89,6 +89,7 @@ const AppointmentDetails = () => {
     queryKey: ["getAppointmentById", appointmentId],
     queryFn: () => patientService.getAppointmentById(appointmentId as string),
     enabled: !!appointmentId,
+    staleTime: 5 * 60 * 1000,
   });
 
   const appointmentDetails = appointmentResponse?.data ?? null;
@@ -203,15 +204,15 @@ const AppointmentDetails = () => {
         <>
           <div className="mb-5 flex flex-row bg-white p-4 rounded-[10px] border border-[#F2F2F2]">
             <Image
-              src={resolveImageSrc(appointmentDetails.doctor?.profile.profilePicture || doctorImage)}
+              src={resolveImageSrc(doctorImage)}
               alt={getDoctorName(appointmentDetails.doctor)}
-              width={80}
-              height={80}
+              width={50}
+              height={50}
               priority
               className="w-20 h-20 rounded-full border-2 border-[#E8E8E8] object-cover"
             />
-            <div className="ml-4 flex-1 flex flex-col justify-center">
-              <MinTitle>{appointmentDetails?.doctor?.title ? `${appointmentDetails.doctor.title}.` : 'Dr.'} {getDoctorName(appointmentDetails.doctor)}</MinTitle>
+            <div className="ml-2 flex-1 flex flex-col justify-center">
+              <span className="block text-sm font-medium font-libre">{appointmentDetails?.doctor?.title ? `${appointmentDetails.doctor.title}.` : 'Dr.'} {getDoctorName(appointmentDetails.doctor)}</span>
               <p className="font-inter text-sm font-normal py-0.5 text-[#666]">
                 {appointmentDetails.doctor?.department}
               </p>
@@ -323,21 +324,24 @@ const AppointmentDetails = () => {
           </Card>
 
           <BtnFlex>
-            {appointmentDetails.approvalStatus === "PENDING" || appointmentDetails.approvalStatus === "CANCELLED"  ? (
+            {appointmentDetails.approvalStatus === "PENDING" ? (
               <p
                 className="text-sm text-gray-600 border border-border text-center bg-white p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80"
                 aria-disabled
               >
                 Once approved, you can message Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}.
               </p>
-            ) : appointmentDetails.payments?.[0]?.status === "FAILED" ||
-              appointmentDetails.payments?.[0]?.status === "CANCELLED" ? (
-              <p className="text-sm text-gray-600 border border-border text-center bg-white p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80">
+            ) : appointmentDetails.payments?.[0]?.status === "FAILED" ? (
+              <p className="text-sm text-white text-center bg-red-800 p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80">
                 This appointment cannot proceed because the payment was unsuccessful.
               </p>
             ) : (
+              appointmentDetails.approvalStatus === "DECLINED" ? 
+              <p className="text-sm text-[#717680] text-center">
+                Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)} has cancelled this appointment.
+              </p> :
               <RescheduleBtn _fn={() => handleMessagePress(appointmentDetails.id)} className="flex text-gray-600">
-                Messsag Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}
+                Message Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}
               </RescheduleBtn>
             )}
             {/* <JoinBtn _fn={() => router.push(ROUTES.home)}>Join Call</JoinBtn> */}

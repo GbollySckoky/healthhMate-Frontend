@@ -16,17 +16,20 @@ const ConsultationPage = () => {
       "getAllHospitals",
       page,
       limit,
+      "",
     ],
     queryFn: () =>
       patientService.getHospitals(
         page,
         limit,
+        "",
       ),
+    staleTime: 5 * 60 * 1000,
   });
 
   const hospitalId = data?.data[0]?.id
   
-  return <Doctor hospitalId={String(hospitalId)} />
+  return <Doctor hospitalId={hospitalId == null ? undefined : String(hospitalId)} />
 };
 
 export default ConsultationPage;
