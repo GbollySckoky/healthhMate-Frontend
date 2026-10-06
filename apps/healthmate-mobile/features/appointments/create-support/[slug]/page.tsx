@@ -25,7 +25,7 @@ const URL_REGEX = /^(https?:\/\/)[^\s$.?#].[^\s]*$/i;
 const Page = () => {
   const queryClient = useQueryClient();
   const params = useParams()
-  const id = String(params.slug)
+  const id = typeof params.slug === 'string' ? params.slug : ''
   const appointmentId = id
   const router = useRouter()
 
@@ -44,6 +44,7 @@ const Page = () => {
     queryKey: ["getAppointmentById", appointmentId],
     queryFn: () => patientService.getAppointmentById(appointmentId as string),
     enabled: !!appointmentId,
+    staleTime: 5 * 60 * 1000,
   });
 
   const appointmentDetails = appointmentResponse?.data ?? null;

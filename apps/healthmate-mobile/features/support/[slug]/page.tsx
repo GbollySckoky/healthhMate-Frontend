@@ -132,6 +132,7 @@ const SupportTicketDetailScreen = () => {
     queryFn: () =>
       patientService.getSupportDetails(id),
     enabled: !!id,
+    staleTime: 5 * 60 * 1000,
   });
 
   const replyMutation = useMutation({

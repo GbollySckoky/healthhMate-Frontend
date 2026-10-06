@@ -66,6 +66,7 @@ const AllAppointments = () => {
   const { data, isError, isLoading, error } = useQuery({
     queryKey: ["getAppointments", page, limit, searchQuery, activeStatus],
     queryFn: () => patientService.getAppointments(page, limit, searchQuery, activeStatus),
+    staleTime: 5 * 60 * 1000,
   });
 
   const appointments = data?.data ?? [];

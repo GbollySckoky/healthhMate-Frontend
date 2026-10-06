@@ -4,8 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 
 const useGetAppointment = () => {
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ["getAppointments", 10, 1],
+        queryKey: ["getAppointments", 1, 1, "", undefined],
         queryFn: () => patientService.getAppointments(1, 1),
+        staleTime: 5 * 60 * 1000,
       });
     const appointment = data?.data?.[0];
 
