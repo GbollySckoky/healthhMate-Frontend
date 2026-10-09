@@ -23,36 +23,25 @@ function Callout({
 
   return (
     <div
-      className={`flex items-start gap-3 rounded-xl border p-4 ${
-        isWarning
-          ? "border-amber-200 bg-amber-50"
-          : "border-slate-200 bg-slate-50"
-      }`}
+      className={`flex items-start gap-3 rounded-xl border p-4 border-slate-200 bg-slate-50`}
     >
       <Icon
         size={18}
         aria-hidden
-        className={`mt-0.5 shrink-0 ${
-          isWarning ? "text-amber-600" : "text-slate-400"
+        className={`mt-0.5 shrink-0 text-slate-400
         }`}
       />
 
       <div className="min-w-0">
         <p
-          className={`text-sm font-semibold ${
-            isWarning ? "text-amber-900" : "text-slate-700"
+          className={`text-sm font-semibold text-slate-700
           }`}
         >
           {label}
         </p>
 
         <p
-          className={`mt-0.5 break-words text-sm ${
-            isWarning
-              ? "text-amber-900"
-              : value
-                ? "text-slate-700"
-                : "text-slate-400"
+          className={`mt-0.5 break-words text-sm text-slate-400
           }`}
         >
           {value || "Not recorded"}

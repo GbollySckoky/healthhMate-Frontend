@@ -176,7 +176,7 @@ const Profile = () => {
   const age = getAge(patient.dateOfBirth);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-5">
+    <div className=" py-5">
       <div className="flex flex-col items-center justify-center">
         <div className="relative">
           <Image
@@ -281,7 +281,7 @@ const Profile = () => {
         className="w-full flex flex-row items-center p-[15px] border border-[#E5E7EB] rounded-lg my-5"
       >
         <LogOut size={17} color={colors.lightRed} />
-        <span className="ml-2.5 text-sm font-bold" style={{ color: colors.lightRed }}>
+        <span className="ml-2.5 text-sm font-medium" style={{ color: colors.lightRed }}>
           Log out
         </span>
       </button>
