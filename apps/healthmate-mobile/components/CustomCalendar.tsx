@@ -10,6 +10,7 @@ interface CustomCalendarType {
   onChangeText: (day: CalendarDay) => void;
   onClose: () => void;
   minDate?: string;
+  data?: { dayOfWeek: string }[];
 }
 
 const CustomCalendar = ({
@@ -17,9 +18,9 @@ const CustomCalendar = ({
   onChangeText,
   onClose,
   minDate,
+  data
 }: CustomCalendarType) => {
   const [viewDate, setViewDate] = useState<Date>(new Date());
-
   /*
    * Convert YYYY-MM-DD into a local Date.
    *
@@ -110,11 +111,12 @@ const CustomCalendar = ({
   const selectDay = (day: number) => {
     const dateObj = new Date(year, month, day);
     const dateString = formatDate(dateObj);
+    console.log("dateString", day);
 
     /*
-     * Don't allow selecting a date before minDate.
+     * Guard selection using the same rules as the disabled buttons.
      */
-    if (minDate && dateString < minDate) {
+    if (isDateDisabled(day)) {
       return;
     }
 
@@ -125,13 +127,22 @@ const CustomCalendar = ({
     onClose();
   };
 
+  const isDateAvailable = (day: number): boolean => {
+    const weekday = new Date(year, month, day)
+      .toLocaleDateString("en-US", { weekday: "long" })
+      .toUpperCase();
+    // console.log("weekday", weekday);
+    return data?.some(
+      (slot) => slot.dayOfWeek.trim().toUpperCase() === weekday
+    ) ?? false;
+    
+  };
+
   const isDateDisabled = (day: number): boolean => {
-    if (!minDate) return false;
+    const dateString = formatDate(new Date(year, month, day));
 
-    const dateObj = new Date(year, month, day);
-    const dateString = formatDate(dateObj);
-
-    return dateString < minDate;
+    return Boolean(minDate && dateString < minDate) || !isDateAvailable(day);
+    // console.log("isDateDisabled", Boolean(minDate && dateString < minDate) || !isDateAvailable(day));
   };
 
   const cells: (number | null)[] = [];
@@ -193,7 +204,9 @@ const CustomCalendar = ({
         {/* Days of Week */}
         <div className="mb-1 grid grid-cols-7 gap-1">
           {["S", "M", "T", "W", "T", "F", "S"].map(
-            (day, index) => (
+            (day, index) => {
+              console.log("day", day);
+              return(
               <div
                 key={index}
                 className="py-1 text-center text-xs text-[#717680]"
@@ -201,13 +214,14 @@ const CustomCalendar = ({
                 {day}
               </div>
             )
-          )}
+          })}
         </div>
 
         {/* Calendar Days */}
         <div className="grid grid-cols-7 gap-1">
           {cells.map((day, index) => {
             if (!day) {
+              console.log("day", day);
               return <div key={index} />;
             }
 
@@ -233,6 +247,7 @@ const CustomCalendar = ({
             );
           })}
         </div>
+
       </div>
     </div>
   );

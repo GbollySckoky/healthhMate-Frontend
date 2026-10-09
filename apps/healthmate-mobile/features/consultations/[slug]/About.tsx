@@ -116,11 +116,10 @@ const About = ({ consultation, id }: Props) => {
           Book Consultation
         </button>
         ): (
-         <button 
-          className="text-sm rounded-xl px-3 mt-5 text-center bg-pink-600 py-3 font-semibold text-white transition opacity-80 cursor-not-allowed"
-          disabled>
-            Dr. James is not currently available for consultation.
-        </button>
+         <p 
+          className="text-sm rounded-xl px-3 mt-5 text-center bg-pink-600 py-3 font-semibold text-white transition opacity-80 cursor-not-allowed">
+           Dr. {consultation.firstName} is not currently available for consultation yet.
+        </p>
         )}
       </div>
      

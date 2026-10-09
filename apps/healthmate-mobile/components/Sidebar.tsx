@@ -110,7 +110,7 @@ export default function Sidebar({
                       ${
                         isActive
                           ? "bg-[#EAF6F1]"
-                          : "hover:bg-[#F7F9F8]"
+                          : ""
                       }
                     `}
                   >

@@ -30,11 +30,11 @@ export function PrescriptionItem({
           </span>
 
           <div className="min-w-0">
-            <h3 className="break-words font-medium text-gray-600">
+            <h3 className="break-words text-sm font-medium text-gray-600">
               {CapitalizeName(prescription?.prescription) || "N/A"}
             </h3>
 
-            <p className="mt-0.5 text-sm text-slate-500">
+            <p className="mt-0.5 text-sm font-normal text-gray-500">
               Prescribed by {doctorName}
             </p>
           </div>

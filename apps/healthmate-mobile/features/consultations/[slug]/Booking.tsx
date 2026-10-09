@@ -64,8 +64,49 @@ const Booking = ({ consultation, id }: BookingProps) => {
     }));
   };
 
+  const getAvailableTimeSlots = (selectedDate: string): string[] => {
+    if(!selectedDate) return [];
+
+    const [year, month, day] = selectedDate.split("-").map(Number);
+
+    const weekday = new Date(year, month - 1, day)
+      .toLocaleDateString("en-US", { weekday: "long" })
+      .toUpperCase();
+
+    const availableSlots = consultation?.availability?.find(
+      (slot: { dayOfWeek: string }) =>
+        slot.dayOfWeek.trim().toUpperCase() === weekday
+    );
+
+    return availableSlots?.availableTimeSlots ?? [];
+  }
+
+  const getConsultationType = (selectedDate: string): string[] => {
+    if (!selectedDate) return [];
+
+    const [year, month, day] = selectedDate.split("-").map(Number);
+
+    const weekday = new Date(year, month -1, day)
+      .toLocaleDateString("en-US", { weekday: 'long'})
+      .toUpperCase();
+
+    const availableSlots = consultation?.availability?.find(
+      (slot: { dayOfWeek: string }) =>
+        slot.dayOfWeek.trim().toUpperCase() === weekday
+    )
+
+    return availableSlots?.consultationType ?? [];
+  }
+
+  const availableTimes = getAvailableTimeSlots(form.date);
+  const availableCleaningType = getConsultationType(form.date);
+
   const handleDateSelect = (day: { dateString: string }) => {
-    updateField("date", day.dateString);
+    setForm((previous) => ({
+      ...previous,
+      date: day.dateString,
+      time: "",
+    }));
     setShowDatePicker(false);
   };
 
@@ -86,6 +127,7 @@ const Booking = ({ consultation, id }: BookingProps) => {
   const isFormInvalid =
     !form.date ||
     !form.time ||
+    !availableTimes.includes(form.time) ||
     !form.consultationType ||
     !form.healthConcern.trim();
 
@@ -121,19 +163,22 @@ const Booking = ({ consultation, id }: BookingProps) => {
           onChangeText={handleDateSelect}
           onClose={() => setShowDatePicker(false)}
           minDate={minDate}
+          data={consultation?.availability || []}
         />
       </div>
-
+  
       {/* Time */}
       <TimeSlotSelector
         value={form.time}
         onChange={(value) => updateField("time", value)}
+        data={availableTimes}
       />
 
       {/* Consultation Type */}
       <ConsultationTypeSelector
         value={form.consultationType}
         onChange={(value) => updateField("consultationType", value)}
+        data={availableCleaningType}
       />
 
       {/* Health Concern */}
