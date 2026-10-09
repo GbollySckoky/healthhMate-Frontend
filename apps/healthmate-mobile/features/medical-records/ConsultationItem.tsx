@@ -36,11 +36,11 @@ export function ConsultationItem({
           </span>
 
           <div className="min-w-0">
-            <h3 className="font-medium text-base text-gray-600">
+            <h3 className="font-medium text-sm text-gray-500">
               {getFullName(note?.doctor)}
             </h3>
 
-            <p className="mt-0.5 text-sm text-slate-500">
+            <p className="mt-0.5 text-sm font-normal text-gray-500">
               {note?.hospital?.hospitalName || "Hospital not recorded"}
             </p>
           </div>

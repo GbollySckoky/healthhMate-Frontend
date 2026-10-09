@@ -14,6 +14,7 @@ interface BookDoctorProps {
 }
 
 const BookDoctor = ({ consultation, onClose, id }: BookDoctorProps) => {
+  console.log("consultation", consultation);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
       <div className="relative flex h-[calc(100vh-32px)] w-full max-w-5xl flex-col overflow-hidden rounded-lg bg-[#F8F9FC] shadow-2xl">

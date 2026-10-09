@@ -1,22 +1,13 @@
 interface TimeSlotSelectorProps {
   value: string;
   onChange: (value: string) => void;
+  data: string[];
 }
-
-const TIME_SLOTS = [
-  "10:00am",
-  "11:00am",
-  "12:00pm",
-  "1:00pm",
-  "2:00pm",
-  "3:00pm",
-  "4:00pm",
-  "5:00pm",
-];
 
 const TimeSlotSelector = ({
   value,
   onChange,
+  data
 }: TimeSlotSelectorProps) => {
   return (
     <div>
@@ -24,8 +15,14 @@ const TimeSlotSelector = ({
         Select Time
       </p>
 
+      {data.length === 0 && (
+        <p className="text-sm text-gray-500">
+          No appointment times available for this date.
+        </p>
+      )}
+
       <div className="grid grid-cols-4 gap-3">
-        {TIME_SLOTS.map((slot) => {
+        {data.map((slot) => {
           const isSelected = value === slot;
 
           return (
