@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, Settings, X } from "lucide-react";
+import { LogOut, X } from "lucide-react";
 import Image from 'next/image'
 import logo from '@/assets/Group 19156 copy.png'
 
@@ -143,7 +143,7 @@ export default function Sidebar({
           </div>
 
           {/* Account */}
-          <div className="mt-8">
+          {/* <div className="mt-8">
             <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-wider text-white">
               Account
             </p>
@@ -176,7 +176,7 @@ export default function Sidebar({
                 Settings
               </span>
             </Link>
-          </div>
+          </div> */}
         </nav>
 
         {/* Logout */}

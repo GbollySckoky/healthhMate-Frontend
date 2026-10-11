@@ -14,3 +14,12 @@ export const ROUTES = {
     availability: '/availability',
     notifications: '/notifications'
 }
+
+const publicRoutes = {
+    login: '/auth/login',
+    forgotPassword: '/auth/forgot-password',
+    signUp: '/auth/sign-up',
+    setUpHospital: '/auth/set-up-hospital'
+}
+
+export { publicRoutes }
