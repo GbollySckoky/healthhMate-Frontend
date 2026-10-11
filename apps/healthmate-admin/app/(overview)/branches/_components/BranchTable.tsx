@@ -1,4 +1,5 @@
 "use client";
+import { adminQueryKeys } from "@/lib/constant/query-keys";
 
 import { useModal } from "@/lib/components/Modal/Modal";
 import {
@@ -36,34 +37,44 @@ const BranchTable = ({ searchQuery = "" }: BranchTableProps) => {
     total: 0,
   });
 
+  const [debouncedSearch, setDebouncedSearch] = useState(searchQuery);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+      setPagination((prev) => ({ ...prev, page: 1 }));
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
+
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["branch", searchQuery, pagination.page, pagination.limit],
-    queryFn: () => Hospital_Admin.getBranch(searchQuery, pagination.page, pagination.limit),
+    queryKey: adminQueryKeys.branches(
+      debouncedSearch,
+      pagination.page,
+      pagination.limit,
+    ),
+    queryFn: () =>
+      Hospital_Admin.getBranch(
+        debouncedSearch,
+        pagination.page,
+        pagination.limit,
+      ),
   });
 
   const branches = data?.data ?? [];
 
-  const filteredBranches = branches.filter((branch: any) => {
-    const search = searchQuery.toLowerCase();
-
-    const matchesSearch =
-      branch.branchName?.toLowerCase().includes(search) ||
-      branch.branchAddress?.toLowerCase().includes(search) ||
-      branch.phoneNumber?.toLowerCase().includes(search) ||
-      branch.state?.toLowerCase().includes(search);
-
-    const matchesStatus = status ? branch.status === status : true;
-
-    return matchesSearch && matchesStatus;
-  });
-
   useEffect(() => {
-
-  })
+    if (data?.meta) {
+      setPagination((prev) => ({
+        ...prev,
+        total: data.meta.total,
+        totalPages: data.meta.totalPages,
+      }));
+    }
+  }, [data]);
 
   const handleDeleteClick = (
     e: React.MouseEvent<HTMLButtonElement>,
-    branchName: string
+    branchName: string,
   ) => {
     e.stopPropagation();
 
@@ -74,13 +85,13 @@ const BranchTable = ({ searchQuery = "" }: BranchTableProps) => {
         className: "max-w-lg",
         onClose: () => {},
         // confirmDelete() {},
-      }
+      },
     );
   };
 
   const handleEditClick = (
     e: React.MouseEvent<HTMLButtonElement>,
-    branchId: number
+    branchId: number,
   ) => {
     e.stopPropagation();
     router.push(`/branches/${branchId}/edit`);
@@ -113,7 +124,7 @@ const BranchTable = ({ searchQuery = "" }: BranchTableProps) => {
                   {error.message}
                 </TableCell>
               </TableRow>
-            ) : filteredBranches.length === 0 ? (
+            ) : branches.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={6}
@@ -123,10 +134,10 @@ const BranchTable = ({ searchQuery = "" }: BranchTableProps) => {
                 </TableCell>
               </TableRow>
             ) : (
-              filteredBranches.map((branch: Branch) => (
+              branches.map((branch: Branch) => (
                 <TableRow
                   key={branch.id}
-                  onClick={() => router.push(`/branches/${branch.id}`)}
+                  // onClick={() => router.push(`/branches/${branch.id}`)}
                   className="cursor-pointer hover:bg-[#FAFBFF]"
                 >
                   <TableCell className="font-inter font-normal text-[12px] text-grey-20">
@@ -153,9 +164,7 @@ const BranchTable = ({ searchQuery = "" }: BranchTableProps) => {
                     <div className="flex items-center gap-3">
                       <button
                         type="button"
-                        onClick={(e) =>
-                          handleDeleteClick(e, branch.branchName)
-                        }
+                        onClick={(e) => handleDeleteClick(e, branch.branchName)}
                       >
                         <Trash2 color="#F04438" size={15} />
                       </button>
@@ -175,7 +184,7 @@ const BranchTable = ({ searchQuery = "" }: BranchTableProps) => {
         )}
       </Table>
 
-      <Paginate pagination={pagination} setPagination={setPagination}/>
+      <Paginate pagination={pagination} setPagination={setPagination} />
     </div>
   );
 };

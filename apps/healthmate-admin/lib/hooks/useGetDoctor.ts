@@ -1,48 +1,63 @@
-"use clirnt"
-import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react'
-import { Hospital_Admin } from '../service/service';
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { adminQueryKeys } from "../constant/query-keys";
+import { Hospital_Admin } from "../service/service";
 
 const useGetDoctor = () => {
-    const [searchInput, setSearchInput] = useState("");
-    const [pagination, setPagination] = useState({
-        page: 1,
-        limit: 10,
-        totalPages: 0,
-        total: 0
-    })
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    totalPages: 0,
+    total: 0,
+  });
 
-    const { data, isLoading, isError, error } = useQuery({
-        queryKey: ["getAllDoctor", searchInput, pagination.page, pagination.limit],
-        queryFn: () => Hospital_Admin.getAllDoctor(searchInput, pagination.page, pagination.limit),
-      });
-    
-    const doctors = data?.data ?? [];
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearch(searchInput);
+      setPagination((prev) => ({ ...prev, page: 1 }));
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [searchInput]);
 
-    useEffect(() => {
-        if(data?.meta) {
-            setPagination((prev) => ({
-                ...prev,
-                total: data.meta.total,
-                totalPages: data.meta.totalPages,
-            }))
-        }
-    },[data])
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: adminQueryKeys.doctors(
+      debouncedSearch,
+      pagination.page,
+      pagination.limit,
+    ),
+    queryFn: () =>
+      Hospital_Admin.getAllDoctor(
+        debouncedSearch,
+        pagination.page,
+        pagination.limit,
+      ),
+  });
 
-//     const filteredDoctors = doctors.filter((doctor: any) => {
-//     const search = searchInput.toLowerCase();
+  useEffect(() => {
+    if (data?.meta) {
+      setPagination((prev) => ({
+        ...prev,
+        total: data.meta.total,
+        totalPages: data.meta.totalPages,
+      }));
+    }
+  }, [data]);
 
-//     const fullName = `${doctor.firstName || ""} ${doctor.lastName || ""}`.toLowerCase();
+  const doctors = data?.data ?? [];
+  return {
+    pagination,
+    doctors,
+    isLoading,
+    isError,
+    error,
+    setPagination,
+    searchInput,
+    setSearchInput,
+  };
+};
 
-//     return (
-//       fullName.includes(search) ||
-//       doctor.email?.toLowerCase().includes(search) ||
-//       doctor.phoneNumber?.toLowerCase().includes(search) ||
-//       doctor.profile?.specialization?.toLowerCase().includes(search)
-//     );
-//   });
-
-  return {pagination, doctors, isLoading, isError, error, setPagination, searchInput, setSearchInput}
-}
-
-export default useGetDoctor
+export default useGetDoctor;

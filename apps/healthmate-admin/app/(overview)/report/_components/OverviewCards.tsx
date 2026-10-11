@@ -1,5 +1,5 @@
 import { overviewCardData } from '@/components/data';
-import { Card, DisplayFlex, MediumText, MediumTitle, PageWrapper, SmallestText, Value } from '@/components/ui/Reusable';
+import { Card, MediumText, MediumTitle, PageWrapper, SmallestText, Value } from '@/components/ui/Reusable';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { EarningsTrend } from './EarningsTrends';
@@ -9,11 +9,13 @@ import { PatientGrowth } from './PatientGrowth';
 import { FinancialReport } from './FinancialReport';
 import DoctorPerformannce from './DoctorPerformance';
 import { CloudUpload } from 'lucide-react';
+import { FlexWrapper } from '@/lib/components/ui/Reusable';
 
 
 const OverviewCards = () => {
   return (
     <PageWrapper>
+        <FlexWrapper>
         {/* Generate Report */}
         <div className='flex justify-end mb-4'>
             <div className="flex bg-pink-600 text-white items-center cursor-pointer p-3 rounded-lg">
@@ -48,15 +50,16 @@ const OverviewCards = () => {
             </Card>
         </div>
         <EarningsTrend />
-        <div className="my-7 flex items-center  gap-5 h-full">
+        <div className="my-7 flex items-center  gap-5 ">
             <AppointmentTrends />
             <ConsultDept />
         </div>
-        <div className="my-7 flex items-center  gap-5 h-full">
+        <div className="my-7 flex items-center  gap-5 ">
             <PatientGrowth/>
             <DoctorPerformannce />
         </div>
         <FinancialReport />
+        </FlexWrapper>
     </PageWrapper>
   )
 }

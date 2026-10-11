@@ -13,5 +13,15 @@ export const ROUTES = {
     signUp: '/auth/sign-up',
     setUpHospital: '/auth/set-up-hospital',
     notifications: 'notifications',
-    profile: 'profile'
+    profile: '/profile'
 }
+
+const publicRoutes = {
+    login: '/auth/login',
+    forgotPassword: '/auth/forgot-password',
+    signUp: '/auth/sign-up',
+    setUpHospital: '/auth/set-up-hospital'
+}
+
+
+export { publicRoutes }

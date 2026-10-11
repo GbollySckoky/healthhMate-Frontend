@@ -12,6 +12,7 @@ import { Signup as SIGN_UP } from '@/lib/interface/signup-interface'
 import { AxiosError } from 'axios'
 import DateInput from '@/components/Inputs/Date'
 import { toast } from 'react-toastify'
+import { setAuthSession } from '@/lib/service/auth-session'
 
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
     const [inputValue, setInputValue] = useState<Signup>({
@@ -32,7 +33,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
         mutationFn: (payload: SIGN_UP) => Hospital_Admin.signup(payload),
         onSuccess: (response) => {
             toast.success(response.data.message)
-            localStorage.setItem('access_token', response.data.access_token);
+            setAuthSession(response.data.access_token);
             handleNextStep(STEP.TWO)
 
         },

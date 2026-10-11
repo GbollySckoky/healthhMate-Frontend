@@ -24,7 +24,7 @@ import useGetStats from "@/lib/hooks/useGetStats";
 
 const tabs = [
   { key: "all", title: "All Appointment" },
-  { key: "upcoming", title: "UPCOMING" },
+  { key: "upcoming", title: "Upcoming" },
   { key: "completed", title: "Completed" },
   { key: "pending", title: "Pending" },
   { key: "cancelled", title: "Cancelled" },
