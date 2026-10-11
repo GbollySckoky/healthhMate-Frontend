@@ -1,14 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
+import { clearAuthSession } from "./auth-session";
+import { ROUTES } from "../constant/Routes";
+import { ADMIN_ENDPOINTS } from "../constant/endpoints";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  // headers: {
-  //   'Content-Type': 'application/json',
-  // },
+  timeout: 30_000,
 });
 
 api.interceptors.request.use((config) => {
-  const authToken = localStorage.getItem('access_token');
+  if (typeof window === "undefined") return config;
+  const authToken = localStorage.getItem("access_token");
 
   if (authToken) {
     config.headers.Authorization = `Bearer ${authToken}`;
@@ -20,12 +22,23 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      window.location.href = '/auth/login';
+    if (typeof window === "undefined") return Promise.reject(error);
+
+    const requestPath = error.config?.url?.split("?")[0]?.replace(/\/$/, "");
+    const isLoginRequest = requestPath?.endsWith(
+      ADMIN_ENDPOINTS.LOGIN.replace(/\/$/, ""),
+    );
+    const alreadyOnLoginPage = window.location.pathname === ROUTES.login;
+
+    if (error.response?.status === 401 && !isLoginRequest) {
+      clearAuthSession();
+      if (!alreadyOnLoginPage) {
+        window.location.replace(ROUTES.login);
+      }
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

@@ -8,7 +8,7 @@ import { Hospital_Admin } from '../service/service';
 const useGetFinance = () => {
     const [pagination, setPagination] = useState({
         page: 1,
-        limit: 10,
+        limit: 50,
         totalPages: 0,
         total: 0,
     });

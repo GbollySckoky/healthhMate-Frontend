@@ -4,6 +4,8 @@ import { STATUS } from "@/lib/types/status";
     switch (status) {
       case STATUS.COMPLETED:
         return "text-[#2F855A] bg-[#EAF7EE]";
+       case STATUS.SUCCESS:
+        return "text-[#2F855A] bg-[#EAF7EE]";
       case STATUS.PENDING:
         return "text-[#2B6CB0] bg-[#EAF2FF]";
       case STATUS.CANCELLED:

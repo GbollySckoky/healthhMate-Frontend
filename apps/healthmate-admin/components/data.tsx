@@ -1,6 +1,6 @@
 import image1 from '@/assets/Image (1).png' 
 import image from '@/assets/Image.png'
-import { House, Wallet, Activity, CalendarDays, HouseWifi, User, Headset, Settings, Bell } from 'lucide-react';
+import { House, Wallet, CalendarDays, HouseWifi, User, Headset, Settings, Bell } from 'lucide-react';
 import { ROUTES } from '@/lib/constant/Routes';
 
 
@@ -349,7 +349,7 @@ export const newBranch = {
     branchAddress:{
         title: 'Priority',
         label: 'Branch Address',
-        placeholder: 'admin@evergreen.com'
+        placeholder: '11, Oristhe street'
     },
     city:{
         title: 'Priority',
@@ -481,12 +481,12 @@ export const sideBarData = [
         text: 'Branches',
         url: ROUTES.branches
     },
-    {
-        id: 7,
-        icon: <Activity size={18} />,
-        text: 'Reports & Analytics',
-        url: ROUTES.report
-    },
+    // {
+    //     id: 7,
+    //     icon: <Activity size={18} />,
+    //     text: 'Reports & Analytics',
+    //     url: ROUTES.report
+    // },
     {
         id: 8,
         icon: <Headset size={18} />,

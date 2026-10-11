@@ -2,7 +2,7 @@
 export default {
   content: [
     '../healthmate-admin/app/**/*.{ts,tsx}',
-    // './healthmate-admin/lib/**/*.{ts,tsx}',
+    './lib/**/*.{ts,tsx}',
     '../healthmate-admin/components/**/*.{ts,tsx}',
     // Add any other paths where you use Tailwind classes
     // './src/**/*.{ts,tsx}',
@@ -74,4 +74,3 @@ export default {
   },
   plugins: [],
 }
-

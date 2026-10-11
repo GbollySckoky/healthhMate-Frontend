@@ -1,4 +1,5 @@
 "use client";
+import { adminQueryKeys } from "@/lib/constant/query-keys";
 
 import { PageWrapper } from "@/components/ui/Reusable";
 import { FlexWrapper } from "@/lib/components/ui/Reusable";
@@ -16,20 +17,19 @@ import { STATUS } from "@/lib/types/status";
 import { useParams } from "next/navigation";
 import PatientHeaderSkeleton from "@/components/ui/PatientHeaderSkeleton";
 
-
 const Page = () => {
   const params = useParams();
   const id = Number(params.slug);
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["appointment"],
+    queryKey: adminQueryKeys.appointments(),
     queryFn: () => Hospital_Admin.getAllAppointments(),
   });
 
   const appointmentData: GET_ALL_APPOINTMENTS[] = data?.data ?? [];
 
   const patients = appointmentData.filter(
-    (patient) => patient.status !== STATUS.PENDING
+    (patient) => patient.status !== STATUS.PENDING,
   );
 
   const patient = patients.find((patient) => patient.id === id);
@@ -91,9 +91,9 @@ const Page = () => {
 
             <TabsContent value="appointments">
               <Appointments
-                // patient={patient}
-                // appointmentData={appointmentData}
-                // isLoading={isLoading}
+              // patient={patient}
+              // appointmentData={appointmentData}
+              // isLoading={isLoading}
               />
             </TabsContent>
           </Tabs>

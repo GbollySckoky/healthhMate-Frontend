@@ -6,12 +6,12 @@ import Link from 'next/link'
 import Img from '@/components/ui/Image'
 import { ROUTES } from '@/lib/constant/Routes'
 import { Login } from '@/lib/types/login.schema'
-import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { Hospital_Admin } from '@/lib/service/service'
 import { LogIn } from '@/lib/interface/login.interface'
 import { AxiosError } from 'axios'
 import { toast } from 'react-toastify'
+import { setAuthSession } from '@/lib/service/auth-session'
 
 
 const Page = () => {
@@ -20,7 +20,6 @@ const Page = () => {
         password: ''
     })
     const [rememberMe, setRememberMe] = useState(false)
-    const router = useRouter()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -33,9 +32,9 @@ const Page = () => {
     const mutation = useMutation({
         mutationFn: (payload: LogIn) => Hospital_Admin.login(payload),
         onSuccess: (response) => {
-            localStorage.setItem('access_token', response.data.access_token)
+            setAuthSession(response.data.access_token)
             toast.success(response.data.message ?? 'Login successful.')
-            router.push(ROUTES.dashboard)
+            window.location.replace(ROUTES.dashboard)
         },
         onError: (error: AxiosError<{message: string}>) => {
             toast.error(error?.response?.data?.message)
