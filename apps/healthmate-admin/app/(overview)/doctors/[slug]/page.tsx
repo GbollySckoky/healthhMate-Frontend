@@ -1,82 +1,100 @@
-"use client"
-import { FlexWrapper, PageWrapper,} from '@/lib/components/ui/Reusable'
-import React from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs"
-import Appointment from './Appointment'
-import Image from 'next/image'
-import image from '@/assets/Image.png'
+"use client";
+import { adminQueryKeys } from "@/lib/constant/query-keys";
+import { FlexWrapper, PageWrapper } from "@/lib/components/ui/Reusable";
+import React from "react";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/lib/components/ui/tabs";
+import Appointment from "./Appointment";
+import Image from "next/image";
+import image from "@/assets/Image.png";
 // import { Trash2 } from 'lucide-react'
-import Overview from './Overview'
-import Documents from './Documents'
-import { useQuery } from '@tanstack/react-query'
-import { Hospital_Admin } from '@/lib/service/service'
+import Overview from "./Overview";
+import Documents from "./Documents";
+import { useQuery } from "@tanstack/react-query";
+import { Hospital_Admin } from "@/lib/service/service";
 import { useParams } from "next/navigation";
-import { DoctorHeaderSkeleton } from '@/components/ui/DoctorDetailsSkeleton'
-import Availability from './Availability'
-
+import { DoctorHeaderSkeleton } from "@/components/ui/DoctorDetailsSkeleton";
+import Availability from "./Availability";
 
 const Page = () => {
-    const params = useParams();
+  const params = useParams();
 
-    const hospitalId = params?.slug; // Access the hospitalId from the URL parameters
-    const { data, isLoading } = useQuery({
-        queryKey: ['getAllDoctor', hospitalId],
-        queryFn: () => Hospital_Admin.getDoctorDetails(String(hospitalId)),
-        enabled: !!hospitalId
-    });
-    
-    const doctorDetails = data?.data || {}
-    const capitalize = (value?: string) =>
-        value ? value.charAt(0).toUpperCase() + value.slice(1) : "";
+  const hospitalId = params?.slug; // Access the hospitalId from the URL parameters
+  const { data, isLoading } = useQuery({
+    queryKey: adminQueryKeys.doctor(String(hospitalId)),
+    queryFn: () => Hospital_Admin.getDoctorDetails(String(hospitalId)),
+    enabled: !!hospitalId,
+  });
+
+  const doctorDetails = data?.data || {};
+  const capitalize = (value?: string) =>
+    value ? value.charAt(0).toUpperCase() + value.slice(1) : "";
   return (
-    <PageWrapper >
-        <FlexWrapper>
-            <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
-                {isLoading ? (
-                    <DoctorHeaderSkeleton />
-                ) : (
-                <div className="mb-3 flex items-center justify-between border-b pb-6 border-borderColor">
-                    <div className="flex items-center">
-                    <Image src={image} alt="Image" className="w-[50px] h-[50px] rounded-full" />
+    <PageWrapper>
+      <FlexWrapper>
+        <div className="bg-white p-6 border border-borderColor rounded-lg mt-5">
+          {isLoading ? (
+            <DoctorHeaderSkeleton />
+          ) : (
+            <div className="mb-3 flex items-center justify-between border-b pb-6 border-borderColor">
+              <div className="flex items-center">
+                <Image
+                  src={image}
+                  alt="Image"
+                  className="w-[50px] h-[50px] rounded-full"
+                />
 
-                    <div className="ml-2">
-                        <p className="font-medium font-libre text-[14px] text-grey-800 mb-1">
-                         {`${capitalize(doctorDetails?.firstName)} ${capitalize(doctorDetails?.lastName) || ""}`.trim() || "-"}
-                        </p>
+                <div className="ml-2">
+                  <p className="font-medium font-libre text-[14px] text-grey-800 mb-1">
+                    {`${capitalize(doctorDetails?.firstName)} ${capitalize(doctorDetails?.lastName) || ""}`.trim() ||
+                      "-"}
+                  </p>
 
-                        <p className="text-[12px] font-inter text-grey-20">
-                        {doctorDetails?.email || "-"}
-                        </p>
-                    </div>
-                    </div>
+                  <p className="text-[12px] font-inter text-grey-20">
+                    {doctorDetails?.email || "-"}
+                  </p>
                 </div>
-                )}
-                <Tabs defaultValue="overview" className='bg-white mt-4'>
-                    <TabsList >
-                        <TabsTrigger value="overview">Overview</TabsTrigger>
-                        <TabsTrigger value="appointments">Appointments</TabsTrigger>
-                        <TabsTrigger value="availabilty">Availability</TabsTrigger>
-                        <TabsTrigger value="documents">Documents</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="overview"><Overview doctorDetails={doctorDetails} isLoading={isLoading} /> </TabsContent>
-                    <TabsContent value="appointments"> 
-                        <Appointment
-                            appointments={doctorDetails?.appointments || []}
-                            isLoading={isLoading}
-                        />
-                    </TabsContent>
-                    <TabsContent value="availabilty"> 
-                        <Availability
-                            availability={doctorDetails?.availability || []}
-                            isLoading={isLoading} 
-                        /> 
-                    </TabsContent>
-                    <TabsContent value="documents"> <Documents /> </TabsContent>
-                </Tabs>
+              </div>
             </div>
-        </FlexWrapper>
+          )}
+          <Tabs defaultValue="overview" className="bg-white mt-4">
+            <TabsList>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="appointments">Appointments</TabsTrigger>
+              <TabsTrigger value="availabilty">Availability</TabsTrigger>
+              <TabsTrigger value="documents">Documents</TabsTrigger>
+            </TabsList>
+            <TabsContent value="overview">
+              <Overview
+                doctorDetails={doctorDetails}
+                isLoading={isLoading}
+              />{" "}
+            </TabsContent>
+            <TabsContent value="appointments">
+              <Appointment
+                appointments={doctorDetails?.appointments || []}
+                isLoading={isLoading}
+              />
+            </TabsContent>
+            <TabsContent value="availabilty">
+              <Availability
+                availability={doctorDetails?.availability || []}
+                isLoading={isLoading}
+              />
+            </TabsContent>
+            <TabsContent value="documents">
+              {" "}
+              <Documents />{" "}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </FlexWrapper>
     </PageWrapper>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

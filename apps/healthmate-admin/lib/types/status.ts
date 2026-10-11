@@ -25,4 +25,5 @@ export const STATUS = {
     UPCOMING: 'UPCOMING',
     PAID: 'SUCESS',
     FAILED: 'FAILED',
+    SUCCESS: 'SUCCESS',
 } 

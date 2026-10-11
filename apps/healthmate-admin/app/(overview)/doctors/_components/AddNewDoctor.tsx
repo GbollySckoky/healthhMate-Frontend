@@ -1,100 +1,100 @@
-"use client"
+"use client";
 
-
-import AuthEmail from '@/components/Inputs/AuthEmail'
-import AuthInput from '@/components/Inputs/AuthInput'
+import AuthEmail from "@/components/Inputs/AuthEmail";
+import AuthInput from "@/components/Inputs/AuthInput";
 // import DateInput from '@/components/Inputs/Date'
-import AuthPassword from '@/components/Inputs/AuthPassword'
-import { DisplayFlex } from '@/components/ui/Reusable'
-import Footer from '@/components/ui/Footer'
-import { useState } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Hospital_Admin } from '@/lib/service/service'
-import { AxiosError } from 'axios'
-import { DOCTOR_SIGNUP } from '@/lib/interface/signup-interface'
-import DateInput from '@/components/Inputs/Date'
-import { useModal } from '@/components/Modal/Modal'
-import { toast } from 'react-toastify'
-
+import AuthPassword from "@/components/Inputs/AuthPassword";
+import { DisplayFlex } from "@/components/ui/Reusable";
+import Footer from "@/components/ui/Footer";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Hospital_Admin } from "@/lib/service/service";
+import { AxiosError } from "axios";
+import { DOCTOR_SIGNUP } from "@/lib/interface/signup-interface";
+import DateInput from "@/components/Inputs/Date";
+import { useModal } from "@/components/Modal/Modal";
+import { toast } from "react-toastify";
 
 interface SelectOption {
-  value: string
-  label: string
+  value: string;
+  label: string;
 }
 
 const GENDER_OPTIONS: SelectOption[] = [
-  { value: '', label: 'Select gender' },
-  { value: 'male', label: 'Male' },
-  { value: 'female', label: 'Female' },
-  { value: 'other', label: 'Other' },
-]
+  { value: "", label: "Select gender" },
+  { value: "male", label: "Male" },
+  { value: "female", label: "Female" },
+  { value: "other", label: "Other" },
+];
 
 const DEPARTMENT_OPTIONS: SelectOption[] = [
-  { value: '', label: 'Select department' },
-  { value: 'GENERAL_MEDICINE', label: 'GENERAL MEDICINE' },
-  { value: 'PEDIATRICS', label: 'PEDIATRICS' },
-  { value: 'OBSTETRICS_GYNECOLOGY', label: '  OBSTETRICS GYNECOLOGY' },
-  { value: 'CARDIOLOGY', label: 'CARDIOLOGY' },
-  { value: 'DERMATOLOGY', label: 'DERMATOLOGY' },
-  { value: 'MENTAL_HEALTH', label: 'MENTAL HEALTH' },
-  { value: 'ORTHOPEDICS', label: 'ORTHOPEDICS' },
-  { value: 'NEUROLOGY', label: 'NEUROLOGY' },
-  { value: 'GASTROENTEROLOGY', label: 'GASTROENTEROLOGY' },
-  { value: 'UROLOGY', label: 'UROLOGY' }
-]
+  { value: "", label: "Select department" },
+  { value: "GENERAL_MEDICINE", label: "GENERAL MEDICINE" },
+  { value: "PEDIATRICS", label: "PEDIATRICS" },
+  { value: "OBSTETRICS_GYNECOLOGY", label: "  OBSTETRICS GYNECOLOGY" },
+  { value: "CARDIOLOGY", label: "CARDIOLOGY" },
+  { value: "DERMATOLOGY", label: "DERMATOLOGY" },
+  { value: "MENTAL_HEALTH", label: "MENTAL HEALTH" },
+  { value: "ORTHOPEDICS", label: "ORTHOPEDICS" },
+  { value: "NEUROLOGY", label: "NEUROLOGY" },
+  { value: "GASTROENTEROLOGY", label: "GASTROENTEROLOGY" },
+  { value: "UROLOGY", label: "UROLOGY" },
+];
 
 const SELECT_CLASS =
-  'border border-gray-300 rounded-md py-2 focus:outline-none focus:ring-1  w-full text-sm'
+  "border border-gray-300 rounded-md py-2 focus:outline-none focus:ring-1  w-full text-sm";
 
-const LABEL_CLASS = 'font-medium text-[12px] font-inter text-[#414651]'
+const LABEL_CLASS = "font-medium text-[12px] font-inter text-[#414651]";
 
 const initialFormState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  dob: '',
-  gender: '',
-  phoneNumber: '',
-  password: '',
-  confirmPassword: '',
-  department: '',
-  title: ''
-}
+  firstName: "",
+  lastName: "",
+  email: "",
+  dob: "",
+  gender: "",
+  phoneNumber: "",
+  password: "",
+  confirmPassword: "",
+  department: "",
+  title: "",
+};
 
 const AddNewDoctor = () => {
-  const [inputValue, setInputValue] = useState(initialFormState)
+  const [inputValue, setInputValue] = useState(initialFormState);
   const [displayPassword, setDisplayPassword] = useState({
     password: false,
     confirmPassword: false,
-  })
-  const queryClient = useQueryClient()
-  const { closeModal } = useModal()
+  });
+  const queryClient = useQueryClient();
+  const { closeModal } = useModal();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setInputValue((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
+    setInputValue((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const togglePassword = (field: 'password' | 'confirmPassword') => {
-    setDisplayPassword((prev) => ({ ...prev, [field]: !prev[field] }))
-  }
-
-  const isDisabled = Object.values(inputValue).some((v) => v === '')
+  const togglePassword = (field: "password" | "confirmPassword") => {
+    setDisplayPassword((prev) => ({ ...prev, [field]: !prev[field] }));
+  };
 
   const mutation = useMutation({
-    mutationFn: (payload: DOCTOR_SIGNUP) => Hospital_Admin.createDoctor(payload),
+    mutationFn: (payload: DOCTOR_SIGNUP) =>
+      Hospital_Admin.createDoctor(payload),
     onSuccess: (response) => {
-        toast.success(response.data.message || 'Account Created')
-        queryClient.invalidateQueries({ queryKey: ['getAllDoctor'] })
-        closeModal()
+      toast.success(response.data.message || "Account Created");
+      queryClient.invalidateQueries({ queryKey: ["getAllDoctor"] });
+      void queryClient.invalidateQueries({ queryKey: ["stats"] });
+      closeModal();
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error.response?.data?.message)
+      toast.error(error.response?.data?.message);
     },
-  })
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const data = {
       email: inputValue.email,
@@ -106,11 +106,11 @@ const AddNewDoctor = () => {
       // hospitalId: inputValue.hospital,
       password: inputValue.password,
       department: inputValue.department,
-      title: inputValue.title
-    }
+      title: inputValue.title,
+    };
 
-    mutation.mutate(data)
-  }
+    mutation.mutate(data);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-2">
@@ -124,16 +124,15 @@ const AddNewDoctor = () => {
             name="title"
             value={inputValue.title}
             onChange={handleChange}
-            className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}>
-              <option  value="" disabled>
-                Select Value
-              </option>
-              <option  value="Dr">
-                Dr
-              </option>
+            className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}
+          >
+            <option value="" disabled>
+              Select Value
+            </option>
+            <option value="Dr">Dr</option>
           </select>
         </div>
-         <div className="block w-full mb-2">
+        <div className="block w-full mb-2">
           <label htmlFor="department" className={LABEL_CLASS}>
             Department
           </label>
@@ -142,9 +141,10 @@ const AddNewDoctor = () => {
             name="department"
             value={inputValue.department}
             onChange={handleChange}
-            className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}>
+            className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}
+          >
             {DEPARTMENT_OPTIONS.map(({ value, label }) => (
-              <option key={value} value={value} disabled={value === ''}>
+              <option key={value} value={value} disabled={value === ""}>
                 {label}
               </option>
             ))}
@@ -203,9 +203,10 @@ const AddNewDoctor = () => {
             name="gender"
             value={inputValue.gender}
             onChange={handleChange}
-            className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}>
+            className={`${SELECT_CLASS} bg-white text-gray-900 px-3`}
+          >
             {GENDER_OPTIONS.map(({ value, label }) => (
-              <option key={value} value={value} disabled={value === ''}>
+              <option key={value} value={value} disabled={value === ""}>
                 {label}
               </option>
             ))}
@@ -221,7 +222,7 @@ const AddNewDoctor = () => {
           name="password"
           onChange={handleChange}
           showPassword={displayPassword.password}
-          onClick={() => togglePassword('password')}
+          onClick={() => togglePassword("password")}
         />
         <AuthPassword
           label="Confirm Password"
@@ -230,7 +231,7 @@ const AddNewDoctor = () => {
           name="confirmPassword"
           onChange={handleChange}
           showPassword={displayPassword.confirmPassword}
-          onClick={() => togglePassword('confirmPassword')}
+          onClick={() => togglePassword("confirmPassword")}
         />
       </DisplayFlex>
 
@@ -263,10 +264,9 @@ const AddNewDoctor = () => {
         text="Add Doctor"
         closeModal={closeModal}
         isLoading={mutation.isPending}
-        // disabled={isDisabled}
       />
     </form>
-  )
-}
+  );
+};
 
-export default AddNewDoctor
+export default AddNewDoctor;

@@ -1,5 +1,5 @@
 "use client"
-import { Search } from "lucide-react"
+import { Copy, Search, Check } from "lucide-react"
 import {
   Table,
   TableBody,
@@ -27,11 +27,27 @@ import { TransactionsEmptyState, TransactionsErrorState, TransactionsTableSkelet
 
 export function TransactionsPage() {
   const [inputValue, setInputValue] = useState<string>("")
+  const [copied, setCopied] = useState<string>("")
   const { pagination, setPagination, financeDatas, isLoading, isError, error } = useGetFinance()
 
   const hasData = !isLoading && !isError && financeDatas?.length > 0
   const isEmpty = !isLoading && !isError && (!financeDatas || financeDatas.length === 0)
 
+  const handleSelectReference = (id: string) => {
+    setCopied((prev) => prev === id ? '' : id)
+  }
+
+  const handleCopyRefrence = async (reference: string) => {
+    if(!reference) return;
+
+    try{
+      await navigator.clipboard.writeText(reference);
+      handleSelectReference(reference);
+      setTimeout(() => handleSelectReference(reference), 2000)
+    }catch(error) {
+      console.error("Failed to copy payment reference:", error);
+    }
+  }
   return (
     <PageWrapper>
       <FlexWrapper className="flex-col ">
@@ -60,7 +76,8 @@ export function TransactionsPage() {
                 <TableHead>Transaction ID</TableHead>
                 <TableHead>Reference</TableHead>
                 <TableHead>Date & Time</TableHead>
-                <TableHead>Patient</TableHead>
+                <TableHead>Patient Name</TableHead>
+                <TableHead>Patient Email</TableHead>
                 <TableHead>Amount</TableHead>
                 <TableHead>Payment Method</TableHead>
                 <TableHead>Status</TableHead>
@@ -76,27 +93,43 @@ export function TransactionsPage() {
               {isEmpty && <TransactionsEmptyState />}
 
               {hasData &&
-                financeDatas.map((data: any) => (
-                  <TableRow key={data.id}>
-                    <TableCell>
-                      <p className="truncate font-inter text-[12px] text-grey-20 w-23">
-                        {data.id ?? 'N/A'}
-                      </p>
+                financeDatas.map((data: any) => {
+                  console.log("finance data", data.metadata?.amount?.user)
+                  return (
+                    <TableRow key={data.id}>
+                      <TableCell>
+                        <p className="truncate font-inter text-[12px] text-grey-20 w-23">
+                          {data.id ?? 'N/A'}
+                        </p>
                     </TableCell>
                     <TableCell>
-                       <p className="truncate font-inter text-[12px] text-grey-20 w-20">
-                          {data.reference ?? 'N/A'}
-                       </p>
+                      <div className="flex">
+                          <p className="truncate font-inter text-[12px] text-grey-20 w-20">
+                              {data.reference ?? 'N/A'}
+                          </p>
+                          <span 
+                              className='cursor-pointer' 
+                              onClick={() => handleCopyRefrence(data.reference)}> 
+                              {copied === data.reference ? (
+                                <Check size={15} />
+                              ): (
+                                <Copy size={15} /> 
+                              )}
+                          </span>
+                      </div>
                     </TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20">
                       {/* {invoice.date} */}
                       <p className="text-[12px] font-normal">10:00AM</p>
                     </TableCell>
-                    <TableCell className="font-inter text-[12px] text-grey-20 font-medium">
-                      {data.metadata.user?.firstName ?? 'N/A'}
+                    <TableCell className="font-inter text-[12px] text-grey-20 font-normal">
+                      {CapitalizeName(data.metadata.amount.user?.firstName ?? 'N/A')} {CapitalizeName(data.metadata.amount.user?.lastName ?? 'N/A')}
                     </TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20">
-                      ₦{Number(data.amount)?.toLocaleString()}
+                      {data.metadata?.amount?.user?.email ?? 'N/A'}
+                    </TableCell>
+                    <TableCell className="font-inter text-[12px] text-grey-20">
+                      {data.metadata?.amount?.amount ? `₦${Number(data.metadata.amount.amount).toLocaleString()}` : 'N/A'}
                     </TableCell>
                     <TableCell className="font-inter text-[12px] text-grey-20">
                       {CapitalizeName(data.paymentMethod?.toLowerCase()) ?? 'N/A'}
@@ -117,7 +150,7 @@ export function TransactionsPage() {
                       View
                     </TableCell> */}
                   </TableRow>
-                ))}
+                )})}
             </TableBody>
           </Table>
 

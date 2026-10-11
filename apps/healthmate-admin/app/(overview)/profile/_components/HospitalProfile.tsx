@@ -1,15 +1,12 @@
 "use client";
 
-import { TableTitle } from "@/lib/components/ui/Reusable";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import Input from "@/lib/components/Inputs/Inputs";
 import Image from "next/image";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
 import { AxiosError } from "axios";
-import { Profile } from "@/lib/interface/register.interface";
 import { toast } from "react-toastify";
-
 
 type HospitalProfileForm = {
   specializations: string;
@@ -22,6 +19,7 @@ type HospitalProfileForm = {
 };
 
 const HospitalProfile = () => {
+  const queryClient = useQueryClient();
   const [inputValue, setInputValue] = useState<HospitalProfileForm>({
     specializations: "",
     licenseNumber: "",
@@ -33,6 +31,12 @@ const HospitalProfile = () => {
   });
 
   const [preview, setPreview] = useState<string>("");
+
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -57,19 +61,19 @@ const HospitalProfile = () => {
   };
 
   const mutation = useMutation({
-    mutationFn: (payload: Profile) => Hospital_Admin.createProfile(payload),
+    mutationFn: (payload: FormData) => Hospital_Admin.createProfile(payload),
     onSuccess: (response) => {
       toast.success(response.data.message);
-    //   closeModal();
+      void queryClient.invalidateQueries({ queryKey: ["me"] });
     },
-    onError: (error: AxiosError<{message: string}>) => {
+    onError: (error: AxiosError<{ message: string }>) => {
       toast.error(error?.response?.data.message);
     },
   });
 
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (mutation.isPending) return;
 
     const formData = new FormData();
 
@@ -84,16 +88,11 @@ const HospitalProfile = () => {
       formData.append("profilePicture", inputValue.profilePicture);
     }
 
-    // call your API here
-    mutation.mutate(formData as unknown as Profile);
+    mutation.mutate(formData);
   };
 
   return (
-    <div className="bg-white rounded-lg border border-borderColor w-[70%] mx-auto">
-      <TableTitle className="border-b border-borderColor100 p-4">
-        Hospital Profile
-      </TableTitle>
-
+    <div className="bg-white rounded-lg border border-borderColor w-full ">
       <form className="pt-5" onSubmit={handleSubmit}>
         <div className="w-[95%] mx-auto py-5">
           <div className="flex justify-center mb-6">
@@ -171,8 +170,11 @@ const HospitalProfile = () => {
         </div>
 
         <div className="border-t border-r border-borderColor100 p-4 flex justify-end">
-          <button className={`text-white rounded-lg px-4 py-2 ${mutation.isPending || mutation.isPending ? 'bg-pink-300 cursor-not-allowed' : 'bg-pink-600 cursor-pointer'}`} disabled={mutation.isPending}>
-            {mutation.isPending ? 'Saving...' : 'Save Changes'}
+          <button
+            className={`text-white rounded-lg px-4 py-2 ${mutation.isPending ? "bg-pink-300 cursor-not-allowed" : "bg-pink-600 cursor-pointer"}`}
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? "Saving..." : "Save Changes"}
           </button>
         </div>
       </form>

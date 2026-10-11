@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 // import './'
 // import '@/styles/globals.css'
-import { ToastContainer} from 'react-toastify';
 import { Providers } from "@/lib/context/Providers";
 
 export const metadata: Metadata = {
@@ -22,7 +21,6 @@ export default function RootLayout({
       <body className="font-sans" suppressHydrationWarning>
       <Providers>
         {children}
-        <ToastContainer />
       </Providers>
       </body>
     </html>

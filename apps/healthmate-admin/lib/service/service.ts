@@ -56,7 +56,7 @@ export const Hospital_Admin = {
         const response = await api.get(ADMIN_ENDPOINTS.GET_STATS);
         return response.data
     },
-    getAllAppointments: async(page = 1, limit = 10, q?: string, status?: string) => {
+    getAllAppointments: async(page = 1, limit = 50, q?: string, status?: string) => {
         const params = new URLSearchParams({})
         params.append('page', String(page));
         params.append('limit', String(limit))
@@ -117,7 +117,7 @@ export const Hospital_Admin = {
         const response = await api.get(`${ADMIN_ENDPOINTS.GET_DOCTOR_AVAILABILITY}${id}`);
         return response.data
     },
-    getFinance: async (page = 1, limit = 10) => {
+    getFinance: async (page = 1, limit = 50) => {
         const searchParams = new URLSearchParams({
         page: page.toString(),
         limit: limit.toString(),
@@ -126,7 +126,7 @@ export const Hospital_Admin = {
         return response.data
     },
     getApprovedAppointment: async (
-        page = 1, limit = 10, status?: string, q?: string
+        page = 1, limit = 50, status?: string, q?: string
     ) => {
         const params = new URLSearchParams({
         })
