@@ -8,6 +8,16 @@ import { Hospital_Admin } from "@/lib/service/service";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
+export type HospitalProfileData = {
+  specializations: string;
+  licenseNumber: string;
+  address: string;
+  state: string;
+  bio: string;
+  website: string;
+  profilePicture: string;
+};
+
 type HospitalProfileForm = {
   specializations: string;
   licenseNumber: string;
@@ -18,23 +28,27 @@ type HospitalProfileForm = {
   profilePicture: File | null;
 };
 
-const HospitalProfile = () => {
+const HospitalProfile = ({ profile, onSaved, onCancel }: {
+  profile?: HospitalProfileData | null;
+  onSaved?: () => void;
+  onCancel?: () => void;
+}) => {
   const queryClient = useQueryClient();
   const [inputValue, setInputValue] = useState<HospitalProfileForm>({
-    specializations: "",
-    licenseNumber: "",
-    address: "",
-    state: "",
-    bio: "",
-    website: "",
+    specializations: profile?.specializations ?? "",
+    licenseNumber: profile?.licenseNumber ?? "",
+    address: profile?.address ?? "",
+    state: profile?.state ?? "",
+    bio: profile?.bio ?? "",
+    website: profile?.website ?? "",
     profilePicture: null,
   });
 
-  const [preview, setPreview] = useState<string>("");
+  const [preview, setPreview] = useState<string>(profile?.profilePicture ?? "");
 
   useEffect(() => {
     return () => {
-      if (preview) URL.revokeObjectURL(preview);
+      if (preview.startsWith("blob:")) URL.revokeObjectURL(preview);
     };
   }, [preview]);
 
@@ -61,13 +75,14 @@ const HospitalProfile = () => {
   };
 
   const mutation = useMutation({
-    mutationFn: (payload: FormData) => Hospital_Admin.createProfile(payload),
+    mutationFn: (payload: FormData) => profile ? Hospital_Admin.updateProfile(payload) : Hospital_Admin.createProfile(payload),
     onSuccess: (response) => {
-      toast.success(response.data.message);
+      toast.success(response.data.message ?? "Profile saved successfully");
+      onSaved?.();
       void queryClient.invalidateQueries({ queryKey: ["me"] });
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error?.response?.data.message);
+      toast.error(error?.response?.data.message ?? "Failed to save profile. Please try again.");
     },
   });
 
@@ -170,6 +185,9 @@ const HospitalProfile = () => {
         </div>
 
         <div className="border-t border-r border-borderColor100 p-4 flex justify-end">
+          {onCancel && (
+            <button type="button" onClick={onCancel} className="mr-3 rounded-lg border border-borderColor px-4 py-2">Cancel</button>
+          )}
           <button
             className={`text-white rounded-lg px-4 py-2 ${mutation.isPending ? "bg-pink-300 cursor-not-allowed" : "bg-pink-600 cursor-pointer"}`}
             disabled={mutation.isPending}
