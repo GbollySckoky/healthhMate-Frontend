@@ -32,7 +32,7 @@ const AuthPassword = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`outline-none border border-borderColor100 rounded-md p-[7px] text-[12px] ${className} w-full mt-1`}
+        className={`outline-none border border-borderColor100 rounded-md p-[7px] text-[12px] ${className} w-full mt-1 bg-transparent`}
         type={showPassword ? 'text' : 'password'}
         name={name}
       />

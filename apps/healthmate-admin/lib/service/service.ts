@@ -17,6 +17,9 @@ export const Hospital_Admin = {
     createProfile: async (payload: any) => {
         return await api.post(ADMIN_ENDPOINTS.CREATE_HOSPITAL_PROFILE, payload); 
     },
+    updateProfile: async (payload: FormData) => {
+        return await api.put("hospital/edit-profile", payload);
+    },
     getAllDoctor: async(q: string = "", page = 1, limit = 10) => {
         const searchParams = new URLSearchParams({
             q: q.toString(),
