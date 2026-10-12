@@ -44,7 +44,7 @@ const EditProfile = () => {
     mutationFn: (payload: FormData) => Doctor.createProfile(payload),
     onSuccess: (response) => {
       toast.success(response.data.message);
-      queryClient.invalidateQueries({ queryKey: ['getDoctor'] })
+      queryClient.invalidateQueries({ queryKey: ['me'] })
       closeModal();
     },
     onError: (error: AxiosError<{message: string}>) => {
