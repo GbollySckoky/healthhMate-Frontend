@@ -22,6 +22,9 @@ const PasswordInput = ({placeholder,value,onChange,className, label, name}: Inpu
             type='password'
             name={name}
         />
+        <span>
+          
+        </span>
     </div>
   )
 }

@@ -1,60 +1,27 @@
 "use client"
-import PasswordInput from '@/lib/components/Inputs/PasswordInput'
-import { Card, TableTitle, FlexWrapper, PageWrapper } from '@/lib/components/ui/Reusable'
-import React, { useState } from 'react'
+import {  FlexWrapper, PageWrapper } from '@/lib/components/ui/Reusable'
+import React from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs"
+import EditProfile from './EditProfile'
+import ChangePassword from './ChangePassword'
 
-const ChangePassword = () => {
-    const [inputValue, setInputValue] = useState({
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: ''
-    })
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setInputValue((prev) => ({
-          ...prev,
-          [name]: value
-        }));
-      };
+const SettingsPage = () => {
 
   return (
     <PageWrapper>
       <FlexWrapper>
-        <Card className='mt-5'>
-          <TableTitle>Change Password</TableTitle>
-          <form action="" className='mt-3'>
-              <PasswordInput 
-                  placeholder='*****'
-                  label='Current Password'
-                  value={inputValue.currentPassword}
-                  onChange={handleChange}
-                  name='currentPassword'
-              />
-              <PasswordInput 
-                  placeholder='*****'
-                  label='New Password'
-                  value={inputValue.newPassword}
-                  onChange={handleChange}
-                  name='newPassword'
-              />
-              <PasswordInput 
-                  placeholder='*****'
-                  label='Confirm Password'
-                  value={inputValue.confirmPassword}
-                  onChange={handleChange}
-                  name='confirmPassword'
-              />
-              <div className="flex justify-end ">
-                  <button className='bg-red-800 text-white font-medium w-fit px-4 py-2 rounded-lg text-[14px] my-4'>
-                      Update Password
-                  </button>
-              </div>
-          </form>
-        </Card>
+         <Tabs defaultValue="change-password" className='bg-white mt-4'>
+            <TabsList className='mb-5'>
+                <TabsTrigger value="change-password">Change Password</TabsTrigger>
+                <TabsTrigger value="profile">Update Profile</TabsTrigger>
+            </TabsList>
+            <TabsContent value="change-password"><ChangePassword /> </TabsContent>
+            <TabsContent value="profile"> <EditProfile /> </TabsContent>
+        </Tabs>
     </FlexWrapper>
     </PageWrapper>
   )
 }
 
-export default ChangePassword
+export default SettingsPage
