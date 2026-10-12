@@ -1,12 +1,14 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { storageService } from '@/constants/storage';
 
 export function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const checkAuth = useCallback(() => {
     setIsAuthenticated(storageService.isAuthenticated());
@@ -26,8 +28,10 @@ export function useAuth() {
   const logout = useCallback(() => {
     storageService.clearAuthData();
     setIsAuthenticated(false);
-    router.push('/auth/login');
-  }, [router]);
+    queryClient.clear();
+    router.replace('/auth/login');
+    router.refresh();
+  }, [router, queryClient]);
 
   return { isAuthenticated, isLoading, login, logout, refresh: checkAuth };
 }

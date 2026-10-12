@@ -12,6 +12,8 @@ import {
   // INACTIVE_COLOR,
 } from "@/constants/data";
 
+import { useAuth } from "@/hooks/useAuthWeb";
+
 import { ROUTES } from "@/constants/route";
 
 interface SidebarProps {
@@ -26,6 +28,7 @@ export default function Sidebar({
   isAuthPage,
 }: SidebarProps) {
   const pathname = usePathname();
+  const { logout } = useAuth();
 
   if (isAuthPage) {
     return null;
@@ -183,6 +186,7 @@ export default function Sidebar({
         <div className="shrink-0 border-t border-[#F1F1F1] p-4">
           <button
             type="button"
+            onClick={() => { onClose(); logout(); }}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-red-100 transition-colors hover:bg-[#FEF3F2]"
           >
             <LogOut size={20} />
