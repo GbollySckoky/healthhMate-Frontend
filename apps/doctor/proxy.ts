@@ -13,7 +13,7 @@ export default function proxy(request: NextRequest) {
   }
 
   const token = request.cookies.get(STORAGE_KEYS.AUTH_TOKEN)?.value;
-  if (!token) {
+  if (!token || token === "undefined" || token === "null" || !token.trim()) {
     return NextResponse.redirect(new URL(publicRoutes.login, request.url));
   }
 

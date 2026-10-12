@@ -1,6 +1,5 @@
 import Sidebar from "@/lib/components/ui/Sidebar";
 import Header from "@/lib/components/ui/Header";
-import { AppointmentProvider } from "@/lib/context/GetAppointmentContext";
 
 export default function OverviewLayout({
   children,
@@ -8,7 +7,6 @@ export default function OverviewLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AppointmentProvider>
       <div className="flex h-dvh">
         <Sidebar />
         <div className="flex min-w-0 flex-1 flex-col ">
@@ -18,6 +16,5 @@ export default function OverviewLayout({
           </main>
         </div>
       </div>
-    </AppointmentProvider>
   );
 }

@@ -2,18 +2,17 @@
 import React, { ReactNode } from 'react'
 import { ModalProvider } from "@/lib/components/modal/Modal";
 import { ModalProviders } from "@/lib/components/modal/FormModal";
-import { QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import { Providers } from "@/lib/constant/Providers";
 
 const Provider = ({children}: {children: ReactNode}) => {
-  const queryClient = new QueryClient()
   return (
-    <QueryClientProvider client={queryClient}>
+    <Providers>
       <ModalProvider>
           <ModalProviders>
           {children}
           </ModalProviders>
       </ModalProvider>
-    </QueryClientProvider>
+    </Providers>
   )
 }
 

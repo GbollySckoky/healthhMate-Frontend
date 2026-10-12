@@ -15,7 +15,7 @@ import { AppointmentCardSkeleton } from '@/lib/components/ui/DashboardSkeleton';
 const UpcomingAppointment = () => {
   const router = useRouter()
    const {data, isLoading, error, isError} = useQuery({
-      queryKey: ['getAppointment', 1, 10, STATUS.UPCOMING],
+      queryKey: ['getAppointment', 1, 10, STATUS.UPCOMING, ''],
       queryFn: () => Doctor.getAppointment(1, 10, STATUS.UPCOMING)
     })
 

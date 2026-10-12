@@ -12,10 +12,17 @@ export const STORAGE_KEYS = {
       const cookie = document.cookie
         .split('; ')
         .find((item) => item.startsWith(`${STORAGE_KEYS.AUTH_TOKEN}=`));
-      return cookie ? decodeURIComponent(cookie.slice(cookie.indexOf('=') + 1)) : null;
+      try {
+        return cookie ? decodeURIComponent(cookie.slice(cookie.indexOf('=') + 1)) || null : null;
+      } catch {
+        return null;
+      }
     },
     
     setAuthToken: (token: string): void => {
+      if (typeof token !== 'string' || !token.trim() || token === 'undefined' || token === 'null') {
+        throw new Error('Authentication response is missing an access token.');
+      }
       if (typeof window === 'undefined') return;
       const secure = window.location.protocol === 'https:' ? '; Secure' : '';
       document.cookie = `${STORAGE_KEYS.AUTH_TOKEN}=${encodeURIComponent(token)}; Path=/; SameSite=Lax${secure}`;

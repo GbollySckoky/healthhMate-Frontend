@@ -55,10 +55,10 @@ const Page = () => {
   const { data, isLoading, error, isError } = useQuery({
     queryKey: [
       "getAppointment",
-      activeStatus,
-      debounceSearchQuery,
       pagination.page,
       pagination.limit,
+      activeStatus ?? "",
+      debounceSearchQuery,
     ],
     queryFn: () =>
       Doctor.getAppointment(
