@@ -51,6 +51,9 @@ export const storageService = {
   },
 
   setAuthToken: (token: string): void => {
+      if (typeof token !== 'string' || !token.trim() || token === 'undefined' || token === 'null') {
+        throw new Error('Authentication response is missing an access token.');
+      }
     if (!isBrowser) return;
     setCookie(STORAGE_KEYS.AUTH_TOKEN, token);
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);

@@ -4,7 +4,7 @@ import { Doctor } from '../constant/service'
 
 const useGetAppointmentCommunicationId = (appointmentId: string) => {
     const {data, isLoading, isError, error} = useQuery({
-        queryKey: ['getCommunicationId'],
+        queryKey: ['getCommunicationId', appointmentId],
         queryFn: () => Doctor.getCommunicationId(appointmentId),
         enabled: !!appointmentId
     })

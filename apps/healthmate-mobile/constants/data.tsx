@@ -4,7 +4,8 @@ import {
   Moon, Eye, EyeOff, CalendarDays, Phone, Bell, Mail, Scale, Home, Activity, CalendarCheck, 
   UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain, Heart, Smile,
   MessageCircle, User, 
-  BriefcaseMedical
+  BriefcaseMedical,
+  Settings
 } from 'lucide-react';
 import { ROUTES } from './route';
 
@@ -767,5 +768,11 @@ export const PATIENT_NAV_ITEMS = [
     label: "Profile",
     href: ROUTES.profile,
     icon: User,
+  },
+  {
+    id: "settings",
+    label: "Settings",
+    href: ROUTES.settings,
+    icon: Settings,
   },
 ];

@@ -15,11 +15,11 @@ import { AppointmentCardSkeleton } from '@/lib/components/ui/DashboardSkeleton';
 const UpcomingAppointment = () => {
   const router = useRouter()
    const {data, isLoading, error, isError} = useQuery({
-      queryKey: ['getAppointment'],
+      queryKey: ['getAppointment', 1, 10, STATUS.UPCOMING, ''],
       queryFn: () => Doctor.getAppointment(1, 10, STATUS.UPCOMING)
     })
 
-    const upcomingConsultation = data?.data
+    const upcomingConsultation: Appointment[] = Array.isArray(data?.data) ? data.data : []
   return (
     <div className="bg-white rounded-lg border border-gray-200 w-full h-[400px] flex flex-col">
     {/* Fixed header */}
@@ -48,7 +48,7 @@ const UpcomingAppointment = () => {
           <p className="text-center py-8 text-gray-500 text-sm">
             No upcoming appointments found
           </p>
-        ) : upcomingConsultation?.slice(0, 10)?.map((consultation:Appointment) => {
+        ) : upcomingConsultation.slice(0, 10).map((consultation) => {
        return(
         <div key={consultation.id} className="flex items-center justify-between py-4 border-t border-gray-200 first:border-t-0">
           <div className="flex">

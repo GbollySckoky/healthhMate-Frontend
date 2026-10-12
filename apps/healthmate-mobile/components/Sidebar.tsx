@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, Settings, X } from "lucide-react";
+import { LogOut, X } from "lucide-react";
 import Image from 'next/image'
 import logo from '@/assets/Group 19156 copy.png'
 
@@ -11,6 +11,8 @@ import {
   ACTIVE_COLOR,
   // INACTIVE_COLOR,
 } from "@/constants/data";
+
+import { useAuth } from "@/hooks/useAuthWeb";
 
 import { ROUTES } from "@/constants/route";
 
@@ -26,6 +28,7 @@ export default function Sidebar({
   isAuthPage,
 }: SidebarProps) {
   const pathname = usePathname();
+  const { logout } = useAuth();
 
   if (isAuthPage) {
     return null;
@@ -143,7 +146,7 @@ export default function Sidebar({
           </div>
 
           {/* Account */}
-          <div className="mt-8">
+          {/* <div className="mt-8">
             <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-wider text-white">
               Account
             </p>
@@ -176,13 +179,14 @@ export default function Sidebar({
                 Settings
               </span>
             </Link>
-          </div>
+          </div> */}
         </nav>
 
         {/* Logout */}
         <div className="shrink-0 border-t border-[#F1F1F1] p-4">
           <button
             type="button"
+            onClick={() => { onClose(); logout(); }}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-red-100 transition-colors hover:bg-[#FEF3F2]"
           >
             <LogOut size={20} />

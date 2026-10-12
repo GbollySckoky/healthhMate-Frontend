@@ -17,7 +17,7 @@ import DoctorProfileSkeleton from '@/lib/components/ui/DoctorProfileSkeleto'
 const Page = () => {
     const {openModal} = useFormModal()
     const {data, isLoading, isError, error } = useQuery({
-      queryKey: ['getDoctor'],
+      queryKey: ['me'],
       queryFn: () => Doctor.getDoctor()
     })
     const profileData = data?.data

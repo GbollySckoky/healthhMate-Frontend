@@ -34,7 +34,7 @@ import { RecentConsultationTableSkeleton } from "@/lib/components/ui/DashboardSk
         }
     }
     const {data, isLoading, error, isError} = useQuery({
-      queryKey: ['getAppointment'],
+      queryKey: ['getAppointment', 1, 10, '', ''],
       queryFn: () => Doctor.getAppointment()
     })
 

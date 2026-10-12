@@ -5,6 +5,9 @@ import Link from 'next/link'
 import image from '@/assets/Group 19156.png'
 import Image from 'next/image'
 import { LogOut } from 'lucide-react'
+import { useQueryClient } from '@tanstack/react-query'
+import { storageService } from '@/lib/constant/storage'
+import { ROUTES } from '@/lib/routes'
 import { usePathname } from 'next/navigation'
 import useGetMe from '@/lib/hooks/useGetMe'
 import MeSkeleton from './MeSkeleton'
@@ -13,6 +16,12 @@ import { CapitalizeName } from '@/lib/constant/capitalizeName'
 
 const SideBar = () => {
   const pathname = usePathname()
+  const queryClient = useQueryClient()
+  const logout = () => {
+    storageService.clearAuthData()
+    queryClient.clear()
+    window.location.replace(ROUTES.login)
+  }
   const [activeUrl, setActiveUrl] = useState<string>(pathname || '')
   const handleActiveUrl = (url: string) => setActiveUrl(url)
   const {myData:data, isLoading} = useGetMe()
@@ -51,9 +60,9 @@ const SideBar = () => {
               <p className="font-sans font-semibold text-[14px] hidden md:block">{`${CapitalizeName(data?.firstName)} ${CapitalizeName(data?.lastName)}`}</p>
               <p className="font-inter text-[14px] font-normal hidden md:block">{data?.email ?? 'N/A'}</p>
             </div>
-            <span className="cursor-pointer">
+            <button type="button" aria-label="Log out" onClick={logout} className="cursor-pointer">
               <LogOut size={18} />
-            </span>
+            </button>
           </div>
         )}
       </div>

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PATIENTS_ENDPOINTS } from '@/constants/endpoints';
 import { storageService } from '@/constants/storage';
 
 const api = axios.create({
@@ -21,7 +22,8 @@ api.interceptors.response.use(
   (error) => {
     if (typeof window === 'undefined') return Promise.reject(error);
 
-    const isLoginRequest = error.config?.url?.includes('/auth/login');
+    const requestPath = error.config?.url?.split('?')[0].replace(/^\/+|\/+$/g, '');
+    const isLoginRequest = requestPath === PATIENTS_ENDPOINTS.LOGIN.replace(/^\/+|\/+$/g, '');
     const alreadyOnLoginPage = window.location.pathname.startsWith('/auth/login');
 
     if (error.response?.status === 401 && !isLoginRequest && !alreadyOnLoginPage) {
