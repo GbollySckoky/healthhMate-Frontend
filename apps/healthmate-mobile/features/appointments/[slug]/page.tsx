@@ -129,6 +129,14 @@ const AppointmentDetails = () => {
       text: appointmentDetails?.healthConcern || "No health concern provided.",
       title: "Health Concern",
     },
+    {
+      text: appointmentDetails?.hospital?.profile?.address || "No hospital address provided.",
+      title: "Hospital Address",
+    },
+     {
+      text: appointmentDetails?.hospital?.profile?.state || "No state address provided.",
+      title: "State",
+    },
   ];
 
   // const handleViewProfile = () => {

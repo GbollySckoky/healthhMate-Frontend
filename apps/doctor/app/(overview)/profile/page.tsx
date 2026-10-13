@@ -6,16 +6,12 @@ import Image from 'next/image'
 import image from '@/assets/default.jpg'
 import Overview from './_components/Overview'
 import Documents from './_components/Documents'
-import { PencilLine } from 'lucide-react'
-import { useFormModal } from '@/lib/components/modal/FormModal'
-import EditProfile from './_components/EditProfile'
 import { useQuery } from '@tanstack/react-query'
 import { Doctor } from '@/lib/constant/service'
 import DoctorProfileSkeleton from '@/lib/components/ui/DoctorProfileSkeleto'
 // import { DOCTOR_PROFILE } from '@/lib/interface/get-doctor-profile.interface'
 
 const Page = () => {
-    const {openModal} = useFormModal()
     const {data, isLoading, isError, error } = useQuery({
       queryKey: ['me'],
       queryFn: () => Doctor.getDoctor()
@@ -47,36 +43,6 @@ const Page = () => {
                             <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
                         </div>
                       </div>
-                      {profileData?.profile === null && (
-                        <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
-                          onClick={() =>
-                          openModal(<EditProfile
-                            />, {
-                            title:
-                              'Edit Profile',
-                            className: 'max-w-lg',
-                            onClose: () => {},
-                          })
-                        }>
-                          {/* <PencilLine size={15} className='mr-2' /> */}
-                            Create Profile
-                          </button>
-                      )}
-                      {profileData?.profile !== null && (
-                        <button className='font-inter font-semibold text-[14px] text-red-800 flex items-center space-x-2 border border-red-800 rounded-lg p-2 cursor-pointer '
-                          onClick={() =>
-                          openModal(<EditProfile
-                            />, {
-                            title:
-                              'Edit Profile',
-                            className: 'max-w-lg',
-                            onClose: () => {},
-                          })
-                        }>
-                          <PencilLine size={15} className='mr-2' />
-                          Edit Profile
-                      </button>
-                      )}
                   </div>
                   <div className='mt-3'>
                       <p className='font-semibold font-libre text-[14px] text-[#414651] pb-[2px]'>About me</p>

@@ -23,6 +23,12 @@ const Page = () => {
         password: ''
     })
     const [rememberMe, setRememberMe] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
+    };
+    
     const router = useRouter()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,6 +92,8 @@ const Page = () => {
                             value={inputValue.password}
                             name='password'
                             onChange={handleChange}
+                            showPassword={showPassword}
+                            onClick={togglePasswordVisibility}
                         />
 
                         {/* Remember me and Forgot password */}
