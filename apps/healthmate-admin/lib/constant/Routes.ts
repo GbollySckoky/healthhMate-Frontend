@@ -12,7 +12,7 @@ export const ROUTES = {
     forgotPassword: '/auth/forgot-password',
     signUp: '/auth/sign-up',
     setUpHospital: '/auth/set-up-hospital',
-    notifications: 'notifications',
+    notifications: '/notifications',
     profile: '/profile'
 }
 

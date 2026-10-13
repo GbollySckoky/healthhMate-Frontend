@@ -113,7 +113,7 @@ const Page = () => {
     if (notification.supportTicketId) {
       router.push(`/support/${notification.supportTicketId}`);
     } else if (notification.appointmentId) {
-      router.push(`/appointments/${notification.appointmentId}`);
+      router.push(`/appointment/${notification.appointmentId}`);
     }
   };
 
