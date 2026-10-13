@@ -32,6 +32,11 @@ export interface AppointmentHospital {
   id: string;
   hospitalName: string;
   email: string;
+  profile: {
+    address: string;
+    state: string;
+    bio: string;
+  };
 }
 
 export interface GetAppointment {

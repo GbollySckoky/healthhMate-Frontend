@@ -43,10 +43,22 @@ const About = ({ consultation, id }: Props) => {
 
   return (
     <div className="mt-3 border-t pt-4">
-      <MinCard
-        title="About"
-        value={consultation?.profile?.bio || "No bio available"}
-      />
+      <div className="space-y-3">
+        <MinCard
+          title="About"
+          value={consultation?.profile?.bio || "No bio available"}
+        />
+
+        <MinCard
+          title="Hospital Address"
+          value={consultation?.hospital?.profile?.address || "No address available"}
+        />
+
+        <MinCard
+          title="State"
+          value={consultation?.hospital?.profile?.state || "No state available"}
+        />
+      </div>
 
       <div className="mt-5">
         <h3 className="text-base font-medium text-[#414651]">Availability</h3>
