@@ -24,4 +24,5 @@ export const DOCTOR_ENDPOINTS = {
     READ_ALL_NOTIFICATIONS: 'notifications/doctor/read-all',
     GET_FINANCE: 'payment/doctor',
     GET_EARNING_STATS: 'payment/doctor/stats',
+    TODAY_APPOINTMENTS: 'appointment/doctor/today',
 }

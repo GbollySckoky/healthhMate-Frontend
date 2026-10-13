@@ -13,39 +13,40 @@ import { CapitalizeName } from '@/lib/constant/capitalizeName';
 
 const Header = () => {
     const pathname = usePathname()
-    const router = useRouter()
-    const isDetailPage = pathname.split('/').length > 2
-
-    const {unReadNotifications} = useGetUnReadNotification()
-
-    const getTitle = (pathname: string) => {
-        if (pathname === ROUTES.dashboard) return 'Dashboard'
-        if (pathname === ROUTES.patients) return 'Patients' 
-        if (pathname === ROUTES.patients || pathname.startsWith(ROUTES.patients + '/')) return 'Patient Details'
-        if (pathname === ROUTES.appointment ) return 'Appointments'
-        if (pathname === ROUTES.appointment || pathname.startsWith(ROUTES.appointment + '/')) return 'Appointments'
-        if (pathname === ROUTES.earnings || pathname.startsWith(ROUTES.earnings + '/')) return 'Earnings'
-        if (pathname === ROUTES.profile) return 'Profile'
-        if (pathname === ROUTES.support) return 'Support'
-        if (pathname === ROUTES.support || pathname.startsWith(ROUTES.support + '/')) return 'Support Details'
-        if (pathname === ROUTES.settings) return 'Settings'
-        if (pathname === ROUTES.message || pathname.startsWith(ROUTES.message + '/')) return 'Messages'
-        if (pathname === ROUTES.availability) return 'Availability'
-        if (pathname === ROUTES.notifications) return 'Notification'
-    return ''
+    const routeTitles: Record<string, [string, string]> = {
+      'patients': ['Patients', 'Patient Details'],
+      'support': ['Support', 'Support Details'],
+      'earnings': ['Earnings', 'Transaction Details'],
+      'profile': ['Profile', 'Profile Details'],
+      'settings': ['Settings', 'Settings'],
+      'notifications': ['Notifications', 'Notification Details'],
+      'appointments': ['Appointments', 'Appointment Details'],
+      'messages': ['Messages', 'Conversation Details'],
+      'availability': ['Availability', 'Availability Details'],
     }
+    const segments = pathname.split('/').filter(Boolean)
+    const isDetailPage = segments.length > 1
+    const titles = routeTitles[segments[0] ?? '']
+    const Title = pathname === '/' ? 'Dashboard' : (titles?.[isDetailPage ? 1 : 0] ?? 'Details')
+    const parentRoute = `/${segments[0] ?? ''}`
+    const headerTitle = pathname.startsWith('/patients/communication/') ? 'Patient Consultation' : Title
 
+    const router = useRouter()
+    const {unReadNotifications} = useGetUnReadNotification()
     const {myData:data, isLoading} = useGetMe() 
-    const Title = getTitle(pathname)
+
 
   return (
     <header className='z-20 flex h-16 shrink-0 items-center justify-between border-b border-slate-100 bg-white px-4 shadow-sm sm:px-8'>
         <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-3">
                 {isDetailPage && (
-                <ChevronLeft size={20} className='cursor-pointer' onClick={() => router.back()} />
+                <button type="button" aria-label={`Back to ${titles?.[0] ?? "overview"}`} onClick={() => router.push(parentRoute)}
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-600 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-800">
+                    <ChevronLeft size={20} />
+                </button>
                 )} 
-                <p className='font-semibold text-[20px] text-health-black font-libre'>{Title}</p>
+                <p className='font-semibold text-[20px] text-health-black font-libre'>{headerTitle}</p>
             </div>
             <div className='flex items-center space-x-4'>
                 <div className='h-8 w-[1px] bg-slate-300 mr-5'/>

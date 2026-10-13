@@ -19,7 +19,7 @@ const ChangePassword = () => {
       };
 
   return (
-    <Card className='mt-5'>
+    <div className='px-5'>
         <TableTitle>Change Password</TableTitle>
         <form action="" className='mt-3'>
             <InputField 
@@ -49,7 +49,7 @@ const ChangePassword = () => {
                 </button>
             </div>
         </form>
-    </Card>
+    </div>
   )
 }
 

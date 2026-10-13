@@ -1,7 +1,5 @@
 "use client";
 
-import { useFormModal } from "@/lib/components/modal/FormModal";
-import Footer from "@/lib/components/ui/Footer";
 import InputField from "@/lib/components/ui/InputField";
 import { DisplayFlex } from "@/lib/components/ui/Reusable";
 // import TelInput from "@/components/ui/TelInput";
@@ -10,12 +8,13 @@ import { Profile } from "@/lib/interface/doctor.schema";
 import React, { FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Doctor } from "@/lib/constant/service";
-import UploadImage from "./UploadImage";
+import UploadImage from "../../profile/_components/UploadImage";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import useGetMe from "@/lib/hooks/useGetMe";
 
 const EditProfile = () => {
-  const { closeModal } = useFormModal();
+  const { myData } = useGetMe();
   const queryClient = useQueryClient()
   const [inputValue, setInputValue] = useState<Profile>({
     yearsOfExperience: "",
@@ -45,7 +44,6 @@ const EditProfile = () => {
     onSuccess: (response) => {
       toast.success(response.data.message);
       queryClient.invalidateQueries({ queryKey: ['me'] })
-      closeModal();
     },
     onError: (error: AxiosError<{message: string}>) => {
       toast.error(error?.response?.data.message)
@@ -54,6 +52,7 @@ const EditProfile = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (mutation.isPending) return;
 
     const formData = new FormData();
 
@@ -67,13 +66,13 @@ const EditProfile = () => {
       formData.append("profilePicture", inputValue.profilePicture);
     }
 
-    await mutation.mutateAsync(formData);
+    mutation.mutate(formData);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='px-5'>
       <div className="flex justify-center mb-4">
-        <UploadImage inputValue={inputValue} setInputValue={setInputValue} />
+        <UploadImage inputValue={inputValue} setInputValue={setInputValue} currentImage={myData?.profile?.profilePicture} />
       </div>
 
       <DisplayFlex>
@@ -120,12 +119,12 @@ const EditProfile = () => {
         label="Bio"
       />
 
-      <Footer
-        closeModal={closeModal}
-        text={mutation.isPending ? "Saving..." : "Save Changes"}
-        cancelText="Cancel"
-        isLoading={mutation.isPending}
-      />
+      <div className="border-t border-borderColor p-4 mt-6 flex justify-end">
+        <button type="submit" disabled={mutation.isPending}
+          className={`text-white rounded-lg px-4 py-2 ${mutation.isPending ? 'bg-pink-300 cursor-not-allowed' : 'bg-pink-600 cursor-pointer'}`}>
+          {mutation.isPending ? 'Saving...' : 'Save Changes'}
+        </button>
+      </div>
     </form>
   );
 };
