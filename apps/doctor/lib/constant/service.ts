@@ -163,4 +163,8 @@ export const Doctor = {
     createConsultationNote: async (id: string, payload: ConsultationNote) => {
         return await api.post(`doctor/consultationNote/${id}`, payload)
     },
+    getTodayAppointments: async () => {
+        const response = await api.get(DOCTOR_ENDPOINTS.TODAY_APPOINTMENTS);
+        return response.data
+    }
 }
