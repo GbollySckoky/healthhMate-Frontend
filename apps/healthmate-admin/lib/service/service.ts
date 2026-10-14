@@ -1,3 +1,4 @@
+import { ChangePassword } from "../interface/change-password";
 import { LogIn } from "../interface/login.interface";
 // import { Profile } from "../interface/register.interface";
 import { DOCTOR_SIGNUP, Signup } from "../interface/signup-interface";
@@ -8,6 +9,13 @@ import { SUPPORT_TICKET, Message, ReplyToTicket  } from "../interface/supportTic
 
 
 export const Hospital_Admin = {
+    changePassword: async (payload: ChangePassword) => {
+        return await api.post(ADMIN_ENDPOINTS.CHANGE_PASSWORD, payload);
+    },
+    getTodayAppointments: async () => {
+        const response = await api.get(ADMIN_ENDPOINTS.TODAY_APPOINTMENTS);
+        return response.data;
+    },
     signup: async (payload: Signup) => {
         return await api.post(ADMIN_ENDPOINTS.SIGN_UP, payload); 
     },
