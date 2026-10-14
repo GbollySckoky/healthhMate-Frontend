@@ -25,5 +25,7 @@ GET_SUPPORT_DETAILS: 'support/hospital/',
 GET_DOCTOR_AVAILABILITY: 'hospital/doctor/availability/',
 GET_FINANCE:'payment/hospital',
 GET_APPROVED_APPOINTMENT: 'appointment/approved/',
- GET_EARNING_STATS: 'payment/hospital/stats'
+GET_EARNING_STATS: 'payment/hospital/stats',
+TODAY_APPOINTMENTS: 'appointment/hospital/today',
+CHANGE_PASSWORD: 'auth/hospital/change-password'
 }

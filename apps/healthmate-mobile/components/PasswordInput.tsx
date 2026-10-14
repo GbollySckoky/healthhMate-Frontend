@@ -37,7 +37,7 @@ const PasswordInput = ({
           value={value}
           onChange={(e) => onChangeText(e.target.value)}
           placeholder={placeholder}
-          className="w-full rounded-md border border-[#D6D7DA] px-3 py-2 pr-12 text-sm outline-none transition focus:border-pink-500 focus:ring-1 focus:ring-pink-500"
+          className="w-full rounded-md border border-[#D6D7DA] px-3 py-2 pr-12 text-sm outline-none transition focus:ring-1 focus:ring-pink-500 bg-transparent"
         />
 
         <button

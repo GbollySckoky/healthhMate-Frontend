@@ -13,7 +13,7 @@ import {
 import { GetOverview } from '@/lib/interface/get-overview-interface';
 import { GetHospitalsResponse } from '@/lib/interface/get-hospitals-interface';
 import { ReplyToTicket, SUPPORT_TICKET } from '@/lib/interface/support';
-import { EditProfile, Profile } from '@/lib/interface/user';
+import { Profile } from '@/lib/interface/user';
 import api from './clientHttps';
 import { PATIENTS_ENDPOINTS } from '@/constants/endpoints';
 import { login } from '@/lib/interface/login';
@@ -23,6 +23,7 @@ import { verifyEmail } from '@/lib/interface/verifyEmail';
 import { InitializePayment } from '@/lib/interface/payment';
 import { CreateMessage } from '@/lib/interface/message';
 import { BLOOD_SUGAR } from '@/lib/interface/blood_sugar';
+import { ChangePassword } from '@/lib/interface/change-password';
 
 export const patientService = {
   login: async (payload: login) => {
@@ -79,7 +80,7 @@ export const patientService = {
   createConsultation: async (doctorId:string, payload: Appointment) => {
     return await api.post(`appointment/${doctorId}/consultation/`, payload);
   },
-  getDoctors: async (hospitalId: string, page = 1, limit = 10, q?: string , department?: string ) => {
+  getDoctors: async (hospitalId: string, page = 1, limit = 50, q?: string , department?: string ) => {
     const searchParams = new URLSearchParams({
       page: page.toString(),
       limit: limit.toString(),
@@ -95,7 +96,7 @@ export const patientService = {
   },
   getHospitals: async (
     page = 1,
-    limit = 10,
+    limit = 50,
     q?: string
   ): Promise<GetHospitalsResponse> => {
     const params = new URLSearchParams({});
@@ -115,7 +116,7 @@ export const patientService = {
   },
   getAppointments: async (
     page = 1,
-    limit = 10,
+    limit = 50,
     q?: string,
     status?: string,
     department?: string
@@ -218,7 +219,7 @@ export const patientService = {
   cancelCallSession: async (callSessionId: string) => {
     return await api.post(`communications/calls/${callSessionId}/cancel`)
   },
-  getFinance: async (page = 1, limit = 10) => {
+  getFinance: async (page = 1, limit = 50) => {
     const searchParams = new URLSearchParams({
       page: page.toString(),
       limit: limit.toString()
@@ -236,5 +237,8 @@ export const patientService = {
   getMedicalRecords: async () => {
     const response = await api.get(PATIENTS_ENDPOINTS.GET_MEDICAL_RECORDS);
     return response.data;
+  },
+  changePassword: async (payload: ChangePassword) => {
+    return await api.post(PATIENTS_ENDPOINTS.CHANGE_PASSWORD, payload)
   }
 };

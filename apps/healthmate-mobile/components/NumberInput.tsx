@@ -20,10 +20,9 @@ const NumberInput = ({
         type="number"
         inputMode="numeric"
         className="
-          w-full p-[10px] border border-[#D6D7DA] rounded-[5px]
+          w-full p-[10px] border border-border rounded-[5px]
           text-sm font-normal
-          placeholder:text-black
-          focus:outline-none focus:ring-1 focus:ring-[#D6D7DA]
+          focus:outline-none 
         "
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onChangeText(e.target.value)

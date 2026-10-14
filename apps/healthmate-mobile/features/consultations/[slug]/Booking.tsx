@@ -13,6 +13,7 @@ import ConsultationTypeSelector from "./ConsultationTypeSelector";
 import { useBooking } from "@/hooks/useBooking";
 import TimeSlotSelector from "./TimeSlotSelector";
 import BookingSummary from "./BookingSummary";
+import AppointmentCalendar from "@/components/AppointmentCalendar";
 
 interface BookingProps {
   consultation: any;
@@ -158,7 +159,7 @@ const Booking = ({ consultation, id }: BookingProps) => {
           _fn={() => setShowDatePicker(true)}
         />
 
-        <CustomCalendar
+        <AppointmentCalendar
           isOpen={showDatePicker}
           onChangeText={handleDateSelect}
           onClose={() => setShowDatePicker(false)}

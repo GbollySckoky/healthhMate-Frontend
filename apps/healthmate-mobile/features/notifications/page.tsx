@@ -99,7 +99,7 @@ const NotificationScreen = () => {
         className={`w-full text-left flex flex-row gap-3 p-3.5 rounded-xl border transition active:opacity-70 ${
           item.isRead
             ? "border-[#f3f4f6] bg-white"
-            : "border-[#dbeafe] bg-[#eff6ff66]"
+            : "border-red-800 bg-[#eff6ff66]"
         }`}
       >
         <div
@@ -124,7 +124,7 @@ const NotificationScreen = () => {
         </div>
 
         {!item.isRead && (
-          <div className="w-2 h-2 rounded-full bg-[#3b82f6] mt-1.5 shrink-0" />
+          <div className="w-2 h-2 rounded-full bg-red-800 mt-1.5 shrink-0" />
         )}
       </button>
     )

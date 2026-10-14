@@ -9,30 +9,14 @@ interface CustomCalendarType {
   isOpen: boolean;
   onChangeText: (day: CalendarDay) => void;
   onClose: () => void;
-  minDate?: string;
-  data?: { dayOfWeek: string }[];
 }
 
 const CustomCalendar = ({
   isOpen,
   onChangeText,
   onClose,
-  minDate,
-  data
 }: CustomCalendarType) => {
   const [viewDate, setViewDate] = useState<Date>(new Date());
-  /*
-   * Convert YYYY-MM-DD into a local Date.
-   *
-   * We don't use new Date("YYYY-MM-DD") because that
-   * can be interpreted as UTC and cause timezone issues.
-   */
-  const parseDate = (dateString: string): Date => {
-    const [year, month, day] = dateString.split("-").map(Number);
-
-    return new Date(year, month - 1, day);
-  };
-
   /*
    * Format a Date as YYYY-MM-DD using local date values.
    */
@@ -44,21 +28,10 @@ const CustomCalendar = ({
     return `${year}-${month}-${day}`;
   };
 
-  /*
-   * Reset the calendar view when it opens.
-   *
-   * If minDate is supplied, start from that month.
-   * Otherwise start from the current month.
-   */
+  // Always open on the current month.
   useEffect(() => {
-    if (!isOpen) return;
-
-    if (minDate) {
-      setViewDate(parseDate(minDate));
-    } else {
-      setViewDate(new Date());
-    }
-  }, [isOpen, minDate]);
+    if (isOpen) setViewDate(new Date());
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -73,12 +46,8 @@ const CustomCalendar = ({
     year: "numeric",
   });
 
-  /*
-   * Determine the first month the user is allowed to view.
-   */
-  const minimumMonth = minDate
-    ? parseDate(minDate)
-    : new Date();
+  const minimumMonth = new Date();
+  const today = formatDate(minimumMonth);
 
   const minimumYear = minimumMonth.getFullYear();
   const minimumMonthIndex = minimumMonth.getMonth();
@@ -95,10 +64,9 @@ const CustomCalendar = ({
     const newDate = new Date(year, month + delta, 1);
 
     /*
-     * Don't allow navigation to a month before minDate.
+     * Don't allow navigation to a month before today.
      */
     if (
-      minDate &&
       newDate <
         new Date(minimumYear, minimumMonthIndex, 1)
     ) {
@@ -127,22 +95,12 @@ const CustomCalendar = ({
     onClose();
   };
 
-  const isDateAvailable = (day: number): boolean => {
-    const weekday = new Date(year, month, day)
-      .toLocaleDateString("en-US", { weekday: "long" })
-      .toUpperCase();
-    // console.log("weekday", weekday);
-    return data?.some(
-      (slot) => slot.dayOfWeek.trim().toUpperCase() === weekday
-    ) ?? false;
-    
-  };
+
 
   const isDateDisabled = (day: number): boolean => {
     const dateString = formatDate(new Date(year, month, day));
 
-    return Boolean(minDate && dateString < minDate) || !isDateAvailable(day);
-    // console.log("isDateDisabled", Boolean(minDate && dateString < minDate) || !isDateAvailable(day));
+    return dateString < today;
   };
 
   const cells: (number | null)[] = [];

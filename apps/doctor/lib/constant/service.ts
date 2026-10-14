@@ -1,3 +1,4 @@
+import { ChangePassword } from "../interface/change-password";
 import admin from "../admin";
 import { LOGIN } from "../interface/login.interface";
 import { SIGNUP } from "../interface/sign-up.interface";
@@ -10,6 +11,9 @@ import { ConsultationNote, Prescription } from "../interface/prescription";
 
 
 export const Doctor = {
+    changePassword: async (payload: ChangePassword) => {
+        return await api.post(DOCTOR_ENDPOINTS.CHANGE_PASSWORD, payload);
+    },
     signup: async (payload: SIGNUP) => {
         return await admin.post(DOCTOR_ENDPOINTS.SIGN_UP, payload); 
     },
