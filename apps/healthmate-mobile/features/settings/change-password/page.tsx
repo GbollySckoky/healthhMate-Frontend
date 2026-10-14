@@ -10,6 +10,8 @@ import {
 import useDisplay from "@/hooks/useDisplay";
 import { passwordData } from "@/constants/data";
 import PasswordInput from "@/components/PasswordInput";
+import useChangePassword from "@/hooks/useChangePassword";
+import { toast } from "react-toastify";
 
 
 type ChangePasswordInputType = {
@@ -29,7 +31,7 @@ const ChangePassword = () => {
   const { oldPassword, newPassword, confirmPassword } =
     passwordData;
 
-  const { openModal, handleDisplay } =
+  const { handleDisplay } =
     useDisplay();
 
   const [inputValue, setInputValue] =
@@ -65,8 +67,20 @@ const ChangePassword = () => {
     }));
   };
 
+  const {isPending, mutation} = useChangePassword()
+
   const handleSavePassword = () => {
     handleDisplay();
+    
+    if(inputValue.newPassword !== inputValue.confirmPassword) {
+      toast.error('Incorrect Password')
+      return
+    }
+    const payload = {
+      oldPassword: inputValue.oldPassword,
+      newPassword: inputValue.newPassword
+    }
+    mutation(payload)
   };
 
     return (
@@ -142,27 +156,10 @@ const ChangePassword = () => {
 
         <SubmitButton
           _fn={handleSavePassword}
+          disabled={isPending}
         >
-          Save Password
+          { isPending ? "Processing..." : "Create Password" }
         </SubmitButton>
-          {/* <Modal
-          isOpen={openModal}
-          closeModal={handleDisplay}
-          route={() =>
-            router.push(ROUTES.home)
-          }
-          submitText="Done"
-          title="Password Updated"
-          text="Your password has been updated successfully. You can change it at any time."
-          icon={
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-pink-100">
-              <Check
-                className="text-pink-600"
-                size={24}
-              />
-            </div>
-          }
-        /> */}
 
       </Wrapper>
   );

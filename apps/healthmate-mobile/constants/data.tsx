@@ -4,7 +4,7 @@ import {
   Moon, Eye, EyeOff, CalendarDays, Phone, Bell, Mail, Scale, Home, Activity, CalendarCheck, 
   UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain, Heart, Smile,
   MessageCircle, User, 
-  BriefcaseMedical,
+  BriefcaseMedical, 
   Settings
 } from 'lucide-react';
 import { ROUTES } from './route';
@@ -530,35 +530,35 @@ export const settingsData = [
     ),
     url: '/settings/change-password',
   },
-  {
-    icon: <Phone size={17} color={colors.lightRed} />,
-    title: 'Change Phone Number',
-    id: '2',
-    rightIcon: (
-      <ChevronRight size={24} color={colors.gray} />
-    ),
-    url: '/settings/change-phoneNumber',
-  },
-  {
-    title: 'Appointments Reminders',
-    id: '3',
-    toggleOn: (
-      <ToggleRight size={24} color={colors.lightRed} />
-    ),
-    toggleOff: (
-      <ToggleLeft size={24} color={colors.lightGray} />
-    ),
-  },
-  {
-    title: 'Medication Reminders',
-    id: '4',
-    toggleOn: (
-      <ToggleRight name="toggle-on" size={24} color={colors.lightRed} />
-    ),
-    toggleOff: (
-      <ToggleLeft size={24} color={colors.lightGray} />
-    ),
-  },
+  // {
+  //   icon: <Phone size={17} color={colors.lightRed} />,
+  //   title: 'Change Phone Number',
+  //   id: '2',
+  //   rightIcon: (
+  //     <ChevronRight size={24} color={colors.gray} />
+  //   ),
+  //   url: '/settings/change-phoneNumber',
+  // },
+  // {
+  //   title: 'Appointments Reminders',
+  //   id: '3',
+  //   toggleOn: (
+  //     <ToggleRight size={24} color={colors.lightRed} />
+  //   ),
+  //   toggleOff: (
+  //     <ToggleLeft size={24} color={colors.lightGray} />
+  //   ),
+  // },
+  // {
+  //   title: 'Medication Reminders',
+  //   id: '4',
+  //   toggleOn: (
+  //     <ToggleRight name="toggle-on" size={24} color={colors.lightRed} />
+  //   ),
+  //   toggleOff: (
+  //     <ToggleLeft size={24} color={colors.lightGray} />
+  //   ),
+  // },
   {
     title: 'FAQs',
     id: '5',
@@ -581,22 +581,22 @@ export const passwordData = {
   oldPassword: {
     label: 'Old Password',
     placeholder: '*******',
-    closeIcon: <EyeOff size={20} color="black" />,
-    openIcon: <Eye size={20} color="black" />,
+    closeIcon: <EyeOff size={15} color="black" />,
+    openIcon: <Eye size={15} color="black" />,
     id: '1',
   },
   newPassword: {
     label: 'New Password',
     placeholder: '*******',
-    closeIcon: <EyeOff size={20} color="black" />,
-    openIcon: <Eye size={20} color="black" />,
+    closeIcon: <EyeOff size={15} color="black" />,
+    openIcon: <Eye size={15} color="black" />,
     id: '2',
   },
   confirmPassword: {
     label: 'Confirm Password',
     placeholder: '*******',
-    closeIcon: <EyeOff size={20} color="black" />,
-    openIcon: <Eye size={20} color="black" />,
+    closeIcon: <EyeOff size={15} color="black" />,
+    openIcon: <Eye size={15} color="black" />,
     id: '3',
   },
 };
@@ -751,12 +751,12 @@ export const PATIENT_NAV_ITEMS = [
     icon: CalendarDays,
   },
   { id: "support", label: "Support", href: "/support", icon: MessageCircle },
-  // {
-  //   id: "records",
-  //   label: "Records",
-  //   href: ROUTES.medicalRecords,
-  //   icon: FileText,
-  // },
+  {
+    id: "notifications",
+    label: "Notifications",
+    href: ROUTES.notifications,
+    icon: Bell,
+  },
   {
     id: "medical-records",
     label: "Medical Records",

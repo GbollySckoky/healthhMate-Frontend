@@ -267,7 +267,12 @@ const AppointmentDetails = () => {
           <Card className="mt-6 cursor-pointer">
              {appointmentDetails.approvalStatus === "PENDING" ? (
                <p className="font-lato text-sm text-[#414651] font-medium mb-1">Once approved, you can message Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}.</p>
-             ) :(
+             ) : 
+              appointmentDetails.approvalStatus === "DECLINED" ? (
+                <p className="text-sm text-[#717680] font-normal">
+                Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)} has cancelled this appointment.
+              </p> 
+            ): (
             <button
               type="button"
               onClick={() => handleMessagePress(appointmentDetails.id)}

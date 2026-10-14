@@ -28,6 +28,7 @@ export const PATIENTS_ENDPOINTS = {
     PAYMENT:'payment/initialize',
     GET_FINANCE: 'payment/user',
     BLOOD_SUGAR: 'track/blood-sugar',
-    GET_MEDICAL_RECORDS: 'medical-records'
+    GET_MEDICAL_RECORDS: 'medical-records',
+    CHANGE_PASSWORD: 'auth/user/change-password'
     // GET_ALL_HOSPITALS: 'hospital/hospitals',
 }

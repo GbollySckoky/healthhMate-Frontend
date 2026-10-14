@@ -21,10 +21,8 @@ const DateInput = ({ label, value, _fn, placeholder }: DateInputType) => {
       <input
         type="date"
         className="
-          w-full p-[10px] border border-[#D6D7DA] rounded-[5px]
-          text-sm font-normal cursor-pointer
-          placeholder:text-black
-          focus:outline-none
+          w-full p-[10px] border border-[#D6D7DA] rounded-[5px] font-normal cursor-pointer
+          focus:outline-none 
         "
         onClick={_fn}
         value={value}
