@@ -4,7 +4,6 @@ import { Bell, ChevronLeft } from 'lucide-react';
 import logo from '../../assets/default.jpg'
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { ROUTES } from '@/lib/constant/Routes';
 import useGetMe from '@/lib/hooks/useGetMe';
 import MeSkeleton from './MeSkeleton';
 import useGetUnReadNotification from '@/lib/hooks/useGetUnReadNotification';

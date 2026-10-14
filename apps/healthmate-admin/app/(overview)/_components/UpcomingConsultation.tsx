@@ -1,12 +1,9 @@
 "use client";
-import { adminQueryKeys } from "@/lib/constant/query-keys";
 import { MediumTitle, MinText, SmallestTitle } from "@/components/ui/Reusable";
 import React from "react";
 import { ChevronRight } from "lucide-react";
 import image from "@/assets/Image.png";
-import { Hospital_Admin } from "@/lib/service/service";
-import { useQuery } from "@tanstack/react-query";
-import { STATUS } from "@/lib/types/status";
+import useGetTodayAppointment from "@/lib/hooks/useGetTodayAppointment";
 import { GET_ALL_APPOINTMENTS } from "@/lib/interface/get_all_appointyment";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/lib/constant/Routes";
@@ -15,15 +12,7 @@ import Image from "next/image";
 // import Image from 'nex'
 const UpcomingConsultation = () => {
   const router = useRouter();
-  const { data, isLoading, error, isError } = useQuery({
-    queryKey: adminQueryKeys.appointments(),
-    queryFn: () => Hospital_Admin.getAllAppointments(1, 10),
-  });
-
-  const datas = data?.data ?? [];
-  const upcomingConsultation = datas.filter(
-    (item: GET_ALL_APPOINTMENTS) => item.status === STATUS.UPCOMING,
-  );
+  const { todayAppointments: upcomingConsultation, isLoading, error, isError } = useGetTodayAppointment();
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 w-full h-[400px] flex flex-col">
@@ -31,10 +20,10 @@ const UpcomingConsultation = () => {
       <div className="sticky top-0 bg-white p-4 border-b border-gray-200 z-10">
         <div className="flex items-center justify-between">
           <MediumTitle>Upcoming Consultations</MediumTitle>
-          <div className="flex items-center text-red-800 cursor-pointer hover:text-red-600">
+          <button type="button" onClick={() => router.push(ROUTES.appointment)} className="flex items-center text-red-800 cursor-pointer hover:text-red-600">
             <p className="font-semibold text-[15px]">See all</p>
             <ChevronRight size={18} />
-          </div>
+          </button>
         </div>
         <p className="pt-3 text-gray-500 font-semibold text-[14px]">Today</p>
       </div>
@@ -44,7 +33,7 @@ const UpcomingConsultation = () => {
         {isLoading ? (
           <AppointmentCardSkeleton />
         ) : isError ? (
-          <p className="text-center py-20 text-sm">{error.message}</p>
+          <p className="text-center py-20 text-sm">{error instanceof Error ? error.message : "Failed to load upcoming appointments. Please try again."}</p>
         ) : upcomingConsultation?.length === 0 ? (
           <p className="text-center py-8 text-gray-500 text-sm">
             No upcoming appointments found

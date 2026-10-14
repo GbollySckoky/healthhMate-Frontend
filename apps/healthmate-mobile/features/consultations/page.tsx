@@ -11,6 +11,7 @@ const ConsultationPage = () => {
   const limit = 10;
   const {
     data,
+    isLoading: loadingHospitals,
   } = useQuery({
     queryKey: [
       "getAllHospitals",
@@ -28,6 +29,13 @@ const ConsultationPage = () => {
   });
 
   const hospitalId = data?.data[0]?.id
+  if (loadingHospitals) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-xs font-normal">Fetching available doctors...</p>
+      </div>
+    );
+  }
   
   return <Doctor hospitalId={hospitalId == null ? undefined : String(hospitalId)} />
 };

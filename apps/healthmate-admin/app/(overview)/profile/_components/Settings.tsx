@@ -1,14 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { PencilLine } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { PageWrapper, FlexWrapper, Infos } from "@/lib/components/ui/Reusable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs";
-import { useFormModal } from "@/lib/components/Modal/FormModal";
 import { Hospital_Admin } from "@/lib/service/service";
 import defaultImage from "@/assets/default.jpg";
-import HospitalProfile, { HospitalProfileData } from "./HospitalProfile";
+import { HospitalProfileData } from "./HospitalProfile";
 
 type AdminProfile = {
   hospitalName: string;
@@ -20,7 +18,6 @@ type AdminProfile = {
 };
 
 const Settings = () => {
-  const { openModal, closeModal } = useFormModal();
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["me"],
     queryFn: (): Promise<{ data: AdminProfile }> => Hospital_Admin.getMe(),
