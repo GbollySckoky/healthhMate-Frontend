@@ -9,6 +9,18 @@ const NewPassword = ({handleNextStep}: {handleNextStep: () => void}) => {
     })
     const [isLoading, setIsLoading] = useState(false)
 
+    const [showPassword, setShowPassword] = useState ({
+        password: false,
+        confirmPassword: false
+    })
+
+    const handleDisplayPassword = (key: keyof typeof showPassword) => {
+        setShowPassword((prev) => ({
+            ...prev,
+            [key]: !prev[key]
+        }))
+    }
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setInputValue((prev) => ({
@@ -16,6 +28,7 @@ const NewPassword = ({handleNextStep}: {handleNextStep: () => void}) => {
           [name]: value
         }));
     };
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -41,6 +54,8 @@ const NewPassword = ({handleNextStep}: {handleNextStep: () => void}) => {
             value={inputValue.password}
             name='password'
             onChange={handleChange}
+            showPassword={showPassword.password}
+            onClick={() => handleDisplayPassword('password')}
         />
 
         <AuthPassword
@@ -49,6 +64,8 @@ const NewPassword = ({handleNextStep}: {handleNextStep: () => void}) => {
             value={inputValue.confirmPassword}
             name='confirmPassword'
             onChange={handleChange}
+            showPassword={showPassword.confirmPassword}
+            onClick={() => handleDisplayPassword('confirmPassword')}
         />
         {/* Login button - pink background */}
         <button 
