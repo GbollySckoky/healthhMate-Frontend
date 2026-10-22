@@ -12,6 +12,7 @@ import { LogIn } from '@/lib/interface/login.interface'
 import { AxiosError } from 'axios'
 import { toast } from 'react-toastify'
 import { setAuthSession } from '@/lib/service/auth-session'
+import MinHeader from '@/components/ui/MinHeader'
 
 
 const Page = () => {
@@ -59,12 +60,11 @@ const Page = () => {
             <div className='w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6  h-screen'>
                 {/* Form container - centered blue-bordered box */}
                 <div className=' w-full max-w-md'>
-                    <div className='mb-6'>
-                        <h1 className='font-semibold text-xl sm:text-2xl text-[#1B1818] mb-2 font-lato'>
-                            Welcome Back, Admin
-                        </h1>
-                        <p className='text-sm text-[#645D5D] font-normal font-lato'>
-                            Log in to your hospital
+                    <MinHeader />
+                    <div className="mb-8">
+                        <p className="text-base font-medium text-[#414651] font-lato text-center">Welcome Back</p>
+                        <p className="text-xs text-[#717680] mt-1 font-lato font-normal text-center">
+                            Log in to access your HealthMate account.
                         </p>
                     </div>
 
