@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Appointment } from "@/lib/interface/createAppointment";
 
 import DateInput from "@/components/DateInput";
-import CustomCalendar from "@/components/CustomCalendar";
 import TextAreaInput from "@/components/TextAreaInput";
 
 import ConsultationTypeSelector from "./ConsultationTypeSelector";
