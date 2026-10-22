@@ -174,7 +174,6 @@ const SignUpPage = () => {
           onSubmit={handleSignUp}
           isLoading={signupMutation.isPending}
         />
-
         {/* Login */}
         <div className="mt-3 flex items-center justify-center pb-4">
           <span className="text-sm text-gray-500">
