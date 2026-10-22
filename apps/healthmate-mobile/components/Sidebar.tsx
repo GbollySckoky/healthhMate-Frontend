@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut, X } from "lucide-react";
 import Image from 'next/image'
-import logo from '@/assets/Group 19156 copy.png'
+import logo from '@/assets/Group 19156(1).svg'
 
 import {
   PATIENT_NAV_ITEMS,
@@ -187,7 +187,7 @@ export default function Sidebar({
           <button
             type="button"
             onClick={() => { onClose(); logout(); }}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-red-100 transition-colors hover:bg-[#FEF3F2]"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-red-100 transition-colors "
           >
             <LogOut size={20} />
             <span>Logout</span>

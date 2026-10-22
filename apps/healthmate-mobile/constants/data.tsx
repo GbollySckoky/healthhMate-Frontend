@@ -2,7 +2,7 @@ import { colors } from './colors';
 import image  from'@/assets/Mobile.png';
 import { 
   Moon, Eye, EyeOff, CalendarDays, Phone, Bell, Mail, Scale, Home, Activity, CalendarCheck, 
-  UserRound, ChevronRight, LockOpen, ToggleRight, ToggleLeft, Dumbbell, PenLine, Pill, Brain, Heart, Smile,
+  UserRound, ChevronRight, LockOpen, Dumbbell, PenLine, Pill, Brain, Heart, Smile,
   MessageCircle, User, 
   BriefcaseMedical, 
   Settings

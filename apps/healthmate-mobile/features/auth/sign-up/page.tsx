@@ -14,7 +14,7 @@ import { publicRoutes } from "@/constants/route";
 import VerifyEmail from "./VerifyEmail";
 import { SignUpForm } from "./SignupForm";
 
-import Logo from "@/assets/Group 19156 copy.png";
+import Logo from "@/assets/Group 19156.svg";
 
 type SignUpStep = "signup" | "verify";
 
@@ -138,10 +138,10 @@ const SignUpPage = () => {
   }
 
   return (
-    <main className="min-h-screen w-screen overflow-y-auto bg-[#FAFAFA] px-4 py-8">
-      <div className="mx-auto w-full max-w-[520px]">
+    <div className="w-full bg-[#FAFAFA]">
+      <div className=" md:w-[70%] mx-auto w-[90%]">
         {/* Logo */}
-        <div className="mb-6 flex justify-center">
+        <div className="my-6 flex justify-center ">
           <Image
             src={Logo}
             alt="HealthMate Logo"
@@ -176,7 +176,7 @@ const SignUpPage = () => {
         />
 
         {/* Login */}
-        <div className="mt-6 flex items-center justify-center pb-4">
+        <div className="mt-3 flex items-center justify-center pb-4">
           <span className="text-sm text-gray-500">
             Already have an account?
           </span>
@@ -190,7 +190,7 @@ const SignUpPage = () => {
           </button>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

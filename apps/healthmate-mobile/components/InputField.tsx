@@ -25,7 +25,7 @@ const InputField = ({
           border
           border-gray-200
           bg-white
-          px-4
+          px-2
           py-2
           text-sm
           text-gray-900
