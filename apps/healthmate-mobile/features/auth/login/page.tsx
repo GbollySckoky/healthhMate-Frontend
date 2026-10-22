@@ -9,7 +9,7 @@ import { publicRoutes, ROUTES } from '@/constants/route';
 import { useRouter } from 'next/navigation';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
-import Logo from "@/assets/Group 19156 copy.png";
+import Logo from "@/assets/Group 19156.svg";
 import Image from 'next/image';
 // import { ROUTES } from '@/lib/routes';
 
@@ -54,7 +54,7 @@ const LoginPage = () => {
       {/* Logo */}
 
       <div className=" md:w-[70%] mx-auto w-[90%]">
-        <div className="mb-6 flex justify-center">
+        <div className="mb-3 flex justify-center">
           <Image
             src={Logo}
             alt="HealthMate Logo"
@@ -64,8 +64,8 @@ const LoginPage = () => {
         </div>
         {/* Header */}
         <div className="mb-8">
-          <p className="text-xl font-medium text-[#414651] font-lato text-center">Welcome Back</p>
-          <p className="text-sm text-[#717680] mt-1 font-lato font-normal text-center">
+          <p className="text-base font-medium text-[#414651] font-lato text-center">Welcome Back</p>
+          <p className="text-xs text-[#717680] mt-1 font-lato font-normal text-center">
             Log in to access your HealthMate account.
           </p>
         </div>
@@ -137,7 +137,7 @@ const LoginPage = () => {
             disabled={isPending}
             className="w-full rounded-lg bg-pink-600 py-4 text-sm font-semibold text-white hover:bg-pink-500 disabled:bg-[#F670C7]"
           >
-            {isPending ? 'Logging in...' : 'Login'}
+            {isPending ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 

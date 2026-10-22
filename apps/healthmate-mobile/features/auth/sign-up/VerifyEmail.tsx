@@ -15,8 +15,9 @@ import { toast } from "react-toastify";
 
 import { patientService } from "@/service/patientService";
 import { verifyEmail } from "@/lib/interface/verifyEmail";
-import { publicRoutes } from "@/constants/route";
+import { publicRoutes, ROUTES } from "@/constants/route";
 import type { SignUpValues } from "./page";
+import { storageService } from "@/constants/storage";
 
 interface VerifyEmailProps {
   inputValue: SignUpValues;
@@ -36,7 +37,7 @@ const VerifyEmail = ({
   >([]);
 
   const [resendTimer, setResendTimer] = useState(60);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [code, setCode] = useState<string[]>(() => Array(6).fill(""));
   /**
    * --------------------------------------------------
@@ -182,12 +183,13 @@ const VerifyEmail = ({
       ),
 
     onSuccess: (response) => {
+      storageService.setAuthToken(response.data.access_token);
       toast.success(
-        response?.data?.message ||
+        response.data.message ||
           "Email verified successfully"
       );
-
-      setIsModalOpen(true);
+      router.replace(ROUTES.home)
+      // setIsModalOpen(true);
     },
 
     onError: (
@@ -253,15 +255,15 @@ const VerifyEmail = ({
    * --------------------------------------------------
    */
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  // };
 
-  const continueAfterVerification = () => {
-    setIsModalOpen(false);
+  // const continueAfterVerification = () => {
+  //   setIsModalOpen(false);
 
-    router.push(publicRoutes.success);
-  };
+  //   router.push(publicRoutes.success);
+  // };
 
   /**
    * --------------------------------------------------
@@ -392,8 +394,8 @@ const VerifyEmail = ({
             transition
             ${
               verifyEmailMutation.isPending
-                ? "cursor-not-allowed bg-gray-300"
-                : "bg-pink-500 hover:bg-pink-600"
+                ? "cursor-not-allowed bg-[#F670C7]"
+                : "hover:bg-pink-500 bg-pink-600"
             }
           `}
         >
@@ -402,74 +404,6 @@ const VerifyEmail = ({
             : "Verify"}
         </button>
       </div>
-
-      {/* Success Modal */}
-
-      {(isModalOpen || openModal) && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
-            {/* Icon */}
-
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-pink-50">
-              <Check
-                size={24}
-                className="text-pink-500"
-              />
-            </div>
-
-            {/* Content */}
-
-            <div className="text-center">
-              <h2 className="text-xl font-semibold text-gray-900">
-                Successful!
-              </h2>
-
-              <p className="mt-2 text-sm text-gray-500">
-                Account successfully verified.
-              </p>
-            </div>
-
-            {/* Continue */}
-
-            <button
-              type="button"
-              onClick={
-                continueAfterVerification
-              }
-              className="
-                mt-6
-                w-full
-                rounded-xl
-                bg-pink-500
-                py-3.5
-                text-sm
-                font-semibold
-                text-white
-                transition
-                hover:bg-pink-600
-              "
-            >
-              Continue
-            </button>
-
-            {/* Close */}
-
-            <button
-              type="button"
-              onClick={closeModal}
-              className="
-                mt-3
-                w-full
-                text-sm
-                text-gray-500
-                hover:text-gray-700
-              "
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

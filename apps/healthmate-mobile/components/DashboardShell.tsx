@@ -35,7 +35,7 @@ export default function DashboardShell({
       /> */}
 
       {/* Main */}
-      <div className={`${isAuthPage ? "" : "flex min-w-0 flex-1 flex-col md:ml-[250px]"}`}>
+      <div className={`flex min-w-0 flex-1 flex-col ${isAuthPage ? "" : "md:ml-[250px]"}`}>
         {isAuthPage ? (
           null ):(  
           <HeaderClient

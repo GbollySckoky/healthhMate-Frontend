@@ -79,6 +79,7 @@ export const SignUpForm = ({
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             onChange("phoneNumber", event.target.value)
           }
+          maxLength={11}
         />
 
         <PasswordInput
@@ -137,8 +138,8 @@ export const SignUpForm = ({
           transition
           ${
             isLoading
-              ? "cursor-not-allowed bg-gray-300"
-              : "bg-pink-500 hover:bg-pink-600"
+              ? "cursor-not-allowed bg-[#F670C7]"
+              : "hover:bg-pink-500 bg-pink-600"
           }
         `}
       >

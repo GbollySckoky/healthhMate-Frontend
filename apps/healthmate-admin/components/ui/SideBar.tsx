@@ -2,7 +2,7 @@
 import React from 'react'
 import { sideBarData } from '@/components/data'
 import Link from 'next/link'
-import image from '../../assets/Group 19156.png'
+import image from '../../assets/Group 19156(1).svg'
 import Image from 'next/image'
 import { LogOut } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
