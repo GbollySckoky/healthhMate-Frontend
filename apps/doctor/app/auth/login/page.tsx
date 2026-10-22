@@ -69,12 +69,10 @@ const Page = () => {
                 {/* Form container - centered blue-bordered box */}
                 <div className=' w-full max-w-md'>
                     <MinHeader />
-                    <div className='mb-6'>
-                        <h1 className='font-semibold text-xl sm:text-2xl text-[#1B1818] mb-2 font-lato'>
-                            Welcome Back, 
-                        </h1>
-                        <p className='text-sm text-[#645D5D] font-normal font-lato'>
-                            Log in to your account
+                    <div className="mb-8">
+                        <p className="text-base font-medium text-[#414651] font-lato text-center">Welcome Back</p>
+                        <p className="text-xs text-[#717680] mt-1 font-lato font-normal text-center">
+                            Log in to access your HealthMate account.
                         </p>
                     </div>
                     <form onSubmit={handleSubmit} className='space-y-4'>
