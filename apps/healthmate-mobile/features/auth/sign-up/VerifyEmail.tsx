@@ -10,12 +10,11 @@ import React, {
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { Check } from "lucide-react";
 import { toast } from "react-toastify";
 
 import { patientService } from "@/service/patientService";
 import { verifyEmail } from "@/lib/interface/verifyEmail";
-import { publicRoutes, ROUTES } from "@/constants/route";
+import { ROUTES } from "@/constants/route";
 import type { SignUpValues } from "./page";
 import { storageService } from "@/constants/storage";
 
@@ -28,7 +27,6 @@ interface VerifyEmailProps {
 const VerifyEmail = ({
   inputValue,
   // onBack,
-  openModal = false,
 }: VerifyEmailProps) => {
   const router = useRouter();
 
