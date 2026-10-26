@@ -286,8 +286,9 @@ export default function AvailabilityPage() {
         <Button
           onClick={submitAvailability}
           className="bg-[#D92D8A] hover:bg-[#C01F78] rounded-lg px-6 py-5 text-sm font-medium"
+          disabled={mutation.isPending}
         >
-          Save Doctor Availability
+          {mutation.isPending ? 'Saving...' : "Save Doctor Availability"}
         </Button>
 
         {/* Table */}

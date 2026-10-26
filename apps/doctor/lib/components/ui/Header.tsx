@@ -58,22 +58,22 @@ const Header = () => {
                     <MeSkeleton />
                 ) : (
                     <div className="flex items-center gap-4 pl-3">
-                        <div className='border border-border rounded-full cursor-pointer'>
+                        <div className='h-[40px] w-[40px] shrink-0 overflow-hidden rounded-full border border-border cursor-pointer'>
                             <Image 
                                 src={data?.profile?.profilePicture || profile} 
                                 alt={CapitalizeName(data?.firstName)} 
-                                width={10} 
-                                height={10} 
-                                className='rounded-full w-10 h-10' 
+                                width={40}
+                                height={40}
+                                className='h-full w-full object-cover'
                             /> 
                         </div>
-                        <div className="hidden sm:block">
-                            <p className='font-lato font-bold text-[14px]'>Dr. {' '}
-                                {CapitalizeName(data?.firstName)} {' '} 
+                     <div className="hidden sm:block">
+                           <p className='font-lato font-bold text-[14px]'>Dr. {' '}
+                       {CapitalizeName(data?.firstName)} {' '} 
                                 {CapitalizeName(data?.lastName)}</p>
-                            <p className='font-medium text-[12px] text-red-800 font-lato'>{data?.profile?.specialization ?? '-'}</p>
-                        </div>
-                    </div>
+                          <p className='font-medium text-[12px] text-red-800 font-lato'>{data?.email ?? '-'}</p>
+                     </div>
+                     </div>
                 )}
             </div>
         </div>

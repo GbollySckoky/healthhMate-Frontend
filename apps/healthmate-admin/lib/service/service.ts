@@ -1,3 +1,4 @@
+import { AppointmentChartsResponse } from "../interface/appointment-charts";
 import { ChangePassword } from "../interface/change-password";
 import { LogIn } from "../interface/login.interface";
 // import { Profile } from "../interface/register.interface";
@@ -21,6 +22,12 @@ export const Hospital_Admin = {
     },
     login: async (payload: LogIn) => {
         return await api.post(ADMIN_ENDPOINTS.LOGIN, payload); 
+    },
+    verifyHospitalCode: async (email: string, payload: { verificationCode: string }) => {
+        return api.post(`${ADMIN_ENDPOINTS.VERIFY_CODE}/${encodeURIComponent(email)}`, payload)
+    },
+    resendHospitalCode: async (email: string) => {
+        return api.post(`${ADMIN_ENDPOINTS.RESEND_CODE}/${encodeURIComponent(email)}`)
     },
     createProfile: async (payload: any) => {
         return await api.post(ADMIN_ENDPOINTS.CREATE_HOSPITAL_PROFILE, payload); 
@@ -62,6 +69,10 @@ export const Hospital_Admin = {
     },
      assignBranch: async (payload: ASSIGN_BRANCH) => {
         return await api.post(ADMIN_ENDPOINTS.ASSIGN_DOCTOR_TO_BRANCH, payload); 
+    },
+    getAppointmentCharts: async () => {
+        const response = await api.get<AppointmentChartsResponse>(ADMIN_ENDPOINTS.CHART);
+        return response.data;
     },
     getStats: async() => {
         const response = await api.get(ADMIN_ENDPOINTS.GET_STATS);

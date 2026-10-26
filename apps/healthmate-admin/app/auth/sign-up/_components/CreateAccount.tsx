@@ -12,9 +12,10 @@ import { Signup as SIGN_UP } from '@/lib/interface/signup-interface'
 import { AxiosError } from 'axios'
 import DateInput from '@/components/Inputs/Date'
 import { toast } from 'react-toastify'
-import { setAuthSession } from '@/lib/service/auth-session'
+import { useRouter } from 'next/navigation'
 
 const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => void}) => {
+    const router = useRouter()
     const [inputValue, setInputValue] = useState<Signup>({
         hospitalName:'',
         dateOfEstablishment:'',
@@ -31,10 +32,9 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
 
     const mutation = useMutation({
         mutationFn: (payload: SIGN_UP) => Hospital_Admin.signup(payload),
-        onSuccess: (response) => {
+        onSuccess: (response, payload) => {
             toast.success(response.data.message)
-            setAuthSession(response.data.access_token);
-            handleNextStep(STEP.TWO)
+            router.push(`/auth/sign-up/verify-code?email=${encodeURIComponent(payload.email)}`)
 
         },
         onError: (error: AxiosError<{message: string | undefined}>) => {
@@ -108,6 +108,7 @@ const CreateAccount = ({handleNextStep}: {handleNextStep: (value: number) => voi
                     value={inputValue.phoneNumber}
                     name='phoneNumber'
                     onChange={handleChange}
+                    // maxLength={11}
                 />
                <AuthPassword
                     label="Password"
