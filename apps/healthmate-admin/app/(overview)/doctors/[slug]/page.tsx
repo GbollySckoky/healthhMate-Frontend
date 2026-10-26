@@ -41,11 +41,13 @@ const Page = () => {
             <DoctorHeaderSkeleton />
           ) : (
             <div className="mb-3 flex items-center justify-between border-b pb-6 border-borderColor">
-              <div className="flex items-center">
+              <div className="flex items-center h-[40px] w-[40px]">
                 <Image
-                  src={image}
+                  src={doctorDetails?.profile.profilePicture || image}
                   alt="Image"
                   className="w-[50px] h-[50px] rounded-full"
+                  width={30}
+                  height={30}
                 />
 
                 <div className="ml-2">

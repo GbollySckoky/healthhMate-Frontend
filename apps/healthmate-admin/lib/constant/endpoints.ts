@@ -27,5 +27,8 @@ GET_FINANCE:'payment/hospital',
 GET_APPROVED_APPOINTMENT: 'appointment/approved/',
 GET_EARNING_STATS: 'payment/hospital/stats',
 TODAY_APPOINTMENTS: 'appointment/hospital/today',
-CHANGE_PASSWORD: 'auth/hospital/change-password'
+CHANGE_PASSWORD: 'auth/hospital/change-password',
+VERIFY_CODE: 'auth/hospital/verify-code',
+RESEND_CODE: 'auth/hospital/resend-code',
+CHART: 'appointment/hospital/charts'
 }

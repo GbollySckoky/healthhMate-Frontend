@@ -1,4 +1,5 @@
 "use client"
+import useGetAppointmentCharts from "@/lib/hooks/useGetAppointmentCharts"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
 import {
@@ -14,19 +15,6 @@ import {
 import { MediumTitle, MinBar } from "@/components/ui/Reusable"
 
 
-// Updated chart data with all three fields
-const chartData = [
-  { month: "January", scheduled: 186, completed: 150, canceled: 136 },
-  { month: "February", scheduled: 305, completed: 280, canceled: 225 },
-  { month: "March", scheduled: 237, completed: 200, canceled: 237 },
-  { month: "April", scheduled: 273, completed: 220, canceled: 253 },
-  { month: "May", scheduled: 209, completed: 180, canceled: 239 },
-  { month: "June", scheduled: 214, completed: 190, canceled: 224 },
-  { month: "July", scheduled: 14, completed: 90, canceled: 24 },
-  { month: "August", scheduled: 14, completed: 90, canceled: 24 },
-  { month: "September", scheduled: 314, completed: 290, canceled: 324 },
-]
-
 const chartConfig = {
   scheduled: {
     label: "Scheduled",
@@ -36,7 +24,7 @@ const chartConfig = {
     label: "Completed",
     color: "var(--green-900)",
   },
-  canceled: {
+  cancelled: {
     label: "Canceled",
     color: "var(--red-10)",
   },
@@ -57,12 +45,19 @@ const trendInfo = [
         color: "bg-red-800",
       },
 ]
+const formatMonth = (value: string) => new Date(`${value}-01T00:00:00Z`).toLocaleDateString('en-US', {
+  month: 'short', timeZone: 'UTC',
+})
+
 export function AppointmentTrends() {
+  const { data, isPending, isError, refetch } = useGetAppointmentCharts()
+  const chartData = data?.data.appointmentTrends ?? []
+
   return (
-    <Card className=" w-full">
-      <div className="flex items-center p-6 gap-5">
-        <MediumTitle>Appointment Trends - Multiple Lines</MediumTitle>
-        <div className="flex">
+    <Card className="flex h-full min-w-0 w-full flex-col">
+      <div className="flex flex-wrap items-center p-6 gap-5">
+        <MediumTitle>Appointment Trends {data?.data.year}</MediumTitle>
+        <div className="flex flex-wrap gap-y-2">
             {trendInfo.map((trend, index) => (
                 <div className="flex items-center space-x-1" key={index}>
                     <MinBar className={`${trend.color} ml-3`} />
@@ -72,7 +67,16 @@ export function AppointmentTrends() {
         </div>
       </div>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-[300px] w-full">
+        {isPending ? (
+          <p role="status" className="h-[300px] flex items-center justify-center">Loading appointment trends…</p>
+        ) : isError ? (
+          <div role="alert" className="h-[300px] flex flex-col items-center justify-center gap-2">
+            <p>Unable to load appointment trends.</p>
+            <button type="button" onClick={() => refetch()} className="text-pink-600">Try again</button>
+          </div>
+        ) : chartData.length === 0 ? (
+          <p className="h-[300px] flex items-center justify-center">No appointment trends available.</p>
+        ) : <ChartContainer title={data?.data.scheduledDefinition} config={chartConfig} className="h-[300px] w-full">
           <LineChart
             accessibilityLayer
             data={chartData}
@@ -87,9 +91,9 @@ export function AppointmentTrends() {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={formatMonth}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent labelFormatter={(label) => formatMonth(String(label))} />} />
             <Line
               dataKey="scheduled"
               type="monotone"
@@ -105,14 +109,14 @@ export function AppointmentTrends() {
               dot={false}
             />
             <Line
-              dataKey="canceled"
+              dataKey="cancelled"
               type="monotone"
-              stroke="var(--color-canceled)"
+              stroke="var(--color-cancelled)"
               strokeWidth={2}
               dot={false}
             />
           </LineChart>
-        </ChartContainer>
+        </ChartContainer>}
       </CardContent>
     </Card>
   )

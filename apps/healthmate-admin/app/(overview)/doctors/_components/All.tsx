@@ -1,6 +1,8 @@
 "use client";
 
-import { CloudUpload, Search, Trash2 } from "lucide-react";
+import { Search, 
+  // Trash2 
+} from "lucide-react";
 import {
   Table,
   TableBody,
@@ -16,7 +18,7 @@ import Input from "@/lib/components/Inputs/Input";
 import Paginate from "@/lib/components/ui/paginate";
 import { useRouter } from "next/navigation";
 // import Calendar from "@/lib/components/calendar/Calendar";
-import DeleteModal from "../../profile/_components/DeleteModal";
+// import DeleteModal from "../../profile/_components/DeleteModal";
 import AddNewDoctor from "./AddNewDoctor";
 import DoctorTableSkeleton from "@/components/ui/DoctorPageSkeleton";
 import { useModal } from "@/components/Modal/Modal";
@@ -41,19 +43,19 @@ const All = () => {
     });
   };
 
-  const handleDeactivateClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  // const handleDeactivateClick = (e: React.MouseEvent) => {
+  //   e.stopPropagation();
 
-    openModal(
-      <DeleteModal text="Are you sure you want to deactivate this doctor? They won't be able to access their dashboard or consult patients." />,
-      {
-        title: "Deactivate this Doctor?",
-        className: "max-w-lg",
-        onClose: () => {},
-        // confirmDelete() {},
-      }
-    );
-  };
+  //   openModal(
+  //     <DeleteModal text="Are you sure you want to deactivate this doctor? They won't be able to access their dashboard or consult patients." />,
+  //     {
+  //       title: "Deactivate this Doctor?",
+  //       className: "max-w-lg",
+  //       onClose: () => {},
+  //       // confirmDelete() {},
+  //     }
+  //   );
+  // };
 
   return (
     <div className="w-full rounded-lg border border-borderColor bg-white">
@@ -61,12 +63,12 @@ const All = () => {
         <TableTitle>All Doctors</TableTitle>
 
         <div className="flex items-center space-x-3">
-          <button className="flex cursor-pointer items-center gap-2 rounded-lg border border-borderColor100 px-3 py-2 transition-colors hover:bg-gray-50">
+          {/* <button className="flex cursor-pointer items-center gap-2 rounded-lg border border-borderColor100 px-3 py-2 transition-colors hover:bg-gray-50">
             <CloudUpload size={15} />
             <p className="font-inter text-[14px] font-medium text-[#414651]">
               Export
             </p>
-          </button>
+          </button> */}
 
           <Button onClick={handleAddDoctorClick}>Add Doctor</Button>
         </div>
@@ -90,6 +92,7 @@ const All = () => {
             <TableHead>Email</TableHead>
             <TableHead>Phone Number</TableHead>
             <TableHead>Gender</TableHead>
+            <TableHead>Department</TableHead>
             <TableHead>Specialization</TableHead>
             <TableHead>License Number</TableHead>
             <TableHead>Consultation Fee</TableHead>
@@ -127,16 +130,16 @@ const All = () => {
                   onClick={() => handleAppointmentClick(doctor.id)}
                 >
                   <TableCell className="font-inter text-[14px] font-normal text-grey-30">
-                    <div className="flex items-center">
+                    <div className="flex items-center gap-2">
                       <Image
                         src={doctor?.profile?.profilePicture || image}
                         alt="Doctor"
-                        width={40}
-                        height={40}
-                        className="object-cover border rounded-full border-border "
+                        width={30}
+                        height={30}
+                        className="h-[30px] w-[30px] shrink-0 rounded-full border border-border object-cover"
                       />
 
-                      <div className="ml-2">
+                      <div>
                         <p className="font-inter text-[12px] font-normal text-grey-20">
                           {`${CapitalizeName(doctor.firstName) || ""} ${
                             CapitalizeName(doctor.lastName) || ""
@@ -163,6 +166,10 @@ const All = () => {
                   </TableCell>
 
                   <TableCell className="font-inter text-[12px] font-normal text-grey-20">
+                    {doctor.department.replaceAll("_", " ") || "-"}
+                  </TableCell>
+
+                  <TableCell className="font-inter text-[12px] font-normal text-grey-20">
                     {doctor.profile?.specialization || "-"}
                   </TableCell>
 
@@ -176,11 +183,11 @@ const All = () => {
                       : "-"}
                   </TableCell>
 
-                  <TableCell>
+                  {/* <TableCell>
                     <button type="button" onClick={handleDeactivateClick}>
                       <Trash2 color="#F04438" size={15} />
                     </button>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))
             )}

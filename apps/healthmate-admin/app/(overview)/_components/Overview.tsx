@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { Card, DisplayFlex, FlexWrapper, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '../../../lib/components/ui/Reusable'
+import { Card, FlexWrapper, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '../../../lib/components/ui/Reusable'
 import { PageWrapper } from '../../../lib/components/ui/Reusable'
 import {  CalendarDays } from 'lucide-react';
 import { ArrowDown, ArrowUp } from "lucide-react"
@@ -128,10 +128,10 @@ const Overview = () => {
                 <Earnings />
             </div>
             {/* Charts */}
-            <DisplayFlex>
+            <div className="my-7 grid grid-cols-1 items-stretch gap-5 xl:grid-cols-[minmax(0,3fr)_minmax(280px,1fr)]">
                 <AppointmentTrends />
                 <ConsultDept />
-            </DisplayFlex>
+            </div>
             <div className="my-7 flex items-center  gap-5 ">
                 <UpcomingConsultation />
                 <RecentActivities />

@@ -1,89 +1,46 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
 import { Pie, PieChart } from "recharts"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { MediumTitle } from "@/components/ui/Reusable"
+import useGetAppointmentCharts from "@/lib/hooks/useGetAppointmentCharts"
 
-export const description = "A donut chart"
-
-const chartData = [
-  { browser: "Cardiology", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "Dermatology", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "Psychiatry", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
-]
-
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Cardiology",
-    color: "var(--purple-900)",
-  },
-  safari: {
-    label: "Dermatology",
-    color: "var(--red-10)",
-  },
-  firefox: {
-    label: "Psychiatry",
-    color: "var(--red-900)",
-  },
-  other: {
-    label: "Other",
-    color: "var(--grey-400)",
-  },
-} satisfies ChartConfig
+const colors = ["var(--purple-900)", "var(--red-10)", "var(--red-900)", "var(--grey-400)"]
+const chartConfig = { count: { label: "Consultations" } } satisfies ChartConfig
 
 export function ConsultDept() {
+  const { data, isPending, isError, refetch } = useGetAppointmentCharts()
+  const consultations = data?.data.consultationsByDepartment
+  const chartData = (consultations?.departments ?? []).map((department, index) => ({
+    ...department,
+    fill: colors[index % colors.length],
+  }))
+
   return (
-    <Card className="flex flex-col max-h-[400px]">
-      <CardHeader className="items-center pb-0">
+    <Card className="flex h-full min-w-0 w-full flex-col">
+      <CardHeader className="items-center">
         <MediumTitle>Consults by Dept.</MediumTitle>
-        {/* <CardDescription>January - June 2024</CardDescription> */}
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square h-[300px]"
-        >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
-              innerRadius={60}
-            />
-          </PieChart>
-        </ChartContainer>
+      <CardContent className="flex flex-1 flex-col justify-center text-center">
+        {isPending ? (
+          <p role="status" className="h-[300px] flex items-center justify-center">Loading consultations…</p>
+        ) : isError ? (
+          <div role="alert" className="h-[300px] flex flex-col items-center justify-center gap-2">
+            <p>Unable to load consultations by department.</p>
+            <button type="button" onClick={() => refetch()} className="text-pink-600">Try again</button>
+          </div>
+        ) : !consultations?.total || chartData.length === 0 ? (
+          <p className="h-[300px] flex items-center justify-center">No consultations available.</p>
+        ) : (
+          <ChartContainer config={chartConfig} className="mx-auto h-[300px] w-full aspect-auto">
+            <PieChart>
+              <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+              <Pie data={chartData} dataKey="count" nameKey="department" innerRadius={60} />
+            </PieChart>
+          </ChartContainer>
+        )}
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
     </Card>
   )
 }
