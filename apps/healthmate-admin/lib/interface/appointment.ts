@@ -39,6 +39,9 @@ export interface User {
   lastName: string
   email: string
   isActive: boolean
+  phone?: string
+  gender?: string
+  dateOfBirth?: string
   profile: any
 }
 

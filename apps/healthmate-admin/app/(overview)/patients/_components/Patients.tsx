@@ -1,7 +1,7 @@
 "use client";
 
 import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable";
-import { CloudUpload, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import Input from "@/lib/components/Inputs/Input";
@@ -66,12 +66,12 @@ const Patients = () => {
           <div className="flex items-center justify-between border-b border-borderColor100 p-4">
             <TableTitle>All Patients</TableTitle>
 
-            <button className="flex cursor-pointer items-center gap-2 rounded-lg border border-borderColor100 px-3 py-2">
+            {/* <button className="flex cursor-pointer items-center gap-2 rounded-lg border border-borderColor100 px-3 py-2">
               <CloudUpload size={15} />
               <span className="font-inter text-[14px] font-medium text-[#414651]">
                 Export
               </span>
-            </button>
+            </button> */}
           </div>
 
           <div className="flex items-center gap-3 px-4 py-4">

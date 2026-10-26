@@ -17,6 +17,7 @@ import Link from "next/link"
 import { Appointment } from "@/lib/interface/doctor-apppointment.interface";
 import { STATUS } from "@/types/status";
 import { RecentConsultationTableSkeleton } from "@/lib/components/ui/DashboardSkeleton";
+import { CapitalizeName } from "@/lib/constant/capitalizeName";
 
   
   export function RecentConsultation() {
@@ -84,7 +85,7 @@ import { RecentConsultationTableSkeleton } from "@/lib/components/ui/DashboardSk
                         <p>{consult.date}</p> 	
                         <p className="text-grey-20 text-[12px]">{consult.time}</p>
                     </TableCell>
-                    <TableCell className="font-inter font-normal text-[12px] text-grey-20">{consult.consultationType}</TableCell>
+                    <TableCell className="font-inter font-normal text-[12px] text-grey-20">{CapitalizeName(consult.consultationType.replaceAll("_", " "))}</TableCell>
                     <TableCell>
                         <span className={`font-inter font-medium rounded-full text-[12px] w-fit py-1 px-3 ${getStatusStyle(consult.status)}`}>
                             {consult.status}

@@ -4,6 +4,7 @@ import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs"
 import EditProfile from './_components/EditProfile'
 import ChangePassword from './_components/ChangePassword'
+import UploadDocument from './_components/uploadDocument'
 
 
 const SettingsPage = () => {
@@ -15,9 +16,11 @@ const SettingsPage = () => {
             <TabsList className='mb-5'>
                 <TabsTrigger value="change-password">Change Password</TabsTrigger>
                 <TabsTrigger value="profile">Update Profile</TabsTrigger>
+                <TabsTrigger value="documents">Upload Documents</TabsTrigger>
             </TabsList>
             <TabsContent value="change-password"><ChangePassword /> </TabsContent>
             <TabsContent value="profile"> <EditProfile /> </TabsContent>
+            <TabsContent value="documents"><UploadDocument /></TabsContent>
         </Tabs>
     </FlexWrapper>
     </PageWrapper>

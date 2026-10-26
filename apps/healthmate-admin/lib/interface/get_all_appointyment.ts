@@ -25,6 +25,10 @@ export interface Doctor {
   firstName: string
   lastName: string
   email: string
+  title: string
+  profile:{
+    profilePicture: string;
+  }
 }
 
 export interface Hospital {

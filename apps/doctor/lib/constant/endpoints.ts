@@ -25,5 +25,6 @@ export const DOCTOR_ENDPOINTS = {
     GET_FINANCE: 'payment/doctor',
     GET_EARNING_STATS: 'payment/doctor/stats',
     TODAY_APPOINTMENTS: 'appointment/doctor/today',
-    CHANGE_PASSWORD: 'auth/doctor/change-password'
+    CHANGE_PASSWORD: 'auth/doctor/change-password',
+    DOCUMENT: 'doctor/profile/document',
 }
