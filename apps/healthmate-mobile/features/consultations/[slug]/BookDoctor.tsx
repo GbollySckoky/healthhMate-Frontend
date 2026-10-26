@@ -20,7 +20,7 @@ const BookDoctor = ({ consultation, onClose, id }: BookDoctorProps) => {
       <div className="relative flex h-[calc(100vh-32px)] w-full max-w-5xl flex-col overflow-hidden rounded-lg bg-[#F8F9FC] shadow-2xl">
         {/* Header */}
         <div className="flex shrink-0 items-center justify-between border-b bg-white px-4 py-4 sm:px-6 sm:py-5">
-          <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <div className="flex min-w-0 items-center gap-3 sm:gap-4 shrink-0 ">
             <Image
               src={consultation?.profile?.profilePicture || profile}
               alt={`${consultation?.firstName || ""} ${
@@ -39,7 +39,7 @@ const BookDoctor = ({ consultation, onClose, id }: BookDoctorProps) => {
               </p>
 
               <p className="mt-1 text-sm font-medium text-gray-500">
-                {consultation?.department || "N/A"}
+                {consultation?.department.replaceAll("_", " ") || "N/A"}
               </p>
 
               <div className="mt-1 flex items-center gap-1 text-sm text-gray-500">
