@@ -11,6 +11,13 @@ import { ConsultationNote, Prescription } from "../interface/prescription";
 
 
 export const Doctor = {
+    getDocuments: async () => {
+        const response = await api.get(DOCTOR_ENDPOINTS.DOCUMENT);
+        return response.data;
+    },
+    uploadDocument: async (payload: FormData) => {
+        return await api.post(DOCTOR_ENDPOINTS.DOCUMENT, payload);
+    },
     changePassword: async (payload: ChangePassword) => {
         return await api.post(DOCTOR_ENDPOINTS.CHANGE_PASSWORD, payload);
     },

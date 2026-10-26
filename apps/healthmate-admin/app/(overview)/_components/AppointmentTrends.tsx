@@ -16,8 +16,8 @@ import { MediumTitle, MinBar } from "@/components/ui/Reusable"
 
 
 const chartConfig = {
-  scheduled: {
-    label: "Scheduled",
+  upcoming: {
+    label: "Upcoming",
     color: "var(--blue-100)",
   },
   completed: {
@@ -33,7 +33,7 @@ const chartConfig = {
 
 const trendInfo = [
     {
-        label: "Scheduled",
+        label: "Upcoming",
         color: "bg-blue-100",
     },
     {
@@ -95,9 +95,9 @@ export function AppointmentTrends() {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent labelFormatter={(label) => formatMonth(String(label))} />} />
             <Line
-              dataKey="scheduled"
+              dataKey="upcoming"
               type="monotone"
-              stroke="var(--color-scheduled)"
+              stroke="var(--color-upcoming)"
               strokeWidth={2}
               dot={false}
             />

@@ -1,5 +1,5 @@
 "use client";
-import { adminQueryKeys } from "@/lib/constant/query-keys";
+
 
 import { PageWrapper } from "@/components/ui/Reusable";
 import { FlexWrapper } from "@/lib/components/ui/Reusable";
@@ -8,31 +8,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Appointments from "./Appointments";
 import Image from "next/image";
 import image from "@/assets/Image.png";
-import { Trash2 } from "lucide-react";
+// import { Trash2 } from "lucide-react";
 import Overview from "./Overview";
 import { useQuery } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
-import { GET_ALL_APPOINTMENTS } from "@/lib/interface/get_all_appointyment";
-import { STATUS } from "@/lib/types/status";
+import { APPOINTMENT_DETAILS } from "@/lib/interface/appointment";
+// import { STATUS } from "@/lib/types/status";
 import { useParams } from "next/navigation";
 import PatientHeaderSkeleton from "@/components/ui/PatientHeaderSkeleton";
 
 const Page = () => {
   const params = useParams();
-  const id = Number(params.slug);
+  const id = String(params.slug);
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: adminQueryKeys.appointments(),
-    queryFn: () => Hospital_Admin.getAllAppointments(),
+    queryKey: ["getAppointmentDetails", id],
+    queryFn: () => Hospital_Admin.getAppointmentDetails(id),
+    enabled: !!id,
   });
 
-  const appointmentData: GET_ALL_APPOINTMENTS[] = data?.data ?? [];
-
-  const patients = appointmentData.filter(
-    (patient) => patient.status !== STATUS.PENDING,
-  );
-
-  const patient = patients.find((patient) => patient.id === id);
+  const patient: APPOINTMENT_DETAILS | undefined = data?.data;
 
   if (isError) {
     return (
@@ -42,6 +37,10 @@ const Page = () => {
         </div>
       </PageWrapper>
     );
+  }
+
+  if (!isLoading && !patient) {
+    return <PageWrapper><p className="py-20 text-center">Patient details not found.</p></PageWrapper>;
   }
 
   return (
@@ -54,9 +53,11 @@ const Page = () => {
             <div className="mb-3 flex items-center justify-between border-b border-borderColor pb-6">
               <div className="flex items-center">
                 <Image
-                  src={image}
+                  src={patient?.user.profile.profilePicture || image}
                   alt="Patient"
-                  className="h-[50px] w-[50px] rounded-full"
+                  width={50}
+                  height={50}
+                  className="h-[50px] w-[50px] rounded-full border border-border"
                 />
 
                 <div className="ml-2">
@@ -72,10 +73,10 @@ const Page = () => {
                 </div>
               </div>
 
-              <button className="flex cursor-pointer items-center rounded-lg border border-red-700 px-3 py-1 font-inter text-[14px] font-semibold text-red-700">
+              {/* <button className="flex cursor-pointer items-center rounded-lg border border-red-700 px-3 py-1 font-inter text-[14px] font-semibold text-red-700">
                 <Trash2 size={15} className="mr-2" />
                 Delete Patient
-              </button>
+              </button> */}
             </div>
           )}
 
@@ -90,11 +91,7 @@ const Page = () => {
             </TabsContent>
 
             <TabsContent value="appointments">
-              <Appointments
-              // patient={patient}
-              // appointmentData={appointmentData}
-              // isLoading={isLoading}
-              />
+              <Appointments patient={patient} isLoading={isLoading} />
             </TabsContent>
           </Tabs>
         </div>

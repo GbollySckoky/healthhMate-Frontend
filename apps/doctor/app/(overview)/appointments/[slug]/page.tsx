@@ -264,7 +264,7 @@ const ApproveAppointment = () => {
     <div>
       <InputField
         placeholder="I will have a proper discussion with you"
-        label="Consultation Note"
+        label="Appointment Note"
         value={inputValue}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setInputValue(e.target.value)
