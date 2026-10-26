@@ -41,7 +41,6 @@ const ChangePassword = () => {
 
   return (
     <div className='px-5'>
-        <TableTitle>Change Password</TableTitle>
         <form onSubmit={handleSubmit} className='mt-3'>
             <InputField
                 type="password"

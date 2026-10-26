@@ -28,7 +28,7 @@ const Page = () => {
           <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
               <div className="mb-3  border-b pb-6 border-borderColor">
                   <div className="flex h-fit items-center justify-between">
-                      <div className="flex min-w-0 items-center gap-2">
+                      <div className="flex min-w-0 items-center gap-4">
                         <Image 
                           src={profileData?.profile?.profilePicture || image} 
                           alt={profileData?.firstName} 
@@ -40,7 +40,7 @@ const Page = () => {
                             <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>{profileData?.title} {`${profileData?.firstName.charAt(0).toUpperCase() + profileData?.firstName.slice(1) || ""} ${
                                 profileData?.lastName.charAt(0).toUpperCase() + profileData?.lastName.slice(1) || ""
                               }`.trim() || "N/A"} </p>
-                            <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p>
+                            {/* <p className='text-[12px] font-inter bg-green-100 rounded-full px-3 w-fit py-1 text-green-900'>Active</p> */}
                         </div>
                       </div>
                   </div>
