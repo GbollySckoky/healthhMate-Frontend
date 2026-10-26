@@ -63,10 +63,10 @@ const ConsultationDetails = () => {
           <Image
             src={consultation?.profile?.profilePicture || profileImage}
             alt="Doctor"
-            width={80}
-            height={80}
+            width={70}
+            height={70}
             priority
-            className="absolute bottom-[-30px] left-6 rounded-full border border-border border-white "
+            className="absolute bottom-[-30px] left-6 rounded-full border border-border border-white w-[70px] h-[70px] object-cover"
           />
 
           <button
@@ -98,7 +98,7 @@ const ConsultationDetails = () => {
                 : ''}
             </h2>
              <p className="mt-1 text-sm text-gray-500">
-                {consultation?.department ?? '-'}
+                {consultation?.department.replaceAll("_", " ") ?? '-'}
             </p>
             {/* <p className="mt-1 text-sm text-pink-600">
               {consultation?.profile?.specialization ??

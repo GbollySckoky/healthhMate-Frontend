@@ -208,7 +208,7 @@ const Doctor  = ({hospitalId}:{hospitalId?: string}) => {
       </div>
 
       <Tabs defaultValue="all" className="w-full min-w-0 flex flex-col" onValueChange={handleTabChange}>
-        <div className="w-full min-w-0 overflow-x-auto">
+        <div className="w-full min-w-0 overflow-x-auto scrollbar-hide">
           <TabsList className="w-max max-w-none flex-nowrap text-[#717680]">
             {DEPARTMENT_OPTIONS.map((department) => (
                 <TabsTrigger key={department.value} value={department.value}>{department.label}</TabsTrigger>
