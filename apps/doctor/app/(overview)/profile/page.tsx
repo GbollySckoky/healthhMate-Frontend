@@ -28,15 +28,15 @@ const Page = () => {
           <div className='bg-white p-6 border border-borderColor rounded-lg mt-5'>
               <div className="mb-3  border-b pb-6 border-borderColor">
                   <div className="flex h-fit items-center justify-between">
-                      <div className="flex items-center">
+                      <div className="flex min-w-0 items-center gap-2">
                         <Image 
                           src={profileData?.profile?.profilePicture || image} 
                           alt={profileData?.firstName} 
-                          className="w-[50px] h-[50px] rounded-full border border-border" 
-                          width={300} 
-                          height={300} 
+                          className="h-[60px] w-[60px] shrink-0 rounded-full border border-border object-cover"
+                          width={60} 
+                          height={60} 
                         />
-                        <div className='ml-2'>
+                        <div className='min-w-0'>
                             <p className='font-medium font-libre text-[20px] text-grey-800 mb-1'>{profileData?.title} {`${profileData?.firstName.charAt(0).toUpperCase() + profileData?.firstName.slice(1) || ""} ${
                                 profileData?.lastName.charAt(0).toUpperCase() + profileData?.lastName.slice(1) || ""
                               }`.trim() || "N/A"} </p>

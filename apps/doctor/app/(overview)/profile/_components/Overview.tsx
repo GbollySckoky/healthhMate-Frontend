@@ -52,7 +52,7 @@ const Overview = ({
           Personal Information
         </p>
 
-        <Infos label="Gender:" value={profileData?.gender || "N/A"} />
+        <Infos label="Gender:" value={CapitalizeName(profileData?.gender) || "N/A"} />
         <Infos
           label="Consultation Fee:"
           value={profileData?.profile?.consultationFee.toLocaleString() || "N/A"}
@@ -69,7 +69,7 @@ const Overview = ({
         />
         <Infos
           label="Department:"
-          value={CapitalizeName(profileData?.department) || "N/A"}
+          value={CapitalizeName(profileData?.department.replaceAll("_", " ")) || "N/A"}
         />
         <Infos
           label="Specialization:"
