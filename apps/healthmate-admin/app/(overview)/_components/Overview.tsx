@@ -9,7 +9,7 @@ import { AppointmentTrends } from './AppointmentTrends';
 import { ConsultDept } from './ConsultDept';
 import UpcomingConsultation from './UpcomingConsultation';
 import RecentActivities from './RecentActivities';
-import { TopDoctors } from './TopDoctors';
+// import { TopDoctors } from './TopDoctors';
 import { useQuery } from '@tanstack/react-query';
 import { Hospital_Admin } from '@/lib/service/service';
 import { OverviewStatsSkeleton } from '@/components/ui/DashboardSkeleton';
@@ -136,7 +136,7 @@ const Overview = () => {
                 <UpcomingConsultation />
                 <RecentActivities />
             </div>
-            <TopDoctors />
+            {/* <TopDoctors /> */}
         </FlexWrapper>
         
     </PageWrapper>

@@ -2,13 +2,14 @@
 import { MediumTitle, MinText, SmallestTitle } from "@/components/ui/Reusable";
 import React from "react";
 import { ChevronRight } from "lucide-react";
-import image from "@/assets/Image.png";
+import image from "@/assets/default.jpg";
 import useGetTodayAppointment from "@/lib/hooks/useGetTodayAppointment";
 import { GET_ALL_APPOINTMENTS } from "@/lib/interface/get_all_appointyment";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/lib/constant/Routes";
 import { AppointmentCardSkeleton } from "@/components/ui/DashboardSkeleton";
 import Image from "next/image";
+import { CapitalizeName } from "@/lib/components/ui/CapitalizeName";
 // import Image from 'nex'
 const UpcomingConsultation = () => {
   const router = useRouter();
@@ -49,12 +50,15 @@ const UpcomingConsultation = () => {
                 >
                   <div className="flex">
                     <Image
-                      src={image}
+                      src={consultation.doctor.profile.profilePicture || image}
                       alt={`${consultation.id} profile`}
-                      className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                      width={40}
+                      height={40}
+                      className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0"
                     />
                     <div className="flex flex-col ml-3 flex-1 min-w-0">
                       <SmallestTitle>
+                        {consultation?.doctor?.title || "N/A"}{" "}
                         {consultation?.doctor?.firstName || "N/A"}{" "}
                         {consultation?.doctor?.lastName || "N/A"}
                       </SmallestTitle>
@@ -68,7 +72,7 @@ const UpcomingConsultation = () => {
                         </MinText>
                         <MinText className="text-gray-500">|</MinText>
                         <MinText className="text-gray-500">
-                          {consultation?.consultationType || "N/A"}
+                          {CapitalizeName(consultation?.consultationType.replaceAll("_", " ")) || "N/A"}
                         </MinText>
                       </div>
                       <MinText className="text-gray-500 truncate">
