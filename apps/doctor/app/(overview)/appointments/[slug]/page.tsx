@@ -4,7 +4,7 @@ import { FlexWrapper, Infos, PageWrapper } from "@/lib/components/ui/Reusable";
 import React, { FormEvent, useState } from "react";
 import Image from "next/image";
 import profileImage from "@/assets/default.jpg";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Doctor } from "@/lib/constant/service";
 import { useParams, useRouter } from "next/navigation";
 import InputField from "@/lib/components/ui/InputField";
@@ -203,6 +203,7 @@ const ApproveAppointment = () => {
   const [inputValue, setInputValue] = useState("");
   const params = useParams();
   const appointment_id = String(params.slug);
+  const queryClient = useQueryClient()
   const { closeModal } = useModal();
   const router = useRouter();
 
@@ -211,6 +212,7 @@ const ApproveAppointment = () => {
       Doctor.approveAppointment(appointment_id, payload),
     onSuccess: (response) => {
       toast.success(response.data.message)
+      queryClient.invalidateQueries({queryKey: ['getAppointment']})
       closeModal();
       router.push(ROUTES.appointment)
     },
