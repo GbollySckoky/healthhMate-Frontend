@@ -15,7 +15,6 @@ const Documents = () => {
         queryFn: Doctor.getDocuments,
     });
     const result = data?.data ?? [];
-    console.log(result)
 
   return (
     <div className="bg-white rounded-lg w-full border border-borderColor">

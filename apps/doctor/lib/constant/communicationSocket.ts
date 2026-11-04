@@ -32,11 +32,12 @@ export function connectCommunicationSocket(token: string) {
     });
 
     socket.on("connect", () => {
-        console.log("Communication socket connected:", socket?.id);
+        toast.success("Communication socket connected:");
+        // socket?.id
     });
 
     socket.on("disconnect", (reason) => {
-        console.log("Communication socket disconnected:", reason);
+        toast.error(reason);
     });
 
     socket.on("connect_error", (error) => {
@@ -120,7 +121,7 @@ export function sendMessage(
     toast.error("Socket not connected yet. Waiting to send message...");
 
     communicationSocket.once("connect", () => {
-      console.log("Socket connected. Sending message:", communicationId);
+      // console.log("Socket connected. Sending message:", communicationId);
       communicationSocket.emit("sendMessage", payload);
     });
 
