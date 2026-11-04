@@ -5,7 +5,7 @@ export default function OverviewLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <div>
+      <div className="h-full min-h-0">
         {children}
       </div>
   );
