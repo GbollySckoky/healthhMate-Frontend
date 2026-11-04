@@ -1,5 +1,6 @@
 import { io, Socket } from "socket.io-client";
 import { Message } from "@/lib/interface/message";
+import { toast } from "react-toastify";
 
 let socket: Socket | null = null;
 let socketToken: string | null = null;
@@ -38,11 +39,11 @@ export function connectCommunicationSocket(token: string): Socket {
   );
 
   socket.on("connect", () => {
-    console.log("✅ Communication socket connected:", socket?.id);
+    toast.success("Communication socket connected");
   });
 
   socket.on("disconnect", (reason) => {
-    console.log("❌ Communication socket disconnected:", reason);
+    toast.error(reason);
   });
 
   socket.on("connect_error", (error) => {
@@ -91,10 +92,10 @@ export function joinCommunication(
 
   if (!communicationSocket.connected) {
     communicationSocket.once("connect", () => {
-      console.log(
-        "Joining communication after socket connected:",
-        communicationId
-      );
+      // console.log(
+      //   "Joining communication after socket connected:",
+      //   communicationId
+      // );
 
       communicationSocket.emit("joinCommunication", {
         communicationId,
@@ -104,7 +105,7 @@ export function joinCommunication(
     return;
   }
 
-  console.log("Joining communication:", communicationId);
+  // console.log("Joining communication:", communicationId);
 
   communicationSocket.emit("joinCommunication", {
     communicationId,
@@ -143,17 +144,17 @@ export function sendMessage(
   };
 
   if (!communicationSocket.connected) {
-    console.log("Socket not connected yet. Waiting to send message...");
+    // console.log("Socket not connected yet. Waiting to send message...");
 
     communicationSocket.once("connect", () => {
-      console.log("Socket connected. Sending message:", communicationId);
+      // console.log("Socket connected. Sending message:", communicationId);
       communicationSocket.emit("sendMessage", payload);
     });
 
     return;
   }
 
-  console.log("Socket sending message:", communicationId);
+  // console.log("Socket sending message:", communicationId);
 
   communicationSocket.emit("sendMessage", payload);
 }
@@ -231,7 +232,7 @@ export function offIncomingCall(callback: (data: unknown) => void) {
 
 export function disconnectCommunicationSocket() {
   if (socket) {
-    console.log("Disconnecting communication socket...");
+    // console.log("Disconnecting communication socket...");
     socket.disconnect();
   }
   socket = null;

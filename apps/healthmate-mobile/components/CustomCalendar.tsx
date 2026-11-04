@@ -79,7 +79,7 @@ const CustomCalendar = ({
   const selectDay = (day: number) => {
     const dateObj = new Date(year, month, day);
     const dateString = formatDate(dateObj);
-    console.log("dateString", day);
+    // console.log("dateString", day);
 
     /*
      * Guard selection using the same rules as the disabled buttons.
@@ -163,7 +163,7 @@ const CustomCalendar = ({
         <div className="mb-1 grid grid-cols-7 gap-1">
           {["S", "M", "T", "W", "T", "F", "S"].map(
             (day, index) => {
-              console.log("day", day);
+              // console.log("day", day);
               return(
               <div
                 key={index}
@@ -179,7 +179,7 @@ const CustomCalendar = ({
         <div className="grid grid-cols-7 gap-1">
           {cells.map((day, index) => {
             if (!day) {
-              console.log("day", day);
+              // console.log("day", day);
               return <div key={index} />;
             }
 
