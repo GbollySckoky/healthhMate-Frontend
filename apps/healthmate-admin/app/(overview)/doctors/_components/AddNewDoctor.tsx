@@ -61,10 +61,10 @@ const initialFormState = {
 
 const AddNewDoctor = () => {
   const [inputValue, setInputValue] = useState(initialFormState);
-  const [displayPassword, setDisplayPassword] = useState({
-    password: false,
-    confirmPassword: false,
-  });
+  // const [displayPassword, setDisplayPassword] = useState({
+  //   password: false,
+  //   confirmPassword: false,
+  // });
   const queryClient = useQueryClient();
   const { closeModal } = useModal();
 
@@ -75,9 +75,9 @@ const AddNewDoctor = () => {
     setInputValue((prev) => ({ ...prev, [name]: value }));
   };
 
-  const togglePassword = (field: "password" | "confirmPassword") => {
-    setDisplayPassword((prev) => ({ ...prev, [field]: !prev[field] }));
-  };
+  // const togglePassword = (field: "password" | "confirmPassword") => {
+  //   setDisplayPassword((prev) => ({ ...prev, [field]: !prev[field] }));
+  // };
 
   const mutation = useMutation({
     mutationFn: (payload: DOCTOR_SIGNUP) =>
@@ -105,7 +105,7 @@ const AddNewDoctor = () => {
       phoneNumber: inputValue.phoneNumber,
       gender: inputValue.gender,
       // hospitalId: inputValue.hospital,
-      password: inputValue.password,
+      // password: inputValue.password,
       department: inputValue.department,
       title: inputValue.title,
     };
@@ -215,7 +215,7 @@ const AddNewDoctor = () => {
         </div>
       </DisplayFlex>
 
-      <DisplayFlex>
+      {/* <DisplayFlex>
         <AuthPassword
           label="Password"
           placeholder="Enter password"
@@ -234,7 +234,7 @@ const AddNewDoctor = () => {
           showPassword={displayPassword.confirmPassword}
           onClick={() => togglePassword("confirmPassword")}
         />
-      </DisplayFlex>
+      </DisplayFlex> */}
 
       {/* <div className="block w-full mb-2">
         <label htmlFor="hospital" className={LABEL_CLASS}>
