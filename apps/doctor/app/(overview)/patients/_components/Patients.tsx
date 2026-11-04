@@ -85,6 +85,7 @@ const Patients = () => {
     });
     
     const patients = data?.data || []
+    localStorage.setItem('count', patients.length)
      useEffect(() => {
         if (data?.meta) {
           setPagination((prev) => ({
