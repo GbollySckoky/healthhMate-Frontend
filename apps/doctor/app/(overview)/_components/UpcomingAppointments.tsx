@@ -9,6 +9,7 @@ import { ROUTES } from '@/lib/routes';
 import { AppointmentCardSkeleton } from '@/lib/components/ui/DashboardSkeleton';
 import useGetTodayAppointment from '@/lib/hooks/useGetTodayAppointment';
 import { Appointment } from '@/lib/interface/doctor-apppointment.interface';
+import { CapitalizeName } from '@/lib/constant/capitalizeName';
 
 const UpcomingAppointment = () => {
   const router = useRouter()
@@ -49,7 +50,9 @@ const UpcomingAppointment = () => {
             <Image 
               src={consultation?.user?.profile?.profilePicture || image} 
               alt={`${consultation.id} profile`} 
-              className='w-10 h-10 rounded-full object-cover flex-shrink-0'
+              className='w-10 h-10 rounded-full object-cover flex-shrink-0 border border-border'
+              width={20}
+              height={20}
             />
             <div className='flex flex-col ml-3 flex-1 min-w-0'>
               <SmallestTitle>Patient: {consultation?.user?.firstName || "N/A"} {consultation?.user?.lastName || "N/A"}</SmallestTitle>
@@ -58,7 +61,7 @@ const UpcomingAppointment = () => {
                 <MinText className='text-gray-500'>|</MinText>
                 <MinText className='text-gray-500'>{consultation?.date || "N/A"}</MinText>
                 <MinText className='text-gray-500'>|</MinText>
-                <MinText className='text-gray-500'>{consultation?.consultationType || "N/A"}</MinText>
+                <MinText className='text-gray-500'>{CapitalizeName(consultation?.consultationType).replaceAll("_", " ") || "N/A"}</MinText>
               </div>
               <MinText className='text-gray-500 truncate'>
                 Dr. {consultation?.doctor?.firstName || "N/A"} {" "} {consultation?.doctor?.lastName || "N/A"}
