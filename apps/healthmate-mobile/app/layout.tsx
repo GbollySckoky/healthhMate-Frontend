@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
-  title: "Healthmate Mobile App",
-  description: "Healthmate mobile app",
+  title: "Healthmate Patient App",
+  description: "Healthmate patient app",
 };
 
 export default function RootLayout({
