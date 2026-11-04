@@ -205,7 +205,7 @@ const AppointmentCalendar = ({
         <div className="mb-1 grid grid-cols-7 gap-1">
           {["S", "M", "T", "W", "T", "F", "S"].map(
             (day, index) => {
-              console.log("day", day);
+              // console.log("day", day);
               return(
               <div
                 key={index}
@@ -221,7 +221,7 @@ const AppointmentCalendar = ({
         <div className="grid grid-cols-7 gap-1">
           {cells.map((day, index) => {
             if (!day) {
-              console.log("day", day);
+              // console.log("day", day);
               return <div key={index} />;
             }
 
