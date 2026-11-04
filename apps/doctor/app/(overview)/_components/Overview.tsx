@@ -8,6 +8,7 @@ import UpcomingAppointment from './UpcomingAppointments';
 import { RecentConsultation } from './RecentConsultation';
 import Earnings from './Earnings';
 import useGreeting from '@/lib/hooks/useGreeting';
+import useGetTodayAppointment from '@/lib/hooks/useGetTodayAppointment';
 import { Doctor } from '@/lib/constant/service';
 import { useQuery } from '@tanstack/react-query';
 import { OverviewStatsSkeleton } from '@/lib/components/ui/DashboardSkeleton';
@@ -60,13 +61,14 @@ const Overview = () => {
             month: 'this month',
         },
     ]
-   
+    const { todayAppointments } = useGetTodayAppointment()
+    const count = todayAppointments.length
   return (
     <div className="min-h-full bg-[#FAFAFA] p-8">
         <div className="flex items-center justify-between mb-5">
             <div>
                 <Title>{greeting}, {myData?.title ? myData.title : 'Dr'}. {CapitalizeName(myData?.firstName)} </Title>
-                <Text>You have 6 appointments today, take good care of their health.</Text>
+                <Text>You have {count} appointments today, take good care of their health.</Text>
             </div> 
             <div className="flex bg-white rounded-lg p-3 border border-borderColor w-fit px-5 py-4">
                 <p className='bg-red-50 rounded-full p-3'> <CalendarDays size={18} /> </p>
