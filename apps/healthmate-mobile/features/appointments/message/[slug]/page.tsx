@@ -327,19 +327,19 @@ const Page = () => {
   const isVideoConsultation = appointment?.consultationType === videoCall;
 
   return (
-    <div className="flex h-[100dvh] flex-col bg-gray-50">
-      <header className="fixed top-0 z-20 mt-14 w-full bg-red-900 px-4 py-3 shadow-sm">
-        <div className="mx-auto flex w-full max-w-3xl items-center justify-between">
-          <div className="flex items-center gap-3">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden bg-gray-50">
+      <header className="z-20 shrink-0 bg-red-900 px-4 py-3 shadow-sm">
+        <div className="mx-auto grid w-full max-w-3xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+          <div className="flex min-w-0 items-center gap-3">
             <Image
               src={doctor?.profile?.profilePicture || defaultImage}
               alt="Doctor profile"
               width={48}
               height={48}
-              className="h-12 w-12 rounded-full border border-white/30 object-cover"
+              className="h-12 w-12 shrink-0 rounded-full border border-white/30 object-cover"
             />
-            <div>
-              <h2 className="text-sm font-semibold text-white">
+            <div className="min-w-0">
+              <h2 className="truncate text-sm font-semibold text-white">
                 Dr. {CapitalizeName(doctor?.firstName ?? "")}{" "}
                 {CapitalizeName(doctor?.lastName ?? "")}
               </h2>
@@ -354,9 +354,14 @@ const Page = () => {
             aria-label={
               isVideoConsultation ? "Start video call" : "Start phone call"
             }
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+            title={isVideoConsultation ? "Start video call" : "Start phone call"}
+            className="inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-white text-red-900 shadow-sm transition hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {isVideoConsultation ? <Video size={20} /> : <Phone size={20} />}
+            {isVideoConsultation ? (
+              <Video size={22} strokeWidth={2} className="shrink-0" aria-hidden="true" />
+            ) : (
+              <Phone size={22} strokeWidth={2} className="shrink-0" aria-hidden="true" />
+            )}
           </button>
         </div>
       </header>
@@ -364,7 +369,7 @@ const Page = () => {
       {callError && (
         <div
           role="alert"
-          className="fixed top-[7.5rem] z-20 w-full px-4"
+          className="shrink-0 px-4 pt-3"
         >
           <div className="mx-auto max-w-3xl rounded-lg bg-red-100 px-4 py-2 text-sm text-red-800 shadow-sm">
             {callError}
@@ -372,7 +377,7 @@ const Page = () => {
         </div>
       )}
 
-      <main className="mt-16 flex-1 overflow-y-auto px-4 py-6 pb-24">
+      <main className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-6">
         {msgIsLoading ? (
           // Message-list skeleton only: real header and input stay visible
           <MessageListSkeleton />
@@ -406,13 +411,13 @@ const Page = () => {
                   className={`flex ${isPatient ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                    className={`min-w-0 max-w-[80%] rounded-2xl px-4 py-3 ${
                       isPatient
                         ? "rounded-br-sm bg-red-900 text-white"
                         : "rounded-bl-sm bg-white text-gray-900 shadow-sm"
                     }`}
                   >
-                    <p className="break-words text-sm leading-6">
+                    <p className="whitespace-pre-wrap break-words [overflow-wrap:anywhere] text-sm leading-6">
                       {item.content}
                     </p>
                     <div
@@ -432,7 +437,7 @@ const Page = () => {
         )}
       </main>
 
-      <div className="fixed bottom-0 w-full border-t border-gray-200 bg-white p-4">
+      <div className="shrink-0 border-t border-gray-200 bg-white p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <form
           onSubmit={handleSubmit}
           className="mx-auto flex max-w-3xl items-center gap-3"
@@ -442,7 +447,7 @@ const Page = () => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Type your message..."
-            className="h-12 flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-red-900 focus:ring-2 focus:ring-red-100"
+            className="h-12 min-w-0 flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-red-900 focus:ring-2 focus:ring-red-100"
           />
           <button
             type="submit"
