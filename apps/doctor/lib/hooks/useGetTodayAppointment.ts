@@ -9,7 +9,6 @@ const useGetTodayAppointment = () => {
         refetchOnMount: 'always',
     })  
     const todayAppointments = data?.data || []
-    console.log("todayAppointments", todayAppointments)
   return {todayAppointments, isLoading, isError, error}
 }
 

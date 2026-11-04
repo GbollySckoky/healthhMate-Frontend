@@ -94,7 +94,7 @@ export function TransactionsPage() {
 
               {hasData &&
                 financeDatas.map((data: any) => {
-                  console.log("finance data", data.metadata?.amount?.user)
+                  // console.log("finance data", data.metadata?.amount?.user)
                   return (
                     <TableRow key={data.id}>
                       <TableCell>
