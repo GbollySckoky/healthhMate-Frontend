@@ -89,7 +89,7 @@ const AddNewDoctor = () => {
       closeModal();
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.log(error.response?.data.message[0])
+      // console.log(error.response?.data.message[0])
       toast.error(error.response?.data?.message[0]);
     },
   });
