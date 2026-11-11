@@ -8,7 +8,7 @@ import { Profile } from "@/lib/interface/doctor.schema";
 import React, { FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Doctor } from "@/lib/constant/service";
-import UploadImage from "../../profile/_components/UploadImage";
+import UploadImage from "@/features/profile/components/UploadImage";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import useGetMe from "@/lib/hooks/useGetMe";

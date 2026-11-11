@@ -1,9 +1,9 @@
 import { Card, PageWrapper } from '@/lib/components/ui/Reusable'
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs"
-import All from './All'
-import Closed from './Closed'
-import Active from './Active'
+import All from '@/features/messages/components/All'
+import Closed from '@/features/messages/components/Closed'
+import Active from '@/features/messages/components/Active'
 
 
 const Message = () => {
