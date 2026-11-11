@@ -1,13 +1,13 @@
-import Input from '@/components/Inputs/Inputs';
+import Input from '@/components/inputs/Inputs';
 import { Admin } from '@/lib/types/addAdmin.schema';
 import React, { FormEvent, useState } from 'react';
 import { admin } from '@/components/data';
-import SelectField from '@/components/Inputs/Select';
+import SelectField from '@/components/inputs/Select';
 import useToggle from '@/lib/hooks/useToggle';
 import Footer from '@/components/ui/Footer';
-import { useFormModal } from '@/components/Modal/FormModal';
-import TelInput from '@/components/Inputs/TelInput';
-import EmailInput from '@/components/Inputs/EmailInput';
+import { useFormModal } from '@/components/modal/FormModal';
+import TelInput from '@/components/inputs/TelInput';
+import EmailInput from '@/components/inputs/EmailInput';
 
 const AddNewAdmin = () => {
   const { name, email, number, role } = admin;

@@ -10,18 +10,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/ui/table";
+} from "@/components/ui/table";
 import image from "@/assets/default.jpg";
 import Image from "next/image";
-import { Button, TableTitle } from "@/lib/components/ui/Reusable";
-import Input from "@/lib/components/Inputs/Input";
-import Paginate from "@/lib/components/ui/paginate";
+import { Button, TableTitle } from "@/components/ui/DetailPrimitives";
+import Input from "@/components/inputs/Input";
+import Paginate from "@/components/ui/TablePagination";
 import { useRouter } from "next/navigation";
-// import Calendar from "@/lib/components/calendar/Calendar";
+// import Calendar from "@/components/calendar/Calendar";
 // import DeleteModal from "@/features/profile/components/DeleteModal";
 import AddNewDoctor from "@/features/doctors/components/AddNewDoctor";
 import DoctorTableSkeleton from "@/components/ui/DoctorPageSkeleton";
-import { useModal } from "@/components/Modal/Modal";
+import { useModal } from "@/components/modal/Modal";
 import { CapitalizeName } from "@/lib/constant/capitalizeName";
 import useGetDoctor from "@/lib/hooks/useGetDoctor";
 

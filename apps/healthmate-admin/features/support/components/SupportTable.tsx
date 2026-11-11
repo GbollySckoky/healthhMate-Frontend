@@ -6,12 +6,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/ui/table"
-import Paginate from "@/lib/components/ui/paginate";
+} from "@/components/ui/table"
+import Paginate from "@/components/ui/TablePagination";
 import { useRouter } from "next/navigation";
 import useGetSupport from "@/lib/hooks/useGetSupport";
 import { SupportTicket } from "@/lib/interface/supportTicket";
-import SupportTableSkeleton from "@/lib/components/ui/SupportTableSkeleton";
+import SupportTableSkeleton from "@/components/ui/SupportTableSkeleton";
 
 export function SupportTable() {
   const router = useRouter()

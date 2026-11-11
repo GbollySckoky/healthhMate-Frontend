@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FormEvent, useEffect, useState } from "react";
-import Input from "@/lib/components/Inputs/Inputs";
+import Input from "@/components/inputs/Inputs";
 import Image from "next/image";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";

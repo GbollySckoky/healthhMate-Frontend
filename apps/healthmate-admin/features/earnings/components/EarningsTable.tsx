@@ -11,13 +11,13 @@ import {
 import {Search } from 'lucide-react'
 import image from '@/assets/Image.png'
 import Image from "next/image";
-import { TableTitle } from "@/components/ui/Reusable";
+import { TableTitle } from "@/components/ui/Primitives";
 // import { getStatusStyle } from "@/lib/constant/status";
-import Input from "@/components/Inputs/Input";
-import MinSelectField from "@/components/Inputs/MinSelectField";
+import Input from "@/components/inputs/Input";
+import MinSelectField from "@/components/inputs/MinSelectField";
 import { useState } from "react";
 import useToggle from "@/lib/hooks/useToggle";
-import Paginate from '@/components/ui/paginate'
+import Paginate from '@/components/ui/PaginationControls'
 import { useRouter } from 'next/navigation'
 import { getStatusStyle } from '@/lib/constant/status'
 

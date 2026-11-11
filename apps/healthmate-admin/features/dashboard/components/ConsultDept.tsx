@@ -3,7 +3,7 @@
 import { Pie, PieChart } from "recharts"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { MediumTitle } from "@/components/ui/Reusable"
+import { MediumTitle } from "@/components/ui/Primitives"
 import useGetAppointmentCharts from "@/lib/hooks/useGetAppointmentCharts"
 
 const colors = ["var(--purple-900)", "var(--red-10)", "var(--red-900)", "var(--grey-400)"]

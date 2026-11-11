@@ -1,14 +1,14 @@
-import Input from "@/components/Inputs/Inputs";
+import Input from "@/components/inputs/Inputs";
 import { Branch } from "@/lib/types/branch.schema";
 import React, { useState } from "react";
 import { newBranch } from "@/components/data";
 import Footer from "@/components/ui/Footer";
-// import { useFormModal } from '@/components/Modal/FormModal';
+// import { useFormModal } from '@/components/modal/FormModal';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
 import { BRANCH_INTERFACE } from "@/lib/interface/branch.interface";
 import { AxiosError } from "axios";
-import { useModal } from "@/components/Modal/Modal";
+import { useModal } from "@/components/modal/Modal";
 import { toast } from "react-toastify";
 
 const AddNewBranch = () => {

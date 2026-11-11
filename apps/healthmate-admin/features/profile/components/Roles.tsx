@@ -1,6 +1,6 @@
 'use client'
-import { useModal } from "@/components/Modal/Modal";
-import { Button, Card } from "@/components/ui/Reusable"
+import { useModal } from "@/components/modal/Modal";
+import { Button, Card } from "@/components/ui/Primitives"
 import {
     Table,
     TableBody,

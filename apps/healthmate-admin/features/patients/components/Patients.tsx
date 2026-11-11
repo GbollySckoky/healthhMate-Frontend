@@ -1,13 +1,13 @@
 "use client";
 
-import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable";
+import { FlexWrapper, PageWrapper, TableTitle } from "@/components/ui/DetailPrimitives";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import Input from "@/lib/components/Inputs/Input";
-import MinSelectField from "@/lib/components/Inputs/MinSelectField";
-import Paginate from "@/lib/components/ui/paginate";
-import AppointmentTableSkeleton from "@/lib/components/ui/AppointmentTableSkeleton";
+import Input from "@/components/inputs/Input";
+import MinSelectField from "@/components/inputs/FilterSelect";
+import Paginate from "@/components/ui/TablePagination";
+import AppointmentTableSkeleton from "@/components/ui/AppointmentTableSkeleton";
 
 import {
   Table,
@@ -16,7 +16,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/ui/table";
+} from "@/components/ui/table";
 
 import useToggle from "@/lib/hooks/useToggle";
 import { CapitalizeName } from "../../../../healthmate-mobile/constants/capitalizeName";

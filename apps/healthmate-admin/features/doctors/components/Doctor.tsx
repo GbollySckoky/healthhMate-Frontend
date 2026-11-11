@@ -1,10 +1,10 @@
-import { PageWrapper } from '@/components/ui/Reusable'
+import { PageWrapper } from '@/components/ui/Primitives'
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import All from '@/features/doctors/components/All'
 import Approved from '@/features/doctors/components/Approved'
 import Pending from '@/features/doctors/components/Pending'
-import { FlexWrapper } from '@/lib/components/ui/Reusable'
+import { FlexWrapper } from '@/components/ui/DetailPrimitives'
 const Doctor = () => {
   return (
     <PageWrapper>

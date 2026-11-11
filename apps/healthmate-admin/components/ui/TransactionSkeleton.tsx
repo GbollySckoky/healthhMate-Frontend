@@ -1,7 +1,7 @@
 import {
   TableCell,
   TableRow,
-} from "@/lib/components/ui/table"
+} from "@/components/ui/table"
 
 const TABLE_COLUMNS = 8
 

@@ -7,18 +7,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/ui/table"
-// import Calendar from "@/lib/components/ui/DateCalendar"
-import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable"
+} from "@/components/ui/table"
+import { FlexWrapper, PageWrapper, TableTitle } from "@/components/ui/DetailPrimitives"
 // import { getStatusStyle } from "@/lib/constant/status";
-// import Input from "@/lib/components/ui/Input"
 import { useState } from "react"
-// import Paginate from "@/lib/components/ui/Paginate"
 import useGetFinance from '@/lib/hooks/useGetFinance';
 import { CapitalizeName } from "@/lib/constant/capitalizeName"
 import EarningsPage from "@/features/earnings/components/Earnings"
-import Input from "@/components/Inputs/Input"
-import Paginate from "@/lib/components/ui/paginate"
+import Input from "@/components/inputs/Input"
+import Paginate from "@/components/ui/TablePagination"
 import { getStatusStyle } from "@/lib/constant/status"
 import { TransactionsEmptyState, TransactionsErrorState, TransactionsTableSkeleton } from "@/components/ui/TransactionSkeleton"
 

@@ -12,7 +12,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { MediumTitle, MinBar } from "@/components/ui/Reusable"
+import { MediumTitle, MinBar } from "@/components/ui/Primitives"
 
 
 const chartConfig = {

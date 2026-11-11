@@ -1,10 +1,10 @@
-import { Card } from '@/components/ui/Reusable'
+import { Card } from '@/components/ui/Primitives'
 import React, { useState } from 'react'
 import { role } from '@/components/data'
-import Input from '@/components/Inputs/Inputs';
-import Checkbox from '@/components/Inputs/Checkbox';
+import Input from '@/components/inputs/Inputs';
+import Checkbox from '@/components/inputs/Checkbox';
 import Footer from '@/components/ui/Footer';
-import { useFormModal } from '@/components/Modal/FormModal';
+import { useFormModal } from '@/components/modal/FormModal';
 
 
 const CreateRole = () => {
