@@ -1,1 +1,1 @@
-export { default } from '@/features/consultations/payment/callback/page';
+export { default } from '@/features/consultations/payment/callback/PaymentCallbackPage';

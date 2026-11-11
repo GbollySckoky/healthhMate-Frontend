@@ -1,1 +1,1 @@
-export { default } from '@/features/track/page'
+export { default } from '@/features/track/HealthTrackingPage'

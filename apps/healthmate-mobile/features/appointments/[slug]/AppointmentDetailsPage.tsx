@@ -1,0 +1,368 @@
+"use client";
+import React from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
+import { Video, ChevronRight, XCircle, MapPin } from "lucide-react";
+import { patientService } from "@/service/patientService";
+import { GetAppointment } from "@/lib/interface/get-appointments-interface";
+import AppointmentDetailsSkeleton from "@/components/ui/AppointmentDetailSkeleton";
+import { BtnFlex, Card, PageWrapper, RescheduleBtn } from "@/components/ui/Primitives";
+import { useModal } from "@/store/Modal";
+import profileFallback from "@/assets/default.jpg";
+import AppointmentStatusBadge from "@/components/ui/AppointmentStatusBadge";
+import { CapitalizeName } from "@/constants/capitalizeName";
+
+const getDoctorName = (doctor: GetAppointment["doctor"]) => {
+  if (!doctor) return "Doctor unavailable";
+  if (doctor.fullName) return doctor.fullName;
+  if (doctor.name) return doctor.name;
+
+  const name = [doctor.firstName, doctor.lastName]
+    .filter((value): value is string => Boolean(value))
+    .map((value) => value.charAt(0).toUpperCase() + value.slice(1).toLocaleLowerCase())
+    .join(" ");
+  
+
+  return name || "Doctor unavailable";
+};
+
+const getDoctorImage = (doctor: GetAppointment["doctor"]) => {
+  return doctor?.profile?.profilePicture || null;
+};
+
+const resolveImageSrc = (src: string | null) => {
+  if (src) return src;
+  return profileFallback;
+};
+
+const formatAppointmentDate = (date?: string, time?: string) => {
+  if (!date && !time) return "N/A";
+
+  const appointmentDate = date ? new Date(date) : null;
+  const formattedDate =
+    appointmentDate && !Number.isNaN(appointmentDate.getTime())
+      ? appointmentDate.toLocaleDateString()
+      : date;
+
+  return [formattedDate, time].filter(Boolean).join(" at ");
+};
+
+const formatConsultationType = (consultationType?: string) => {
+  if (!consultationType) return "N/A";
+
+  return (
+    consultationType.charAt(0).toUpperCase() +
+    consultationType.slice(1).toLocaleLowerCase().replaceAll("_", " ")
+  );
+};
+
+const getPaymentStatusClass = (status?: string) => {
+  switch (status?.toUpperCase()) {
+    case "SUCCESS":
+    case "COMPLETED":
+      return "text-green-600";
+    case "FAILED":
+    case "CANCELLED":
+      return "text-red-600";
+    case "PENDING":
+      return "text-amber-600";
+    default:
+      return "text-[#414651]";
+  }
+};
+
+const AppointmentDetails = () => {
+  const params = useParams();
+  const rawId = params?.slug;
+  const appointmentId = Array.isArray(rawId) ? rawId[0] : rawId;
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { openModal, closeModal } = useModal();
+
+  const {
+    data: appointmentResponse,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["getAppointmentById", appointmentId],
+    queryFn: () => patientService.getAppointmentById(appointmentId as string),
+    enabled: !!appointmentId,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const appointmentDetails = appointmentResponse?.data ?? null;
+
+  const cancelAppointment = useMutation({
+    mutationFn: (id: string) => patientService.cancelAppointment(id),
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["getAppointmentById", appointmentId] }),
+        queryClient.invalidateQueries({ queryKey: ["getAppointments"] }),
+      ]);
+    },
+  });
+
+  const doctorImage = appointmentDetails ? getDoctorImage(appointmentDetails.doctor) : null;
+
+  const detailItems = [
+    {
+      text: appointmentDetails?.payments?.[0]?.status || 'N/A',
+      title: "Payment Status",
+      textClassName: getPaymentStatusClass(appointmentDetails?.payments?.[0]?.status),
+    },
+    {
+      text: appointmentDetails?.note || "No consultation note added yet for this appointment.",
+      title: "Approval/Rejection Note",
+    },
+    {
+      text: formatAppointmentDate(appointmentDetails?.date, appointmentDetails?.time),
+      title: "Date & Time",
+    },
+    {
+      text: formatConsultationType(appointmentDetails?.consultationType),
+      title: "Consultation Type",
+      icon: <Video size={13} color="#717680" />,
+    },
+    {
+      text: appointmentDetails?.healthConcern || "No health concern provided.",
+      title: "Health Concern",
+    },
+    {
+      text: appointmentDetails?.hospital?.profile?.address || "No hospital address provided.",
+      title: "Hospital Address",
+    },
+     {
+      text: appointmentDetails?.hospital?.profile?.state || "No state address provided.",
+      title: "State",
+    },
+  ];
+
+  // const handleViewProfile = () => {
+  //   if (!appointmentDetails?.doctor?.id) return;
+  //   router.push(doctorProfileRoute(appointmentDetails.doctor.id));
+  // };
+
+  const canCancelAppointment =
+    appointmentDetails?.status?.toUpperCase() === "PENDING" ||
+    appointmentDetails?.status?.toUpperCase() === "UPCOMING";
+
+  const handleCancelAppointment = () => {
+    if (!appointmentId) return;
+
+    openModal(
+      <div className="flex flex-col gap-3">
+        <p className="text-sm text-[#414651]">
+          This will cancel your appointment. This action cannot be undone.
+        </p>
+        <div className="flex flex-row gap-2 mt-2">
+          <button
+            type="button"
+            onClick={closeModal}
+            className="flex-1 py-3 rounded-lg border border-[#D6D7DA] bg-[#FAFAFA] text-sm font-semibold text-[#252B37]"
+          >
+            Keep booking
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              cancelAppointment.mutate(appointmentId);
+              closeModal();
+            }}
+            className="flex-1 py-3 rounded-lg bg-[#B42318] text-sm font-semibold text-white"
+          >
+            Cancel booking
+          </button>
+        </div>
+      </div>,
+      { title: "Cancel booking?" }
+    );
+  };
+
+  const handleReportIssue = (id: string) => {
+
+    router.push(`/appointments/create-support/${id}`);
+  };
+
+  const handleMessagePress = (communicationId: string) => {
+    router.push(`/appointments/message/${communicationId}`);
+  };
+  return (
+    <PageWrapper>
+      {isLoading && <AppointmentDetailsSkeleton />}
+
+      {isError && (
+        <div className="flex flex-col items-center justify-center px-5 py-10">
+          <p className="font-lato text-sm text-[#B42318] text-center">
+            {(error as Error).message || "Unable to load appointment"}
+          </p>
+        </div>
+      )}
+
+      {!isLoading && !isError && !appointmentDetails && (
+        <div className="flex flex-col items-center justify-center px-5 py-10">
+          <p className="font-lato text-sm text-[#414651] mt-2.5 text-center">
+            Appointment not found
+          </p>
+        </div>
+      )}
+
+      {!isLoading && !isError && appointmentDetails && (
+        <>
+          <div className="mb-5 flex flex-row bg-white p-4 rounded-[10px] border border-[#F2F2F2]">
+            <Image
+              src={resolveImageSrc(doctorImage)}
+              alt={getDoctorName(appointmentDetails.doctor)}
+              width={50}
+              height={50}
+              priority
+              className="w-20 h-20 rounded-full border-2 border-[#E8E8E8] object-cover"
+            />
+            <div className="ml-2 flex-1 flex flex-col justify-center">
+              <span className="block text-sm font-medium font-libre">{appointmentDetails?.doctor?.title ? `${appointmentDetails.doctor.title}.` : 'Dr.'} {getDoctorName(appointmentDetails.doctor)}</span>
+              <p className="font-inter text-sm font-normal py-0.5 text-[#666]">
+                {appointmentDetails.doctor?.department}
+              </p>
+              <div className="flex flex-row items-center">
+                <MapPin size={16} color="#666" />
+                <p className="font-libre-regular text-sm text-[#666] ml-1 font-normal">
+                  {appointmentDetails.hospital?.hospitalName || "Hospital unavailable"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <Card>
+            <div className="flex flex-col items-start gap-2 py-2">
+              <p className="font-lato text-sm text-[#414651] font-medium">Status</p>
+              <AppointmentStatusBadge status={appointmentDetails.status} />
+            </div>
+            <div className="h-px bg-[#F5F5F5] mt-3" />
+            {detailItems.map((item, index) => {
+              const { text, title, icon } = item;
+              const isLastItem = index === detailItems.length - 1;
+
+              return (
+                <div key={title} className="py-2">
+                  <div className="flex flex-col gap-0.5">
+                    <p className="font-lato text-sm text-[#414651] font-medium mb-1">{title}</p>
+                    <div className="flex flex-row items-center">
+                      {icon && <span className="mr-1.5">{icon}</span>}
+                      <p
+                        className={`font-lato text-xs font-normal not-italic ${
+                          item.textClassName || "text-[#414651]"
+                        }`}
+                      >
+                        {text}
+                      </p>
+                    </div>
+                  </div>
+                  {!isLastItem && <div className="h-px bg-[#F5F5F5] mt-3" />}
+                </div>
+              );
+            })}
+          </Card>
+
+          <Card className="mt-6 cursor-pointer">
+             {appointmentDetails.approvalStatus === "PENDING" ? (
+               <p className="font-lato text-sm text-[#414651] font-medium mb-1">Once approved, you can message Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}.</p>
+             ) : 
+              appointmentDetails.approvalStatus === "DECLINED" ? (
+                <p className="text-sm text-[#717680] font-normal">
+                Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)} has cancelled this appointment.
+              </p> 
+            ): (
+            <button
+              type="button"
+              onClick={() => handleMessagePress(appointmentDetails.id)}
+              className="w-full flex flex-row items-center justify-between py-2 text-left"
+            >
+              <div >
+                <p className="font-lato text-sm text-[#414651] font-medium mb-1">Chat With Doctor</p>
+                <p className="font-lato text-xs text-[#414651] font-normal">
+                  Send a message to your doctor
+                </p>
+              </div>
+              <ChevronRight size={18} color="#717680" />
+            </button>
+             )}
+            <div className="h-px bg-[#F5F5F5] mt-3" />
+
+            <button
+              type="button"
+              onClick={() => handleReportIssue(appointmentDetails.id)}
+              className="w-full flex flex-row items-center justify-between py-2 text-left"
+            >
+              <div>
+                <p className="font-lato text-sm text-[#414651] font-medium mb-1">
+                  Report an Issue
+                </p>
+                <p className="font-lato text-xs text-[#414651] font-normal">
+                  Get help with this appointment
+                </p>
+              </div>
+              <ChevronRight size={18} color="#717680" />
+            </button>
+            <div className="h-px bg-[#F5F5F5] mt-3" />
+
+            <button
+              type="button"
+              aria-disabled={!canCancelAppointment || cancelAppointment.isPending}
+              disabled={!canCancelAppointment || cancelAppointment.isPending}
+              onClick={handleCancelAppointment}
+              className={`w-full flex flex-row items-center justify-between py-2 text-left disabled:cursor-not-allowed ${
+                !canCancelAppointment || cancelAppointment.isPending ? "opacity-50" : ""
+              }`}
+            >
+              <div>
+                <p className="font-lato text-sm text-[#B42318] font-medium mb-1">
+                  {cancelAppointment.isPending ? "Cancelling booking..." : "Cancel Booking"}
+                </p>
+                <p className="font-lato text-xs text-[#414651] font-normal">
+                  {canCancelAppointment
+                    ? "Cancel this appointment"
+                    : "This appointment can no longer be cancelled"}
+                </p>
+              </div>
+              <XCircle size={18} color="#B42318" />
+            </button>
+
+            {cancelAppointment.isError && (
+              <p className="font-lato text-xs text-[#B42318] mt-2">
+                {(cancelAppointment.error as Error).message ||
+                  "Unable to cancel this booking. Please try again."}
+              </p>
+            )}
+          </Card>
+
+          <BtnFlex>
+            {appointmentDetails.approvalStatus === "PENDING" ? (
+              <p
+                className="text-sm text-gray-600 border border-border text-center bg-white p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80"
+                aria-disabled
+              >
+                Once approved, you can message Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}.
+              </p>
+            ) : appointmentDetails.payments?.[0]?.status === "FAILED" ? (
+              <p className="text-sm text-white text-center bg-red-800 p-3 flex items-center justify-center rounded-xl cursor-not-allowed opacity-80">
+                This appointment cannot proceed because the payment was unsuccessful.
+              </p>
+            ) : (
+              appointmentDetails.approvalStatus === "DECLINED" ? 
+              <p className="text-sm text-[#717680] text-center">
+                Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)} has cancelled this appointment.
+              </p> :
+              <RescheduleBtn _fn={() => handleMessagePress(appointmentDetails.id)} className="flex text-gray-600">
+                Message Dr. {CapitalizeName(appointmentDetails.doctor?.firstName)}
+              </RescheduleBtn>
+            )}
+            {/* <JoinBtn _fn={() => router.push(ROUTES.home)}>Join Call</JoinBtn> */}
+          </BtnFlex>
+        </>
+      )}
+    </PageWrapper>
+  );
+};
+
+export default AppointmentDetails;
