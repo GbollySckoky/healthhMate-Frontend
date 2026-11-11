@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 
-import TextArea from "@/lib/components/ui/TextArea"
+import TextArea from "@/components/ui/TextArea"
 import useCreateConsultation from "@/lib/hooks/useCreateConsultation"
 import { Appointment } from "@/lib/interface/doctor-apppointment.interface"
 import useGetDate from "@/lib/hooks/useGetDate"

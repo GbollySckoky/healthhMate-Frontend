@@ -6,4 +6,4 @@ export const metadata: Metadata = {
   description: "Healthmate doctor app",
 };
 
-export { default } from "@/features/shell/root-layout";
+export { default } from "@/features/shell/RootLayout";

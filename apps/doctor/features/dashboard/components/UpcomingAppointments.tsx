@@ -1,12 +1,12 @@
 "use client"
-import { MediumTitle, MinText, SmallestTitle } from '@/lib/components/ui/Reusable'
+import { MediumTitle, MinText, SmallestTitle } from '@/components/ui/Primitives'
 import React from 'react'
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image'
 import image from '@/assets/default.jpg';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
-import { AppointmentCardSkeleton } from '@/lib/components/ui/DashboardSkeleton';
+import { AppointmentCardSkeleton } from '@/components/ui/DashboardSkeleton';
 import useGetTodayAppointment from '@/lib/hooks/useGetTodayAppointment';
 import { Appointment } from '@/lib/interface/doctor-apppointment.interface';
 import { CapitalizeName } from '@/lib/constant/capitalizeName';

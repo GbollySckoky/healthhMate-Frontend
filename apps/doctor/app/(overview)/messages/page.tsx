@@ -1,1 +1,1 @@
-export { default } from "@/features/messages/page";
+export { default } from "@/features/messages/MessagesPage";

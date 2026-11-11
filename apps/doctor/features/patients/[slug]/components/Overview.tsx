@@ -1,7 +1,7 @@
-import { Infos } from '@/lib/components/ui/Reusable'
+import { Infos } from '@/components/ui/Primitives'
 import React from 'react'
 import { Appointment } from '@/lib/interface/doctor-apppointment.interface'
-import DetailSkeleton from '@/lib/components/ui/DetailsSkeleton'
+import DetailSkeleton from '@/components/ui/DetailsSkeleton'
 import { CapitalizeName } from '@/lib/constant/capitalizeName'
 
 
