@@ -2,12 +2,12 @@
 
 import React, { useState } from "react"
 
-import TextArea from "@/lib/components/ui/TextArea"
+import TextArea from "@/components/ui/TextArea"
 import useCreatePrescription from "@/lib/hooks/useCreatePrescription"
 import { Appointment } from "@/lib/interface/doctor-apppointment.interface"
 import { CapitalizeName } from "@/lib/constant/capitalizeName"
 import useGetDate from "@/lib/hooks/useGetDate"
-import InputField from "@/lib/components/ui/InputField"
+import InputField from "@/components/ui/InputField"
 
 const PrescriptionSkeleton = () => {
   return (

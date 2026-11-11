@@ -6,11 +6,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/ui/table"
-import Paginate from "@/lib/components/ui/Paginate";
+} from "@/components/ui/table"
+import Paginate from "@/components/ui/TablePagination";
 import useGetSupport from "@/lib/hooks/useGetSupport";
 import { SupportTicket } from "@/lib/interface/support";
-import SupportTableSkeleton from "@/lib/components/ui/SupportTableSkeleton";
+import SupportTableSkeleton from "@/components/ui/SupportTableSkeleton";
 import { useRouter } from "next/navigation";
 
 export function SupportTable() {

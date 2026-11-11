@@ -1,6 +1,6 @@
 "use client"
-import InputField from '@/lib/components/ui/InputField'
-import { TableTitle } from '@/lib/components/ui/Reusable'
+import InputField from '@/components/ui/InputField'
+import { TableTitle } from '@/components/ui/Primitives'
 import React, { useState } from 'react'
 import useChangePassword from '@/lib/hooks/useChangePassword'
 import { toast } from 'react-toastify'

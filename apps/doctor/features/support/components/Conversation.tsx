@@ -1,12 +1,12 @@
-import { Card, CardText } from '@/lib/components/ui/Reusable'
+import { Card, CardText } from '@/components/ui/Primitives'
 import React, { useState } from 'react'
 import { CheckCheck } from 'lucide-react';
-import Input from '@/lib/components/ui/Input';
+import Input from '@/components/ui/Input';
 import { Send } from 'lucide-react';
-import Footer from '@/lib/components/ui/Footer';
-import { useFormModal } from '@/lib/components/modal/FormModal';
+import Footer from '@/components/ui/Footer';
+import { useFormModal } from '@/components/modal/FormModal';
 
-const Coversation = () => {
+const Conversation = () => {
     const [inputValue, setInputValue] = useState("")
     const {closeModal} = useFormModal()
     
@@ -45,4 +45,4 @@ const Coversation = () => {
   )
 }
 
-export default Coversation
+export default Conversation

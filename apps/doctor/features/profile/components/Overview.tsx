@@ -1,5 +1,5 @@
-import LoaadingSkeleton from "@/lib/components/ui/LoaadingSkeleton";
-import { Infos } from "@/lib/components/ui/Reusable";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import { Infos } from "@/components/ui/Primitives";
 import { CapitalizeName } from "@/lib/constant/capitalizeName";
 // import { DOCTOR_PROFILE } from "@/lib/interface/get-doctor-profile.interface";
 import React from "react";
@@ -17,7 +17,7 @@ const Overview = ({
 }) => {
 
   if (isLoading) {
-    return <LoaadingSkeleton />;
+    return <LoadingSkeleton />;
   }
 
   if (isError) {

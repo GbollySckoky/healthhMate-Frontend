@@ -1,9 +1,9 @@
 "use client";
 
-import InputField from "@/lib/components/ui/InputField";
-import { DisplayFlex } from "@/lib/components/ui/Reusable";
+import InputField from "@/components/ui/InputField";
+import { DisplayFlex } from "@/components/ui/Primitives";
 // import TelInput from "@/components/ui/TelInput";
-import TextArea from "@/lib/components/ui/TextArea";
+import TextArea from "@/components/ui/TextArea";
 import { Profile } from "@/lib/interface/doctor.schema";
 import React, { FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

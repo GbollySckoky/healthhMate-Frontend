@@ -1,4 +1,4 @@
-import { Card, MediumText, Value } from '@/lib/components/ui/Reusable';
+import { Card, MediumText, Value } from '@/components/ui/Primitives';
 import React from 'react';
 import useGetEarningStats from '@/lib/hooks/useGetPaymentStats';
 
