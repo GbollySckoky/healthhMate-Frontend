@@ -1,6 +1,6 @@
 "use client";
 
-import { MediumTitle, TableTitle } from '@/lib/components/ui/Reusable'
+import { MediumTitle, TableTitle } from '@/components/ui/Primitives'
 import React from 'react'
 import { useQuery } from '@tanstack/react-query';
 import { Doctor } from '@/lib/constant/service';

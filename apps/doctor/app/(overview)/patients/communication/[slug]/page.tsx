@@ -1,1 +1,1 @@
-export { default } from "@/features/patients/communication/[slug]/page";
+export { default } from "@/features/patients/communication/[slug]/PatientCommunicationPage";

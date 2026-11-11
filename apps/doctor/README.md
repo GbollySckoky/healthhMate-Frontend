@@ -18,10 +18,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Project structure
 
-- `app/`: Next.js route entry points, metadata, global styles, and favicon. Pages and layouts re-export feature components.
-- `features/`: Page UI and behavior grouped by domain (dashboard, auth, patients, and other app features). Supporting UI lives in each feature's `components/` folder.
+- `app/`: Next.js route entry points, metadata, global styles, and favicon. Pages and layouts re-export feature components; route URLs stay defined here.
+- `features/`: Page UI and behavior grouped by domain (dashboard, auth, patients, and other app features). Pages use descriptive PascalCase filenames such as `AppointmentsPage.tsx`. Supporting UI lives in each feature's `components/` folder.
 - `features/shell/`: Root layout and shared application loading UI.
-- `lib/`: Shared hooks, API services, types, and utilities.
+- `components/`: Shared UI, inputs, modals, and providers.
+- `lib/`: Shared hooks, API services, types, and utilities; shared UI belongs in `components/`.
 
 Implement page changes in `features/`. Keep `app/` entry points thin and update the corresponding feature component instead.
 

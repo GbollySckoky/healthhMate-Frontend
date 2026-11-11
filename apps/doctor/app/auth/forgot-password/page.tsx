@@ -1,1 +1,1 @@
-export { default } from "@/features/auth/forgot-password/page";
+export { default } from "@/features/auth/forgot-password/ForgotPasswordPage";

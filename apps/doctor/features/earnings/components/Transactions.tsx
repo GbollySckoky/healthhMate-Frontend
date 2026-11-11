@@ -7,18 +7,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/ui/table"
-// import Calendar from "@/lib/components/ui/DateCalendar"
-import { FlexWrapper, PageWrapper, TableTitle } from "@/lib/components/ui/Reusable"
-import Input from "@/lib/components/ui/Input"
+} from "@/components/ui/table"
+// import Calendar from "@/components/ui/DateCalendar"
+import { FlexWrapper, PageWrapper, TableTitle } from "@/components/ui/Primitives"
+import Input from "@/components/ui/Input"
 import { useState } from "react"
-import Paginate from "@/lib/components/ui/Paginate"
+import Paginate from "@/components/ui/TablePagination"
 import useGetFinance from '@/lib/hooks/useGetFinance';
 import { CapitalizeName } from "@/lib/constant/capitalizeName"
 import EarningsPage from "@/features/earnings/components/Earnings"
 import { getStatusStyle } from '@/lib/constant/status';
 import useGetDate from "@/lib/hooks/useGetDate"
-import { TransactionsEmptyState, TransactionsErrorState, TransactionsTableSkeleton } from "@/lib/components/ui/EarningSkeleton"
+import { TransactionsEmptyState, TransactionsErrorState, TransactionsTableSkeleton } from "@/components/ui/EarningSkeleton"
 import { Copy, Check } from 'lucide-react';
 
 export function TransactionsPage() {
