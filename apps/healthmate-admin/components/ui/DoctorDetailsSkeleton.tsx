@@ -1,11 +1,11 @@
 "use client";
 
-// import { Card }  .=from "@/lib/components/ui/Reusable";
+// import { Card }  .=from "@/components/ui/DetailPrimitives";
 import {
   TableBody,
   TableCell,
   TableRow,
-} from "@/lib/components/ui/table";
+} from "@/components/ui/table";
 
 export const DoctorHeaderSkeleton = () => {
   return (

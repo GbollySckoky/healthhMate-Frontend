@@ -1,18 +1,18 @@
 "use client";
 
-import AuthEmail from "@/components/Inputs/AuthEmail";
-import AuthInput from "@/components/Inputs/AuthInput";
-// import DateInput from '@/components/Inputs/Date'
-// import AuthPassword from "@/components/Inputs/AuthPassword";
-import { DisplayFlex } from "@/components/ui/Reusable";
+import AuthEmail from "@/components/inputs/AuthEmail";
+import AuthInput from "@/components/inputs/AuthInput";
+// import DateInput from '@/components/inputs/Date'
+// import AuthPassword from "@/components/inputs/AuthPassword";
+import { DisplayFlex } from "@/components/ui/Primitives";
 import Footer from "@/components/ui/Footer";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
 import { AxiosError } from "axios";
 import { DOCTOR_SIGNUP } from "@/lib/interface/signup-interface";
-import DateInput from "@/components/Inputs/Date";
-import { useModal } from "@/components/Modal/Modal";
+import DateInput from "@/components/inputs/Date";
+import { useModal } from "@/components/modal/Modal";
 import { toast } from "react-toastify";
 
 interface SelectOption {

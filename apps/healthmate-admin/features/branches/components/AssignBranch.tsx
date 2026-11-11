@@ -1,11 +1,11 @@
 import { adminQueryKeys } from "@/lib/constant/query-keys";
 import React, { useState } from "react";
-import Footer from "@/lib/components/ui/Footer";
+import Footer from "@/components/ui/Footer";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
 import { ASSIGN_BRANCH } from "@/lib/interface/branch.interface";
 import { AxiosError } from "axios";
-import { useModal } from "@/components/Modal/Modal";
+import { useModal } from "@/components/modal/Modal";
 import { toast } from "react-toastify";
 
 const SELECT_CLASS =

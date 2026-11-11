@@ -1,5 +1,5 @@
 "use client"
-import { MediumTitle } from '@/components/ui/Reusable'
+import { MediumTitle } from '@/components/ui/Primitives'
 import React from 'react'
 import { Hospital_Admin } from '@/lib/service/service'
 import { adminQueryKeys } from '@/lib/constant/query-keys'

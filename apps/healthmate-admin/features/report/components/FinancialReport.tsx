@@ -1,6 +1,6 @@
 "use client"
-import Input from "@/components/Inputs/Input"
-import { Card, MinTexts } from "@/components/ui/Reusable"
+import Input from "@/components/inputs/Input"
+import { Card, MinTexts } from "@/components/ui/Primitives"
 import {
     Table,
     TableBody,

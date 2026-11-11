@@ -1,4 +1,4 @@
-import { Card, Info } from '@/components/ui/Reusable'
+import { Card, Info } from '@/components/ui/Primitives'
 import React from 'react'
 
 const Overview = () => {

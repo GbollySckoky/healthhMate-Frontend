@@ -1,9 +1,9 @@
 "use client"
-import { Card, CardText } from '@/components/ui/Reusable'
+import { Card, CardText } from '@/components/ui/Primitives'
 import React, { useState } from 'react'
 import { supportInfo } from '@/components/data'
-import Conversation from '@/features/support/components/Coversation'
-import SelectField from '@/components/Inputs/Select'
+import Conversation from '@/features/support/components/Conversation'
+import SelectField from '@/components/inputs/Select'
 import image from '@/assets/Image.png'
 import Image from 'next/image'
 

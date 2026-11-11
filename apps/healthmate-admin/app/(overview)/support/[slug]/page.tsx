@@ -1,1 +1,1 @@
-export { default } from "@/features/support/[slug]/page";
+export { default } from "@/features/support/[slug]/SupportDetailsPage";

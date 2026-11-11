@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { PageWrapper, FlexWrapper, Infos } from "@/lib/components/ui/Reusable";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/components/ui/tabs";
+import { PageWrapper, FlexWrapper, Infos } from "@/components/ui/DetailPrimitives";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Hospital_Admin } from "@/lib/service/service";
 import defaultImage from "@/assets/default.jpg";
 import { HospitalProfileData } from "@/features/profile/components/HospitalProfile";

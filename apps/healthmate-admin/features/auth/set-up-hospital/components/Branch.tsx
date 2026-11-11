@@ -1,7 +1,7 @@
 "use client"
 import { useHospitalForm } from '@/lib/context/HospitalContextForm'
-import AuthNumber from '@/components/Inputs/AuthNumber'
-import AuthInput from '@/components/Inputs/AuthInput'
+import AuthNumber from '@/components/inputs/AuthNumber'
+import AuthInput from '@/components/inputs/AuthInput'
 
 const Branch = ({handleNextStep}: {handleNextStep: () => void}) => {
   const {hospitalFormData, updateHospitalData} = useHospitalForm()

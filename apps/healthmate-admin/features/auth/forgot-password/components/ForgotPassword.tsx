@@ -1,5 +1,5 @@
 "use client"
-import AuthEmail from '@/components/Inputs/AuthEmail'
+import AuthEmail from '@/components/inputs/AuthEmail'
 // import { STEP } from '@/lib/interface/step'
 import React, { useState } from 'react'
 

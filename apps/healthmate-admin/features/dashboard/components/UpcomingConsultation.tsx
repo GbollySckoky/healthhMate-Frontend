@@ -1,5 +1,5 @@
 "use client";
-import { MediumTitle, MinText, SmallestTitle } from "@/components/ui/Reusable";
+import { MediumTitle, MinText, SmallestTitle } from "@/components/ui/Primitives";
 import React from "react";
 import { ChevronRight } from "lucide-react";
 import image from "@/assets/default.jpg";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { ROUTES } from "@/lib/constant/Routes";
 import { AppointmentCardSkeleton } from "@/components/ui/DashboardSkeleton";
 import Image from "next/image";
-import { CapitalizeName } from "@/lib/components/ui/CapitalizeName";
+import { CapitalizeName } from "@/components/ui/CapitalizeName";
 // import Image from 'nex'
 const UpcomingConsultation = () => {
   const router = useRouter();

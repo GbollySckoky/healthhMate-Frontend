@@ -3,21 +3,21 @@
 import { ArrowDown, ArrowUp, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { Card, FlexWrapper, MediumText, PageWrapper, TableTitle, Value } from "@/lib/components/ui/Reusable";
-import Input from "@/lib/components/Inputs/Input";
-import AppointmentTableSkeleton from "@/lib/components/ui/AppointmentTableSkeleton";
+import { Card, FlexWrapper, MediumText, PageWrapper, TableTitle, Value } from "@/components/ui/DetailPrimitives";
+import Input from "@/components/inputs/Input";
+import AppointmentTableSkeleton from "@/components/ui/AppointmentTableSkeleton";
 
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/lib/components/ui/tabs";
+} from "@/components/ui/tabs";
 ;
 import { STATUS } from "@/lib/types/status";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/lib/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table";
 import useGetAllAppointments from "@/lib/hooks/useGetAllAppointments";
-import Paginate from "@/lib/components/ui/paginate";
+import Paginate from "@/components/ui/TablePagination";
 import { CapitalizeName } from "@/lib/constant/capitalizeName";
 import { getStatusStyle } from "@/lib/constant/status";
 import useGetStats from "@/lib/hooks/useGetStats";

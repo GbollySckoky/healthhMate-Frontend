@@ -1,4 +1,4 @@
-import { useModal } from "@/components/Modal/Modal";
+import { useModal } from "@/components/modal/Modal";
 import {
     Table,
     TableBody,
@@ -9,7 +9,7 @@ import {
   } from "@/components/ui/table"
 import image from '@/assets/Image.png'
 import Image from "next/image";
-import { MinTexts } from "@/components/ui/Reusable";
+import { MinTexts } from "@/components/ui/Primitives";
 import {  activeStatus } from "@/lib/types/status";
 // import {
 //   Pagination,
@@ -22,7 +22,7 @@ import {  activeStatus } from "@/lib/types/status";
 // } from "@/components/ui/pagination";
 import { Trash2, Pencil } from 'lucide-react';
 import DeleteModal from "@/features/profile/components/DeleteModal";
-import Paginate from "@/components/ui/paginate";
+import Paginate from "@/components/ui/PaginationControls";
 
 
   const invoices = [

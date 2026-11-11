@@ -9,19 +9,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TableTitle } from "@/components/ui/Reusable";
-import Input from "@/components/Inputs/Input";
-import MinSelectField from "@/components/Inputs/MinSelectField";
+import { TableTitle } from "@/components/ui/Primitives";
+import Input from "@/components/inputs/Input";
+import MinSelectField from "@/components/inputs/MinSelectField";
 import { useState } from "react";
 import useToggle from "@/lib/hooks/useToggle";
-import Paginate from "@/components/ui/paginate";
+import Paginate from "@/components/ui/PaginationControls";
 import { useRouter } from "next/navigation";
 import Calendar from "@/components/calendar/Calendar";
 import { useQuery } from "@tanstack/react-query";
 import { Hospital_Admin } from "@/lib/service/service";
 import { GET_ALL_APPOINTMENTS } from "@/lib/interface/get_all_appointyment";
 import { STATUS } from "@/lib/types/status";
-import { CapitalizeName } from "@/lib/components/ui/CapitalizeName";
+import { CapitalizeName } from "@/components/ui/CapitalizeName";
 
 const AllAppointmentTable = () => {
   const [searchInput, setSearchInput] = useState<string>("");

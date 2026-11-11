@@ -1,20 +1,20 @@
 "use client";
 
-// import MinSelectField from "@/lib/components/Inputs/MinSelectField";
-import Input from "@/lib/components/Inputs/Input";
+// import MinSelectField from "@/components/inputs/FilterSelect";
+import Input from "@/components/inputs/Input";
 import {
   Button,
   FlexWrapper,
   PageWrapper,
   TableTitle,
-} from "@/lib/components/ui/Reusable";
+} from "@/components/ui/DetailPrimitives";
 import React, { useState } from "react";
 import { Search } from "lucide-react";
 import BranchTable from "@/features/branches/components/BranchTable";
 // import useToggle from "@/lib/hooks/useToggle";
 import AddNewBranch from "@/features/branches/components/AddNewBranch";
 import AssignBranch from "@/features/branches/components/AssignBranch";
-import { useModal } from "@/components/Modal/Modal";
+import { useModal } from "@/components/modal/Modal";
 
 const Branch = () => {
   const [inputValue, setInputValue] = useState("");

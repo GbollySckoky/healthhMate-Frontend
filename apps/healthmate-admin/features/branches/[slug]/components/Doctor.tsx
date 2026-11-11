@@ -1,12 +1,12 @@
 "use client"
-import MinSelectField from '@/components/Inputs/MinSelectField'
-import { Button, PageWrapper, TableTitle } from '@/components/ui/Reusable'
+import MinSelectField from '@/components/inputs/MinSelectField'
+import { Button, PageWrapper, TableTitle } from '@/components/ui/Primitives'
 import React, { useState } from 'react'
 import {Search } from 'lucide-react'
-import Input from '@/components/Inputs/Input'
+import Input from '@/components/inputs/Input'
 import useToggle from '@/lib/hooks/useToggle'
 import AddNewBranch from '@/features/branches/components/AddNewBranch'
-import { useFormModal } from '@/components/Modal/FormModal'
+import { useFormModal } from '@/components/modal/FormModal'
 import DoctorTable from '@/features/branches/[slug]/components/DoctorTable'
 
 

@@ -1,7 +1,7 @@
 "use client";
 import { adminQueryKeys } from "@/lib/constant/query-keys";
 
-import { useModal } from "@/lib/components/Modal/Modal";
+import { useModal } from "@/components/modal/Modal";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/ui/table";
+} from "@/components/ui/table";
 import { Trash2, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +18,7 @@ import DeleteModal from "@/features/profile/components/DeleteModal";
 import { Hospital_Admin } from "@/lib/service/service";
 import BranchTableSkeleton from "@/components/ui/BranchPageSkeleton";
 import { Branch } from "@/lib/interface/branch";
-import Paginate from "@/lib/components/ui/paginate";
+import Paginate from "@/components/ui/TablePagination";
 import { useEffect, useState } from "react";
 import { CapitalizeName } from "@/lib/constant/capitalizeName";
 

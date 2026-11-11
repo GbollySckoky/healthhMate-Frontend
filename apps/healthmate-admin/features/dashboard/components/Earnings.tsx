@@ -8,7 +8,7 @@ import {
 
 import {
   DisplayFlex,
-} from '@/components/ui/Reusable'
+} from '@/components/ui/Primitives'
 
 import useToggle from '@/lib/hooks/useToggle'
 import useGetEarningStats from '@/lib/hooks/useGetEarningStats'

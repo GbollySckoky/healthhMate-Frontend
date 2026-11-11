@@ -1,1 +1,1 @@
-export { default } from "@/features/branches/page";
+export { default } from "@/features/branches/BranchesPage";

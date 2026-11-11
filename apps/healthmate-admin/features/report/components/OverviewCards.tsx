@@ -1,5 +1,5 @@
 import { overviewCardData } from '@/components/data';
-import { Card, MediumText, MediumTitle, PageWrapper, SmallestText, Value } from '@/components/ui/Reusable';
+import { Card, MediumText, MediumTitle, PageWrapper, SmallestText, Value } from '@/components/ui/Primitives';
 import React from 'react'
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { EarningsTrend } from '@/features/report/components/EarningsTrends';
@@ -9,7 +9,7 @@ import { PatientGrowth } from '@/features/report/components/PatientGrowth';
 import { FinancialReport } from '@/features/report/components/FinancialReport';
 import DoctorPerformannce from '@/features/report/components/DoctorPerformance';
 import { CloudUpload } from 'lucide-react';
-import { FlexWrapper } from '@/lib/components/ui/Reusable';
+import { FlexWrapper } from '@/components/ui/DetailPrimitives';
 
 
 const OverviewCards = () => {

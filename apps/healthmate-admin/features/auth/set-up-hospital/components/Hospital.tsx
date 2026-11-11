@@ -1,7 +1,7 @@
 "use client"
-import AuthNumber from '@/components/Inputs/AuthNumber'
-import AuthEmail from '@/components/Inputs/AuthEmail'
-import AuthInput from '@/components/Inputs/AuthInput'
+import AuthNumber from '@/components/inputs/AuthNumber'
+import AuthEmail from '@/components/inputs/AuthEmail'
+import AuthInput from '@/components/inputs/AuthInput'
 import { useHospitalForm } from '@/lib/context/HospitalContextForm'
 import Image from '@/features/auth/set-up-hospital/components/Image'
 
