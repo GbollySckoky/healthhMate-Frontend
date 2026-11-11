@@ -16,7 +16,16 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
+
+- `app/`: Route entry points, metadata, global styles, and assets. Pages and layouts re-export feature components; existing URLs remain defined here.
+- `features/`: UI grouped by domain. Pages use descriptive PascalCase names such as `AppointmentsPage.tsx`. Supporting UI lives in each feature's `components/` folder; non-UI helpers stay beside the feature page in `utils.ts`.
+- `features/shell/`: Root and overview layouts.
+- `components/`: Shared `ui/`, `inputs/`, and `client/` components.
+- `lib/`: Shared hooks, services, types, and utilities.
+- `providers/`: Application providers.
+
+Implement page changes in `features/` and keep `app/` entry points thin.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
 

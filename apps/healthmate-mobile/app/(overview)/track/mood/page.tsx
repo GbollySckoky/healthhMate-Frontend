@@ -1,1 +1,1 @@
-export { default } from '@/features/track/mood/page';
+export { default } from '@/features/track/mood/MoodPage';

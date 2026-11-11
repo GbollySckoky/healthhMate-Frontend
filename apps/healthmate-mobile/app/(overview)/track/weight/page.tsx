@@ -1,1 +1,1 @@
-export { default } from '@/features/track/weight/page';
+export { default } from '@/features/track/weight/WeightPage';

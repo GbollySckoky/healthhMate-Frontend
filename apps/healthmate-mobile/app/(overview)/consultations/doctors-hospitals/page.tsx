@@ -1,1 +1,1 @@
-export { default } from '@/features/consultations/doctors-hospitals/page';
+export { default } from '@/features/consultations/doctors-hospitals/DoctorsHospitalsPage';

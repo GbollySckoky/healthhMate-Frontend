@@ -1,1 +1,1 @@
-export { default } from '@/features/track/sleep-log/page';
+export { default } from '@/features/track/sleep-log/SleepLogPage';

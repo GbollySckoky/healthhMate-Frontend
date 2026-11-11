@@ -1,1 +1,1 @@
-export { default } from '@/features/settings/change-password/page'
+export { default } from '@/features/settings/change-password/ChangePasswordPage'

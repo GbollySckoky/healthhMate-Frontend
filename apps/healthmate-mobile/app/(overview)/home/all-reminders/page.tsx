@@ -1,1 +1,1 @@
-export { default } from '@/features/home/all-reminders/page'
+export { default } from '@/features/home/all-reminders/AllRemindersPage'

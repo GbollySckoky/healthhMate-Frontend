@@ -1,1 +1,1 @@
-export { default} from '@/features/support/page'
+export { default} from '@/features/support/SupportPage'
