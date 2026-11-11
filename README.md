@@ -1,135 +1,201 @@
-# Turborepo starter
+# Healthmate Digital Healthcare & Telemedicine Platform
 
-This Turborepo starter is maintained by the Turborepo core team.
+**Connecting patients, healthcare professionals, and hospitals through a unified digital healthcare experience.**
 
-## Using this example
+Healthmate is a full-stack telemedicine platform designed to simplify access to healthcare by bringing appointment management, secure communication, virtual consultations, payments, and personal health tracking into one connected ecosystem.
 
-Run the following command:
+The platform provides dedicated interfaces for patients, doctors, and hospital administrators, enabling each user group to manage healthcare interactions through role-specific workflows.
 
-```sh
-npx create-turbo@latest
+## Overview
+
+Accessing healthcare can involve fragmented processes, from discovering medical professionals and arranging consultations to managing payments, communicating with doctors, and monitoring personal health information.
+
+Healthmate explores how modern web technologies can bring these interactions together into a more accessible and coordinated digital experience.
+
+The platform consists of three interconnected applications:
+
+- **Patient Application:** Enables patients to discover healthcare providers, book consultations, communicate with doctors, make payments, and track health metrics.
+- **Doctor Portal:** Supports healthcare professionals in managing consultations, patient interactions, prescriptions, and clinical notes.
+- **Hospital Administration Dashboard:** Provides administrative workflows for managing doctors, appointments, and hospital-related operations.
+
+## Core Features
+
+### Patient Experience
+
+**Doctor & Hospital Discovery**
+- Browse available hospitals and healthcare professionals.
+- Explore doctor profiles and consultation information.
+- Discover highly rated doctors.
+
+**Appointment & Consultation Management**
+- Book medical consultations.
+- Review upcoming and previous appointments.
+- Track appointment status and consultation progress.
+
+**Payments**
+- Integrated payment processing using Paystack.
+- Payment workflows connected to consultation bookings.
+
+**Real-Time Communication**
+- Patient-doctor messaging.
+- Audio and video consultation functionality powered by Agora.
+- Communication workflows connected to consultations.
+
+**Personal Health Tracking**
+- Blood pressure monitoring.
+- Blood glucose tracking.
+- Mood tracking.
+- Sleep logging.
+
+**Account Management**
+- User authentication and email verification.
+- Profile management.
+- Notifications and support features.
+
+### Doctor Experience
+
+- Doctor authentication and role-based access.
+- Appointment and consultation management.
+- Patient communication workflows.
+- Prescription management.
+- Consultation notes.
+- Video and audio consultation integration.
+
+### Hospital Administration
+
+- Hospital administration workflows.
+- Doctor and hospital management.
+- Appointment oversight.
+- Role-specific administrative access.
+
+## Technology Stack
+
+| Layer | Technologies |
+|---|---|
+| Frontend | Next.js, React, TypeScript |
+| Backend | Node.js, NestJS |
+| Database | PostgreSQL |
+| ORM | Prisma |
+| Real-Time Communication | Agora |
+| Payments | Paystack |
+| Email Services | Resend |
+| Media Storage | Cloudinary |
+| Background Processing | BullMQ |
+| Frontend Deployment | Vercel |
+| Backend Deployment | Render |
+| Database Infrastructure | Supabase PostgreSQL |
+
+## System Architecture
+
+Healthmate follows a modular, API-driven architecture that separates client applications, backend business logic, data persistence, and external service integrations.
+
+```text
+                  HEALTHMATE PLATFORM
+                          |
+          +---------------+---------------+
+          |               |               |
+     Patient App     Doctor Portal    Hospital Admin
+          |               |               |
+          +---------------+---------------+
+                          |
+                    REST API Layer
+                     NestJS Backend
+                          |
+          +---------------+---------------+
+          |               |               |
+    Authentication    Appointments    Communication
+          |               |               |
+          +---------------+---------------+
+                          |
+                  Prisma ORM
+                          |
+                  PostgreSQL
+                          |
+       +------------------+------------------+
+       |          |           |              |
+    Paystack    Agora       Resend       Cloudinary
+    Payments    Calls       Emails       Media
 ```
 
-## What's inside?
+## Engineering & Implementation
 
-This Turborepo includes the following packages/apps:
+### Authentication and Authorization
 
-### Apps and Packages
+Implemented authentication workflows with role-based authorization to support different levels of access across patient, doctor, and administrative interfaces.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### Backend Architecture
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Developed a modular backend using NestJS, with dedicated modules for authentication, appointments, users, doctors, hospitals, payments, health tracking, and support.
 
-### Utilities
+### Database Design
 
-This Turborepo has some additional tools already setup for you:
+Used PostgreSQL and Prisma to model application data and relationships, including users, doctors, hospitals, appointments, prescriptions, and consultation notes.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### Third-Party Integrations
 
-### Build
+Integrated external services to support key application capabilities:
 
-To build all apps and packages, run the following command:
+- **Paystack:** Consultation payment processing.
+- **Agora:** Real-time audio and video communication.
+- **Resend:** Transactional email notifications.
+- **Cloudinary:** Media storage and image uploads.
 
-```
-cd my-turborepo
+### Healthcare Workflow Integration
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+Designed interconnected workflows spanning appointment booking, payment processing, communication, consultation management, and health tracking.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+## 🌐 Live Applications
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+Healthmate consists of three interconnected applications, each designed for a specific role within the healthcare ecosystem.
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+### 🧑‍💻 Patient Application
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+Enables patients to discover doctors and hospitals, book consultations, make payments, communicate with healthcare professionals, attend virtual consultations, and track personal health metrics.
 
-### Develop
+🔗 **[Launch Patient Application](https://healthmaate.netlify.app/)**
 
-To develop all apps and packages, run the following command:
+### 👨‍⚕️ Doctor Portal
 
-```
-cd my-turborepo
+Provides healthcare professionals with a dedicated interface for managing appointments, communicating with patients, conducting virtual consultations, issuing prescriptions, and documenting consultation notes.
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+🔗 **[Launch Doctor Portal](https://doctor.healthmatepatient.com/)**
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+### 🏥 Hospital Administration Dashboard
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+Enables hospital administrators to manage doctors, oversee appointments, and coordinate hospital-related operations through a centralized administrative interface.
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+🔗 **[Launch Admin Dashboard](https://admin.healthmatepatient.com/)**
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+---
 
-### Remote Caching
+> **Note:** Healthmate is an evolving demonstration project. Please avoid submitting real patient records or sensitive medical information.
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## Project Background
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+Healthmate was inspired by the challenges people experience when accessing healthcare services in Nigeria.
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+The goal was to explore how software could reduce friction across healthcare interactions while providing a connected experience for patients, doctors, and hospitals.
 
-```
-cd my-turborepo
+Read the development story:
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
+[Why I Built Healthmate](https://gbolahancoker.substack.com/p/why-i-built-healthmate)
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
+## Project Status
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+**Active Development Portfolio / Demonstration Project**
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+Healthmate continues to evolve as new features, integrations, and improvements are developed.
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
+Some functionality may be incomplete or subject to change.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+## Author
 
-## Useful Links
+**Gbolahan Coker**
 
-Learn more about the power of Turborepo:
+Full-Stack Software Developer specializing in React, Next.js, TypeScript, Node.js, NestJS, and PostgreSQL.
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+Focused on building scalable web applications, integrated business workflows, and intuitive digital experiences.
+
+---
+
+**Healthmate Making digital healthcare more connected and accessible.**
