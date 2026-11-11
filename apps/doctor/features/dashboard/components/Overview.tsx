@@ -3,10 +3,10 @@ import React from 'react'
 import { Card, MediumText, MediumTitle, SmallText, SmallTitle, Text, Title, Value } from '@/lib/components/ui/Reusable'
 import {  CalendarDays } from 'lucide-react';
 import { ArrowDown, ArrowUp } from "lucide-react"
-import RecentActivities from './RecentActivities';
-import UpcomingAppointment from './UpcomingAppointments';
-import { RecentConsultation } from './RecentConsultation';
-import Earnings from './Earnings';
+import RecentActivities from '@/features/dashboard/components/RecentActivities';
+import UpcomingAppointment from '@/features/dashboard/components/UpcomingAppointments';
+import { RecentConsultation } from '@/features/dashboard/components/RecentConsultation';
+import Earnings from '@/features/dashboard/components/Earnings';
 import useGreeting from '@/lib/hooks/useGreeting';
 import useGetTodayAppointment from '@/lib/hooks/useGetTodayAppointment';
 import { Doctor } from '@/lib/constant/service';
