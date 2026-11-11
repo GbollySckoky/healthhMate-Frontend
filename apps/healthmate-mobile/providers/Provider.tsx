@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 // import ErrorBoundary from "@/components/ErrorBoundary";
 
 
-const ToastLoader = dynamic(() => import("@/components/Client/ToastLoader"), { ssr: false });
+const ToastLoader = dynamic(() => import("@/components/client/ToastLoader"), { ssr: false });
 
 export default function Providers({
   children,

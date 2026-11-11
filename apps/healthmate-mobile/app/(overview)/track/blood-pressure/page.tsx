@@ -1,1 +1,1 @@
-export { default } from '@/features/track/blood-pressure/page';
+export { default } from '@/features/track/blood-pressure/BloodPressurePage';

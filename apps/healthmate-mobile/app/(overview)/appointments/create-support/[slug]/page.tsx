@@ -1,1 +1,1 @@
-export { default } from '@/features/appointments/create-support/[slug]/page'
+export { default } from '@/features/appointments/create-support/[slug]/CreateSupportPage'

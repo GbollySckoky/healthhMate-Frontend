@@ -1,1 +1,1 @@
-export { default } from '@/features/track/blood_sugar/page'
+export { default } from '@/features/track/blood-sugar/BloodSugarPage'
