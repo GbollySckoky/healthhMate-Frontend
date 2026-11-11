@@ -1,1 +1,1 @@
-export { default } from "@/features/auth/set-up-hospital/page";
+export { default } from "@/features/auth/set-up-hospital/HospitalSetupPage";

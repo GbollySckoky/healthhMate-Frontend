@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
-import { Card, FlexWrapper, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '@/lib/components/ui/Reusable'
-import { PageWrapper } from '@/lib/components/ui/Reusable'
+import { Card, FlexWrapper, MediumText, MediumTitle, SmallText, SmallTitle, SmallestText, Text, Title, Value } from '@/components/ui/DetailPrimitives'
+import { PageWrapper } from '@/components/ui/DetailPrimitives'
 import {  CalendarDays } from 'lucide-react';
 import { ArrowDown, ArrowUp } from "lucide-react"
 import Earnings from '@/features/dashboard/components/Earnings';

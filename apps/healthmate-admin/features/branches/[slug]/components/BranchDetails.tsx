@@ -1,10 +1,10 @@
-import { PageWrapper } from '@/components/ui/Reusable'
+import { PageWrapper } from '@/components/ui/Primitives'
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Overview from '@/features/branches/[slug]/components/Overview'
 import Doctor from '@/features/branches/[slug]/components/Doctor'
 import DetailsNav from '@/components/ui/DetailsNav'
-import { FlexWrapper } from '@/lib/components/ui/Reusable'
+import { FlexWrapper } from '@/components/ui/DetailPrimitives'
 
 const BranchDetails = () => {
   return (

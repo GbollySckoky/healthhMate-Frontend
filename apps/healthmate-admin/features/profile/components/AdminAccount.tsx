@@ -1,5 +1,5 @@
 'use client'
-import { Button, Card } from "@/components/ui/Reusable"
+import { Button, Card } from "@/components/ui/Primitives"
 import {
     Table,
     TableBody,
@@ -12,7 +12,7 @@ import { Trash2 } from 'lucide-react';
 import { activeStatus } from "@/lib/types/status";
 import DeleteModal from "@/features/profile/components/DeleteModal";
 import AddNewAdmin from "@/features/profile/components/AddNewAdmin";
-import { useFormModal } from "@/components/Modal/FormModal";
+import { useFormModal } from "@/components/modal/FormModal";
 
 
   const invoices = [
