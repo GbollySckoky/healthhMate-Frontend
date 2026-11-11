@@ -16,7 +16,14 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
+
+- `app/`: Next.js route entry points, metadata, global styles, and favicon. Pages and layouts re-export feature components.
+- `features/`: Page UI and behavior grouped by domain (dashboard, auth, patients, and other app features). Supporting UI lives in each feature's `components/` folder.
+- `features/shell/`: Root layout and shared application loading UI.
+- `lib/`: Shared hooks, API services, types, and utilities.
+
+Implement page changes in `features/`. Keep `app/` entry points thin and update the corresponding feature component instead.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
 

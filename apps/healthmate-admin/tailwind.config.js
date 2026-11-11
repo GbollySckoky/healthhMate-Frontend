@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
+    './features/**/*.{ts,tsx}',
     '../healthmate-admin/app/**/*.{ts,tsx}',
     './lib/**/*.{ts,tsx}',
     '../healthmate-admin/components/**/*.{ts,tsx}',

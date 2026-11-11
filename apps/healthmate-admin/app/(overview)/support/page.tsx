@@ -1,8 +1,1 @@
-import React from 'react'
-import Support from './_component/Support'
-
-const SupportPage = () => {
-  return <Support />
-}
-
-export default SupportPage
+export { default } from "@/features/support/page";
